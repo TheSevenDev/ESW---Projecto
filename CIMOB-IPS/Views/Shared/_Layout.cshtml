@@ -11,31 +11,27 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">CIMOB-IPS</a>
-            </div>
-            <div class="navbar-collapse collapse">
+    <nav>
+        <div class="navbar-menu">
+            <ul>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
 
-                @{
-                <ul class="nav navbar-nav">                
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
-                    @if (ViewData["Autentication"] != null && (ViewData["Autentication"].ToString() == "Student" || ViewData["Autentication"].ToString() == "CIMOB")) {
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Área Pessoal</a></li>
-                    }
-                     @if (ViewData["Autentication"]!=null && ViewData["Autentication"].ToString() == "CIMOB")
-                     {
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a></li>
-                     }
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
-                </ul>
+                @if (ViewData["Autentication"] != null && (ViewData["Autentication"].ToString() == "Student" || ViewData["Autentication"].ToString() == "CIMOB"))
+                {
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Área Pessoal</a></li>
                 }
-            </div>
+                @if (ViewData["Autentication"] != null && ViewData["Autentication"].ToString() == "CIMOB")
+                {
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a></li>
+                }
+
+                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
+            </ul>
         </div>
+        @Html.Partial("SessionBar")<!-- Eventualmente mandar a sessão ou um objeto com info-->
     </nav>
-    <div class="container body-content">
+    <div>
         @RenderBody()
         <footer>
             <p>&copy; 2018 &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>
