@@ -9,8 +9,9 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-image: url('../images/savin-ny-website-background-web.jpg');
+    background-image: url('../images/cimob_bg.jpg');
     font-family: 'Segoe UI ', Tahoma, Geneva, Verdana, sans-serif;
+    background-repeat: no-repeat;
     background-size: 100vw 100vh;
 }
 
@@ -25,7 +26,7 @@ html, body {
     left: 0.75%;
     position: fixed;
     width: 69%;
-    height: 6vmin;
+    height: 3.5vmin;
     border: 0.1vmin solid var(--main-grey);
 }
 
@@ -38,9 +39,9 @@ html, body {
     list-style: none;
 }
 
-.navbar-menu a, nav a:visited, nav a:link, nav a:active {
-    text-decoration: none;
-    color: var(--main-grey);
+.navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
+   text-decoration: none;
+   color: var(--main-grey);
 }
 
 .navbar-menu li {
@@ -49,7 +50,7 @@ html, body {
     justify-content: center;
     flex-basis: 7%;
     list-style: none;
-    font-size: 2vmin;
+    font-size: 1.2vmax;
     margin-left: 2.5%;
     height: 100%;
 }
@@ -64,21 +65,45 @@ html, body {
     Session bar
 */
 .nav-session {
-    display: flex;
-    justify-content: initial;
-    align-items:center;
-    flex-basis: 15%;
-    border: 0.1vmin solid var(--main-grey);
-    height: 6vmin;
-    top: 1.5%;
     position: fixed;
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    border: 0.1vmin solid var(--main-grey);
+    height: 3.5vmin;
+    top: 1.5%;
     right: 0.75%;
-    width: 25%;
-    font-size: 2vmin;
-    padding-left:1%;
+    width: 28%;
+}
+
+.nav-session a {
+    font-size: 1vmax;
+}
+
+.nav-session a, .nav-session a:visited, .nav-session a:link, .nav-session a:active {
+    text-decoration: none;
+    color: var(--blue-var3);
 }
 
 
+.session-actions {
+    position: relative;
+    margin-left: 7vw;
+}
+
+.session-name {
+    position: relative;
+    font-size: 1.1vw;
+    margin-left: 1vw;
+}
+
+.sign-in, .sign-out {
+
+}
+
+.sign-up {
+    margin-left:1vw;
+}
 
 footer {
     position: fixed;
@@ -93,4 +118,15 @@ footer {
     bottom: 0;
     left: 0;
     border: 0.1vmin solid var(--blue-var3);
+}
+
+
+
+/*
+    MÁXIMO USÁVEL. RESPONSIVENESS(?)
+*/
+@media screen and (max-width: 780px) {
+    .navbar-menu,.nav-session, footer {
+        background-color:red;
+    }
 }
