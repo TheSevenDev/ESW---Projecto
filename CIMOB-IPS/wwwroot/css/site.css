@@ -50,7 +50,7 @@ html, body {
 .navbar-menu li {
     display: flex;
     align-items: center;
-    flex-basis:5%;
+    flex-basis:8%;
     list-style: none;
     font-size: 1.2vmax;
     margin-left:0.90vw;
