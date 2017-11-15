@@ -12,11 +12,12 @@
 </head>
 <body>
     <nav>
+        @Html.Partial("SessionBar")<!-- Eventualmente mandar a sessão ou um objeto com info-->
         <div class="navbar-menu">
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
-
+                
                 @if (ViewData["Autentication"] != null && (ViewData["Autentication"].ToString() == "Student" || ViewData["Autentication"].ToString() == "CIMOB"))
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Área Pessoal</a></li>
@@ -25,18 +26,17 @@
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a></li>
                 }
-
-                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>       
             </ul>
-        </div>
-        @Html.Partial("SessionBar")<!-- Eventualmente mandar a sessão ou um objeto com info-->
+        </div>    
     </nav>
-    <div>
+    <div class="body-panel">
         @RenderBody()
+    </div>
         <footer>
             <p>&copy; 2018 &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>
         </footer>
-    </div>
+    x
     @RenderSection("Scripts", required: false)
 </body>
 </html>
