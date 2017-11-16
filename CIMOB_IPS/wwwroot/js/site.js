@@ -1,4 +1,4 @@
-﻿// Write your JavaScript code.
+﻿// Write your JavaScript code
 
 function toogleSettings()
 {   
