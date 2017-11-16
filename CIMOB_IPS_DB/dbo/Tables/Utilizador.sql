@@ -1,0 +1,8 @@
+﻿-- UTILIZADORES
+CREATE TABLE Utilizador
+(
+	id_utilizador BIGINT PRIMARY KEY IDENTITY(1,1),
+	email NVARCHAR(60) NOT NULL,
+	password VARBINARY(16) NOT NULL,
+	activo bit NOT NULL DEFAULT 0
+)
