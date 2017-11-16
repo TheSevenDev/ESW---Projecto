@@ -14,8 +14,8 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI ', Tahoma, Geneva, Verdana, sans-serif;
-    background-repeat: no-repeat;
-    background-size: 100vw 100vh;
+    width: 100vw;
+    height: 100vh;
 }
 
 
@@ -23,17 +23,17 @@ html, body {
     Session bar
 */
 .nav-session {
+    z-index: 999;
     position: fixed;
     display: inline-flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content:flex-end;
+    justify-content: flex-end;
     height: 4.5vmin;
     top: 0;
-    right:0;
+    right: 0;
     width: 100%;
-    background-color:var(--grey-var1);
-    color:white;
+    background-color: var(--grey-var1);
+    color: white;
 }
 
 .nav-session a {
@@ -49,7 +49,7 @@ html, body {
 .session-name {
     position: relative;
     font-size: 1.1vw;
-    margin-right: 78.5vw;
+    margin-right: 77.3vw;
 }
 .option-button {
     height: 3vmin;
@@ -85,6 +85,7 @@ html, body {
 
 
 .navbar-menu {
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -121,7 +122,7 @@ html, body {
 .navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
     text-decoration: none;
     color: var(--grey-var1);
-    font-weight: 200;
+    font-weight: 300;
 }
 
 
@@ -141,6 +142,45 @@ footer {
     height: 3%;
     bottom: 0;
     left: 0;
+    z-index: 999;
+}
+
+
+/*
+    SUB-MENUS
+*/
+.submenu {
+    position:fixed;
+    left: 82%;
+    top: 8.5%;
+    width: 15%;
+    height: 20vmin;
+    z-index:999;
+    border: 1px solid black;
+}
+
+.submenu > ul {
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    margin-top:0;
+    
+}
+
+
+.submenu li {
+    text-align: right;
+    display: block;
+    list-style: none;
+    font-size: 1.2vmax;
+    height: 100%;
+    margin-top: 1.5%;
+}
+
+.submenu a, .submenu a:visited, .submenu a:link, .submenu a:active {
+    text-decoration: none;
+    color: var(--grey-var1);
+    font-weight: 300;
 }
 
 
@@ -149,6 +189,7 @@ footer {
     min-height:88.5vmin;
     top:8.5vmin;
     background-color:white;
+    z-index:100;
 }
 
 /*
