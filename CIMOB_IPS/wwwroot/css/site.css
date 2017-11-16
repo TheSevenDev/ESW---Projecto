@@ -1,0 +1,202 @@
+﻿:root {
+    --main-blue: #597EAA;
+    --blue-var1: #9FC5F8;
+    --blue-var2: #6FA8DC;
+    --blue-var3: #085394;
+    --blue-var4: #6FBAE4;
+
+
+    --main-grey: #383838;
+    --grey-var1: #54565B;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI ', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+/*
+    Session bar
+*/
+.nav-session {
+    z-index: 999;
+    position: fixed;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 4.5vmin;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background-color: var(--grey-var1);
+    color: white;
+}
+
+.nav-session a {
+    font-size: 1.1vmax;
+    font-weight:500;
+}
+
+.nav-session a, .nav-session a:visited, .nav-session a:link, .nav-session a:active {
+    text-decoration: none;
+    color: var(--blue-var4);
+}
+
+.session-name {
+    position: relative;
+    font-size: 1.1vw;
+    margin-right: 77.3vw;
+}
+.option-button {
+    height: 3vmin;
+    width: 3vmin;
+}
+
+.option-button:hover {
+    cursor: pointer;
+}
+
+#notifications {
+    position: relative;
+    margin-right: 2.5vw;
+}
+
+#options {
+    margin-right: 1.1vw;
+}
+
+
+.session-actions {
+    position: relative;
+    margin-right: 1vw;
+}
+
+.sign-in, .sign-out {
+
+}
+
+.sign-up {
+    margin-left:1vw;
+}
+
+
+.navbar-menu {
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    top: 4.5vmin;
+    position: fixed;
+    width: 100%;
+    height: 4vmin;
+    background-color: var(--blue-var1);
+}
+
+.navbar-menu > ul {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    list-style: none;
+}
+
+.navbar-menu li {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    font-size: 1.2vmax;
+    height: 100%;
+    margin-left:4.5vw;
+}
+
+.navbar-menu li:first-child {
+    margin-left: 0.94vw;
+}
+
+.navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
+    text-decoration: none;
+    color: var(--grey-var1);
+    font-weight: 300;
+}
+
+
+.navbar-menu li:hover, .navbar-menu li:hover a {
+    font-weight: 700;
+}
+
+footer {
+    position: fixed;
+    background: var(--grey-var1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.7vmin;
+    width: 100%;
+    height: 3%;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+}
+
+
+/*
+    SUB-MENUS
+*/
+.submenu {
+    position:fixed;
+    left: 82%;
+    top: 8.5%;
+    width: 15%;
+    height: 20vmin;
+    z-index:999;
+    border: 1px solid black;
+}
+
+.submenu > ul {
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    margin-top:0;
+    
+}
+
+
+.submenu li {
+    text-align: right;
+    display: block;
+    list-style: none;
+    font-size: 1.2vmax;
+    height: 100%;
+    margin-top: 1.5%;
+}
+
+.submenu a, .submenu a:visited, .submenu a:link, .submenu a:active {
+    text-decoration: none;
+    color: var(--grey-var1);
+    font-weight: 300;
+}
+
+
+.body-panel{
+    position:relative;
+    min-height:88.5vmin;
+    top:8.5vmin;
+    background-color:white;
+    z-index:100;
+}
+
+/*
+    MÁXIMO USÁVEL. RESPONSIVENESS(?)
+*/
+@media screen and (max-width: 720px) {
+    .navbar-menu,.nav-session, footer {
+        background-color:red;
+    }
+}
