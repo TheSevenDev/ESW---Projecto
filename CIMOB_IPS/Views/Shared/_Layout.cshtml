@@ -7,8 +7,9 @@
 
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+        <script src="~/js/site.js"></script>
     </environment>
-
+    
 </head>
 <body>
     <nav>
@@ -28,16 +29,23 @@
                 }
                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>       
             </ul>
-            <img class="option-button" id="notifications" src="~/images/icons/notifications-button_grey.png" />
-            <img class="option-button" id="options" src="~/images/icons/settings-work-tool.png" />   
+            <img class="option-button" id="notifications" src="~/images/icons/notifications-button_grey.png" onclick="javascript: toogleNotifications();"/>
+            <img class="option-button" id="options" src="~/images/icons/settings-work-tool.png" onclick="javascript: toogleSettings();" />   
         </div>    
-        <div class="submenu">
+        <div class="submenu" id="submenu-settings">
             <ul>  
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Ver Perfil</a> </li>     
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Alterar-palavra-passe</a></li>
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Convidar um técnico</a></li>
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Ajuda</a></li>
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Sair</a></li>           
+            </ul>
+        </div>
+
+        <div class="notifications" id="submenu-notifications">
+            <ul>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">SAMONASTANASTANASTI</a> </li>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Candidatura submetida a 16/11/2017</a> </li>
             </ul>
         </div>
     </nav>

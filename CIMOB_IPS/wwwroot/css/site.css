@@ -54,6 +54,7 @@ html, body {
 .option-button {
     height: 3vmin;
     width: 3vmin;
+    user-select:none;
 }
 
 .option-button:hover {
@@ -150,13 +151,15 @@ footer {
     SUB-MENUS
 */
 .submenu {
-    position:fixed;
-    left: 82%;
+    display: none;
+    position: fixed;
+    left: 87%;
     top: 8.5%;
-    width: 15%;
-    height: 20vmin;
-    z-index:999;
-    border: 1px solid black;
+    width: 13%;
+    height: 19vmin;
+    z-index: 999;
+    background-color: var(--blue-var1);
+    box-shadow: 1px 1px 0px 1px var(--grey-var1);
 }
 
 .submenu > ul {
@@ -164,24 +167,76 @@ footer {
     width: 100%;
     list-style: none;
     margin-top:0;
-    
 }
 
 
 .submenu li {
-    text-align: right;
+    text-align:right;
+    margin-right:5%;
     display: block;
     list-style: none;
     font-size: 1.2vmax;
     height: 100%;
-    margin-top: 1.5%;
+    margin-top: 2.5%;
 }
 
 .submenu a, .submenu a:visited, .submenu a:link, .submenu a:active {
     text-decoration: none;
     color: var(--grey-var1);
-    font-weight: 300;
+    font-weight: 500;
+    font-size:1.1vmax;
 }
+
+.submenu a:hover {
+    font-weight: 700;
+}
+
+/*
+    NOTIFICATIONS
+*/
+
+
+.notifications {
+    display:none;
+    position: fixed;
+    left: 77%;
+    top: 8.5%;
+    width: 18%;
+    z-index: 999;
+    background-color: var(--blue-var1);
+    box-shadow: 1px 1px 0px 1px var(--grey-var1);
+}
+
+.notifications > ul {
+    padding: 0;
+    width: 100%;
+    list-style: none;
+    margin-top: 0;
+}
+
+
+.notifications li {
+    text-align: center;
+    margin-right: 5%;
+    display: block;
+    list-style: none;
+    font-size: 1.2vmax;
+    height: 100%;
+    margin-top: 2%;
+    width:100%;
+}
+
+.notifications li:first-child {
+    margin-top: 2%;
+}
+
+.notifications a, .notifications a:visited, .notifications a:link, .notifications a:active {
+    text-decoration: none;
+    color: var(--grey-var1);
+    font-weight: 500;
+    font-size: 1.1vmax;
+}
+
 
 
 .body-panel{
