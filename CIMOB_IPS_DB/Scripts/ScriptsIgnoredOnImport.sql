@@ -1,0 +1,13 @@
+﻿
+USE master
+GO
+
+IF EXISTS(select * from sys.databases where name='CIMOB_IPS')
+DROP DATABASE CIMOB_IPS
+GO
+
+CREATE DATABASE CIMOB_IPS;
+GO
+
+USE CIMOB_IPS
+GO

@@ -1,0 +1,5 @@
+﻿CREATE TABLE Estado
+(
+	id_estado BIGINT PRIMARY KEY IDENTITY(1,1),
+	descricao NVARCHAR(20) NOT NULL
+)
