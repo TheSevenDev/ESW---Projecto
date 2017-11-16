@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace CIMOB-IPS.Views.Shared
+namespace CIMOB_IPS.Views.Shared
 {
     public class SessionBarModel : PageModel
     {
