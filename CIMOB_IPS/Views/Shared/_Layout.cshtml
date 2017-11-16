@@ -13,7 +13,7 @@
 <body>
     <nav>
         @Html.Partial("SessionBar")<!-- Eventualmente mandar a sessão ou um objeto com info-->
-        <div class="navbar-menu">
+        <div class="navbar-menu">   
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
@@ -28,6 +28,8 @@
                 }
                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>       
             </ul>
+            <img class="option-button" id="notifications" src="~/images/icons/notifications-button_grey.png" />
+            <img class="option-button" id="options" src="~/images/icons/settings-work-tool.png" />   
         </div>    
     </nav>
     <div class="body-panel">
