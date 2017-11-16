@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]CIMOB-IPS</title>
+    <title>@ViewData["Title"]CIMOB IPS</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="~/css/site.css" />
@@ -12,7 +12,7 @@
 </head>
 <body>
     <nav>
-        @Html.Partial("SessionBar")<!-- Eventualmente mandar a sessão ou um objeto com info-->
+        @Html.Partial("SessionBar")
         <div class="navbar-menu">   
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
@@ -31,6 +31,15 @@
             <img class="option-button" id="notifications" src="~/images/icons/notifications-button_grey.png" />
             <img class="option-button" id="options" src="~/images/icons/settings-work-tool.png" />   
         </div>    
+        <div class="submenu">
+            <ul>  
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Ver Perfil</a> </li>     
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Alterar-palavra-passe</a></li>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Convidar um técnico</a></li>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Ajuda</a></li>
+                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Sair</a></li>           
+            </ul>
+        </div>
     </nav>
     <div class="body-panel">
         @RenderBody()
