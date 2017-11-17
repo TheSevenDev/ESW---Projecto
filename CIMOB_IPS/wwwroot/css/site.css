@@ -121,6 +121,7 @@ html, body {
     font-size: 1.8vmax;
     height: 100%;
     margin-left:4.5vw;
+    font-size:1.1vw;
 }
 
 .navbar-menu li:first-child {
@@ -131,6 +132,7 @@ html, body {
     text-decoration: none;
     color: var(--grey-var1);
     font-weight: 300;
+    font-size: 1.1vw;
 }
 
 
