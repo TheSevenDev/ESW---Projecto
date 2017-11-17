@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CIMOB_IPS.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIMOB_IPS
 {
@@ -22,6 +24,11 @@ namespace CIMOB_IPS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddSessionStateTempDataProvider();
+
+            var connection = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
+                Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;
+                TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddDbContext<CIMOB_IPS_DBContext>(options => options.UseSqlServer(connection));
 
             services.AddSession();
         }
