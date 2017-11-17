@@ -6,7 +6,7 @@
     <title>@ViewData["Title"]CIMOB IPS</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href='@Url.Content("~/css/site.css")'/>
         <script src="~/js/site.js"></script>
     </environment>
     
@@ -63,7 +63,6 @@
         <footer>
             <p>&copy; 2018 &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>
         </footer>
-    x
     @RenderSection("Scripts", required: false)
 </body>
 </html>
