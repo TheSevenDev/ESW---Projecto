@@ -17,7 +17,7 @@ function toogleNotifications()
 }
 
 function toogleHelp() {
-    //hideMenus();
+    hideMenus();
     var fade = document.getElementById("fade-background");
     var help = document.getElementById("help-content");
     var closeHelp = document.getElementById("help-close");
