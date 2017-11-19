@@ -16,6 +16,11 @@ namespace CIMOB_IPS
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            //Email.SendEmail("xthe.seven@gmail.com");
+            //Email.SendEmail("barb.97@hotmail.com");
+            //Email.SendEmail("brunop.esac@hotmail.com");
+            //Email.SendEmail("fernandes_.10@hotmail.com");
         }
 
         public IConfiguration Configuration { get; }
