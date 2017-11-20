@@ -19,11 +19,11 @@
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
                 
-                @if (Session["Authentication"] != null && (Session["Authentication"].ToString() == "Student" || Session["Authentication"].ToString() == "CIMOB"))
+                @if (ViewData["Authentication"] != null && (ViewData["Authentication"].ToString() == "Student" || ViewData["Authentication"].ToString() == "CIMOB"))
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Área Pessoal</a></li>
                 }
-                @if (Session["Authentication"] != null && Session["Authentication"].ToString() == "CIMOB")
+                @if (ViewData["Authentication"] != null && ViewData["Authentication"].ToString() == "CIMOB")
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a></li>
                 }
