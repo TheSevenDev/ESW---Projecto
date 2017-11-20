@@ -251,8 +251,9 @@ footer {
 }
 
 .body-panel {
-    position: relative;
+    position: fixed;
     min-height: 88.5vmin;
+    min-width:100%;
     top: 8.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
@@ -298,6 +299,56 @@ footer {
     width: 100%;
     height: 88.5vmin;
 }
+/*
+   PROFILE
+*/
+
+.information {
+    font-size: 15px;
+    font-family: 'Segoe UI';
+    width: 300px;
+    height: 120px;
+    position: absolute;
+    top: 150px;
+    margin-left: 25px;
+}
+
+.changeImage {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    top: 130px;
+    margin-left: 350px;
+}
+
+#but {
+    display: block;
+    margin: auto;
+}
+
+#img {
+    display: block;
+    margin: auto;
+}
+
+#title {
+    margin-left: 200px;
+    font-size: 40px;
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    color: var(--main-grey);
+}
+
+.profile {
+    background-color: white;
+    border-bottom: var(--light-grey);
+    width: 500px;
+    height: 400px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)
 */
