@@ -10,6 +10,7 @@
     --grey-var1: #54565B;
 
     --light-grey:#F1F1F1;
+    --dark-grey: #222222;
 }
 
 html, body {
@@ -30,12 +31,12 @@ html, body {
     position: fixed;
     display: inline-flex;
     align-items: center;
-    justify-content: flex-end;
+    flex-flow: row wrap;
     height: 4.5vmin;
     top: 0;
     right: 0;
     width: 100%;
-    background-color: var(--grey-var1);
+    background-color: var(--dark-grey);
     color: white;
 }
 
@@ -49,11 +50,31 @@ html, body {
     color: var(--blue-var4);
 }
 
-.session-name {
-    position: relative;
-    font-size: 1.1vw;
-    margin-right: 78.5vw;
+#session-logo {
+    position: fixed;
+    margin-left:0.6vw;
 }
+
+#session-logo img {
+    width: 5.3vmin;
+    height: 3.5vmin;
+}
+
+.session-name {
+    position: fixed;
+    font-size: 1.1vw;
+    left: 44vw;
+}
+.session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
+    text-decoration: none;
+    color: white;
+}
+
+#logout{
+    color:var(--blue-var4);
+    font-size:1vw;
+}
+
 .option-button {
     height: 2.5vmin;
     width: 2.5vmin;
@@ -77,12 +98,11 @@ html, body {
     margin-right: 1vw;
 }
 
-
 .session-actions {
-    position: relative;
-    margin-right: 1vw;
+    position: fixed;
+    margin-left: 87.5vw;
+    width:100%;
 }
-
 
 .sign-up {
     margin-left:1vw;
@@ -98,7 +118,7 @@ html, body {
     top: 4.5vmin;
     position: fixed;
     width: 100%;
-    height: 4vmin;
+    height: 3vmin;
     background-color: var(--blue-var2);
     box-shadow: 0 0.5px 0 0 var(--grey-var1);
 }
@@ -128,8 +148,8 @@ html, body {
 .navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
     text-decoration: none;
     color: var(--grey-var1);
-    font-weight: 300;
-    font-size: 1.1vw;
+    font-weight: 500;
+    font-size: 1.3vmax;
 }
 
 
@@ -147,12 +167,12 @@ html, body {
 
 footer {
     position: fixed;
-    background: var(--grey-var1);
+    background: var(--dark-grey);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 1.7vmin;
+    font-size: 1.5vmin;
     width: 100%;
     height: 3%;
     bottom: 0;
@@ -248,9 +268,9 @@ footer {
 
 .body-panel {
     position: fixed;
-    min-height: 88.5vmin;
+    min-height: 89.5vmin;
     min-width:100%;
-    top: 8.5vmin;
+    top: 7.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
 }
@@ -350,7 +370,7 @@ footer {
 */
 @media screen and (max-width: 720px) {
     .navbar-menu,.nav-session, footer {
-        background-color:red;
+        
     }
 }
 
