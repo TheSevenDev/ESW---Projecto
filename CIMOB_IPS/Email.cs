@@ -16,8 +16,10 @@ namespace CIMOB_IPS
             client.EnableSsl = true;
             client.Credentials = new NetworkCredential("cimob.ips.1718g1@gmail.com", "f00n!l06");
 
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From = new MailAddress("cimob.ips.1718g1@gmail.com");
+            MailMessage mailMessage = new MailMessage
+            {
+                From = new MailAddress("cimob.ips.1718g1@gmail.com")
+            };
             mailMessage.To.Add(toEmail);
             mailMessage.Body = "Não responder, e-mail de teste :)";
             mailMessage.Subject = "E-mail de teste";

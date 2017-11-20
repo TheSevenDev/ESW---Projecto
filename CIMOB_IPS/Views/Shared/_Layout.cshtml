@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"]</title>
+    <title>CIMOB-IPS @ViewData["Title"]</title>
 
     <environment include="Development">
         <link rel="stylesheet" href='@Url.Content("~/css/site.css")'/>
+        <link rel="shortcut icon" type="image/png" href="~/images/icons/favicon.png" />
         <script src="~/js/site.js"></script>
     </environment>
-    
 </head>
 <body>
     <nav>
@@ -19,11 +19,11 @@
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
                 
-                @if (ViewData["Autentication"] != null && (ViewData["Autentication"].ToString() == "Student" || ViewData["Autentication"].ToString() == "CIMOB"))
+                @if (Session["Authentication"] != null && (Session["Authentication"].ToString() == "Student" || Session["Authentication"].ToString() == "CIMOB"))
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Área Pessoal</a></li>
                 }
-                @if (ViewData["Autentication"] != null && ViewData["Autentication"].ToString() == "CIMOB")
+                @if (Session["Authentication"] != null && Session["Authentication"].ToString() == "CIMOB")
                 {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a></li>
                 }

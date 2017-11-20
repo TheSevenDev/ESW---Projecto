@@ -293,6 +293,11 @@ footer {
     cursor:pointer;
 }
 
+
+#background-image {
+    width: 100%;
+    height: 88.5vmin;
+}
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)
 */
