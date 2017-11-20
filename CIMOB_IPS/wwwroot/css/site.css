@@ -24,6 +24,15 @@ html, body {
 /*
     Session bar:
 */
+
+img {
+    float: left;
+    width: 15%;
+    border: thin solid;
+    padding: 5px;
+    margin: 0px 10px 10px 0;
+}
+
 .nav-session {
     z-index: 600;
     position: fixed;
@@ -300,3 +309,4 @@ footer {
         background-color:red;
     }
 }
+
