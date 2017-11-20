@@ -300,17 +300,19 @@ footer {
 .information {
     font-size: 15px;
     font-family: 'Segoe UI';
-    width: 10vw;
-    height: 12vw;
-    margin-right: auto;
+    width: 300px;
+    height: 120px;
     position: absolute;
-    top: 80px;
+    top: 100px;
+    margin-left: 25px;
 }
 
 .changeImage {
-    width: 10vw;
-    height: 12vw;
-    margin-left: auto;
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    top: 80px;
+    margin-left: 350px;
 }
 
 #but {
