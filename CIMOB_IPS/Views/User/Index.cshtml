@@ -2,11 +2,12 @@
 @{
     ViewData["Title"] = "Register";
 }
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-<h2>Registo</h2>
+
 
 <div>
-    <form>
+    <form hidden="hidden">
         <table>
             <tr>
                 <td><label for="name" name="labelName">Nome Completo</label></td>
@@ -14,28 +15,54 @@
             </tr>
             <tr>
                 <td><label for="studentID" name="labelStudentID">Número de Estudante(IPS)</label></td>
-                <td><input type="number" name="studentID" /></td>
+                <td><input type="text" name="studentID" /></td>
             </tr>
         </table>
     </form>
 </div>
 
-<div>
+<div class="profile">
+    <h2>Registo</h2>
     <form>
         <table>
             <tr>
-                <td><label for="email" name="labelEmail"></label></td>
-                <td><input type="email" name="email" /></td>
+                <td><label for="email" name="labelEmail">Email:</label></td>
+                <td><input type="email" name="email" class="inputLength"/></td>
             </tr>
             <tr>
-                <td><label for="telephone" name="labelTelephone"></label></td>
-                <td><input type="tel" name="telephone" /></td>
+                <td><label for="password" name="labelPassword">Password:</label></td>
+                <td><input type="password" name="password" class="inputLength"/></td>
             </tr>
             <tr>
-                <td><label for="credits" name="labelCredits"></label></td>
-                <td><input type="number" name="credits" /></td>
+                <td><label for="passwordConfirmation" name="labelPasswordConfirmation">Confirme a Password:</label></td>
+                <td><input type="password" name="passwordConfirmation" class="inputLength"/></td>
             </tr>
-
+            <tr>
+                <td><label for="telephone" name="labelTelephone">Telemóvel:</label></td>
+                <td><input type="tel" name="telephone" class="inputLength"/></td>
+            </tr>
+            <tr>
+                <td><label for="country" name="labelCountry">Nacionalidade:</label></td>
+                <td><select name="country"><option value=1>Portugal</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="school" name="labelSchool">Escola:</label></td>
+                <td><select name="school"><option value=1>Escola Superior de Tecnologia de Setúbal</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="course" name="labelCourse">Curso:</label></td>
+                <td><select name="course"><option value=1>Licenciatura em Engenharia Informática</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="credits" name="labelCredits">ECTS:</label></td>
+                <td><input type="text" name="credits" class="inputLength"/></td>
+            </tr>
+            <tr>
+                <td></td><td></td>
+            </tr>
+            <tr>
+                <td></td><td><input type="submit" value="Registar" /></td>
+            </tr>
         </table>
     </form>
 </div>

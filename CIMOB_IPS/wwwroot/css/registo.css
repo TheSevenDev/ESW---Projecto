@@ -1,0 +1,46 @@
+﻿:root {
+    --main-blue: #597EAA;
+    --blue-var1: #9FC5F8;
+    --blue-var2: #6FA8DC;
+    --blue-var3: #085394;
+    --blue-var4: #6FBAE4;
+    --main-grey: #383838;
+    --grey-var1: #54565B;
+    --light-grey: #F1F1F1;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+    width: 100vw;
+    height: 100vh;
+}
+
+
+
+
+.profile {
+    background-color: white;
+    border: 1px solid var(--light-grey);
+    padding: 5%;
+    width: 40%;
+    height: 30%;
+    margin-top: 4%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.profile h2 {
+   padding-left: 35%;
+   margin-top: -5%;
+   margin-bottom: 10%;
+}
+
+.profile td {
+   padding: 2%;
+}
+
+.inputLength{
+    width:80%;
+}

@@ -8,7 +8,7 @@ namespace CIMOB_IPS.Controllers
     {
         public IActionResult Index()
         {
-            Session["Authentication"] = "";
+            //Session["Authentication"] = "";
             return View();
         }
 
