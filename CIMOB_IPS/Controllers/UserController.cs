@@ -9,7 +9,7 @@ namespace CIMOB_IPS.Controllers
     public class UserController : Controller
     {
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Register()
         {
 
             return View();

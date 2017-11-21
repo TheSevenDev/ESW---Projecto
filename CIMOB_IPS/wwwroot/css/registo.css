@@ -25,14 +25,13 @@ html, body {
     border: 1px solid var(--light-grey);
     padding: 5%;
     width: 40%;
-    height: 30%;
     margin-top: 4%;
     margin-right: auto;
     margin-left: auto;
 }
 
 .profile h2 {
-   padding-left: 35%;
+   padding-left: 42%;
    margin-top: -5%;
    margin-bottom: 10%;
 }
