@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using CIMOB_IPS.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CIMOB_IPS
 {
@@ -28,6 +29,13 @@ namespace CIMOB_IPS
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(options =>
+            {
+                options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            }).AddCookie();
+
             services.AddMvc().AddSessionStateTempDataProvider();
 
             var connection = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
@@ -41,7 +49,8 @@ namespace CIMOB_IPS
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseSession();
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
