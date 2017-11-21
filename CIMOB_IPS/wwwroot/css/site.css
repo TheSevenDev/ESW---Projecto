@@ -16,7 +16,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial,Helvetica, sans-serif;
     width: 100vw;
     height: 100vh;
 }
@@ -56,25 +56,25 @@ html, body {
 }
 
 #session-logo img {
-    width: 16vmin;
+    width: 15vmin;
     height: 4vmin;
     position:fixed;
-    top:0.2%;
+    top:0.25%;
 }
 
 .session-name {
     position: fixed;
-    font-size: 1.1vw;
     left: 44vw;
 }
 .session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
     text-decoration: none;
-    color: white;
+    color: var(--light-grey);
+    font-size:1vw;
 }
 
 #logout{
     color:var(--blue-var4);
-    font-size:1vw;
+    font-size:0.9vw;
 }
 
 .option-button {
