@@ -56,8 +56,10 @@ html, body {
 }
 
 #session-logo img {
-    width: 5.3vmin;
-    height: 3.5vmin;
+    width: 16vmin;
+    height: 4vmin;
+    position:fixed;
+    top:0.2%;
 }
 
 .session-name {
