@@ -15,6 +15,11 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-       
+        public IActionResult Login()
+        {
+
+            return View();
+        }
+
     }
 }

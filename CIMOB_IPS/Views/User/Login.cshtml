@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+}
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+
+
+<div class="middleSquare">
+    <h2>Login</h2>
+    <form>
+        <table class="tableLogin">
+            <tr>
+                <td><label for="email" name="labelEmail">Email:</label></td>
+                <td><input type="text" name="email" /></td>
+            </tr>
+            <tr>
+                <td><label for="password" name="labelPassword">Password:</label></td>
+                <td><input type="password" name="password" /></td>
+            </tr>
+            <tr>
+                <td></td><td><input type="checkbox" name="rememberMe" value=1 class="squaredThree"/>Lembrar-me</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Login" class="submitButton" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
