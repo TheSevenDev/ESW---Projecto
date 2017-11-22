@@ -4,12 +4,10 @@
     --blue-var2: #6FA8DC;
     --blue-var3: #085394;
     --blue-var4: #6FBAE4;
-
-
+    --blue-var5: #e5e5ff;
     --main-grey: #383838;
     --grey-var1: #54565B;
-
-    --light-grey:#F1F1F1;
+    --light-grey: #F1F1F1;
     --dark-grey: #222222;
 }
 
@@ -32,7 +30,7 @@ html, body {
     display: inline-flex;
     align-items: center;
     flex-flow: row wrap;
-    height: 4.5vmin;
+    height: 6vmin;
     top: 0;
     right: 0;
     width: 100%;
@@ -46,8 +44,12 @@ html, body {
 }
 
 .nav-session a, .nav-session a:visited, .nav-session a:link, .nav-session a:active {
-    text-decoration: none;
+    text-decoration:none;
     color: var(--blue-var4);
+}
+
+.nav-session a, .nav-session a:visited:hover, .nav-session a:link:hover, .nav-session a:active:hover {
+    text-decoration: underline;
 }
 
 #session-logo {
@@ -56,10 +58,10 @@ html, body {
 }
 
 #session-logo img {
-    width: 15vmin;
+    width: 17vmin;
     height: 4vmin;
     position:fixed;
-    top:0.25%;
+    top:1%;
 }
 
 .session-name {
@@ -72,9 +74,17 @@ html, body {
     font-size:1vw;
 }
 
+.session-name a:hover, .session-name a:visited:hover, .session-name a:link:hover, .session-name a:active:hover {
+    text-decoration: none;
+}
+
 #logout{
     color:var(--blue-var4);
     font-size:0.9vw;
+}
+
+#logout:hover, #logout:visited:hover, #logout:link:hover, #logout:active:hover {
+    text-decoration: underline;
 }
 
 .option-button {
@@ -117,10 +127,10 @@ html, body {
     align-items: center;
     justify-content: center;
     left: 0;
-    top: 4.5vmin;
+    top: 6vmin;
     position: fixed;
     width: 100%;
-    height: 3.5vmin;
+    height: 4.5vmin;
     background-color: var(--blue-var4);
     box-shadow: 0 0.5px 0 0 var(--grey-var1);
 }
@@ -150,13 +160,13 @@ html, body {
 .navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
     text-decoration: none;
     color: var(--grey-var1);
-    font-weight: 500;
+    font-weight:bold;
     font-size: 1.2vmax;
 }
 
 
 .navbar-menu li:hover, .navbar-menu li:hover a {
-    font-weight: 700;
+    color: var(--light-grey)
 }
 
 .navbar-menu img{
@@ -190,7 +200,7 @@ footer {
     display: none;
     position: fixed;
     left: 86.9%;
-    top: 8.3%;
+    top: 10.8%;
     width: 13%;
     height: 23vmin;
     z-index: 700;
@@ -234,8 +244,8 @@ footer {
 .notifications {
     display: none;
     position: fixed;
-    left: 80%;
-    top: 8.3%;
+    left: 79%;
+    top: 10.8%;
     width: 18%;
     z-index: 700;
 }
@@ -270,9 +280,9 @@ footer {
 
 .body-panel {
     position: fixed;
-    min-height: 89vmin;
+    min-height: 87vmin;
     min-width:100%;
-    top: 8vmin;
+    top: 10.6vmin;
     background-color: var(--light-grey);
     z-index: 100;
 }

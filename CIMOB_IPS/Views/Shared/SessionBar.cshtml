@@ -6,13 +6,8 @@
             <a asp-area="" asp-controller="User" asp-action="Index"><img src="~/images/cimobips.png" /></a>
         </div>
 
-        <div class="session-name">
-             <a asp-area="" asp-controller="User" asp-action="Index">Não Autenticado</a>
-        </div>
-
-
         <div class="session-actions">
-            <span class="sign-in"> <a asp-area="" asp-controller="Login" asp-action="OnPostAsync">Não Autenticado</a></span>
+            <span class="sign-in"> <a asp-area="" asp-controller="Login" asp-action="OnPostAsync">Autenticar</a></span>
 
             <span class="sign-up"><a asp-area="" asp-controller="User" asp-action="Index">Criar conta</a></span>
         </div>
@@ -28,11 +23,5 @@ else
         <div class="session-name">
             <a asp-area="" asp-controller="Profile" asp-action="Index">José Pedro Borges</a> <a id="logout" asp-area="" asp-controller="Login" asp-action="Logout">(Sair)</a>
         </div>
-
-
-        <div class="session-actions">
-            <span class="sign-in"> <a href="#">Autenticar</a></span>
-
-        <span class="sign-up"><a asp-area="" asp-controller="User" asp-action="Register">Criar conta</a></span>
-    </div>
 </div>
+}
