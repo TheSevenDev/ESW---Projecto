@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CIMOB_IPS.Models
 {
-    public partial class Student
+    public partial class Student : Account
     {
         public Student()
         {

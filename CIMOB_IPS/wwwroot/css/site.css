@@ -318,11 +318,11 @@ footer {
 .body-panel {
     position: fixed;
     min-height: 87vmin;
+    height:100%;
     min-width:100%;
     top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
-    padding:2%;
 }
 
 
@@ -366,56 +366,121 @@ footer {
     height: 88.5vmin;
 }
 /*
-   PROFILE
+   PROFILE (VH = ALTURA DA JANELA) (VW = LARGURA DA JANELA)
 */
 
 .information {
-    font-size: 15px;
-    font-family: 'Segoe UI';
-    width: 300px;
-    height: 120px;
+    font-size: 95%;
+    width: Auto;
+    height: auto;
     position: absolute;
-    top: 150px;
-    margin-left: 25px;
+    top: 20%;
+}
+.information tr {
+    position:relative;
+    line-height:1%;
 }
 
 .changeImage {
-    width: 130px;
-    height: 130px;
+    width: 30%;
+    height: 30%;
     position: absolute;
-    top: 130px;
-    margin-left: 350px;
+    top: 90%;
+    margin-left: 90%;
 }
 
-#but {
+#button {
     display: block;
-    margin: auto;
+    margin-top: 0%;
+    margin-left: -400%;
 }
 
 #img {
     display: block;
-    margin: auto;
+    margin-top: -80%;
+    margin-left: -408%;
 }
 
 #title {
-    margin-left: 200px;
-    font-size: 40px;
+    font-size: 250%;
     font-family: 'Segoe UI';
     font-weight: bold;
     color: var(--main-grey);
+    margin-left: 44%;
 }
 
 .profile {
-    background-color: white;
-    border-bottom: var(--light-grey);
-    border-width:thin;
-    padding: 5%;
     width: 40%;
     height: 30%;
-    margin-right: auto;
-    margin-left: auto;
+    position: absolute;
+    top: 20%;
+    margin-left: 36%;
 }
 
+.page-title{
+    margin-left:39%;
+    font-size:1.75vmax;
+}
+
+
+.main-container-invite {
+    /*background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    width: 35%;
+    margin-left:31%;
+    min-height: 20vh;
+}
+
+/*
+    PASSAR PARA O REGISTER CSS
+*/
+.invite-form{
+    margin-left:23%;
+    margin-top:11%;
+    position:relative;
+}
+
+.invite-form label {
+    position: relative;
+    margin-top: 20%;
+    font-size: 1.2vmax;
+}
+
+input[type=email] {
+    width: 22.2vw;
+    padding: 6px 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1vmax;
+}
+
+input[type=submit] {
+    width: 35%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left:48%;
+    font-size:1.1vmax;
+    
+}
+
+input[type=submit]:hover {
+    background-color: var(--blue-var3);
+}
+
+.box-invites {
+    width: 55%;
+    margin-left: 23%;
+    min-height: 38vh;
+    margin-top: 4%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
 
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)

@@ -22,7 +22,6 @@ html, body {
 .middleSquare {
     background-color: white;
     border: 1px solid var(--light-grey);
-    padding: 5%;
     width: 40%;
     margin-top: 4%;
     margin-right: auto;
@@ -64,4 +63,11 @@ html, body {
 }
 
 
+.loginTitle {
+    font-size: 1.75vmax;
+    margin-left: 42%;
+}
 
+.buttonSubmit {
+    
+}
