@@ -9,7 +9,7 @@ namespace CIMOB_IPS
 {
     public class Email
     {
-        public static void SendEmail(string toEmail)
+        public static void SendEmail(string toEmail, string subject, string body)
         {
             SmtpClient client = new SmtpClient("smtp.gmail.com");
             client.UseDefaultCredentials = false;
@@ -21,8 +21,9 @@ namespace CIMOB_IPS
                 From = new MailAddress("cimob.ips.1718g1@gmail.com")
             };
             mailMessage.To.Add(toEmail);
-            mailMessage.Body = "Não responder, e-mail de teste :)";
-            mailMessage.Subject = "E-mail de teste";
+            mailMessage.Body = body;
+            mailMessage.Subject = subject;
+            mailMessage.IsBodyHtml = true;
             client.Send(mailMessage);
 
             Guid g;
