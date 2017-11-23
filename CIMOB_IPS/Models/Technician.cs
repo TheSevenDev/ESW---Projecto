@@ -14,6 +14,7 @@ namespace CIMOB_IPS.Models
         public long IdAccount { get; set; }
         public string Name { get; set; }
         public long Telephone { get; set; }
+        public bool IsAdmin { get; set; }
 
         public Account IdAccountNavigation { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
