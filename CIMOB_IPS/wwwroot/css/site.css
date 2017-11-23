@@ -58,7 +58,7 @@ html, body {
 }
 
 #session-logo img {
-    width: 17vmin;
+    width: 15vmin;
     height: 4vmin;
     position:fixed;
     top:1%;
@@ -120,7 +120,6 @@ html, body {
     margin-left:1vw;
 }
 
-
 .navbar-menu {
     z-index: 600;
     display: flex;
@@ -132,7 +131,6 @@ html, body {
     width: 100%;
     height: 4.5vmin;
     background-color: var(--blue-var4);
-    box-shadow: 0 0.5px 0 0 var(--grey-var1);
 }
 
 .navbar-menu > ul {
@@ -148,9 +146,8 @@ html, body {
     display: flex;
     align-items: center;
     list-style: none;
-    font-size: 1.1vmax;
     height: 100%;
-    margin-left:4.5vw;
+    margin-left:4vw;
 }
 
 .navbar-menu li:first-child {
@@ -169,6 +166,7 @@ html, body {
     color: var(--light-grey)
 }
 
+
 .navbar-menu img{
     opacity: 0.80;
 }
@@ -176,6 +174,46 @@ html, body {
 .navbar-menu img:hover {
     opacity: 1;
 }
+
+
+.sub-menu {
+    display: none;
+    position: fixed;
+    background-color: var(--blue-var4);
+    min-width: 12vw;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index:700;
+    color:var(--grey-var1);
+    top:10.5%;
+    padding:0;
+}
+
+.sub-menu li, .sub-menu li:first-child {
+    position: relative;
+    margin-left: 5%;
+    margin-top: 7%;
+}
+
+.sub-menu li:first-child {
+    margin-top: 2%;
+}
+
+.sub-menu li a, .sub-menu li a:visited, .sub-menu li a:link, .sub-menu li a:active {
+    text-decoration: none;
+    color: var(--grey-var1);
+    font-weight: bold;
+    font-size: 1.1vmax;
+    display: inline-block;
+}
+
+.sub-menu li:hover, .sub-menu li:hover a {
+    color: var(--light-grey)
+}
+
+.navbar-menu li:hover .sub-menu{
+    display:block;
+}
+
 
 footer {
     position: fixed;
@@ -194,32 +232,31 @@ footer {
 
 
 /*
-    SUB-MENUS aa
+    SUB-MENUS 
 */
-.submenu {
+.menu-settings {
     display: none;
     position: fixed;
     left: 86.9%;
     top: 10.8%;
     width: 13%;
-    height: 23vmin;
     z-index: 700;
     background-color: white;
     border-bottom: 1px solid lightgray;
-    box-shadow: 1px 1px 1px 1px var(--grey-var1);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
-.submenu > ul {
+.menu-settings > ul {
     padding: 0;
     width: 100%;
     list-style: none;
-    margin-top:0;
+    margin-top: 0;
 }
 
 
-.submenu li {
-    text-align:right;
-    margin-right:5%;
+.menu-settings li {
+    text-align: right;
+    margin-right: 5%;
     display: block;
     list-style: none;
     font-size: 1.2vmax;
@@ -227,14 +264,14 @@ footer {
     margin-top: 1.5vmin;
 }
 
-.submenu a, .submenu a:visited, .submenu a:link, .submenu a:active {
+.menu-settings a, .menu-settings a:visited, .menu-settings a:link, .menu-settings a:active {
     text-decoration: none;
     color: var(--grey-var1);
     font-weight: 500;
-    font-size:1.1vmax;
+    font-size: 1.1vmax;
 }
 
-.submenu a:hover {
+.menu-settings a:hover {
     font-weight: 700;
 }
 
@@ -262,7 +299,7 @@ footer {
     margin-right: 5%;
     list-style: none;
     width: 100%;
-    box-shadow: 1px 1px 0 1px var(--grey-var1);
+    box-shadow:  0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
     border-bottom: 1px solid lightgray;
 }
@@ -282,9 +319,10 @@ footer {
     position: fixed;
     min-height: 87vmin;
     min-width:100%;
-    top: 10.6vmin;
+    top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
+    padding:2%;
 }
 
 

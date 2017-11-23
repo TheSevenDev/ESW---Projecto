@@ -21,5 +21,11 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        [ActionName("ConvidarTecnico")]
+        public IActionResult Invite()
+        {
+            return View("Invite");
+        }
+
     }
 }
