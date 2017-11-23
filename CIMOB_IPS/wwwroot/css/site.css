@@ -366,54 +366,55 @@ footer {
     height: 88.5vmin;
 }
 /*
-   PROFILE
+   PROFILE (VH = ALTURA DA JANELA) (VW = LARGURA DA JANELA)
 */
 
 .information {
-    font-size: 15px;
-    font-family: 'Segoe UI';
-    width: 300px;
-    height: 120px;
+    font-size: 95%;
+    width: Auto;
+    height: auto;
     position: absolute;
-    top: 150px;
-    margin-left: 25px;
+    top: 20%;
+}
+.information tr {
+    position:relative;
+    line-height:1%;
 }
 
 .changeImage {
-    width: 130px;
-    height: 130px;
+    width: 30%;
+    height: 30%;
     position: absolute;
-    top: 130px;
-    margin-left: 350px;
+    top: 90%;
+    margin-left: 90%;
 }
 
-#but {
+#button {
     display: block;
-    margin: auto;
+    margin-top: 0%;
+    margin-left: -400%;
 }
 
 #img {
     display: block;
-    margin: auto;
+    margin-top: -80%;
+    margin-left: -408%;
 }
 
 #title {
-    margin-left: 200px;
-    font-size: 40px;
+    font-size: 250%;
     font-family: 'Segoe UI';
     font-weight: bold;
     color: var(--main-grey);
+    margin-left: 44%;
 }
 
 .profile {
-    background-color: white;
-    border-bottom: var(--light-grey);
-    border-width:thin;
-    padding: 5%;
     width: 40%;
     height: 30%;
-    margin-right: auto;
-    margin-left: auto;
+    position: absolute;
+    top: 20%;
+    margin-left: 36%;
 }
 
 
