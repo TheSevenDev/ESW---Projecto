@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -17,8 +20,9 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Login()
         {
-
+            
             return View();
+           
         }
 
         [ActionName("ConvidarTecnico")]
@@ -27,5 +31,14 @@ namespace CIMOB_IPS.Controllers
             return View("Invite");
         }
 
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+    
     }
 }
