@@ -323,7 +323,6 @@ footer {
     top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
-    padding:1.5%;
 }
 
 
@@ -427,7 +426,7 @@ footer {
     /*background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
     width: 35%;
-    margin-left: 30%;
+    margin-left:31%;
     min-height: 20vh;
 }
 
@@ -471,6 +470,15 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: var(--blue-var3);
+}
+
+.box-invites {
+    width: 55%;
+    margin-left: 23%;
+    min-height: 38vh;
+    margin-top: 4%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 /*
