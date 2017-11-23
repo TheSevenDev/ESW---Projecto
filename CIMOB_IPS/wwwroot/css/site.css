@@ -318,11 +318,12 @@ footer {
 .body-panel {
     position: fixed;
     min-height: 87vmin;
+    height:100%;
     min-width:100%;
     top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
-    padding:2%;
+    padding:1.5%;
 }
 
 
@@ -416,6 +417,63 @@ footer {
     top: 20%;
     margin-left: 36%;
 }
+
+.page-title{
+    margin-left:39%;
+    font-size:1.75vmax;
+}
+
+
+.main-container-invite {
+    /*background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    width: 35%;
+    margin-left: 30%;
+    min-height: 20vh;
+}
+
+/*
+    PASSAR PARA O REGISTER CSS
+*/
+.invite-form{
+    margin-left:23%;
+    margin-top:11%;
+    position:relative;
+}
+
+.invite-form label {
+    position: relative;
+    margin-top: 20%;
+    font-size: 1.2vmax;
+}
+
+input[type=email] {
+    width: 22.2vw;
+    padding: 6px 10px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1vmax;
+}
+
+input[type=submit] {
+    width: 35%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left:48%;
+    font-size:1.1vmax;
+    
+}
+
+input[type=submit]:hover {
+    background-color: var(--blue-var3);
+}
+
 
 
 /*
