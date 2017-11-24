@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using CIMOB_IPS.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -18,11 +20,16 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public  IActionResult Login(IFormCollection form)
         {
             
-            return View();
-           
+            string email = Convert.ToString(form["email"]);
+            string password = Convert.ToString(form["password"]);
+            if (Account.IsRegistered(email, password)){
+                LoginController lc = new LoginController();
+                lc.LoginAsStud();
+            }
+            return View("Login");
         }
 
         [ActionName("ConvidarTecnico")]

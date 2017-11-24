@@ -13,8 +13,8 @@ namespace CIMOB_IPS.Controllers
     {
         public IActionResult Index()
         {
-            UserController user = new UserController();
-            return user.Login();
+            HomeController user = new HomeController();
+            return user.Index();
         }
 
         public async Task<IActionResult> LoginAsTec()
@@ -69,7 +69,7 @@ namespace CIMOB_IPS.Controllers
             }
 
             return Index();
-        }
+        } 
 
         public async Task<IActionResult> Logout()
         {

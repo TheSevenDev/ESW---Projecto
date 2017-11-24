@@ -7,11 +7,11 @@
 <h2 class="loginTitle">Autenticar</h2>
 <div class="middleSquare">
 
-    <form>
+    <form asp-action="Login">
         <table class="tableLogin">
             <tr>
                 <td><label for="email" name="labelEmail">Email:</label></td>
-                <td><input type="text" name="email" /></td>
+                <td><input type="text" name="email"  id="email"/></td>
             </tr>
             <tr>
                 <td><label for="password" name="labelPassword">Password:</label></td>
@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <td></td>
-                <td class="buttonSubmit"><input type="submit" value="Autenticar" class="submitButton" /></td>
+                <td><input type="submit" value="Autenticar" /></td>
             </tr>
         </table>
     </form>
