@@ -9,6 +9,8 @@
     --grey-var1: #54565B;
     --light-grey: #F1F1F1;
     --dark-grey: #222222;
+    --main-red: #cc0000;
+    --red-var1: #ff0033;
 }
 
 html, body {
@@ -493,6 +495,94 @@ footer {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
+
+/*
+    AUTENTICAR
+*/
+.page-title-login {
+    margin-left: 45%;
+    font-size: 1.75vmax;
+}
+
+
+.main-container-login {
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 35%;
+    margin-left: 32.5%;
+    min-height: 38vh;
+}
+
+.main-container-login table tr{
+    line-height:5vh;
+}
+
+
+.login-form {
+    margin-left: 18%;
+    margin-top: 8%;
+    padding-top:3.5%;
+    position: relative;
+}
+
+.login-formlabel {
+    position: relative;
+    margin-top: 20%;
+    font-size: 1.2vmax;
+}
+
+.login-form input[type=email], input[type="password"] {
+    width: 22.2vw;
+    padding: 2% 3%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1vmax;
+}
+
+.login-form a, .login-form a:visited, .login-form a:link, .login-form a:active {
+    text-decoration: none;
+    color: var(--blue-var4);
+    font-weight: 500;
+    font-size: 1vmax;
+    margin-left:28%;
+}
+.login-form .form-error {
+    color:var(--red-var1);
+    float:left;
+    font-size:0.95vmax;
+    position:fixed;
+    margin-top:1.8%;
+    margin-right:3%;
+
+}
+
+.login-form input[type=submit] {
+    width: 35%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 2.5%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 43%;
+    font-size: 1.1vmax;
+    margin-top:4.2%;
+}
+
+.login-form input[type=submit]:hover {
+    background-color: var(--blue-var3);
+}
+
+.box-invites {
+    width: 55%;
+    margin-left: 23%;
+    min-height: 38vh;
+    margin-top: 4%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)
 */

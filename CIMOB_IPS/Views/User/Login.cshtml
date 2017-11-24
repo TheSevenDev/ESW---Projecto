@@ -4,26 +4,32 @@
 }
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-<h2 class="loginTitle">Autenticar</h2>
-<div class="middleSquare">
-
-    <form asp-action="ExecLogin">
-        <table class="tableLogin">
+<h2 class="page-title-login">Autenticar</h2>
+<div class="main-container-login">
+    <form asp-action="ExecLoginAsync" class="login-form">
+        <table>
             <tr>
-                <td><label for="email" name="labelEmail">Email:</label></td>
-                <td><input type="email" name="email" id="email"/></td>
+                <td><label class="login-formlabel" for="email"> Email:</label></td>
             </tr>
             <tr>
-                <td><label for="password" name="labelPassword">Password:</label></td>
-                <td><input type="password" name="password" /></td>
+                <td><input type="email" name="email" id="email" placeholder="exemplo@exemplo.com"/></td>
             </tr>
             <tr>
-                <!--<td></td><td><input type="checkbox" name="rememberMe" value=1 class="squaredThree"/>Lembrar-me</td>-->
+                <td><label class="login-formlabel" for="password" >Palavra-passe:</label></td>
+            </tr>
+            <tr> 
+                <td><input type="password" name="password" placeholder="***************" /></td>
             </tr>
             <tr>
                 <td></td>
-                <td><input type="submit" value="Autenticar" /></td>
             </tr>
         </table>
+
+        
+        <a asp-area="" asp-controller="Home" asp-action="Index">Esqueceu-se da palavra-passe?</a>
+        <div class="form-error">
+            <label >@ViewData["Error-Login"]</label>
+        </div>
+        <input type="submit" value="Autenticar" class="submitButton" />
     </form>
 </div>

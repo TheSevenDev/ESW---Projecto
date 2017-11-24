@@ -37,7 +37,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         public  IActionResult Login()
-        {          
+        {
             return View();
         }
 
@@ -82,10 +82,14 @@ namespace CIMOB_IPS.Controllers
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
+
+                ViewData["Error-Login"] = "";
+                return View("Login");
             }
 
-            return RedirectToAction("Login", "User");
-         
+            ViewData["Error-Login"] = "Credenciais Inválidas.";
+            return View("Login");
+
         }
 
         public async Task<IActionResult> Logout()
