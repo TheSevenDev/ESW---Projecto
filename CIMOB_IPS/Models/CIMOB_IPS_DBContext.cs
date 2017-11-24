@@ -22,6 +22,10 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<Technician> Technician { get; set; }
 
+        public CIMOB_IPS_DBContext(DbContextOptions<CIMOB_IPS_DBContext> options)
+        : base(options)
+        { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
