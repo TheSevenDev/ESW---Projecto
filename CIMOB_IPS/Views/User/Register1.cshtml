@@ -1,0 +1,72 @@
+﻿@Model CIMOB_IPS.Models.Student
+
+@{
+    ViewData["Title"] = "Register";
+}
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+
+
+
+<div>
+    <form asp-action="Create">
+        <table>
+            <tr>
+                <td><label asp-for="Name" class="control-label"></label></td>
+                <td><input asp-for="Name" class="form-control" /></td>
+                <td><span asp-validation-for="Name" class="text-danger"></span></td>
+            </tr
+                    <tr>
+                        <td><label for="studentID" name="labelStudentID">Número de Estudante(IPS)</label></td>
+                        <td><input type="text" name="studentID" /></td>
+                    </tr>
+        </table>
+    </form>
+</div>
+
+<div class="middleSquare">
+    <h2>Registo</h2>
+    <form asp-action="Create" hidden="hidden">
+        <table>
+            <tr></tr>
+            <tr>
+                <td><label for="password" name="labelPassword">Password:</label></td>
+                <td><input type="password" name="password" class="inputLength" /></td>
+            </tr>
+            <tr>
+                <td><label for="passwordConfirmation" name="labelPasswordConfirmation">Confirme a Password:</label></td>
+                <td><input type="password" name="passwordConfirmation" class="inputLength" /></td>
+            </tr>
+            <tr>
+                <td><label for="telephone" name="labelTelephone">Telemóvel:</label></td>
+                <td><input type="tel" name="telephone" class="inputLength" /></td>
+            </tr>
+            <tr>
+                <td><label for="country" name="labelCountry">Nacionalidade:</label></td>
+                <td><select name="country"><option value=1>Portugal</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="school" name="labelSchool">Escola:</label></td>
+                <td><select name="school"><option value=1>Escola Superior de Tecnologia de Setúbal</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="course" name="labelCourse">Curso:</label></td>
+                <td><select name="course"><option value=1>Licenciatura em Engenharia Informática</option></select></td>
+            </tr>
+            <tr>
+                <td><label for="credits" name="labelCredits">ECTS:</label></td>
+                <td><input type="text" name="credits" class="inputLength" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Registar" class="submitButton" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+
+

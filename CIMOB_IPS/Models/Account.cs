@@ -19,7 +19,6 @@ namespace CIMOB_IPS.Models
         public long IdAccount { get; set; }
         public string Email { get; set; }
         public byte[] Password { get; set; }
-        public bool Active { get; set; }
 
         public ICollection<Notification> Notification { get; set; }
         public ICollection<Student> Student { get; set; }
