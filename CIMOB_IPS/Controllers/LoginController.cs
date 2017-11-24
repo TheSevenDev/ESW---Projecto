@@ -13,8 +13,8 @@ namespace CIMOB_IPS.Controllers
     {
         public IActionResult Index()
         {
-            HomeController home = new HomeController();
-            return home.Index();
+            UserController user = new UserController();
+            return user.Login();
         }
 
         public async Task<IActionResult> LoginAsTec()
@@ -38,7 +38,7 @@ namespace CIMOB_IPS.Controllers
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "User");
             }
 
             return Index();
@@ -65,7 +65,7 @@ namespace CIMOB_IPS.Controllers
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "User");
             }
 
             return Index();

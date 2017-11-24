@@ -8,6 +8,9 @@ namespace CIMOB_IPS.Models
         public long IdNotification { get; set; }
         public long IdAccount { get; set; }
         public string Description { get; set; }
+        public bool ReadNotification { get; set; }
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
 
         public Account IdAccountNavigation { get; set; }
     }

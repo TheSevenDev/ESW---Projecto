@@ -16,12 +16,12 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Mobility> Mobility { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
         public virtual DbSet<Notification> Notification { get; set; }
+        public virtual DbSet<PendingAccount> PendingAccount { get; set; }
         public virtual DbSet<Program> Program { get; set; }
         public virtual DbSet<State> State { get; set; }
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<Technician> Technician { get; set; }
 
-        /*
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -29,10 +29,6 @@ namespace CIMOB_IPS.Models
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer(@"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             }
-        }*/
-
-        public CIMOB_IPS_DBContext(DbContextOptions<CIMOB_IPS_DBContext> options) : base(options)
-        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,8 +38,6 @@ namespace CIMOB_IPS.Models
                 entity.HasKey(e => e.IdAccount);
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
-
-                entity.Property(e => e.Active).HasColumnName("active");
 
                 entity.Property(e => e.Email)
                     .IsRequired()
@@ -276,6 +270,16 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdNotification).HasColumnName("id_notification");
 
+                entity.Property(e => e.ActionName)
+                    .IsRequired()
+                    .HasColumnName("action_name")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.ControllerName)
+                    .IsRequired()
+                    .HasColumnName("controller_name")
+                    .HasMaxLength(50);
+
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
@@ -283,11 +287,32 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
 
+                entity.Property(e => e.ReadNotification).HasColumnName("read_notification");
+
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Notification)
                     .HasForeignKey(d => d.IdAccount)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_N_Account");
+            });
+
+            modelBuilder.Entity<PendingAccount>(entity =>
+            {
+                entity.HasKey(e => e.IdPending);
+
+                entity.ToTable("Pending_Account");
+
+                entity.Property(e => e.IdPending).HasColumnName("id_pending");
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasColumnName("email")
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.Guid)
+                    .IsRequired()
+                    .HasColumnName("guid")
+                    .HasMaxLength(32);
             });
 
             modelBuilder.Entity<Program>(entity =>
@@ -385,6 +410,8 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.IdTechnician).HasColumnName("id_technician");
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
+
+                entity.Property(e => e.IsAdmin).HasColumnName("is_admin");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
