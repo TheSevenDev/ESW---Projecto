@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
@@ -12,7 +13,10 @@ namespace CIMOB_IPS.Models
 
         public long IdTechnician { get; set; }
         public long IdAccount { get; set; }
+        [Required]
+        [StringLength(60)]
         public string Name { get; set; }
+        [Required]
         public long Telephone { get; set; }
 
         public Account IdAccountNavigation { get; set; }

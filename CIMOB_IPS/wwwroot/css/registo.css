@@ -20,8 +20,7 @@ html, body {
 
 
 .middleSquare {
-    background-color: white;
-    border: 1px solid var(--light-grey);
+    background-color: var(--light-grey);
     padding: 5%;
     width: 40%;
     margin-top: 4%;
