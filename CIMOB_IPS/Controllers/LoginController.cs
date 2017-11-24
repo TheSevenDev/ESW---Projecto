@@ -31,6 +31,7 @@ namespace CIMOB_IPS.Controllers
 
                 // Create the identity from the user info
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "123123123"));
                 identity.AddClaim(new Claim(ClaimTypes.Name, "username"));
                 identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
 

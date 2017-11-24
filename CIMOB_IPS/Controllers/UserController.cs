@@ -36,16 +36,9 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public  IActionResult Login(IFormCollection form)
-        {
-            
-            string email = Convert.ToString(form["email"]);
-            string password = Convert.ToString(form["password"]);
-            if (Account.IsRegistered(email, password)){
-                LoginController lc = new LoginController();
-                lc.LoginAsStud();
-            }
-            return View("Login");
+        public  IActionResult Login()
+        {          
+            return View();
         }
 
         [ActionName("ConvidarTecnico")]
@@ -72,6 +65,28 @@ namespace CIMOB_IPS.Controllers
             Email.SendEmail(emailTec, subject, body);
         }
 
+
+
+        public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
+        {
+            string email = Convert.ToString(form["email"]);
+            string password = Convert.ToString(form["password"]);
+            if (Account.IsRegistered(email, password))
+            {
+                //VERIFICAR SE É ESTUDANTE OU TÉCNICO E EFETUAR O RESPETIVO LOGIN
+
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "123123123"));
+                identity.AddClaim(new Claim(ClaimTypes.Name, "username"));
+                identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
+            }
+
+            return RedirectToAction("Login", "User");
+         
+        }
 
         public async Task<IActionResult> Logout()
         {

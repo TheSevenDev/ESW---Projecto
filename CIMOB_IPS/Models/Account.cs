@@ -25,47 +25,60 @@ namespace CIMOB_IPS.Models
         public ICollection<Technician> Technician { get; set; }
 
 
-        public static bool IsRegistered(string email, string password)
+        public static bool IsRegistered(string _email, string _password)
         {
-
             using (SqlConnection connection = new SqlConnection(Startup.connection))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "select email from Student where email=@email and password=@password";
-                command.Parameters.AddWithValue("@email", email);
-                command.Parameters.AddWithValue("@password", EncryptToMD5(password));
+                connection.Open();
+                command.CommandText = "select * from Account where email=@email";
+                command.Parameters.AddWithValue("@email", _email);
                 SqlDataReader reader = command.ExecuteReader();
-
-                return reader.HasRows;
-
-
+                if (reader.Read())
+                {
+                    if (reader.HasRows)
+                    {
+                        string bdpw = ToHex((byte[])reader[2], false);
+                        if (bdpw.Equals(EncryptToMD5(_password)))
+                        {
+                            return true;
+                        }
+                    }
+                }
+                connection.Close();  
             }
+
+            return false;
         }
-    
-               
-                
+             
 
         private static string EncryptToMD5(string password)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-
-            //compute hash from the bytes of text
+            Console.WriteLine(password);
             md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(password));
 
-            //get hash result after compute it
             byte[] result = md5.Hash;
 
             StringBuilder strBuilder = new StringBuilder();
             for (int i = 0; i < result.Length; i++)
             {
-                //change it into 2 hexadecimal digits
-                //for each byte
                 strBuilder.Append(result[i].ToString("x2"));
             }
-
+            
             return strBuilder.ToString();
         
-    }
+        }
+
+        public static string ToHex(byte[] bytes, bool upperCase)
+        {
+            StringBuilder result = new StringBuilder(bytes.Length * 2);
+
+            for (int i = 0; i < bytes.Length; i++)
+                result.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
+
+            return result.ToString();
+        }
     }
 
     
