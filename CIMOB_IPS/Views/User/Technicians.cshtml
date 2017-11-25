@@ -4,7 +4,7 @@
 }
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-<h2 class="page-title">Convites de equipa CIMOB</h2>
+<h2 class="page-title">Técnicos CIMOB</h2>
 
 <div class="main-container-invite">
     <form asp-action="InviteTec" class="invite-form">
@@ -19,12 +19,27 @@
                     <input id="email" name="email" required type="email" placeholder="nome.apelido@ips.pt" />
                 </td>
             </tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr>
+
+                <td>
+                    
+                    @if (User.IsInRole("tecnico_admin"))
+                    {
+                        <label for="admin">Administrador</label>
+                        <input type="checkbox" name="admin" id="admin" />
+                    }
+                </td>
+            </tr>
         </table>
           <input type="submit" value="Enviar convite" />
      </form>
 </div>
 
-
+<!--
 <div class="box-invites">
 
 
@@ -32,3 +47,4 @@
 
 
 </div>
+    -->

@@ -32,23 +32,34 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
 
             return View();
         }
 
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             return View();
         }
 
-        [ActionName("ConvidarTecnico")]
-        public IActionResult Invite()
+        [ActionName("Tecnicos")]
+        public IActionResult Tecnicos()
         {
-            return View("Invite");
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            return View("Technicians");
         }
 
         public IActionResult InviteTec(IFormCollection form)
         {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("tecnico"))
+                return RedirectToAction("Index", "Home");
+
             string destination = Convert.ToString(form["email"]);
             SendEmailToTec(destination);
 
@@ -85,18 +96,25 @@ namespace CIMOB_IPS.Controllers
                 identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
                 if (state == LoginState.CONNECTED_STUDENT)
                     identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
-                else
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                else { 
+
+                    if(Account.IsAdmin(accountId) == "True")
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                    else
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                }
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
                 return RedirectToAction("Index", "Home");
             }
         }
-    
 
         public async Task<IActionResult> Logout()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");

@@ -420,7 +420,7 @@ footer {
 }
 
 .page-title{
-    margin-left:39%;
+    margin-left:42%;
     font-size:1.75vmax;
 }
 
@@ -550,6 +550,11 @@ footer {
     font-size: 1vmax;
     margin-left:28%;
 }
+
+.login-form a:hover, .login-form a:visited:hover, .login-form a:link:hover, .login-form a:active:hover {
+    text-decoration: underline;
+}
+
 .login-form .form-error {
     color:var(--red-var1);
     float:left;

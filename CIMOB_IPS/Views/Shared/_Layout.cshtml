@@ -30,7 +30,7 @@
                         </ul>
                     </li>
                     }
-                    @if (User.IsInRole("tecnico"))
+                    @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                     {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Listagens</a>
                         <ul class="sub-menu">
@@ -62,9 +62,9 @@
             <ul>  
                 <li> <a asp-area="" asp-controller="Profile" asp-action="Index">Perfil</a> </li>     
                 <li> <a asp-area="" asp-controller="Home" asp-action="Index">Alterar-palavra-passe</a></li>
-                @if (User.IsInRole("tecnico"))
+                @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 {
-                    <li> <a asp-area="" asp-controller="User" asp-action="ConvidarTecnico">Convidar um Técnico</a></li>
+                    <li> <a asp-area="" asp-controller="User" asp-action="Tecnicos">Técnicos</a></li>
                 }
                 <li> <a asp-area="" asp-controller="Login" asp-action="Logout">Sair</a></li>           
             </ul>

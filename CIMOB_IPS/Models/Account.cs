@@ -133,9 +133,32 @@ namespace CIMOB_IPS.Models
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine("=================NOME=======================" + reader[0]);
                         return reader[0].ToString();
                     }             
+                }
+
+                return "";
+            }
+        }
+
+        public static string IsAdmin(string _accountId)
+        {
+
+            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                connection.Open();
+                    command.CommandText = "select is_admin from Technician where id_account=@id_account";
+
+                command.Parameters.AddWithValue("@id_account", _accountId);
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine("============ISADMIN==============" + reader[0].ToString());
+                        return reader[0].ToString();
+                    }
                 }
 
                 return "";
