@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models
 {
-    public enum EnumUserType
+    public enum UserType
     {
-      STUDENT, TECHNICAN
+      STUDENT, TECHNICIAN
     }
 }

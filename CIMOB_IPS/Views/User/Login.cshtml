@@ -12,13 +12,13 @@
                 <td><label class="login-formlabel" for="email"> Email:</label></td>
             </tr>
             <tr>
-                <td><input type="email" name="email" id="email" placeholder="exemplo@exemplo.com"/></td>
+                <td><input type="email" name="email" id="email" required placeholder="exemplo@exemplo.com"/></td>
             </tr>
             <tr>
                 <td><label class="login-formlabel" for="password" >Palavra-passe:</label></td>
             </tr>
             <tr> 
-                <td><input type="password" name="password" placeholder="***************" /></td>
+                <td><input type="password" name="password" required placeholder="***************" /></td>
             </tr>
             <tr>
                 <td></td>
@@ -28,8 +28,10 @@
         
         <a asp-area="" asp-controller="Home" asp-action="Index">Esqueceu-se da palavra-passe?</a>
         <div class="form-error">
-            <label >@ViewData["Error-Login"]</label>
+            <label >@ViewData["Login-Message"]</label>
         </div>
         <input type="submit" value="Autenticar" class="submitButton" />
     </form>
 </div>
+
+<!-- <img style="margin-left:87vw;margin-top:22vh;width:13vmax; height:4vmax;" src="~/images/cimobips.png" />-->

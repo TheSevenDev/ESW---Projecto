@@ -36,7 +36,7 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public  IActionResult Login()
+        public IActionResult Login()
         {
             return View();
         }
@@ -65,32 +65,35 @@ namespace CIMOB_IPS.Controllers
             Email.SendEmail(emailTec, subject, body);
         }
 
-
-
         public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
         {
             string email = Convert.ToString(form["email"]);
             string password = Convert.ToString(form["password"]);
-            if (Account.IsRegistered(email, password))
-            {
-                //VERIFICAR SE É ESTUDANTE OU TÉCNICO E EFETUAR O RESPETIVO LOGIN
+            LoginState state = Account.IsRegistered(email, password);
 
+
+            if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+            {
+                ViewData["Login-Message"] = state.GetMessage();
+                return View("Login");
+            }
+            else
+            {
+                string accountId = Account.AccountID(email);
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "123123123"));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "username"));
-                identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
+                identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
+                if (state == LoginState.CONNECTED_STUDENT)
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
+                else
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
 
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
-
-                ViewData["Error-Login"] = "";
-                return View("Login");
+                return RedirectToAction("Index", "Home");
             }
-
-            ViewData["Error-Login"] = "Credenciais Inválidas.";
-            return View("Login");
-
         }
+    
 
         public async Task<IActionResult> Logout()
         {
