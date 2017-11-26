@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 
-<div class="middleSquare" >
+<div class="middleSquare">
     <h2>Registo</h2>
     <div>
         <form asp-action="PreRegister">
@@ -39,12 +39,12 @@
                 </tr>
                 <tr>
                     <td><label asp-for="Student.Cc"></label></td>
-                    <td><input asp-for="Student.Cc" /></td>
+                    <td><input asp-for="Student.Cc" type="text" /></td>
                     <td><span asp-validation-for="Student.Cc" class="text-danger"></span></td>
                 </tr>
                 <tr>
                     <td><label asp-for="Student.Telephone"></label></td>
-                    <td><input asp-for="Student.Telephone" /></td>
+                    <td><input asp-for="Student.Telephone" type="text" /></td>
                     <td><span asp-validation-for="Student.Telephone" class="text-danger"></span></td>
                 </tr>
                 <tr>
@@ -63,14 +63,39 @@
                 </tr>
                 <tr>
                     <td><label asp-for="Student.Credits"></label></td>
-                    <td><input asp-for="Student.Credits" /></td>
+                    <td><input asp-for="Student.Credits" type="text" /></td>
                     <td><span asp-validation-for="Student.Credits" class="text-danger"></span></td>
                 </tr>
                 <tr>
                     <td></td>
                     <td></td>
                     <td><input type="submit" value="Registar" /></td>
-                </tr>   
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
+<div class="middleSquare" hidden="hidden">
+    <h2>Registo</h2>
+    <div>
+        <form asp-action="Register">
+            <table>
+                <tr>
+                    <td><label asp-for="Technician.Name"></label>:</td>
+                    <td><input asp-for="Technician.Name" /></td>
+                    <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Technician.Telephone"></label></td>
+                    <td><input asp-for="Technician.Telephone" type="text" /></td>
+                    <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" value="Registar" /></td>
+                </tr>
             </table>
         </form>
     </div>
