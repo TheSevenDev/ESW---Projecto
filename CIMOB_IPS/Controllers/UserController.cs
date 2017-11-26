@@ -17,19 +17,35 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult PreRegister(IFormCollection form)
         {
-            String studentName = Convert.ToString(form["Student.Name"].ToString());
-            long studentNumber = Convert.ToInt64(form["Student.StudentNum"].ToString());
-
-            InsertPreRegister(studentName, studentNumber);
+            long studentNumber = Convert.ToInt64(form["PendingAccount.Guid"]);
+            String studentEmail = studentNumber + "@estudantes.ips.pt";
+            
+            InsertPreRegister(studentEmail,studentNumber);
+            SendEmailToStudent(studentEmail);
 
             return View("Index");
         }
 
-        public IActionResult Register()
+        public IActionResult Register(IFormCollection form)
         {
+
+            //buscar IdAccount, Name e StudentNum pelo url
+            long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
+            String address = Convert.ToString(form["Student.Address"].ToString());
+            long ccNum = Convert.ToInt64(form["Student.Cc"]);
+            long telephone = Convert.ToInt64(form["Student.Telephone"]);
+            long idNacionality = Convert.ToInt64(form["Student.IdNacionality"]);
+            int credits = Convert.ToInt32(form["Student.Credits"]);
+
+            Student student = new Student {IdCourse = idCourse, Name="Aluno1", Address=address, Cc=ccNum, Telephone=telephone, IdNationality=idNacionality, Credits=credits, StudentNum= 150221014 };
+
+            //InsertStudent(student);
+
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
+            
+            //WelcomeEmail(student.Email);
             return View();
         }
 
@@ -69,6 +85,26 @@ namespace CIMOB_IPS.Controllers
                 "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
 
             Email.SendEmail(emailTec, subject, body);
+        }
+
+        private void WelcomeEmail(string targetEmail)
+        {
+            string subject = "Bem-Vindo ao CIMOB-IPS";
+
+            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
+                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
+
+            Email.SendEmail(targetEmail, subject, body);
+        }
+
+        private void SendEmailToStudent(String emailStudent)
+        {
+            string subject = "Registo no CIMOB-IPS";
+
+            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href=\"www.google.pt\">aqui</a>.";
+
+            Email.SendEmail(emailStudent, subject, body);
         }
 
         public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
@@ -115,18 +151,39 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public void InsertPreRegister(String studentName, long studentNumber)
+        public void InsertPreRegister(String studentEmail, long studentNumber)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "insert into dbo.Pending_Account values (@Name,@StudentNumber)";
-                command.Parameters.AddWithValue("@Name", studentName);
+                command.CommandText = "insert into dbo.Pending_Account values (@Email,@StudentNumber)";
+                command.Parameters.AddWithValue("@Email", studentEmail);
                 command.Parameters.AddWithValue("@StudentNumber", studentNumber);
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
             }
         }
+
+        //public void InsertStudent(Student student)
+        //{
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    using (SqlCommand command = new SqlCommand("", connection))
+        //    {
+        //        command.CommandText = "insert into dbo.Student values (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
+        //        command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
+        //        command.Parameters.AddWithValue("@IdCourse", student.IdCourse);
+        //        command.Parameters.AddWithValue("@Name", student.Name);
+        //        command.Parameters.AddWithValue("@Adress", student.Address);
+        //        command.Parameters.AddWithValue("@CC", student.Cc);
+        //        command.Parameters.AddWithValue("@Telephone", student.Telephone);
+        //        command.Parameters.AddWithValue("@IdNacionality", student.IdNationality);
+        //        command.Parameters.AddWithValue("@Credits", student.Credits);
+        //        command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+        //        connection.Open();
+        //        command.ExecuteNonQuery();
+        //        connection.Close();
+        //    }
+        //}
     }
 }
