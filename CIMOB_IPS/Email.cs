@@ -26,9 +26,9 @@ namespace CIMOB_IPS
             mailMessage.IsBodyHtml = true;
             client.Send(mailMessage);
 
-            Guid g;
-            g = Guid.NewGuid();
-            Console.WriteLine(g);
+            //Guid g;
+            //g = Guid.NewGuid();
+            //Console.WriteLine(g);
         }
     }
 }

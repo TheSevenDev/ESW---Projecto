@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
-    public partial class Technician : Account
+    public partial class Technician
     {
         public Technician()
         {
@@ -13,9 +13,11 @@ namespace CIMOB_IPS.Models
 
         public long IdTechnician { get; set; }
         public long IdAccount { get; set; }
+        [Display(Name = "Nome:")]
         [Required]
         [StringLength(60)]
         public string Name { get; set; }
+        [Display(Name = "Contacto:")]
         [Required]
         public long Telephone { get; set; }
         public bool IsAdmin { get; set; }

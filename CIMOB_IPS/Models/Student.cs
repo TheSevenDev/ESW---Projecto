@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
-    public partial class Student : Account
+    public partial class Student
     {
         public Student()
         {
@@ -38,6 +38,7 @@ namespace CIMOB_IPS.Models
         public long StudentNum { get; set; }
 
         public Account IdAccountNavigation { get; set; }
+        [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }
         public Nationality IdNationalityNavigation { get; set; }
         public ICollection<Application> Application { get; set; }

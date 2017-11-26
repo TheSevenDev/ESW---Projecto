@@ -14,9 +14,9 @@ namespace CIMOB_IPS
 {
     public class Startup
     {
-        public static string connection = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
-                Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;
-                TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        //public static string connection = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
+        //        Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;
+        //        TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
         public Startup(IConfiguration configuration)
         {
@@ -40,10 +40,11 @@ namespace CIMOB_IPS
                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             }).AddCookie();
 
-            services.AddMvc().AddSessionStateTempDataProvider();
+            CIMOB_IPS_DBContext.ConnectionString = Configuration.GetConnectionString("CIMOB_IPS_DB");
 
+            services.AddMvc().AddSessionStateTempDataProvider();
             
-            services.AddDbContext<CIMOB_IPS_DBContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<CIMOB_IPS_DBContext>(options => options.UseSqlServer(CIMOB_IPS_DBContext.ConnectionString));
 
             services.AddSession();
         }

@@ -1,5 +1,22 @@
-﻿@{
+﻿@model CIMOB_IPS.Models.Account
+
+@{
     ViewData["Title"] = "Profile";
+    //VER SE HA MELHOR FORMA PA FAZER ISTO
+    List <Student> students = Model.Student.ToList();
+    List<Technician> technicians = Model.Technician.ToList();
+
+    Student student = null;
+    Technician technician = null;
+
+    if(students.Count > 0)
+    {
+        student = students.First();
+    }
+    else
+    {
+        technician = technicians.First();
+    }
 }
 
 <h2></h2>
@@ -7,42 +24,70 @@
 
 <div class="profile">
     <div class="changeImage">
-        <img id ="img" src="~/images/user1.png" width="130" height="130" />
+        <img id="img" src="~/images/user1.png" width="130" height="130" />
         <button id="button" type="button">Alterar Imagem</button>
     </div>
+    <table class="information">
+       @if (student != null)
+        {
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.Name)</td>
+            <td>@Html.DisplayFor(model => student.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.IdNationality)</td>
+            <td>@Html.DisplayFor(model => student.IdNationalityNavigation.Description)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.IdCourseNavigation)</td>
+            <td>@Html.DisplayFor(model => student.IdCourseNavigation.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Email)</td>
+            <td>@Html.DisplayFor(model => model.Email)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.Telephone)</td>
+            <td>@Html.DisplayFor(model => student.Telephone)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.Credits)</td>
+            <td>@Html.DisplayFor(model => student.Credits)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.Cc)</td>
+            <td>@Html.DisplayFor(model => student.Cc)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => student.StudentNum)</td>
+            <td>@Html.DisplayFor(model => student.StudentNum)</td>
+        </tr>
+        <!-- Ter??
+        <tr>
+            <td><p>Bolsa: </p></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><p>Tipo de Mobilidade Atual: </p></td>
+            <td></td>
+        </tr>
+            -->
+       }
+       else
+       {
+        <tr>
+            <td>@Html.DisplayNameFor(model => technician.Name)</td>
+            <td>@Html.DisplayFor(model => technician.Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.Email)</td>
+            <td>@Html.DisplayFor(model => model.Email)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => technician.Telephone)</td>
+            <td>@Html.DisplayFor(model => technician.Telephone)</td>
+        </tr>
 
-        <table class="information">
-            <tr>
-                <td><p>Número de Estudante: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Nome Completo: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Nacionalidade: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Escola: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Curso: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Ano Curricular: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Contacto: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>E-mail: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Bolsa: </p></td><td></td>
-            </tr>
-            <tr>
-                <td><p>Tipo de Mobilidade Atual: </p></td><td></td>
-            </tr>
-</table>
-                   
-
+       }
+    </table>
 </div>

@@ -9,16 +9,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using CIMOB_IPS.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace CIMOB_IPS.Controllers
 {
     public class UserController : Controller
     {
-        public string connectionString = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
-                Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;
-                TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
 
         public IActionResult PreRegister(IFormCollection form)
         {
@@ -122,7 +117,7 @@ namespace CIMOB_IPS.Controllers
 
         public void InsertPreRegister(String studentName, long studentNumber)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 command.CommandText = "insert into dbo.Pending_Account values (@Name,@StudentNumber)";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,6 +18,8 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdAccount { get; set; }
+
+        [Display(Name = "E-mail:")]
         public string Email { get; set; }
         public byte[] Password { get; set; }
 
@@ -24,10 +27,9 @@ namespace CIMOB_IPS.Models
         public ICollection<Student> Student { get; set; }
         public ICollection<Technician> Technician { get; set; }
 
-
         public static LoginState IsRegistered(string _email, string _password)
         {
-            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 string accountID = "";
@@ -73,7 +75,7 @@ namespace CIMOB_IPS.Models
 
         public static string AccountID(string email)
         {
-            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 connection.Open();
@@ -95,7 +97,7 @@ namespace CIMOB_IPS.Models
         public static UserType AccountType(string _accountId)
         {
 
-            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 connection.Open();
@@ -117,7 +119,7 @@ namespace CIMOB_IPS.Models
         public static string AccountName(string _accountId)
         {
 
-            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 connection.Open();
@@ -144,7 +146,7 @@ namespace CIMOB_IPS.Models
         public static string IsAdmin(string _accountId)
         {
 
-            using (SqlConnection connection = new SqlConnection(Startup.connection))
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 connection.Open();

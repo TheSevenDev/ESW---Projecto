@@ -26,12 +26,13 @@ namespace CIMOB_IPS.Models
         : base(options)
         { }
 
+        public static string ConnectionString { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+                optionsBuilder.UseSqlServer(ConnectionString);
             }
         }
 
@@ -387,7 +388,7 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.StudentNum).HasColumnName("student_num");
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
-
+                
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Student)
                     .HasForeignKey(d => d.IdAccount)
@@ -407,6 +408,7 @@ namespace CIMOB_IPS.Models
                     .HasConstraintName("fk_E_Nationality");
             });
 
+
             modelBuilder.Entity<Technician>(entity =>
             {
                 entity.HasKey(e => e.IdTechnician);
@@ -424,6 +426,7 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
 
+                
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Technician)
                     .HasForeignKey(d => d.IdAccount)
