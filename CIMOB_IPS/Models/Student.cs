@@ -10,6 +10,7 @@ namespace CIMOB_IPS.Models
         {
             Application = new HashSet<Application>();
         }
+        
 
         public long IdStudent { get; set; }
         public long IdAccount { get; set; }
