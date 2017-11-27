@@ -12,7 +12,7 @@
                 <td><label asp-for="Email" class="login-formlabel"></label></td>
             </tr>
             <tr>
-                <td><input asp-for="Email" placeholder="exemplo@dominio.com" /></td>
+                <td><input asp-for="Email" placeholder="exemplo@dominio.com" value="@ViewData["initial-email"]"/></td>
             </tr>
             <tr>
                 <td><span asp-validation-for="Email" class="error-message"></span></td>
@@ -21,7 +21,7 @@
                 <td><label asp-for="Password" class="login-formlabel"></label></td>
             </tr>
             <tr>
-                <td><input asp-for="Password" placeholder="***************" /></td>
+                <td><input asp-for="Password" type="password" placeholder="***************" /></td>
             </tr>
             <tr>
                 <td><span asp-validation-for="Password" class="error-message"></span></td>
@@ -41,25 +41,26 @@
 </div>
 
 
-<div class="main-container-fyp" id="fyp">
+<div class="main-container-fyp" id="fyp" style="display: @ViewData["fyp-initial-display"]">
     <img id="fyp-close" src="~/images/icons/error.png" onclick="javascript: tooglefyp();" />
-    <form asp-action="ExecLoginAsync" class="fyp-form">
+    <form asp-action="ExecFYP" class="fyp-form">
         <table>
             <tr>
-                <td><label class="fyp-formlabel" for="email"> <b>Recuperação de senha</b></label></td>
+                <td><label class="fyp-formlabel" for="email" > <b>Recuperação de senha</b></label></td>
             </tr>
             <tr>
-                <td><label class="fyp-formlabel" for="email"> Email:</label></td>
+                <td><label class="fyp-formlabel" for="email" id="fyp-emailbox"> Email:</label></td>
             </tr>
             <tr>
-                <td><input type="email" name="email" id="email" required placeholder="exemplo@exemplo.com" /></td>
+                <td><input type="email" name="email" id="email-fyp" required placeholder="exemplo@dominio.com" value="@ViewData["initial-email-fyp"]" /></td>
             </tr>
             <tr>
                 <td></td>
             </tr>
         </table>
         <div class="form-error">
-            <label>@ViewData["Login-Message"]</label>
+            <label>@ViewData["FYP-Message-Error"]</label>
+            <label style="color:green">@Html.Raw(ViewData["FYP-Message"])</label>
         </div>
         <input type="submit" value="Enviar" class="submitButton" />
     </form>
