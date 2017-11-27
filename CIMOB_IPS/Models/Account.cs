@@ -21,6 +21,8 @@ namespace CIMOB_IPS.Models
 
         [Display(Name = "E-mail:")]
         public string Email { get; set; }
+        [Required]
+        [Display(Name = "Password:")]
         public byte[] Password { get; set; }
 
         public ICollection<Notification> Notification { get; set; }
@@ -169,7 +171,7 @@ namespace CIMOB_IPS.Models
 
 
 
-        private static string EncryptToMD5(string password)
+        public static string EncryptToMD5(string password)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
             Console.WriteLine(password);
