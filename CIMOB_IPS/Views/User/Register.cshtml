@@ -60,6 +60,31 @@
     </div>
 </div>
 
+<div class="middleSquare" hidden="hidden">
+    <h2>Registo</h2>
+    <div>
+        <form asp-action="Register">
+            <table>
+                <tr>
+                    <td><label asp-for="Technician.Name"></label>:</td>
+                    <td><input asp-for="Technician.Name" /></td>
+                    <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Technician.Telephone"></label></td>
+                    <td><input asp-for="Technician.Telephone" type="text" /></td>
+                    <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" value="Registar" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
