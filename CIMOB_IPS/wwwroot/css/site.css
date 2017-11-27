@@ -373,34 +373,38 @@ footer {
 */
 
 .information {
+    display: none;
     font-size: 95%;
     width: Auto;
     height: auto;
     position: absolute;
-    top: 20%;
+    top: 40%;
+    margin-left: 20%;
 }
+
 .information tr {
     position:relative;
 }
 
-.changeImage {
+
+.image {
     width: 30%;
     height: 30%;
     position: absolute;
-    top: 90%;
-    margin-left: 90%;
+    margin-left: 17%;
 }
 
 #button {
-    display: block;
-    margin-top: 0%;
-    margin-left: -400%;
+    display: none;
+    height: 25%;
+    width: 55%;
+    margin-left: 200%;
+    margin-top: 120%;
 }
 
 #img {
     display: block;
-    margin-top: -80%;
-    margin-left: -408%;
+    margin-left: 71%;
 }
 
 #title {
@@ -412,11 +416,14 @@ footer {
 }
 
 .profile {
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    background-color: white;
+    border-bottom: 1px solid lightgray;
     width: 40%;
-    height: 30%;
+    height: 60%;
     position: absolute;
     top: 20%;
-    margin-left: 36%;
+    margin-left: 28%;
 }
 
 .page-title{
@@ -434,12 +441,39 @@ footer {
 }
 
 /*
+    EDITAR PERFIL
+*/
+.editProfile {
+    font-size: 95%;
+    width: Auto;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    margin-left: 20%;
+}
+
+#saveProfile {
+    height: 6%;
+    width: 23%;
+    position: absolute;
+    margin-left: 70%;
+    margin-top: 63%;
+}
+
+#changeImage {
+    height: 6%;
+    width: 20%;
+    position: absolute;
+    margin-left: 40.2%;
+    margin-top: 22%;
+}
+    /*
     PASSAR PARA O REGISTER CSS
 */
-.invite-form{
-    margin-left:23%;
-    margin-top:11%;
-    position:relative;
+    .invite-form {
+    margin-left: 23%;
+    margin-top: 11%;
+    position: relative;
 }
 
 .invite-form label {

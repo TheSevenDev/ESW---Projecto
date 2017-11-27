@@ -2,92 +2,147 @@
 
 @{
     ViewData["Title"] = "Profile";
-    //VER SE HA MELHOR FORMA PA FAZER ISTO
-    List <Student> students = Model.Student.ToList();
-    List<Technician> technicians = Model.Technician.ToList();
+    ////VER SE HA MELHOR FORMA PA FAZER ISTO
+    //List <Student> students = Model.Student.ToList();
+    //List<Technician> technicians = Model.Technician.ToList();
 
     Student student = null;
     Technician technician = null;
 
-    if(students.Count > 0)
-    {
-        student = students.First();
-    }
-    else
-    {
-        technician = technicians.First();
-    }
+    //if(students.Count > 0)
+    //{
+    //    student = students.First();
+    //}
+    //else
+    //{
+    //    technician = technicians.First();
+    //}
 }
 
 <h2></h2>
 <p id="title">Perfil</p>
 
 <div class="profile">
-    <div class="changeImage">
+    <div class="image">
         <img id="img" src="~/images/user1.png" width="130" height="130" />
-        <button id="button" type="button">Alterar Imagem</button>
+        <button id="button" type="button">Editar Perfil</button>
     </div>
     <table class="information">
-       @if (student != null)
+        @if (student != null)
         {
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.Name)</td>
-            <td>@Html.DisplayFor(model => student.Name)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.IdNationality)</td>
-            <td>@Html.DisplayFor(model => student.IdNationalityNavigation.Description)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.IdCourseNavigation)</td>
-            <td>@Html.DisplayFor(model => student.IdCourseNavigation.Name)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.Email)</td>
-            <td>@Html.DisplayFor(model => model.Email)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.Telephone)</td>
-            <td>@Html.DisplayFor(model => student.Telephone)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.Credits)</td>
-            <td>@Html.DisplayFor(model => student.Credits)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.Cc)</td>
-            <td>@Html.DisplayFor(model => student.Cc)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => student.StudentNum)</td>
-            <td>@Html.DisplayFor(model => student.StudentNum)</td>
-        </tr>
-        <!-- Ter??
-        <tr>
-            <td><p>Bolsa: </p></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><p>Tipo de Mobilidade Atual: </p></td>
-            <td></td>
-        </tr>
-            -->
-       }
-       else
-       {
-        <tr>
-            <td>@Html.DisplayNameFor(model => technician.Name)</td>
-            <td>@Html.DisplayFor(model => technician.Name)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => model.Email)</td>
-            <td>@Html.DisplayFor(model => model.Email)</td>
-        </tr>
-        <tr>
-            <td>@Html.DisplayNameFor(model => technician.Telephone)</td>
-            <td>@Html.DisplayFor(model => technician.Telephone)</td>
-        </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Name)</td>
+                    <td>@Html.DisplayFor(model => student.Name)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.IdNationality)</td>
+                    <td>@Html.DisplayFor(model => student.IdNationalityNavigation.Description)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.IdCourseNavigation)</td>
+                    <td>@Html.DisplayFor(model => student.IdCourseNavigation.Name)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Email)</td>
+                    <td>@Html.DisplayFor(model => model.Email)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Telephone)</td>
+                    <td>@Html.DisplayFor(model => student.Telephone)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Credits)</td>
+                    <td>@Html.DisplayFor(model => student.Credits)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Cc)</td>
+                    <td>@Html.DisplayFor(model => student.Cc)</td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.StudentNum)</td>
+                    <td>@Html.DisplayFor(model => student.StudentNum)</td>
+                </tr>
+                <!-- Ter??
+                <tr>
+                    <td><p>Bolsa: </p></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td><p>Tipo de Mobilidade Atual: </p></td>
+                    <td></td>
+                </tr>
+                    -->
+        }
+        else
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => technician.Name)</td>
+                <td>@Html.DisplayFor(model => technician.Name)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Email)</td>
+                <td>@Html.DisplayFor(model => model.Email)</td>
+            </tr>
+            <tr>
+                <td>@Html.DisplayNameFor(model => technician.Telephone)</td>
+                <td>@Html.DisplayFor(model => technician.Telephone)</td>
+            </tr>
 
-       }
-    </table>
-</div>
+        }
+        </table>
+    
+    
+        <button id="saveProfile" type="button">Salvar Alterações</button>
+        <button id="changeImage" type="button">Alterar Imagem</button>
+
+
+    <table class="editProfile">
+        @if (student != null)
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => student.Name)</td>
+                <td><input type="text"></td>
+            </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.IdNationality)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Email)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Telephone)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Credits)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.Cc)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => student.StudentNum)</td>
+                    <td><input type="text"></td>
+                </tr>
+        }
+        else
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(model => technician.Name)</td>
+                <td><input type="text"></td>
+            </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => model.Email)</td>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(model => technician.Telephone)</td>
+                    <td><input type="text"></td>
+                </tr>
+
+        }
+
+        </table>
