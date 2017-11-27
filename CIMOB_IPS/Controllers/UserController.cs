@@ -26,8 +26,21 @@ namespace CIMOB_IPS.Controllers
 
             InsertPreRegister(studentEmail, studentNumber);
             SendEmailToStudent(studentEmail);
+            ViewData["sucess"] = "true";
 
-            return View("Index");
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                {
+                    connection.Open();
+                }
+            }
+            catch (SqlException e)
+            {
+                ViewData["sucess"] = "false";
+            }
+
+            return View("Register");
         }
 
         public IActionResult RegisterStudent(IFormCollection form)
@@ -37,22 +50,23 @@ namespace CIMOB_IPS.Controllers
 
             long idAccount = InsertAccount(email, password);
 
-            //buscar Name e StudentNum pelo url
+            
+            long studentNum = 150221014; //StudentNum pelo url
             long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
             String address = Convert.ToString(form["Student.Address"].ToString());
             long ccNum = Convert.ToInt64(form["Student.Cc"]);
             long telephone = Convert.ToInt64(form["Student.Telephone"]);
-            long idNacionality = Convert.ToInt64(form["Student.IdNacionality"]);
+            long idNacionality = Convert.ToInt64(form["Student.IdNationality"]);
             int credits = Convert.ToInt32(form["Student.Credits"]);
 
-            Student student = new Student {IdAccount = idAccount, IdCourse = idCourse, Name = "Ricardo Fernandes", Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = 150221014 };
+            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = "Ricardo Fernandes", Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
 
             InsertStudent(student);
 
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            WelcomeEmail(email);
+            //WelcomeEmail(email);
             return View("/Views/Home/Index.cshtml");
         }
 
@@ -62,12 +76,13 @@ namespace CIMOB_IPS.Controllers
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
-            //buscar IsAdmin pelo Url
+            
 
+            bool isAdmin = true; //buscar IsAdmin pelo Url
             String name = Convert.ToString(form["Technician.Name"].ToString());
             long telephone = Convert.ToInt64(form["Technician.Telephone"]);
 
-            Technician technician = new Technician {IdAccount=idAccount, Name=name,Telephone=telephone,IsAdmin=true};
+            Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin };
 
             InsertTechnician(technician);
 
@@ -75,7 +90,7 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-
+            //WelcomeEmail(email);
             return View();
         }
 
@@ -190,8 +205,8 @@ namespace CIMOB_IPS.Controllers
                 command.CommandText = "Select email From dbo.Pending_Account Where id_pending=@idAccount";
                 command.Parameters.AddWithValue("@idAccount", idAccount);
                 connection.Open();
-                
-                String email = (String) command.ExecuteScalar();
+
+                String email = (String)command.ExecuteScalar();
 
                 if (connection.State == System.Data.ConnectionState.Open)
                 {
@@ -205,25 +220,25 @@ namespace CIMOB_IPS.Controllers
 
         public long InsertAccount(String email, String password)
         {
-            password = Account.EncryptToMD5(password);
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) output INSERTED.id_account values (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
             {
-                command.CommandText = "insert into dbo.Account values (@Email,@Password); Select SCOPE_IDENTITY()";
+
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@Password", password);
-                command.Parameters.Add("@ID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
                 connection.Open();
-
-                command.ExecuteNonQuery();
+                //command.ExecuteNonQuery();
+                long idAccount = (Int64) command.ExecuteScalar();
 
                 if (connection.State == System.Data.ConnectionState.Open)
                 {
                     connection.Close();
                 }
 
-                return Convert.ToInt64(command.Parameters["@ID"].Value);
+                return idAccount;
+
             }
+    
         }
 
         public void InsertPreRegister(String studentEmail, long studentNumber)
