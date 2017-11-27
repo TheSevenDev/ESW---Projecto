@@ -50,7 +50,7 @@ namespace CIMOB_IPS.Controllers
 
             long idAccount = InsertAccount(email, password);
 
-            
+
             long studentNum = 150221014; //StudentNum pelo url
             long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
             String address = Convert.ToString(form["Student.Address"].ToString());
@@ -76,7 +76,7 @@ namespace CIMOB_IPS.Controllers
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
-            
+
 
             bool isAdmin = true; //buscar IsAdmin pelo Url
             String name = Convert.ToString(form["Technician.Name"].ToString());
@@ -228,7 +228,7 @@ namespace CIMOB_IPS.Controllers
                 command.Parameters.AddWithValue("@Password", password);
                 connection.Open();
                 //command.ExecuteNonQuery();
-                long idAccount = (Int64) command.ExecuteScalar();
+                long idAccount = (Int64)command.ExecuteScalar();
 
                 if (connection.State == System.Data.ConnectionState.Open)
                 {
@@ -238,7 +238,7 @@ namespace CIMOB_IPS.Controllers
                 return idAccount;
 
             }
-    
+
         }
 
         public void InsertPreRegister(String studentEmail, long studentNumber)
@@ -291,5 +291,13 @@ namespace CIMOB_IPS.Controllers
                 connection.Close();
             }
         }
+
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+     
+
     }
 }
