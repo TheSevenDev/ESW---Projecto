@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <h2 class="register-title">Registo</h2>
-<div class="main-container-pre-register" hidden>
+<div class="main-container-pre-register">
         <form asp-action="PreRegister" class="pre-register-form">
             <table>
                 <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
@@ -18,9 +18,9 @@
         </form>
 </div>
 
-<div class="main-container-register" >
+<div class="main-container-register" hidden="hidden">
     <div>
-        <form asp-action="Register" class="register-form">
+        <form asp-action="RegisterStudent" class="register-form">
             <table>
                 <tr> <td><label asp-for="Student.Name"></label></td></tr>
                 <tr> <td><input asp-for="Student.Name" /></td></tr>
@@ -41,15 +41,19 @@
                 <tr> <td><input asp-for="Student.Telephone" type="text" style="width: 15vw;"/></td></tr>
                 <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
 
+                <tr> <td><label asp-for="Student.Address"></label></td></tr>
+                <tr> <td><input asp-for="Student.Address" /></td></tr>
+                <tr> <td><span asp-validation-for="Student.Address" class="error-message"></span></td></tr>
+
                 <tr> <td><label asp-for="Student.IdNationality"></label></td></tr>
-                <tr> <td><select asp-for="Student.IdNationality" asp-items="ViewBag.IdNationality"></select></td></tr>
+                <tr> <td><select asp-for="Student.IdNationality" asp-items="ViewBag.IdNationality"><option value=1>Portugal</option></select></td></tr>
                 <tr> <td><span asp-validation-for="Student.IdNationality" class="error-messager"></span></td></tr>
 
                 <tr> <td><label for="school" name="labelSchool">Escola:</label></td></tr>
-                <tr> <td><select name="school"><option value="" disabled selected>Escola Superior de Tecnologia de Setúbal</option></select></td></tr>
+                <tr> <td><select name="school"><option value=1>Escola Superior de Tecnologia de Setúbal</option></select></td></tr>
 
                 <tr> <td><label asp-for="Student.IdCourse"></label></td></tr>
-                <tr> <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1 disabled selected>Licenciatura em Engenharia Informática</option></select></td></tr>
+                <tr> <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1>Licenciatura em Engenharia Informática</option></select></td></tr>
                 <tr> <td><span asp-validation-for="Student.IdCourse" class="text-danger"></span></td></tr>
 
                 <tr> <td><label asp-for="Student.Credits"></label></td></tr>
@@ -85,9 +89,16 @@
     </div>
 </div>
 
+@if (ViewData["sucess"] == "true")
+{
+    <div class="middleSquare">
+        <h1>Email enviado com sucesso.</h1>
+    </div>
+ }
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+      @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ }
 
 
