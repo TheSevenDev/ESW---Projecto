@@ -84,10 +84,10 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Index()
         {
-            var account = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            //var account = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
 
             //add verificação
-            return View(account);
+            return View(/*account*/);
         }
     }
 }
