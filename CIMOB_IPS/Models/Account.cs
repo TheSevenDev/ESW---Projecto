@@ -18,10 +18,11 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdAccount { get; set; }
-
+        [Required(ErrorMessage = "O Email não preenchido")]
+        [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
         [Display(Name = "E-mail:")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "A Password não preenchida")]
         [Display(Name = "Password:")]
         public byte[] Password { get; set; }
 
