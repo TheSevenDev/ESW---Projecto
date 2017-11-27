@@ -617,7 +617,7 @@ html, body {
     margin-right: auto;
     margin-left: 67.5%;
     position: absolute;
-    margin-top: -12.6%;
+    margin-top: -27vh;
     display: none;
 }
 
@@ -654,8 +654,8 @@ html, body {
     float: left;
     font-size: 0.95vmax;
     position: fixed;
-    margin-top: 1.8%;
-    margin-right: 3%;
+    margin-top: 0.2%;
+    margin-left:0.3%;
 }
 
 .fyp-form input[type=submit] {
