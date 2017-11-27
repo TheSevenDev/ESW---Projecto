@@ -35,7 +35,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "ECTS:")]
         public int Credits { get; set; }
         [Required]
-        [Display(Name = "Nº Estudante:")]
+        [Display(Name = "Nº de Estudante:")]
         public long StudentNum { get; set; }
 
         public Account IdAccountNavigation { get; set; }

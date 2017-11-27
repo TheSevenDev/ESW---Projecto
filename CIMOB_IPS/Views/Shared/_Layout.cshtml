@@ -85,17 +85,12 @@
 
 
     <div class="body-panel" onclick="javascript: hideMenus();">
-        <img style="position:fixed; margin-left:84.5vw;margin-top:76vh;width:15vmax; height:4.5vmax; opacity:0.7" src="~/images/cimobips.png" />
+        <img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.5vmax; opacity:0.7;" src="~/images/cimobips.png" />
         @RenderBody()
     </div>
-    
         <footer>
-            <p>&copy; 2018 &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>         
+            <p>&copy; @DateTime.Now.Year &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>         
         </footer>
-    <script src="~/js/site.js"></script>  
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 
     

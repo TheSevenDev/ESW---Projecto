@@ -6,71 +6,55 @@
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-
-<div class="middleSquare" >
-    <h2>Registo</h2>
-    <div>
-        <form asp-action="PreRegister">
+<h2 class="register-title">Registo</h2>
+<div class="main-container-pre-register" hidden>
+        <form asp-action="PreRegister" class="pre-register-form">
             <table>
-                <tr>
-                    <td><label asp-for="Student.StudentNum"></label></td>
-                    <td><input asp-for="Student.StudentNum" type="text" /></td>
-                    <td><span asp-validation-for="Student.StudentNum" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><input type="submit" value="Enviar" /></td>
-                </tr>
+                <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
+                <tr><td><input asp-for="Student.StudentNum" type="text" placeholder="Número de Estudante" /></td></tr>
+                <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
+                <tr><td><input type="submit" value="Enviar" /></td></tr>
             </table>
         </form>
-    </div>
 </div>
 
-<div class="middleSquare" hidden="hidden">
-    <h2>Registo</h2>
+<div class="main-container-register" >
     <div>
-        <form asp-action="Register">
+        <form asp-action="Register" class="register-form">
             <table>
-                <tr>
-                    <td><label asp-for="Student.Name"></label>:</td>
-                    <td><input asp-for="Student.Name" /></td>
-                    <td><span asp-validation-for="Student.Name" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td><label asp-for="Student.Cc"></label></td>
-                    <td><input asp-for="Student.Cc" /></td>
-                    <td><span asp-validation-for="Student.Cc" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td><label asp-for="Student.Telephone"></label></td>
-                    <td><input asp-for="Student.Telephone" /></td>
-                    <td><span asp-validation-for="Student.Telephone" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td><label asp-for="Student.IdNationality"></label></td>
-                    <td><select asp-for="Student.IdNationality" asp-items="ViewBag.IdNationality"></select></td>
-                    <td><span asp-validation-for="Student.IdNationality" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td><label for="school" name="labelSchool">Escola:</label></td>
-                    <td><select name="school"><option value="" disabled selected>Escola Superior de Tecnologia de Setúbal</option></select></td>
-                </tr>
-                <tr>
-                    <td><label asp-for="Student.IdCourse"></label></td>
-                    <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1 disabled selected>Licenciatura em Engenharia Informática</option></select></td>
-                    <td><span asp-validation-for="Student.IdCourse" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td><label asp-for="Student.Credits"></label></td>
-                    <td><input asp-for="Student.Credits" /></td>
-                    <td><span asp-validation-for="Student.Credits" class="text-danger"></span></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td><input type="submit" value="Registar" /></td>
-                </tr>   
+                <tr> <td><label asp-for="Student.Name"></label></td></tr>
+                <tr> <td><input asp-for="Student.Name" /></td></tr>
+                <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
+
+                <tr> <td><label asp-for="Account.Password"></label></td></tr>
+                <tr> <td><input asp-for="Account.Password" type="password" /></td></tr>
+                <tr> <td><span asp-validation-for="Account.Password" class="text-danger"></span></td><tr>
+
+                <tr> <td><label for="passwordConfirmation" name="labelPasswordConfirmation">Confirme a Password:</label></td></tr>
+                <tr> <td><input type="password" name="passwordConfirmation" /></td></tr>
+
+                <tr> <td><label asp-for="Student.Cc"></label></td></tr>
+                <tr> <td><input asp-for="Student.Cc" type="text" style="width: 15vw;"/></td></tr>
+                <tr> <td><span asp-validation-for="Student.Cc" class="error-message"></span></td></tr>
+
+                <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
+                <tr> <td><input asp-for="Student.Telephone" type="text" style="width: 15vw;"/></td></tr>
+                <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
+
+                <tr> <td><label asp-for="Student.IdNationality"></label></td></tr>
+                <tr> <td><select asp-for="Student.IdNationality" asp-items="ViewBag.IdNationality"></select></td></tr>
+                <tr> <td><span asp-validation-for="Student.IdNationality" class="error-messager"></span></td></tr>
+
+                <tr> <td><label for="school" name="labelSchool">Escola:</label></td></tr>
+                <tr> <td><select name="school"><option value="" disabled selected>Escola Superior de Tecnologia de Setúbal</option></select></td></tr>
+
+                <tr> <td><label asp-for="Student.IdCourse"></label></td></tr>
+                <tr> <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1 disabled selected>Licenciatura em Engenharia Informática</option></select></td></tr>
+                <tr> <td><span asp-validation-for="Student.IdCourse" class="text-danger"></span></td></tr>
+
+                <tr> <td><label asp-for="Student.Credits"></label></td></tr>
+                <tr> <td><input asp-for="Student.Credits" type="text" style="width: 5vw;"/> <input type="submit" value="Registar" /></td> <td></td> </tr>
+                <tr> <td><span asp-validation-for="Student.Credits" class="text-danger"></span> </td></tr>
             </table>
         </form>
     </div>
