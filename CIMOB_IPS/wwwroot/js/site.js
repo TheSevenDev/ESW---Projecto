@@ -24,6 +24,16 @@ function toogleHelp() {
     closeHelp.style.display = ((closeHelp.style.display != 'block') ? 'block' : 'none')
 }
 
+function tooglefyp() {
+    var fyp = document.getElementById("fyp");
+    var closefyp = document.getElementById("fyp-close");
+
+    fyp.style.display = ((fyp.style.display != 'block') ? 'block' : 'none')
+    closefyp.style.display = ((closefyp.style.display != 'block') ? 'block' : 'none')
+}
+
+
+
 function hideMenus()
 {
     document.getElementById("submenu-settings").style.display = "none";
