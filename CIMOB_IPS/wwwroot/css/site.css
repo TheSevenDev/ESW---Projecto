@@ -218,23 +218,6 @@ html, body {
     display:block;
 }
 
-
-footer {
-    position: fixed;
-    background: var(--dark-grey);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.5vmin;
-    width: 100%;
-    height: 3%;
-    bottom: 0;
-    left: 0;
-    z-index: 800;
-}
-
-
 /*
     SUB-MENUS 
 */
@@ -317,15 +300,6 @@ footer {
     color: var(--grey-var1);
     font-weight: 500;
     font-size: 1.1vmax;
-}
-
-.body-panel {
-    position: absolute;
-    min-height: 100%;
-    width: 100%;
-    top: 10.5vmin;
-    background-color: var(--light-grey);
-    z-index: 100;
 }
 
 
@@ -426,9 +400,12 @@ footer {
     margin-left: 28%;
 }
 
-.page-title{
-    margin-left:42%;
-    font-size:1.75vmax;
+.page-title {
+    font-size: 1.75vmax;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    margin-top: 1%;
 }
 
 
@@ -534,10 +511,11 @@ footer {
     AUTENTICAR
 */
 .page-title-login {
-    margin-left: 45.5%;
     font-size: 1.75vmax;
-    position:fixed;
-    margin-top:4%;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    margin-top: 3%;
 }
 
 
@@ -626,6 +604,111 @@ footer {
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
+
+
+.main-container-fyp {
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 25%;
+    margin-left: 50.5%;
+    min-height: 27vh;
+    margin-right: auto;
+    margin-left: 67.5%;
+    position: absolute;
+    margin-top: -12.6%;
+    display: none;
+}
+
+.main-container-fyp table tr {
+    line-height: 5vh;
+}
+
+
+.fyp-form {
+    margin-left: 4%;
+    margin-top: 0%;
+    padding-top: 3.5%;
+}
+
+.fyp-formlabel {
+    position: relative;
+    margin-top: 20%;
+    font-size: 1.2vmax; 
+}
+
+.fyp-form input[type=email], input[type="password"] {
+    width: 22.2vw;
+    padding: 2% 3%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1vmax;
+}
+
+
+.fyp-form .form-error {
+    color: var(--red-var1);
+    float: left;
+    font-size: 0.95vmax;
+    position: fixed;
+    margin-top: 1.8%;
+    margin-right: 3%;
+}
+
+.fyp-form input[type=submit] {
+    width: 35%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 2.5%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 58.5%;
+    font-size: 1.1vmax;
+}
+
+.fyp-form input[type=submit]:hover {
+    background-color: var(--blue-var3);
+}
+
+
+#fyp-close {
+    position: fixed;
+    width: 1.7vw;
+    height: 1.7vw;
+    top: 37.5%;
+    left: 91.5%;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.body-panel {
+    position: absolute;
+    min-height: 87%;
+    width: 100%;
+    top: 10.5vmin;
+    background-color: var(--light-grey);
+    z-index: 100;
+}
+
+
+footer {
+    position: fixed;
+    background: var(--dark-grey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5vmin;
+    width: 100%;
+    height: 3%;
+    bottom: 0;
+    left: 0;
+    z-index: 800;
+}
+
+
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)
 */

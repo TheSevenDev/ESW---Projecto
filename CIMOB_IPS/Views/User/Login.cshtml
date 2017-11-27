@@ -1,4 +1,4 @@
-﻿
+﻿@model CIMOB_IPS.Models.Account
 @{
     ViewData["Title"] = "Login";
 }
@@ -9,16 +9,22 @@
     <form asp-action="ExecLoginAsync" class="login-form">
         <table>
             <tr>
-                <td><label class="login-formlabel" for="email"> Email:</label></td>
+                <td><label asp-for="Email" class="login-formlabel"></label></td>
             </tr>
             <tr>
-                <td><input type="email" name="email" id="email" required placeholder="exemplo@exemplo.com"/></td>
+                <td><input asp-for="Email" placeholder="exemplo@dominio.com" /></td>
             </tr>
             <tr>
-                <td><label class="login-formlabel" for="password" >Palavra-passe:</label></td>
+                <td><span asp-validation-for="Email" class="error-message"></span></td>
             </tr>
-            <tr> 
-                <td><input type="password" name="password" required placeholder="***************" /></td>
+            <tr>
+                <td><label asp-for="Password" class="login-formlabel"></label></td>
+            </tr>
+            <tr>
+                <td><input asp-for="Password" placeholder="***************" /></td>
+            </tr>
+            <tr>
+                <td><span asp-validation-for="Password" class="error-message"></span></td>
             </tr>
             <tr>
                 <td></td>
@@ -26,7 +32,7 @@
         </table>
 
         
-        <a asp-area="" asp-controller="Home" asp-action="Index">Esqueceu-se da palavra-passe?</a>
+        <a style="cursor:pointer;" onclick="javascript: tooglefyp();">Esqueceu-se da palavra-passe?</a>
         <div class="form-error">
             <label >@ViewData["Login-Message"]</label>
         </div>
@@ -34,3 +40,27 @@
     </form>
 </div>
 
+
+<div class="main-container-fyp" id="fyp">
+    <img id="fyp-close" src="~/images/icons/error.png" onclick="javascript: tooglefyp();" />
+    <form asp-action="ExecLoginAsync" class="fyp-form">
+        <table>
+            <tr>
+                <td><label class="fyp-formlabel" for="email"> <b>Recuperação de senha</b></label></td>
+            </tr>
+            <tr>
+                <td><label class="fyp-formlabel" for="email"> Email:</label></td>
+            </tr>
+            <tr>
+                <td><input type="email" name="email" id="email" required placeholder="exemplo@exemplo.com" /></td>
+            </tr>
+            <tr>
+                <td></td>
+            </tr>
+        </table>
+        <div class="form-error">
+            <label>@ViewData["Login-Message"]</label>
+        </div>
+        <input type="submit" value="Enviar" class="submitButton" />
+    </form>
+</div>
