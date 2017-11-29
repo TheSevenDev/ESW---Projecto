@@ -158,41 +158,51 @@ namespace CIMOB_IPS.Controllers
             Email.SendEmail(emailStudent, subject, body);
         }
 
-        public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            string email = Convert.ToString(form["email"]);
-            string password = Convert.ToString(form["password"]);
-            LoginState state = Account.IsRegistered(email, password);
+            string email = model.Email;
+            string password = model.Password;
+
+            if (ModelState.IsValid)
+            {
+                LoginState state = Account.IsRegistered(email, password);
 
 
-            if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
-            {
-                ViewData["Login-Message"] = state.GetMessage();
-                ViewData["fyp-initial-display"] = "none";
-                ViewData["initial-email"] = email;
-                return View("Login");
-            }
-            else
-            {
-                string accountId = Account.AccountID(email);
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
-                identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
-                if (state == LoginState.CONNECTED_STUDENT)
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
+                if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+                {
+                    ViewData["Login-Message"] = state.GetMessage();
+                    ViewData["fyp-initial-display"] = "none";
+                    ViewData["initial-email"] = email;
+
+                    return View("Login");
+
+                }
                 else
                 {
-
-                    if (Account.IsAdmin(accountId) == "True")
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                    string accountId = Account.AccountID(email);
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
+                    if (state == LoginState.CONNECTED_STUDENT)
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
                     else
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
-                }
+                    {
 
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
-                return RedirectToAction("Index", "Home");
+                        if (Account.IsAdmin(accountId) == "True")
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                        else
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                    }
+
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                    return RedirectToAction("Index", "Home");
+                }
             }
+            ViewData["initial-email"] = email;
+            return View(model);
         }
 
         public IActionResult ExecFYP(IFormCollection form)

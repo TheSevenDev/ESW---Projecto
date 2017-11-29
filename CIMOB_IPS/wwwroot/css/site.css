@@ -526,7 +526,7 @@ html, body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     width: 35%;
     margin-left: 32.5%;
-    min-height: 40.5vh;
+    min-height: 44.5vh;
     margin-right: auto;
     margin-left: auto;
 }
@@ -549,8 +549,8 @@ html, body {
     font-size: 1.2vmax;
 }
 
-.login-form input[type=email], input[type="password"] {
-    width: 22.2vw;
+.login-form input[type=email], input[type="password"], #input-pw {
+    width: 25.4vw;
     padding: 2% 3%;
     display: inline-block;
     border: 1px solid #ccc;
@@ -581,15 +581,31 @@ html, body {
 
 }
 
+#fyp-link {
+    margin-left: 0;
+}
+
+.error-message {
+    color: var(--red-var1);
+    font-size: 0.94vmax;
+}
+
+.remember-me{
+    width:100%;
+    margin-top:3%;
+    font-size:1.2vmax;
+
+}
+
 .login-form input[type=submit] {
-    width: 35%;
+    width: 100%;
     background-color: var(--blue-var4);
     color: white;
-    padding: 2.5%;
+    padding: 0.7vw;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 40%;
+    margin-left: 2.15vw;
     font-size: 1.1vmax;
     margin-top:4.2%;
 }
@@ -679,7 +695,7 @@ html, body {
     position: fixed;
     width: 1.7vw;
     height: 1.7vw;
-    top: 38%;
+    top: 41.8%;
     left: 91.5%;
     z-index: 999;
     cursor: pointer;
