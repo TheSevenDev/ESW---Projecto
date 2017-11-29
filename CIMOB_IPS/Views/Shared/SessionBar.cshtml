@@ -8,8 +8,8 @@
     @if (!User.Identity.IsAuthenticated)
     {
         <div class="session-actions">
-            <span class="sign-in"> <a asp-area="" asp-controller="User" asp-action="Login">Autenticar</a></span>
-            <span class="sign-up"><a asp-area="" asp-controller="User" asp-action="Register">Criar conta</a></span>
+            <span class="sign-in"> <a href="@Url.RouteUrl("LoginRoute")">Autenticar</a></span>
+            <span class="sign-up"><a href="@Url.RouteUrl("RegisterRoute")">>Criar conta</a></span>
         </div>
 
     }
