@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <h2 class="register-title">Registo</h2>
-<div class="main-container-pre-register">
+<div class="main-container-pre-register" hidden="hidden">
         <form asp-action="PreRegister" class="pre-register-form">
             <table>
                 <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
@@ -18,7 +18,7 @@
         </form>
 </div>
 
-<div class="main-container-register" hidden="hidden">
+<div class="main-container-register">
     <div>
         <form asp-action="RegisterStudent" class="register-form">
             <table>
@@ -30,8 +30,9 @@
                 <tr> <td><input asp-for="Account.Password" type="password" /></td></tr>
                 <tr> <td><span asp-validation-for="Account.Password" class="text-danger"></span></td><tr>
 
-                <tr> <td><label for="passwordConfirmation" name="labelPasswordConfirmation">Confirme a Password:</label></td></tr>
-                <tr> <td><input type="password" name="passwordConfirmation" /></td></tr>
+                <tr> <td><label asp-for="Account.ConfirmPassword"></label></td></tr>
+                <tr> <td><input asp-for="Account.ConfirmPassword" type="password" /></td></tr>
+                <tr> <td><span asp-validation-for="Account.ConfirmPassword" class="text-danger"></span></td><tr>
 
                 <tr> <td><label asp-for="Student.Cc"></label></td></tr>
                 <tr> <td><input asp-for="Student.Cc" type="text" style="width: 15vw;"/></td></tr>
