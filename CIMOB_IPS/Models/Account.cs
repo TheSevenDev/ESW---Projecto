@@ -61,6 +61,7 @@ namespace CIMOB_IPS.Models
                     {
                         accountID = reader[0].ToString();
                         string bdpw = ToHex((byte[])reader[2], false);
+                        Console.WriteLine("PASSWORD DB: " + bdpw + " PASSWORD CLIENT:" + EncryptToMD5(_password));
                         if (!bdpw.Equals(EncryptToMD5(_password)))
                         {
                             return LoginState.WRONG_PASSWORD;
@@ -169,7 +170,6 @@ namespace CIMOB_IPS.Models
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine("============ISADMIN==============" + reader[0].ToString());
                         return reader[0].ToString();
                     }
                 }

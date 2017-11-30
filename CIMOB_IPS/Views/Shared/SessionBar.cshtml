@@ -1,28 +1,24 @@
 ﻿
-@if (!User.Identity.IsAuthenticated)
-{
-    <div class="nav-session">
-        <div id="session-logo">
-            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cimobips.png" /></a>
-        </div>
 
-        <div class="session-actions">
-            <span class="sign-in"> <a asp-area="" asp-controller="User" asp-action="Login">Autenticar</a></span>
-                
-
-            <span class="sign-up"><a asp-area="" asp-controller="User" asp-action="Register">Criar conta</a></span>
-        </div>
+<div class="nav-session">
+    <div id="session-logo">
+        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cimobips.png" /></a>
     </div>
-}
-else
-{
-    <div class="nav-session">
-        <div id="session-logo">
-            <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cimobips.png" /></a>
+
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div class="session-actions">
+            <span class="sign-in"> <a href="@Url.RouteUrl("LoginRoute")">Autenticar</a></span>
+            <span class="sign-up"><a href="@Url.RouteUrl("RegisterRoute")">Criar conta</a></span>
         </div>
 
+    }
+    else
+    {
         <div class="session-name">
-            <a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a> <a id="logout" asp-area="" asp-controller="Login" asp-action="Logout">(Sair)</a>
+            <a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a> <a id="logout" asp-area="" asp-controller="User" asp-action="Logout">(Sair)</a>
         </div>
-</div>
+
 }
+
+</div>
