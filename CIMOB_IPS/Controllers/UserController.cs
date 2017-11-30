@@ -232,9 +232,7 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
         }

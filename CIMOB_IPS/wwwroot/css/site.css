@@ -692,11 +692,11 @@ html, body {
 
 
 #fyp-close {
-    position: fixed;
+    position: absolute;
     width: 1.7vw;
     height: 1.7vw;
-    top: 41.8%;
-    left: 91.5%;
+    top: -3%;
+    left: 95%;
     z-index: 999;
     cursor: pointer;
 }
