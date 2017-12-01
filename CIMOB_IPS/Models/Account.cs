@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -22,9 +23,16 @@ namespace CIMOB_IPS.Models
         [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
         [Display(Name = "E-mail:")]
         public string Email { get; set; }
+
         [Required(ErrorMessage = "A Password não preenchida")]
         [Display(Name = "Password:")]
         public byte[] Password { get; set; }
+
+        [NotMapped] 
+        [Required]
+        [Compare("Password",ErrorMessage ="As Passwords não coincidem.")]
+        [Display(Name = "Confirme a Password:")]
+        public byte[] ConfirmPassword { get; set; }
 
         public ICollection<Notification> Notification { get; set; }
         public ICollection<Student> Student { get; set; }
@@ -53,6 +61,7 @@ namespace CIMOB_IPS.Models
                     {
                         accountID = reader[0].ToString();
                         string bdpw = ToHex((byte[])reader[2], false);
+                        Console.WriteLine("PASSWORD DB: " + bdpw + " PASSWORD CLIENT:" + EncryptToMD5(_password));
                         if (!bdpw.Equals(EncryptToMD5(_password)))
                         {
                             return LoginState.WRONG_PASSWORD;
@@ -161,7 +170,6 @@ namespace CIMOB_IPS.Models
                 {
                     while (reader.Read())
                     {
-                        Console.WriteLine("============ISADMIN==============" + reader[0].ToString());
                         return reader[0].ToString();
                     }
                 }

@@ -25,11 +25,16 @@ function toogleHelp() {
 }
 
 function tooglefyp() {
+    clearfyp();
     var fyp = document.getElementById("fyp");
     var closefyp = document.getElementById("fyp-close");
 
     fyp.style.display = ((fyp.style.display !== 'block') ? 'block' : 'none')
     closefyp.style.display = ((closefyp.style.display !== 'block') ? 'block' : 'none')
+}
+
+function clearfyp() {
+    document.getElementById('email-fyp').value = "";
 }
 
 

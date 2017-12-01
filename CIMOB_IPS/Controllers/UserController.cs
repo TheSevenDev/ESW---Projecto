@@ -8,11 +8,14 @@ using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using CIMOB_IPS.Models;
 using System.Data;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace CIMOB_IPS.Controllers
 {
     public class UserController : Controller
-    {
+    {   
+        private const int NEW_PW_MAX_LENGTH = 8;
 
         public IActionResult Register()
         {
@@ -50,7 +53,7 @@ namespace CIMOB_IPS.Controllers
 
             long idAccount = InsertAccount(email, password);
 
-            
+
             long studentNum = 150221014; //StudentNum pelo url
             long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
             String address = Convert.ToString(form["Student.Address"].ToString());
@@ -76,7 +79,7 @@ namespace CIMOB_IPS.Controllers
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
-            
+
 
             bool isAdmin = true; //buscar IsAdmin pelo Url
             String name = Convert.ToString(form["Technician.Name"].ToString());
@@ -98,6 +101,9 @@ namespace CIMOB_IPS.Controllers
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
+
+            ViewData["fyp-initial-display"] = "none";
+            ViewData["initial-email"] = "";
 
             return View();
         }
@@ -152,47 +158,81 @@ namespace CIMOB_IPS.Controllers
             Email.SendEmail(emailStudent, subject, body);
         }
 
-        public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            string email = model.Email;
+            string password = model.Password;
+
+            if (ModelState.IsValid)
+            {
+                LoginState state = Account.IsRegistered(email, password);
+
+
+                if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+                {
+                    ViewData["Login-Message"] = state.GetMessage();
+                    ViewData["fyp-initial-display"] = "none";
+                    ViewData["initial-email"] = email;
+
+                    return View("Login");
+
+                }
+                else
+                {
+                    string accountId = Account.AccountID(email);
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
+                    if (state == LoginState.CONNECTED_STUDENT)
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
+                    else
+                    {
+
+                        if (Account.IsAdmin(accountId) == "True")
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                        else
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                    }
+
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            ViewData["initial-email"] = email;
+            return View(model);
+        }
+
+        public IActionResult ExecFYP(IFormCollection form)
         {
             string email = Convert.ToString(form["email"]);
-            string password = Convert.ToString(form["password"]);
-            LoginState state = Account.IsRegistered(email, password);
+            LoginState state = Account.IsRegistered(email, "");
 
 
-            if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+            if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED)
             {
-                ViewData["Login-Message"] = state.GetMessage();
+                ViewData["FYP-Message-Error"] = state.GetMessage();
+                ViewData["FYP-Message"] = "";
+                ViewData["fyp-initial-display"] = "block";
+                ViewData["initial-email-fyp"] = email;
                 return View("Login");
             }
             else
             {
-                string accountId = Account.AccountID(email);
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
-                identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
-                if (state == LoginState.CONNECTED_STUDENT)
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
-                else
-                {
-
-                    if (Account.IsAdmin(accountId) == "True")
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
-                    else
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
-                }
-
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
-                return RedirectToAction("Index", "Home");
+                SendFYPEmail(email);
+                ViewData["FYP-Message"] = "Password renovada. <br>Verifique a sua caixa de correio.";
+                ViewData["FYP-Message-Error"] = "";
+                ViewData["fyp-initial-display"] = "block";
+                return View("Login");
             }
         }
 
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
         }
@@ -202,7 +242,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "Select email From dbo.Pending_Account Where id_pending=@idAccount";
+                command.CommandText = "SELECT email FROM dbo.Pending_Account WHERE id_pending=@idAccount";
                 command.Parameters.AddWithValue("@idAccount", idAccount);
                 connection.Open();
 
@@ -221,14 +261,14 @@ namespace CIMOB_IPS.Controllers
         public long InsertAccount(String email, String password)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) output INSERTED.id_account values (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
             {
 
                 command.Parameters.AddWithValue("@Email", email);
                 command.Parameters.AddWithValue("@Password", password);
                 connection.Open();
                 //command.ExecuteNonQuery();
-                long idAccount = (Int64) command.ExecuteScalar();
+                long idAccount = (Int64)command.ExecuteScalar();
 
                 if (connection.State == System.Data.ConnectionState.Open)
                 {
@@ -238,7 +278,7 @@ namespace CIMOB_IPS.Controllers
                 return idAccount;
 
             }
-    
+
         }
 
         public void InsertPreRegister(String studentEmail, long studentNumber)
@@ -246,7 +286,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "insert into dbo.Pending_Account values (@Email,@StudentNumber)";
+                command.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@Email,@StudentNumber)";
                 command.Parameters.AddWithValue("@Email", studentEmail);
                 command.Parameters.AddWithValue("@StudentNumber", studentNumber);
                 connection.Open();
@@ -260,7 +300,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "insert into dbo.Student values (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
+                command.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
                 command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
                 command.Parameters.AddWithValue("@IdCourse", student.IdCourse);
                 command.Parameters.AddWithValue("@Name", student.Name);
@@ -281,7 +321,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "insert into dbo.Technician values (@IdAccount,@Name,@Telephone,@IsAdmin)";
+                command.CommandText = "INSERT INTO dbo.Technician VALUES (@IdAccount,@Name,@Telephone,@IsAdmin)";
                 command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
                 command.Parameters.AddWithValue("@Name", technician.Name);
                 command.Parameters.AddWithValue("@Telephone", technician.Telephone);
@@ -291,5 +331,51 @@ namespace CIMOB_IPS.Controllers
                 connection.Close();
             }
         }
+
+
+        private void ChangePassword(string _email, String _newpassword) {
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2)  where email = @email";
+                command.Parameters.AddWithValue("@password", _newpassword);
+                command.Parameters.AddWithValue("@email", _email);
+                connection.Open();
+                command.ExecuteReader();
+                connection.Close();
+
+            }
+        }
+
+        private void SendFYPEmail(string _email)
+        {
+            string newPW = GenerateNewPassword();
+            ChangePassword(_email, Account.EncryptToMD5(newPW));
+
+            //SEND EMAIL WITH PASSWORD
+
+            string subject = "[CIMOB-IPS] Alteração da palavra-passe.";
+
+            string body = "Enviamos-lhe este email em resposta ao pedido de alteração da palavra-passe de acesso à plataforma do CIMOB-IPS.<br><br> A sua nova palavra-passe é:" + newPW
+                + "<br<br>>Caso não queira permanecer com a nova palavra-passe pode sempre alterá-la em: <a href=\"cimob-ips.azurewebsites.net/user/alterar_palavra_passe\"> cimob-ips.azurewebsites.net/user/alterar_palavra_passe </a>"
+                + "<br><br> A Equipa do CIMOB-IPS.";
+
+            Email.SendEmail(_email, subject, body);
+
+        }
+
+        private string GenerateNewPassword()
+        {
+            RNGCryptoServiceProvider newpw = new RNGCryptoServiceProvider();
+
+            byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
+            newpw.GetBytes(tokenBuffer);
+            return Convert.ToBase64String(tokenBuffer);
+
+        }
+
+     
+
     }
 }
