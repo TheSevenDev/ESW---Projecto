@@ -1,4 +1,4 @@
-﻿@model CIMOB_IPS.Models.Account
+﻿@model CIMOB_IPS.Models.ProfileViewModel
 
 @{
     ViewData["Title"] = "Profile";
@@ -6,8 +6,8 @@
     //List <Student> students = Model.Student.ToList();
     //List<Technician> technicians = Model.Technician.ToList();
 
-    Student student = null;
-    Technician technician = null;
+    //Student student = null;
+    //Technician technician = null;
 
     //if(students.Count > 0)
     //{
@@ -16,7 +16,8 @@
     //else
     //{
     //    technician = technicians.First();
-    //}
+
+    var cenas = (Student)Model.Account;
 }
 
 <h2></h2>
@@ -28,10 +29,10 @@
         <button id="button" type="button">Editar Perfil</button>
     </div>
     <table class="information">
-        @if (student != null)
+        @if(Model.AccountType == EnumAccountType.STUDENT)
         {
                 <tr>
-                    <td>@Html.DisplayNameFor(model => student.Name)</td>
+                    <td>@Html.DisplayNameFor(model => (Student)(Model.Account).Name)</td>
                     <td>@Html.DisplayFor(model => student.Name)</td>
                 </tr>
                 <tr>

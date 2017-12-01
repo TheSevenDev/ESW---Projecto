@@ -11,9 +11,9 @@ namespace CIMOB_IPS.Controllers
 {
     public class ProfileController : Controller
     {
-        public Account GetAccountModelByID(int id)
+        public ProfileViewModel GetAccountModelByID(int id)
         {
-            var account = new Account{ IdAccount = id };
+            var viewModel = new ProfileViewModel{ };
 
             using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
@@ -42,14 +42,13 @@ namespace CIMOB_IPS.Controllers
                         StudentNum = reader.GetInt64(9)
                     };
 
-                    account.Email = reader.GetString(1);
+                    modelStudent.IdAccountNavigation.Email = reader.GetString(1);
+                    viewModel.Account = modelStudent;
+                    viewModel.AccountType = EnumAccountType.STUDENT;
 
                     reader.Close();
 
-                    //VER SE HA MELHOR FORMA PA FAZER ISTO
-                    account.Student.Add(modelStudent);
-
-                    return account;
+                    return viewModel;
                 }
 
                 reader.Close();
@@ -69,13 +68,11 @@ namespace CIMOB_IPS.Controllers
                         IsAdmin = reader2.GetBoolean(4)
                     };
 
-                    account.Email = reader2.GetString(5);
+                    modelTech.IdAccountNavigation.Email = reader.GetString(1);
+                    viewModel.Account = modelTech;
+                    viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
-                    reader2.Close();
-
-                    account.Technician.Add(modelTech);
-
-                    return account;
+                    return viewModel;
                 }
             }
 
@@ -84,10 +81,10 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Index()
         {
-            //var account = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            //var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
 
             //add verificação
-            return View(/*account*/);
+            return View(/*accountViewModel*/);
         }
     }
 }
