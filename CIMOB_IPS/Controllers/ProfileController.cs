@@ -42,7 +42,7 @@ namespace CIMOB_IPS.Controllers
                         StudentNum = reader.GetInt64(9)
                     };
 
-                    modelStudent.IdAccountNavigation.Email = reader.GetString(1);
+                    modelStudent.IdAccountNavigation = new Account { Email = reader.GetString(1) };
                     viewModel.Account = modelStudent;
                     viewModel.AccountType = EnumAccountType.STUDENT;
 
@@ -53,7 +53,7 @@ namespace CIMOB_IPS.Controllers
 
                 reader.Close();
 
-                SqlCommand commandtechnician = new SqlCommand("select t.*, a.email from Technician t, Account a " + 
+                SqlCommand commandtechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " + 
                     "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
                 commandtechnician.Parameters.AddWithValue("@Id", id);
                 SqlDataReader reader2 = commandtechnician.ExecuteReader();
@@ -63,17 +63,21 @@ namespace CIMOB_IPS.Controllers
                     var modelTech = new Technician
                     {
                         IdTechnician = reader2.GetInt64(0),
-                        Name = reader2.GetString(2),
-                        Telephone = reader2.GetInt64(3),
-                        IsAdmin = reader2.GetBoolean(4)
+                        Name = reader2.GetString(1),
+                        Telephone = reader2.GetInt64(2),
+                        IsAdmin = reader2.GetBoolean(3)
                     };
 
-                    modelTech.IdAccountNavigation.Email = reader.GetString(1);
+                    modelTech.IdAccountNavigation = new Account { Email = reader.GetString(4) };
                     viewModel.Account = modelTech;
                     viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
+                    reader2.Close();
+
                     return viewModel;
                 }
+
+                reader2.Close();
             }
 
             return null;
@@ -81,10 +85,18 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Index()
         {
-            //var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
 
             //add verificação
-            return View(/*accountViewModel*/);
+            return View(accountViewModel);
+        }
+
+        public IActionResult Edit()
+        {
+            var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+
+            //add verificação
+            return View(accountViewModel);
         }
     }
 }

@@ -347,7 +347,6 @@ html, body {
 */
 
 .information {
-    display: none;
     font-size: 95%;
     width: Auto;
     height: auto;
@@ -361,19 +360,27 @@ html, body {
 }
 
 
-.image {
+.profileImage {
     width: 30%;
     height: 30%;
     position: absolute;
     margin-left: 17%;
 }
 
-#button {
-    display: none;
-    height: 25%;
-    width: 55%;
-    margin-left: 200%;
-    margin-top: 120%;
+.profile button {
+        height: 7%;
+        width: 20%;
+        float: right;
+        border: none;
+        background-color: inherit;
+        color: var(--main-blue);
+        font-weight: bold;
+        font-size: 1vmax;
+}
+
+.profile button:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 #img {
@@ -394,11 +401,12 @@ html, body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
     border-bottom: 1px solid lightgray;
-    width: 40%;
-    height: 60%;
+    width: 39%;
+    height: 59%;
     position: absolute;
     top: 20%;
     margin-left: 30.3%;
+    padding: 1% 1%;
 }
 
 .page-title {

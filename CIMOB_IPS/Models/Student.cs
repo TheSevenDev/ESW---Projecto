@@ -52,6 +52,7 @@ namespace CIMOB_IPS.Models
         public long StudentNum { get; set; }
 
         public Account IdAccountNavigation { get; set; }
+        [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }
         public Nationality IdNationalityNavigation { get; set; }
         public ICollection<Application> Application { get; set; }

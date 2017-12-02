@@ -1,0 +1,74 @@
+﻿@model CIMOB_IPS.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+
+    Student studentModel = new Student();
+    Technician technicianModel = new Technician();
+
+    if(Model.AccountType == EnumAccountType.STUDENT)
+    {
+        studentModel = ((Student)Model.Account);
+    }
+    else
+    {
+        technicianModel = ((Technician)Model.Account);
+    }
+}
+
+<p id="title">Editar Perfil</p>
+
+<div class="profile">
+    <div class="profileImage">
+        <img id="img" src="~/images/user1.png" width="130" height="130" />
+    </div>
+    <div class="information">
+        <div class="col-md-4">
+            @if (Model.AccountType == EnumAccountType.STUDENT)
+            {
+                <form asp-action="EditProfileStudent">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="@studentModel.Telephone" class="control-label"></label>
+                        <input asp-for="@studentModel.Telephone" class="form-control" />
+                        <span asp-validation-for="@studentModel.Telephone" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@studentModel.StudentNum" class="control-label"></label>
+                        <input asp-for="@studentModel.StudentNum" class="form-control" />
+                        <span asp-validation-for="@studentModel.StudentNum" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@studentModel.Address" class="control-label"></label>
+                        <input asp-for="@studentModel.Address" class="form-control" />
+                        <span asp-validation-for="@studentModel.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </form>
+            }
+            else
+            {
+                <form asp-action="EditProfileTechnician">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label asp-for="@technicianModel.Telephone" class="control-label"></label>
+                            <input asp-for="@technicianModel.Telephone" class="form-control" />
+                            <span asp-validation-for="@technicianModel.Telephone" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
+
+<!--???-->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
