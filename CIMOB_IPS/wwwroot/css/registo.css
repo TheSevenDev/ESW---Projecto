@@ -8,6 +8,14 @@
     min-height: 25vh;
 }
 
+#pre-register-message{
+    margin-left: 4%;
+    margin-top: 3%;
+    font-size: 1.2vmax;
+    color:green;
+    position: absolute;
+}
+
 .pre-register-form {
     margin-left: 15%;
     margin-top: 10%;
@@ -15,6 +23,8 @@
     padding-left: 3%;
     position: relative;
 }
+
+
 
 
 .pre-register-form label {

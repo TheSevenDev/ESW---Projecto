@@ -22,30 +22,6 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public IActionResult PreRegister(IFormCollection form)
-        {
-            long studentNumber = Convert.ToInt64(form["Student.StudentNum"]);
-            String studentEmail = studentNumber + "@estudantes.ips.pt";
-
-            InsertPreRegister(studentEmail, studentNumber);
-            SendEmailToStudent(studentEmail);
-            ViewData["sucess"] = "true";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-                {
-                    connection.Open();
-                }
-            }
-            catch (SqlException e)
-            {
-                ViewData["sucess"] = "false";
-            }
-
-            return View("Register");
-        }
-
         public IActionResult RegisterStudent(IFormCollection form)
         {
             String email = getEmailByIdPendingAccount("1"); //Id vem do url
@@ -128,35 +104,40 @@ namespace CIMOB_IPS.Controllers
             return View("Invite");
         }
 
-        private void SendEmailToTec(string emailTec)
+        [HttpPost]
+        public IActionResult PreRegister(RegisterViewModel model)
         {
-            string subject = "Convite para registo no CIMOB-IPS";
 
-            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
 
-            Email.SendEmail(emailTec, subject, body);
+            
+
+                long studentNumber = model.Student.StudentNum;
+                String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
+
+
+                InsertPreRegister(studentEmail, studentNumber);
+                SendEmailToStudent(studentEmail);
+                ViewData["message"] = "Email enviado!";
+
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    {
+                        connection.Open();
+                    }
+                }
+                catch (SqlException e)
+                {
+                    ViewData["message"] = "Erro mongo...";
+                }
+            
+
+            return View("Register");
         }
 
-        private void WelcomeEmail(string targetEmail)
-        {
-            string subject = "Bem-Vindo ao CIMOB-IPS";
 
-            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
-                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
-
-            Email.SendEmail(targetEmail, subject, body);
-        }
-
-        private void SendEmailToStudent(String emailStudent)
-        {
-            string subject = "Registo no CIMOB-IPS";
-
-            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a>.";
-
-            Email.SendEmail(emailStudent, subject, body);
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -332,7 +313,6 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-
         private void ChangePassword(string _email, String _newpassword) {
 
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
@@ -346,6 +326,16 @@ namespace CIMOB_IPS.Controllers
                 connection.Close();
 
             }
+        }
+
+        private string GenerateNewPassword()
+        {
+            RNGCryptoServiceProvider newpw = new RNGCryptoServiceProvider();
+
+            byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
+            newpw.GetBytes(tokenBuffer);
+            return Convert.ToBase64String(tokenBuffer);
+
         }
 
         private void SendFYPEmail(string _email)
@@ -365,17 +355,36 @@ namespace CIMOB_IPS.Controllers
 
         }
 
-        private string GenerateNewPassword()
+        private void SendEmailToTec(string emailTec)
         {
-            RNGCryptoServiceProvider newpw = new RNGCryptoServiceProvider();
+            string subject = "Convite para registo no CIMOB-IPS";
 
-            byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
-            newpw.GetBytes(tokenBuffer);
-            return Convert.ToBase64String(tokenBuffer);
+            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
 
+            Email.SendEmail(emailTec, subject, body);
         }
 
-     
+        private void WelcomeEmail(string targetEmail)
+        {
+            string subject = "Bem-Vindo ao CIMOB-IPS";
+
+            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
+                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
+
+            Email.SendEmail(targetEmail, subject, body);
+        }
+
+        private void SendEmailToStudent(String emailStudent)
+        {
+            string subject = "Registo no CIMOB-IPS";
+
+            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href=\"www.google.pt\">aqui</a>.";
+
+            Email.SendEmail(emailStudent, subject, body);
+        }
+
 
     }
 }

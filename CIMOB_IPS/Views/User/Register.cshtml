@@ -1,4 +1,4 @@
-﻿@model CIMOB_IPS.Models.UserViewModel;
+﻿@model CIMOB_IPS.Models.RegisterViewModel;
 
 @{
     ViewData["Title"] = "Register";
@@ -7,20 +7,20 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <h2 class="register-title">Registo</h2>
-<div class="main-container-pre-register" hidden="hidden">
-        <form asp-action="PreRegister" class="pre-register-form">
+<div class="main-container-pre-register" >
+        <form asp-action="PreRegister" method="post" class="pre-register-form">
             <table>
                 <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
-                <tr><td><input asp-for="Student.StudentNum" type="text" placeholder="Número de Estudante" /></td></tr>
+                <tr><td><input asp-for="Student.StudentNum"  placeholder="Número de Estudante" /></td></tr>
                 <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
-                <tr><td><input type="submit" value="Enviar" /></td></tr>
+                <tr><td><div id="=pre-register-message">@ViewData["message"]</div><input type="submit" value="Enviar" /></td></tr>
             </table>
         </form>
 </div>
 
-<div class="main-container-register">
+<div class="main-container-register" hidden="hidden">
     <div>
-        <form asp-action="RegisterStudent" class="register-form">
+        <form asp-action="RegisterStudent" method="post" class="register-form">
             <table>
                 <tr> <td><label asp-for="Student.Name"></label></td></tr>
                 <tr> <td><input asp-for="Student.Name" /></td></tr>
@@ -68,7 +68,7 @@
 <div class="middleSquare" hidden="hidden">
     <h2>Registo</h2>
     <div>
-        <form asp-action="RegisterTechnician">
+        <form asp-action="RegisterTechnician" method="post">
             <table>
                 <tr>
                     <td><label asp-for="Technician.Name"></label></td>
@@ -89,14 +89,6 @@
         </form>
     </div>
 </div>
-
-@if (ViewData["sucess"] == "true")
-{
-    <div class="middleSquare">
-        <h1>Email enviado com sucesso.</h1>
-    </div>
- }
-
 
 @section Scripts {
       @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
