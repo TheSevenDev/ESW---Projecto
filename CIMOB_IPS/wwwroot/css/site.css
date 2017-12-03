@@ -325,6 +325,12 @@ html, body {
     height:85%;
     top:10%;
     left:25%;
+    
+}
+
+#help-content h1{
+    width:100%;
+    text-align:center;
 }
 
 #help-close {
@@ -687,7 +693,7 @@ html, body {
     width: 35%;
     background-color: var(--blue-var4);
     color: white;
-    padding: 2.5%;
+    padding: 2.8%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
