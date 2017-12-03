@@ -11,7 +11,16 @@ namespace CIMOB_IPS.Models
 
         public EnumAccountType AccountType { get; set; }
 
-        [NotMapped]
-        public Object Account { get; set; }
+        public Student Student { get; set; }
+
+        public Technician Technician { get; set; }
+
+        public ProfileViewModel()
+        {
+            Student = new Student();
+            Technician = new Technician();
+        }
     }
+
+
 }

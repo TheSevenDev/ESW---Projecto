@@ -6,11 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using CIMOB_IPS.Models;
 using System.Data.SqlClient;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIMOB_IPS.Controllers
 {
     public class ProfileController : Controller
     {
+        private readonly CIMOB_IPS_DBContext _context;
+
+        public ProfileController(CIMOB_IPS_DBContext context)
+        {
+            _context = context;
+        }
+
         public ProfileViewModel GetAccountModelByID(int id)
         {
             var viewModel = new ProfileViewModel{ };
@@ -32,6 +40,7 @@ namespace CIMOB_IPS.Controllers
                     var modelStudent = new Student
                     {
                         IdStudent = reader.GetInt64(0),
+                        IdAccount = id,
                         IdCourseNavigation = new Course { Name = reader.GetString(2) },
                         Name = reader.GetString(3),
                         Address = reader.GetString(4),
@@ -42,8 +51,8 @@ namespace CIMOB_IPS.Controllers
                         StudentNum = reader.GetInt64(9)
                     };
 
-                    modelStudent.IdAccountNavigation = new Account { Email = reader.GetString(1) };
-                    viewModel.Account = modelStudent;
+                    modelStudent.IdAccountNavigation = new Account { IdAccount = id, Email = reader.GetString(1) };
+                    viewModel.Student = modelStudent;
                     viewModel.AccountType = EnumAccountType.STUDENT;
 
                     reader.Close();
@@ -63,13 +72,14 @@ namespace CIMOB_IPS.Controllers
                     var modelTech = new Technician
                     {
                         IdTechnician = reader2.GetInt64(0),
+                        IdAccount = id,
                         Name = reader2.GetString(1),
                         Telephone = reader2.GetInt64(2),
                         IsAdmin = reader2.GetBoolean(3)
                     };
 
-                    modelTech.IdAccountNavigation = new Account { Email = reader.GetString(4) };
-                    viewModel.Account = modelTech;
+                    modelTech.IdAccountNavigation = new Account { IdAccount = id, Email = reader.GetString(4) };
+                    viewModel.Technician = modelTech;
                     viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
                     reader2.Close();
@@ -83,9 +93,14 @@ namespace CIMOB_IPS.Controllers
             return null;
         }
 
+        public int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
         public IActionResult Index()
         {
-            var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             //add verificação
             return View(accountViewModel);
@@ -93,10 +108,64 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Edit()
         {
-            var accountViewModel = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             //add verificação
             return View(accountViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfileStudent([Bind("IdAccount, Name, Telephone,StudentNum,Address")] Student student)
+        {
+
+            if (GetCurrentUserID() != student.IdAccount)
+            {
+                return BadRequest();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    {
+                        //create await  
+
+                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        {
+                            command.CommandText = "UPDATE Student SET telephone = @Telephone, student_num = @StudentNum, address = @Address" +
+                                " WHERE id_account = @IdAccount";
+                            command.Parameters.AddWithValue("@Telephone", student.Telephone);
+                            command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+                            command.Parameters.AddWithValue("@Address", student.Address);
+                            command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
+                            sqlConnection.Open();
+                            command.ExecuteNonQuery();
+                            sqlConnection.Close();
+                        }
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountExists(student.IdAccount))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        private bool AccountExists(long id)
+        {
+            return _context.Account.Any(e => e.IdAccount == id);
         }
     }
 }
