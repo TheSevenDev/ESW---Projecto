@@ -17,7 +17,7 @@ namespace CIMOB_IPS.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Lembrar-me")]
+        [Display(Name = "Manter sessão")]
         public bool RememberMe { get; set; }
 
     }

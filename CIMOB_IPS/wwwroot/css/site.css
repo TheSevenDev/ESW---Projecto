@@ -70,7 +70,8 @@ html, body {
 
 .session-name {
     position: fixed;
-    left: 44vw;
+    width:100%;
+    text-align:center;
 }
 .session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
     text-decoration: none;
