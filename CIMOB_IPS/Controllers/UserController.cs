@@ -24,7 +24,7 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult RegisterStudent(IFormCollection form)
         {
-            String email = getEmailByIdPendingAccount("1"); //Id vem do url
+            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
@@ -51,7 +51,7 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult RegisterTechnician(IFormCollection form)
         {
-            String email = getEmailByIdPendingAccount("1"); //Id vem do url
+            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
@@ -137,8 +137,6 @@ namespace CIMOB_IPS.Controllers
             return View("Register");
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -218,7 +216,7 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public String getEmailByIdPendingAccount(string idAccount)
+        public String GetEmailByIdPendingAccount(string idAccount)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -324,7 +322,6 @@ namespace CIMOB_IPS.Controllers
                 connection.Open();
                 command.ExecuteReader();
                 connection.Close();
-
             }
         }
 
