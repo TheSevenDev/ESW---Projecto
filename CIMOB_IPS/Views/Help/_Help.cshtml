@@ -4,5 +4,6 @@
 
     string html = HelpController.GetHelpInformation(controller, action);
 }
-
-@Html.Raw(html)
+<div style="padding:3%;">
+    @Html.Raw(html)
+</div>

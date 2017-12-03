@@ -325,6 +325,12 @@ html, body {
     height:85%;
     top:10%;
     left:25%;
+    
+}
+
+#help-content h1{
+    width:100%;
+    text-align:center;
 }
 
 #help-close {

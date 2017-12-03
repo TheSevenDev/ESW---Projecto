@@ -14,6 +14,11 @@ namespace CIMOB_IPS.Models
         public long IdStudent { get; set; }
         public long IdAccount { get; set; }
 
+        [Required(ErrorMessage = "O número de Estudante não está preenchido.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "O Nº Estudante tem de ser expresso em algarismos.")]
+        [Display(Name = "Número de Estudante:")]
+        public long StudentNum { get; set; }
+
         [Required(ErrorMessage = "O Curso não está preenchido.")]
         [Display(Name = "Curso:")]
         public long IdCourse { get; set; }
@@ -45,11 +50,6 @@ namespace CIMOB_IPS.Models
         [RegularExpression("^[0-9]*$", ErrorMessage = "Os ECTS tem de ser expresso em algarismos.")]
         [Display(Name = "ECTS:")]
         public int Credits { get; set; }
-
-        [Required (ErrorMessage = "O Nº Estudante não está preenchido.")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "O Nº Estudante tem de ser expresso em algarismos.")]
-        [Display(Name = "Nº Estudante:")]
-        public long StudentNum { get; set; }
 
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]

@@ -14,7 +14,7 @@ using System.Text;
 namespace CIMOB_IPS.Controllers
 {
     public class UserController : Controller
-    {   
+    {
         private const int NEW_PW_MAX_LENGTH = 8;
 
         public IActionResult Register()
@@ -105,38 +105,34 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult PreRegister(RegisterViewModel model)
         {
 
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            
+            long studentNumber = model.Student.StudentNum;
+            String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
 
-                long studentNumber = model.Student.StudentNum;
-                String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
-
-
+            //if (ModelState.IsValid) { 
+            try
+            {
                 InsertPreRegister(studentEmail, studentNumber);
                 SendEmailToStudent(studentEmail);
-                ViewData["message"] = "Email enviado!";
-
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-                    {
-                        connection.Open();
-                    }
-                }
-                catch (SqlException e)
-                {
-                    ViewData["message"] = "Erro mongo...";
-                }
-            
+                ViewData["message"] = "Email enviado.";
+                return View("Register");
+            }
+            catch (SqlException e)
+            {
+                ViewData["message"] = "Conexção Falhada.";
+            }
+            //}
+            ViewData["message"] = "";
 
             return View("Register");
         }
-
+    
 
 
         [HttpPost]
