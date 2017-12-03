@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using CIMOB_IPS.Models;
 
 namespace CIMOB_IPS.Models
 {
@@ -434,5 +435,7 @@ namespace CIMOB_IPS.Models
                     .HasConstraintName("fk_T_Account");
             });
         }
+
+        public DbSet<CIMOB_IPS.Models.ProfileViewModel> ProfileViewModel { get; set; }
     }
 }

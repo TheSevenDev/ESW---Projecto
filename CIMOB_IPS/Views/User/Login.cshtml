@@ -1,12 +1,10 @@
-﻿@model CIMOB_IPS.Models.Account
+﻿@model CIMOB_IPS.Models.LoginViewModel
 @{
     ViewData["Title"] = "Login";
 }
-<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
-
 <h2 class="page-title-login">Autenticar</h2>
 <div class="main-container-login">
-    <form asp-action="ExecLoginAsync" class="login-form">
+    <form asp-action="Login" method="post" class="login-form">
         <table>
             <tr>
                 <td><label asp-for="Email" class="login-formlabel"></label></td>
@@ -21,22 +19,37 @@
                 <td><label asp-for="Password" class="login-formlabel"></label></td>
             </tr>
             <tr>
-                <td><input asp-for="Password" type="password" placeholder="***************" /></td>
+                <td><input asp-for="Password" id="input-pw" placeholder="***************" /></td>
             </tr>
             <tr>
                 <td><span asp-validation-for="Password" class="error-message"></span></td>
             </tr>
             <tr>
-                <td></td>
+            </tr>
+            <tr></tr><tr></tr><tr></tr>
+            <tr>
+                <td><span class="error-message">@ViewData["Login-Message"]</span></td>
             </tr>
         </table>
 
         
-        <a style="cursor:pointer;" onclick="javascript: tooglefyp();">Esqueceu-se da palavra-passe?</a>
-        <div class="form-error">
-            <label >@ViewData["Login-Message"]</label>
-        </div>
-        <input type="submit" value="Autenticar" class="submitButton" />
+        <table>
+            <tr>
+                <td>
+                    <div class="remember-me">
+                        <input asp-for="RememberMe" />
+                        <label asp-for="RememberMe"></label>
+                    </div>
+                </td>
+                <td>
+                    <input type="submit" value="Autenticar" class="submitButton" />
+                </td>
+            </tr>
+            <tr></tr>
+            <tr>
+                <td><a style="cursor:pointer;" id="fyp-link" onclick="javascript: tooglefyp();">Esqueceu-se da palavra-passe?</a></td>
+            </tr>
+        </table>
     </form>
 </div>
 

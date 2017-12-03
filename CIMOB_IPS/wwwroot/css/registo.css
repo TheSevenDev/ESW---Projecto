@@ -8,6 +8,14 @@
     min-height: 25vh;
 }
 
+#pre-register-message{
+    margin-left: 4%;
+    margin-top: 3%;
+    font-size: 1.2vmax;
+    color:green;
+    position: absolute;
+}
+
 .pre-register-form {
     margin-left: 15%;
     margin-top: 10%;
@@ -23,7 +31,7 @@
     font-size: 1.2vmax;
 }
 
-.pre-register-form input[type=text] {
+.pre-register-form input[type=number] {
     width: 22.2vw;
     padding: 2% 3%;
     display: inline-block;
@@ -32,6 +40,13 @@
     box-sizing: border-box;
     font-size: 1.1vmax;
 }
+
+.input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    margin: 0;
+}
+
 
 .pre-register-form input[type=submit] {
     width: 35%;

@@ -6,14 +6,22 @@ using Microsoft.AspNetCore.Mvc;
 using CIMOB_IPS.Models;
 using System.Data.SqlClient;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIMOB_IPS.Controllers
 {
     public class ProfileController : Controller
     {
-        public Account GetAccountModelByID(int id)
+        private readonly CIMOB_IPS_DBContext _context;
+
+        public ProfileController(CIMOB_IPS_DBContext context)
         {
-            var account = new Account{ IdAccount = id };
+            _context = context;
+        }
+
+        public ProfileViewModel GetAccountModelByID(int id)
+        {
+            var viewModel = new ProfileViewModel{ };
 
             using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
@@ -32,6 +40,7 @@ namespace CIMOB_IPS.Controllers
                     var modelStudent = new Student
                     {
                         IdStudent = reader.GetInt64(0),
+                        IdAccount = id,
                         IdCourseNavigation = new Course { Name = reader.GetString(2) },
                         Name = reader.GetString(3),
                         Address = reader.GetString(4),
@@ -42,19 +51,18 @@ namespace CIMOB_IPS.Controllers
                         StudentNum = reader.GetInt64(9)
                     };
 
-                    account.Email = reader.GetString(1);
+                    modelStudent.IdAccountNavigation = new Account { IdAccount = id, Email = reader.GetString(1) };
+                    viewModel.Student = modelStudent;
+                    viewModel.AccountType = EnumAccountType.STUDENT;
 
                     reader.Close();
 
-                    //VER SE HA MELHOR FORMA PA FAZER ISTO
-                    account.Student.Add(modelStudent);
-
-                    return account;
+                    return viewModel;
                 }
 
                 reader.Close();
 
-                SqlCommand commandtechnician = new SqlCommand("select t.*, a.email from Technician t, Account a " + 
+                SqlCommand commandtechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " + 
                     "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
                 commandtechnician.Parameters.AddWithValue("@Id", id);
                 SqlDataReader reader2 = commandtechnician.ExecuteReader();
@@ -64,30 +72,149 @@ namespace CIMOB_IPS.Controllers
                     var modelTech = new Technician
                     {
                         IdTechnician = reader2.GetInt64(0),
-                        Name = reader2.GetString(2),
-                        Telephone = reader2.GetInt64(3),
-                        IsAdmin = reader2.GetBoolean(4)
+                        IdAccount = id,
+                        Name = reader2.GetString(1),
+                        Telephone = reader2.GetInt64(2),
+                        IsAdmin = reader2.GetBoolean(3)
                     };
 
-                    account.Email = reader2.GetString(5);
+                    modelTech.IdAccountNavigation = new Account { IdAccount = id, Email = reader2.GetString(4) };
+                    viewModel.Technician = modelTech;
+                    viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
                     reader2.Close();
 
-                    account.Technician.Add(modelTech);
-
-                    return account;
+                    return viewModel;
                 }
+
+                reader2.Close();
             }
 
             return null;
         }
 
+        public int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
         public IActionResult Index()
         {
-            //var account = GetAccountModelByID(int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             //add verificação
-            return View(/*account*/);
+            return View(accountViewModel);
+        }
+
+        public IActionResult Edit()
+        {
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
+
+            //add verificação
+            return View(accountViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfileStudent([Bind("IdAccount, Name, Telephone,StudentNum,Address")] Student student)
+        {
+
+            if (GetCurrentUserID() != student.IdAccount)
+            {
+                return BadRequest();
+            }
+
+            //não está a apresentar erros na pagina
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    {
+                        //create await  
+
+                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        {
+                            command.CommandText = "UPDATE Student SET telephone = @Telephone, student_num = @StudentNum, address = @Address" +
+                                " WHERE id_account = @IdAccount";
+                            command.Parameters.AddWithValue("@Telephone", student.Telephone);
+                            command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+                            command.Parameters.AddWithValue("@Address", student.Address);
+                            command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
+                            sqlConnection.Open();
+                            command.ExecuteNonQuery();
+                            sqlConnection.Close();
+                        }
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountExists(student.IdAccount))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
+        {
+
+            if (GetCurrentUserID() != technician.IdAccount)
+            {
+                return BadRequest();
+            }
+
+            //não está a apresentar erros na pagina
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    {
+                        //create await  
+
+                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        {
+                            command.CommandText = "UPDATE Technician SET telephone = @Telephone" +
+                                " WHERE id_account = @IdAccount";
+                            command.Parameters.AddWithValue("@Telephone", technician.Telephone);
+                            command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
+                            sqlConnection.Open();
+                            command.ExecuteNonQuery();
+                            sqlConnection.Close();
+                        }
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountExists(technician.IdAccount))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        private bool AccountExists(long id)
+        {
+            return _context.Account.Any(e => e.IdAccount == id);
         }
     }
 }

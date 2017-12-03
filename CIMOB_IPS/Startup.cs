@@ -71,6 +71,22 @@ namespace CIMOB_IPS
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "LoginRoute", "Login",
+                    defaults: new { controller = "User"  , action = "Login"});
+
+                routes.MapRoute(
+                    "ExecLoginRoute", "Login",
+                    defaults: new { controller = "User", action = "ExecLoginAsync" });
+
+                routes.MapRoute(
+                    "ExecFypRoute", "Login",
+                    defaults: new { controller = "User", action = "ExecFYP" });
+
+                routes.MapRoute(
+                    "RegisterRoute", "Register",
+                    defaults: new { controller = "User", action = "Register" });
             });
         }
     }

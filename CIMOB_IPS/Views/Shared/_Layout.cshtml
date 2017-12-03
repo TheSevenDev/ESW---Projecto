@@ -1,12 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
+
+    // = HelpController.GetHelpInformation(controller, action);
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CIMOB-IPS</title>
 
-        <link rel="stylesheet" href='@Url.Content("~/css/site.css")'/>
-        <link rel="shortcut icon" type="image/png" href="~/images/icons/favicon.png" />
+        <link rel="stylesheet" href="~/css/site.css" />
+
+        <link rel="shortcut icon" type="image/png" href="~/favicon.ico" />
 </head>
 <body>
     <nav>
@@ -14,7 +22,11 @@
         <div class="navbar-menu">
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="About">Programa</a>
+                <ul class="sub-menu">
+                <li><a asp-area="" asp-controller="Home" asp-action="About">Instituições</a></li>
+                <li></li>
+                </ul></li>
 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -23,9 +35,8 @@
                     {
                     <li><a asp-area="" asp-controller="Home" asp-action="About">Candidatura</a>
                         <ul class="sub-menu">
-                            <li><a asp-area="" asp-controller="Home" asp-action="About">OPÇÃO 1</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="About">OPÇÃO 2</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="About">OPÇÃO 3</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">Iniciar Candidatura</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">Minhas Candidaturas</a></li>
                             <li></li>
                         </ul>
                     </li>
@@ -80,7 +91,7 @@
     <div id="fade-background" onclick="javascript: toogleHelp();"></div>
     <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />   
     <div id="help-content">
-        <!--PARTIAL VIEW-->
+        @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
 
 
@@ -94,6 +105,25 @@
     @RenderSection("Scripts", required: false)
 
     <script src="~/js/site.js"></script>
-    
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+    </script>
+    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            crossorigin="anonymous"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+    </script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script> 
+
 </body>
 </html>

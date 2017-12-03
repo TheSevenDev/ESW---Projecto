@@ -22,30 +22,6 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public IActionResult PreRegister(IFormCollection form)
-        {
-            long studentNumber = Convert.ToInt64(form["Student.StudentNum"]);
-            String studentEmail = studentNumber + "@estudantes.ips.pt";
-
-            InsertPreRegister(studentEmail, studentNumber);
-            SendEmailToStudent(studentEmail);
-            ViewData["sucess"] = "true";
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-                {
-                    connection.Open();
-                }
-            }
-            catch (SqlException e)
-            {
-                ViewData["sucess"] = "false";
-            }
-
-            return View("Register");
-        }
-
         public IActionResult RegisterStudent(IFormCollection form)
         {
             String email = getEmailByIdPendingAccount("1"); //Id vem do url
@@ -128,71 +104,82 @@ namespace CIMOB_IPS.Controllers
             return View("Invite");
         }
 
-        private void SendEmailToTec(string emailTec)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult PreRegister(RegisterViewModel model)
         {
-            string subject = "Convite para registo no CIMOB-IPS";
 
-            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
 
-            Email.SendEmail(emailTec, subject, body);
-        }
+            long studentNumber = model.Student.StudentNum;
+            String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
 
-        private void WelcomeEmail(string targetEmail)
-        {
-            string subject = "Bem-Vindo ao CIMOB-IPS";
-
-            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
-                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
-
-            Email.SendEmail(targetEmail, subject, body);
-        }
-
-        private void SendEmailToStudent(String emailStudent)
-        {
-            string subject = "Registo no CIMOB-IPS";
-
-            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a>.";
-
-            Email.SendEmail(emailStudent, subject, body);
-        }
-
-        public async Task<IActionResult> ExecLoginAsync(IFormCollection form)
-        {
-            string email = Convert.ToString(form["email"]);
-            string password = Convert.ToString(form["password"]);
-            LoginState state = Account.IsRegistered(email, password);
-
-
-            if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+            //if (ModelState.IsValid) { 
+            try
             {
-                ViewData["Login-Message"] = state.GetMessage();
-                ViewData["fyp-initial-display"] = "none";
-                ViewData["initial-email"] = email;
-                return View("Login");
+                InsertPreRegister(studentEmail, studentNumber);
+                SendEmailToStudent(studentEmail);
+                ViewData["message"] = "Email enviado.";
+                return View("Register");
             }
-            else
+            catch (SqlException e)
             {
-                string accountId = Account.AccountID(email);
-                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
-                identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
-                if (state == LoginState.CONNECTED_STUDENT)
-                    identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
+                ViewData["message"] = "Conexção Falhada.";
+            }
+            //}
+            ViewData["message"] = "";
+
+            return View("Register");
+        }
+    
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            string email = model.Email;
+            string password = model.Password;
+
+            if (ModelState.IsValid)
+            {
+                LoginState state = Account.IsRegistered(email, password);
+
+
+                if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
+                {
+                    ViewData["Login-Message"] = state.GetMessage();
+                    ViewData["fyp-initial-display"] = "none";
+                    ViewData["initial-email"] = email;
+
+                    return View("Login");
+
+                }
                 else
                 {
-
-                    if (Account.IsAdmin(accountId) == "True")
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                    string accountId = Account.AccountID(email);
+                    var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
+                    identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, accountId));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(accountId)));
+                    if (state == LoginState.CONNECTED_STUDENT)
+                        identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
                     else
-                        identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
-                }
+                    {
 
-                var principal = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = true });
-                return RedirectToAction("Index", "Home");
+                        if (Account.IsAdmin(accountId) == "True")
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
+                        else
+                            identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
+                    }
+
+                    var principal = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                    return RedirectToAction("Index", "Home");
+                }
             }
+            ViewData["initial-email"] = email;
+            return View(model);
         }
 
         public IActionResult ExecFYP(IFormCollection form)
@@ -222,9 +209,7 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> Logout()
         {
             if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
         }
@@ -324,9 +309,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-
-        private void ChangePassword(string _email, String _newpassword)
-        {
+        private void ChangePassword(string _email, String _newpassword) {
 
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -339,6 +322,16 @@ namespace CIMOB_IPS.Controllers
                 connection.Close();
 
             }
+        }
+
+        private string GenerateNewPassword()
+        {
+            RNGCryptoServiceProvider newpw = new RNGCryptoServiceProvider();
+
+            byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
+            newpw.GetBytes(tokenBuffer);
+            return Convert.ToBase64String(tokenBuffer);
+
         }
 
         private void SendFYPEmail(string _email)
@@ -358,13 +351,22 @@ namespace CIMOB_IPS.Controllers
 
         }
 
-        private string GenerateNewPassword()
+        private void SendEmailToTec(string emailTec)
         {
-            RNGCryptoServiceProvider newpw = new RNGCryptoServiceProvider();
+            string subject = "Convite para registo no CIMOB-IPS";
 
-            byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
-            newpw.GetBytes(tokenBuffer);
-            return Convert.ToBase64String(tokenBuffer);
+            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
+
+            Email.SendEmail(emailTec, subject, body);
+        }
+
+        private void WelcomeEmail(string targetEmail)
+        {
+            string subject = "Bem-Vindo ao CIMOB-IPS";
+
+            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
+                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
 
         }
 
@@ -478,6 +480,15 @@ namespace CIMOB_IPS.Controllers
             return null;
         }
 
+        private void SendEmailToStudent(String emailStudent)
+        {
+            string subject = "Registo no CIMOB-IPS";
+
+            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href=\"www.google.pt\">aqui</a>.";
+
+            Email.SendEmail(emailStudent, subject, body);
+        }
 
 
     }

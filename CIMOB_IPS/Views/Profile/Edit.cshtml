@@ -1,0 +1,42 @@
+﻿@model CIMOB_IPS.Models.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+
+    Student studentModel = new Student();
+    Technician technicianModel = new Technician();
+
+    if(Model.AccountType == EnumAccountType.STUDENT)
+    {
+        studentModel = Model.Student;
+    }
+    else
+    {
+        technicianModel = Model.Technician;
+    }
+}
+
+<p id="title">Editar Perfil</p>
+
+<div class="profile">
+    <div class="profileImage">
+        <img id="img" src="~/images/user1.png" width="130" height="130" />
+    </div>
+    <div class="information">
+        <div class="col-md-4">
+            @if (Model.AccountType == EnumAccountType.STUDENT)
+            {
+                @Html.Partial("_EditProfileStudentForm", Model.Student)
+            }
+            else
+            {
+                @Html.Partial("_EditProfileTechnicianForm", Model.Technician)
+            }
+        </div>
+    </div>
+</div>
+
+<!--???-->
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

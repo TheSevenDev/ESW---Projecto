@@ -1,0 +1,9 @@
+﻿@{
+    string controller = (string)ViewData["Controller"];
+    string action = (string)ViewData["Action"];
+
+    string html = HelpController.GetHelpInformation(controller, action);
+}
+<div style="padding:3%;">
+    @Html.Raw(html)
+</div>
