@@ -30,19 +30,7 @@
             }
             else
             {
-                <form asp-action="EditProfileTechnician">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <div class="form-group">
-                            <label asp-for="@technicianModel.Telephone" class="control-label"></label>
-                            <input asp-for="@technicianModel.Telephone" class="form-control" />
-                            <span asp-validation-for="@technicianModel.Telephone" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Guardar" class="btn btn-default" />
-                    </div>
-                </form>
+                @Html.Partial("_EditProfileTechnicianForm", Model.Technician)
             }
         </div>
     </div>

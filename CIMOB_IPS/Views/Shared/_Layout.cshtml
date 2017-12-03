@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@{ 
+    ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
+    ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
+
+    // = HelpController.GetHelpInformation(controller, action);
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -84,7 +91,7 @@
     <div id="fade-background" onclick="javascript: toogleHelp();"></div>
     <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />   
     <div id="help-content">
-        <!--PARTIAL VIEW-->
+        @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
 
 

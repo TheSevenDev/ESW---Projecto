@@ -78,7 +78,7 @@ namespace CIMOB_IPS.Controllers
                         IsAdmin = reader2.GetBoolean(3)
                     };
 
-                    modelTech.IdAccountNavigation = new Account { IdAccount = id, Email = reader.GetString(4) };
+                    modelTech.IdAccountNavigation = new Account { IdAccount = id, Email = reader2.GetString(4) };
                     viewModel.Technician = modelTech;
                     viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
@@ -124,6 +124,7 @@ namespace CIMOB_IPS.Controllers
                 return BadRequest();
             }
 
+            //não está a apresentar erros na pagina
             if (ModelState.IsValid)
             {
                 try
@@ -149,6 +150,54 @@ namespace CIMOB_IPS.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!AccountExists(student.IdAccount))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
+        {
+
+            if (GetCurrentUserID() != technician.IdAccount)
+            {
+                return BadRequest();
+            }
+
+            //não está a apresentar erros na pagina
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    {
+                        //create await  
+
+                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        {
+                            command.CommandText = "UPDATE Technician SET telephone = @Telephone" +
+                                " WHERE id_account = @IdAccount";
+                            command.Parameters.AddWithValue("@Telephone", technician.Telephone);
+                            command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
+                            sqlConnection.Open();
+                            command.ExecuteNonQuery();
+                            sqlConnection.Close();
+                        }
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountExists(technician.IdAccount))
                     {
                         return NotFound();
                     }
