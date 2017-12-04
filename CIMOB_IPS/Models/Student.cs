@@ -40,7 +40,7 @@ namespace CIMOB_IPS.Models
 
         [Required(ErrorMessage = "O Nº Telemóvel não está preenchido.")]
         //testar regex
-        [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Telemovel tem de ser expresso em algarismos.")]
+        [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Telemóvel tem de ser expresso em 9 algarismos.")]
         //[MinLength(9, ErrorMessage = "O Nº Telemóvel tem de conter no minimo 9 algarismos.")]
         [Display(Name = "Nº Telemóvel:")]
         public long Telephone { get; set; }

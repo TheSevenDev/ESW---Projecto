@@ -195,6 +195,8 @@ namespace CIMOB_IPS.Controllers
             return View("Register" , new RegisterViewModel { Nationalities = nationalities });
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
