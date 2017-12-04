@@ -9,6 +9,9 @@ using System.Data.SqlClient;
 using CIMOB_IPS.Models;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -192,7 +195,6 @@ namespace CIMOB_IPS.Controllers
                  }
                 }
       
-            ViewBag.Nationalities = nationalities;
             return View("Register" , new RegisterViewModel { Nationalities = nationalities });
         }
 
@@ -490,7 +492,7 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("UpdatePassword");
         }
 
-        private void SendEmailToStudent(String emailStudent)
+        private void SendEmailToStudent(String emailStudent, string guid)
         {
             string subject = "Registo no CIMOB-IPS";
             string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
