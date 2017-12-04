@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using CIMOB_IPS.Models;
 using System.Security.Cryptography;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -28,7 +27,7 @@ namespace CIMOB_IPS.Controllers
         [HttpPost]
         public IActionResult RegisterStudent(IFormCollection form)
         {
-            String email = getEmailByIdPendingAccount("1"); //Id vem do url
+            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
@@ -55,7 +54,7 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult RegisterTechnician(IFormCollection form)
         {
-            String email = getEmailByIdPendingAccount("1"); //Id vem do url
+            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
             String password = Convert.ToString(form["Account.Password"]);
 
             long idAccount = InsertAccount(email, password);
@@ -276,7 +275,7 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public String getEmailByIdPendingAccount(string idAccount)
+        public String GetEmailByIdPendingAccount(string idAccount)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -399,7 +398,6 @@ namespace CIMOB_IPS.Controllers
                 connection.Open();
                 command.ExecuteReader();
                 connection.Close();
-
             }
         }
 
@@ -447,10 +445,52 @@ namespace CIMOB_IPS.Controllers
             string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
                 " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
 
-            Email.SendEmail(targetEmail, subject, body);
         }
 
-        private void SendEmailToStudent(String emailStudent, String guid)
+
+        public int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
+        [HttpPost]
+        public IActionResult UpdatePassword([Bind("Password")] Account account, UpdatePasswordViewModel model)
+        {
+            
+            string confirmation = Convert.ToString(model.Confirmation);
+            string newPW = Convert.ToString(model.NewPassword);
+
+            if (GetCurrentUserID() != account.IdAccount)
+            {
+                return BadRequest();
+            }
+
+
+            //não está a apresentar erros na pagina
+            if (confirmation.Equals(newPW))
+            {
+
+
+                using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                {
+                    //create await  
+
+                    using (SqlCommand command = sqlConnection.CreateCommand())
+                    {
+                        command.CommandText = "UPDATE Account SET password = @Password WHERE id_account = @IdAccount";
+                        command.Parameters.AddWithValue("@Password", account.Password);
+                        sqlConnection.Open();
+                        command.ExecuteNonQuery();
+                        sqlConnection.Close();
+                    }
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("UpdatePassword");
+        }
+
+        private void SendEmailToStudent(String emailStudent)
         {
             string subject = "Registo no CIMOB-IPS";
             string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
@@ -462,4 +502,4 @@ namespace CIMOB_IPS.Controllers
 
 
     }
-}
+    }

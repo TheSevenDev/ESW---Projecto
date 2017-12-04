@@ -120,7 +120,7 @@ namespace CIMOB_IPS.Controllers
         {
 
             if (GetCurrentUserID() != student.IdAccount)
-            {
+            {   
                 return BadRequest();
             }
 

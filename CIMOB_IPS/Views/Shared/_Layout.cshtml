@@ -61,7 +61,7 @@
             @if (User.Identity.IsAuthenticated)
             {    <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
                  <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" />
-                 <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();" />
+                 <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings   ();" />
             }
             else
             {
@@ -72,7 +72,7 @@
         <div class="menu-settings" id="submenu-settings">
             <ul>  
                 <li> <a asp-area="" asp-controller="Profile" asp-action="Index">Perfil</a> </li>     
-                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Alterar-palavra-passe</a></li>
+                <li> <a asp-area="" asp-controller="User" asp-action="UpdatePassword">Alterar Palavra-Passe</a> </li>
                 @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 {
                     <li> <a asp-area="" asp-controller="Account" asp-action="Tecnicos">Técnicos</a></li>
