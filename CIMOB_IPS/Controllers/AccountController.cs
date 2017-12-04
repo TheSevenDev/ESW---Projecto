@@ -7,23 +7,26 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using CIMOB_IPS.Models;
-using System.Data;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
 
 namespace CIMOB_IPS.Controllers
 {
-    public class UserController : Controller
+    public class AccountController : Controller
     {
         private const int NEW_PW_MAX_LENGTH = 8;
 
         public IActionResult Register()
         {
+            ViewData["register-type"] = "student-preregister";
             return View();
         }
 
+
+        [HttpPost]
         public IActionResult RegisterStudent(IFormCollection form)
         {
             String email = GetEmailByIdPendingAccount("1"); //Id vem do url
@@ -105,6 +108,7 @@ namespace CIMOB_IPS.Controllers
 
             return View("Invite");
         }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -114,26 +118,84 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
+            ViewData["register-type"] = "student-preregister";
+
             long studentNumber = model.Student.StudentNum;
             String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
 
-            //if (ModelState.IsValid) { 
             try
             {
-                InsertPreRegister(studentEmail, studentNumber);
-                SendEmailToStudent(studentEmail);
-                ViewData["message"] = "Email enviado.";
+                bool success = InsertPreRegister(studentEmail);
+                if(success)
+                {
+                    ViewData["message"] = "Número registado.";
+                    ViewData["error-message"] = "";
+                }
+                else{
+                    ViewData["error-message"] = "Número já registado.";
+                    ViewData["message"] = "";
+                }
+
                 return View("Register");
             }
             catch (SqlException e)
             {
-                ViewData["message"] = "Conexção Falhada.";
+                ViewData["error-message"] = "Conexão Falhada.";
             }
-            //}
-            ViewData["message"] = "";
-
+ 
             return View("Register");
         }
+
+        public IActionResult RegisterStudent([FromQuery] string account_id)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            ViewData["register-type"] = "student-register";
+
+            List<SelectListItem> nationalities = new List<SelectListItem>();
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "Select email from dbo.Pending_Account where guid = @guid";
+                command.Parameters.AddWithValue("@guid", account_id);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if(!reader.HasRows)//Invalid GUID
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    while (reader.Read())
+                    {
+                        string email = reader[0].ToString();
+                        string studentNumber = reader[0].ToString().Substring(0, 9);
+
+                        ViewData["student-email"] = email;
+                        ViewData["student-number"] = studentNumber;
+
+                    }
+                    reader.Close();
+                    connection.Close();
+                    using (SqlCommand command2 = new SqlCommand("", connection))
+                    {
+                        connection.Open();
+                        command2.CommandText = "Select * from dbo.Nationality";
+                        SqlDataReader reader2 = command2.ExecuteReader();
+                        while (reader2.Read())
+                        {
+                            nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
+                        }
+
+                    }
+                    connection.Close();
+                 }
+                }
+      
+            return View("Register" , new RegisterViewModel { Nationalities = nationalities });
+        }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -258,17 +320,34 @@ namespace CIMOB_IPS.Controllers
 
         }
 
-        public void InsertPreRegister(String studentEmail, long studentNumber)
+        public bool InsertPreRegister(String studentEmail)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@Email,@StudentNumber)";
-                command.Parameters.AddWithValue("@Email", studentEmail);
-                command.Parameters.AddWithValue("@StudentNumber", studentNumber);
+                command.CommandText = "Select a.email , pa.email from dbo.Account a, dbo.Pending_Account pa where a.email = @email or pa.email = @email";
+                command.Parameters.AddWithValue("@email", studentEmail);
                 connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                    return false;            
+                else
+                {
+                    using (SqlCommand command2 = new SqlCommand("", connection))
+                    {
+                        connection.Close();
+                        connection.Open();
+                        command2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid)";
+                        command2.Parameters.AddWithValue("@email", studentEmail);
+                        Guid guid;
+                        guid = Guid.NewGuid();
+                        command2.Parameters.AddWithValue("@guid", guid);
+                        command2.ExecuteNonQuery();
+                        connection.Close();
+                        SendEmailToStudent(studentEmail, guid.ToString());
+                        return true;
+                    }
+                }
             }
         }
 
@@ -430,10 +509,10 @@ namespace CIMOB_IPS.Controllers
         private void SendEmailToStudent(String emailStudent)
         {
             string subject = "Registo no CIMOB-IPS";
+            string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
 
-            string body = "Olá, <br> Para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a>.";
-
+            string body = "Olá, <br> Clique <a href =\"" + link + "\">aqui</a> para se registar na aplicação do CIMOB-IPS.<br> ";
+               
             Email.SendEmail(emailStudent, subject, body);
         }
 

@@ -19,18 +19,18 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdAccount { get; set; }
-        [Required(ErrorMessage = "O Email não preenchido")]
+        [Required(ErrorMessage = "O email não preenchido")]
         [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
         [Display(Name = "E-mail:")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "A Password não preenchida")]
+        [Required(ErrorMessage = "A password não está preenchida")]
         [Display(Name = "Password:")]
         public byte[] Password { get; set; }
 
         [NotMapped] 
-        [Required]
-        [Compare("Password",ErrorMessage ="As Passwords não coincidem.")]
+        [Required(ErrorMessage = "A confirmação da password não está preenchida")]
+        [Compare("Password", ErrorMessage ="As passwords não coincidem.")]
         [Display(Name = "Confirme a Password:")]
         public byte[] ConfirmPassword { get; set; }
 
