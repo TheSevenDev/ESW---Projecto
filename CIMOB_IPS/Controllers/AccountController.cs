@@ -195,6 +195,8 @@ namespace CIMOB_IPS.Controllers
             return View("Register" , new RegisterViewModel { Nationalities = nationalities });
         }
 
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -452,22 +454,33 @@ namespace CIMOB_IPS.Controllers
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
-        [HttpPost]
-        public IActionResult UpdatePassword([Bind("Password")] Account account, UpdatePasswordViewModel model)
+        [HttpGet]
+        public IActionResult UpdatePassword()
         {
-            
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdatePassword([Bind("CurrentPassword, NewPassword, Confirmation")] UpdatePasswordViewModel model)
+        {
+
             string confirmation = Convert.ToString(model.Confirmation);
             string newPW = Convert.ToString(model.NewPassword);
 
-            if (GetCurrentUserID() != account.IdAccount)
+            if (GetCurrentUserID() != model.IdAccount)
             {
                 return BadRequest();
             }
 
-
             //não está a apresentar erros na pagina
-            if (confirmation.Equals(newPW))
+            if (!confirmation.Equals(newPW))
             {
+                ViewData["message"] = "As Passwords não coincidem";
+            }
+
+                { 
 
 
                 using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
@@ -476,20 +489,26 @@ namespace CIMOB_IPS.Controllers
 
                     using (SqlCommand command = sqlConnection.CreateCommand())
                     {
-                        command.CommandText = "UPDATE Account SET password = @Password WHERE id_account = @IdAccount";
-                        command.Parameters.AddWithValue("@Password", account.Password);
+                        command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @IdAccount";
+                        command.Parameters.AddWithValue("@Password", model.NewPassword);
                         sqlConnection.Open();
                         command.ExecuteNonQuery();
                         sqlConnection.Close();
                     }
+
+                    //PASSWORD ALTERADA COM SUCESSO
+                    ViewData["message"] = "Password Alterada Com Sucesso";
+
                 }
-                return RedirectToAction("Index");
+                }
+
+            return View("Home");
             }
+        
 
-            return RedirectToAction("UpdatePassword");
-        }
 
-        private void SendEmailToStudent(String emailStudent, string guid)
+
+        private void SendEmailToStudent(string emailStudent, string guid)
         {
             string subject = "Registo no CIMOB-IPS";
             string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;

@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
 
 </Project>

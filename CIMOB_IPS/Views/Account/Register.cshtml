@@ -58,7 +58,7 @@
                     <tr> <td><span asp-validation-for="Student.Address" class="error-message"></span></td></tr>
 
                     <tr> <td><label>Nacionalidade: </label></td></tr>
-                    <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --")</td></tr>
+                    <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new )</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                     <tr> <td><label for="school" name="labelSchool">Escola:</label></td></tr>
