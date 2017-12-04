@@ -21,8 +21,7 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Register()
         {
-            ViewData["pre-register-display"] = "block";
-            ViewData["register-display"] = "none";
+            ViewData["register-type"] = "student-preregister";
             return View();
         }
 
@@ -119,8 +118,7 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            ViewData["pre-register-display"] = "block";
-            ViewData["register-display"] = "none";
+            ViewData["register-type"] = "student-preregister";
 
             long studentNumber = model.Student.StudentNum;
             String studentEmail = studentNumber.ToString() + "@estudantes.ips.pt";
@@ -153,8 +151,7 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            ViewData["pre-register-display"] = "none";
-            ViewData["register-display"] = "block";
+            ViewData["register-type"] = "student-register";
 
             List<SelectListItem> nationalities = new List<SelectListItem>();
 
