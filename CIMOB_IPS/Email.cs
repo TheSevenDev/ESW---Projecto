@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace CIMOB_IPS
 {
@@ -25,10 +21,6 @@ namespace CIMOB_IPS
             mailMessage.Subject = subject;
             mailMessage.IsBodyHtml = true;
             client.Send(mailMessage);
-
-            //Guid g;
-            //g = Guid.NewGuid();
-            //Console.WriteLine(g);
         }
     }
 }

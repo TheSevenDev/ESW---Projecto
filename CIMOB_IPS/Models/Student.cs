@@ -14,8 +14,8 @@ namespace CIMOB_IPS.Models
         public long IdStudent { get; set; }
         public long IdAccount { get; set; }
 
-        [Required(ErrorMessage = "O número de Estudante não está preenchido.")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "O Nº Estudante tem de ser expresso em algarismos.")]
+        [Required(ErrorMessage = "O Número de Estudante não está preenchido.")]
+        [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Estudante tem de ser expresso em 9 algarismos.")]
         [Display(Name = "Número de Estudante:")]
         public long StudentNum { get; set; }
 
@@ -28,6 +28,9 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nome:")]
         public string Name { get; set; }
 
+        [Required(ErrorMessage = "A morada não está preenchida.")]
+        [StringLength(99, ErrorMessage = "A morada deverá conter no máximo 99 caracteres.")]
+        [Display(Name = "Morada:")]
         public string Address { get; set; }
 
         [Required(ErrorMessage = "O Cartão de Cidadão não está preenchido.")]
@@ -42,11 +45,11 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nº Telemóvel:")]
         public long Telephone { get; set; }
 
-        [Required(ErrorMessage = "A Nacionalidade não está preenchida.")]
+        [Required(ErrorMessage = "Seleccione uma nacionalidade.")]
         [Display(Name = "Nacionalidade:")]
         public long IdNationality { get; set; }
 
-        [Required(ErrorMessage = "Os ECTS não está preenchido.")]
+        [Required(ErrorMessage = "ECTS não está preenchido.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Os ECTS tem de ser expresso em algarismos.")]
         [Display(Name = "ECTS:")]
         public int Credits { get; set; }

@@ -7,32 +7,38 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <h2 class="register-title">Registo</h2>
-<div class="main-container-pre-register" >
+<div class="main-container-pre-register" style="display:@ViewData["pre-register-display"]">
         <form asp-action="PreRegister" method="post" class="pre-register-form">
             <table>
                 <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
-                <tr><td><input asp-for="Student.StudentNum"  placeholder="Número de Estudante" /></td></tr>
+                <tr><td><input asp-for="Student.StudentNum" placeholder="Número de Estudante" /></td></tr>
                 <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
-                <tr><td><div id="=pre-register-message">@ViewData["message"]</div><input type="submit" value="Enviar" /></td></tr>
+                <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span><input type="submit" value="Enviar" /></td></tr>
             </table>
         </form>
 </div>
 
-<div class="main-container-register" hidden="hidden">
+<div class="main-container-register" style="display:@ViewData["register-display"]">
     <div>
         <form asp-action="RegisterStudent" method="post" class="register-form">
             <table>
+                <tr> <td><label>Email:</label></td></tr>
+                <tr> <td><input value="@ViewData["student-email"]" type="text" disabled/></td></tr>
+
+                <tr> <td><label>Número de Estudante:</label></td></tr>
+                <tr> <td><input value="@ViewData["student-number"]" type="text" disabled /></td></tr>
+
                 <tr> <td><label asp-for="Student.Name"></label></td></tr>
                 <tr> <td><input asp-for="Student.Name" /></td></tr>
                 <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
 
                 <tr> <td><label asp-for="Account.Password"></label></td></tr>
                 <tr> <td><input asp-for="Account.Password" type="password" /></td></tr>
-                <tr> <td><span asp-validation-for="Account.Password" class="text-danger"></span></td><tr>
+                <tr> <td><span asp-validation-for="Account.Password" class="error-message"></span></td><tr>
 
                 <tr> <td><label asp-for="Account.ConfirmPassword"></label></td></tr>
                 <tr> <td><input asp-for="Account.ConfirmPassword" type="password" /></td></tr>
-                <tr> <td><span asp-validation-for="Account.ConfirmPassword" class="text-danger"></span></td><tr>
+                <tr> <td><span asp-validation-for="Account.ConfirmPassword" class="error-message"></span></td><tr>
 
                 <tr> <td><label asp-for="Student.Cc"></label></td></tr>
                 <tr> <td><input asp-for="Student.Cc" type="text" style="width: 15vw;"/></td></tr>
@@ -46,9 +52,9 @@
                 <tr> <td><input asp-for="Student.Address" /></td></tr>
                 <tr> <td><span asp-validation-for="Student.Address" class="error-message"></span></td></tr>
 
-                <tr> <td><label asp-for="Student.IdNationality"></label></td></tr>
-                <tr> <td><select asp-for="Student.IdNationality" asp-items="ViewBag.IdNationality"><option value=1>Portugal</option></select></td></tr>
-                <tr> <td><span asp-validation-for="Student.IdNationality" class="error-messager"></span></td></tr>
+                <tr> <td><label>Nacionalidade: </label></td></tr>
+                <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --")</td></tr>
+                <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                 <tr> <td><label for="school" name="labelSchool">Escola:</label></td></tr>
                 <tr> <td><select name="school"><option value=1>Escola Superior de Tecnologia de Setúbal</option></select></td></tr>
@@ -58,8 +64,15 @@
                 <tr> <td><span asp-validation-for="Student.IdCourse" class="text-danger"></span></td></tr>
 
                 <tr> <td><label asp-for="Student.Credits"></label></td></tr>
-                <tr> <td><input asp-for="Student.Credits" type="text" style="width: 5vw;"/> <input type="submit" value="Registar" /></td> <td></td> </tr>
-                <tr> <td><span asp-validation-for="Student.Credits" class="text-danger"></span> </td></tr>
+                <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3vw;" /> </td></tr>
+                <tr> <td><span asp-validation-for="Student.Credits" class="error-message"></span> </td> </tr>
+                <tr> <td><input type="submit" value="Registar" /></td> </tr>
+                <tr> </tr>
+                <tr> </tr>
+                <tr> </tr>
+                <tr> </tr>
+                <tr> </tr>
+                <tr> </tr>
             </table>
         </form>
     </div>

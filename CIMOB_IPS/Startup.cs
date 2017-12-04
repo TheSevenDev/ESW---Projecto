@@ -74,19 +74,28 @@ namespace CIMOB_IPS
 
                 routes.MapRoute(
                     "LoginRoute", "Login",
-                    defaults: new { controller = "User"  , action = "Login"});
+                    defaults: new { controller = "Account"  , action = "Login"});
 
                 routes.MapRoute(
                     "ExecLoginRoute", "Login",
-                    defaults: new { controller = "User", action = "ExecLoginAsync" });
+                    defaults: new { controller = "Account", action = "ExecLoginAsync" });
 
                 routes.MapRoute(
                     "ExecFypRoute", "Login",
-                    defaults: new { controller = "User", action = "ExecFYP" });
+                    defaults: new { controller = "Account", action = "ExecFYP" });
 
                 routes.MapRoute(
                     "RegisterRoute", "Register",
-                    defaults: new { controller = "User", action = "Register" });
+                    defaults: new { controller = "Account", action = "Register" });
+
+                routes.MapRoute(
+                    "RegisterStudentRoute", "RegisterStudent",
+                    defaults: new { controller = "Account", action = "RegisterStudent" });
+
+                routes.MapRoute(
+                    "PreRegisterRoute", "Register",
+                    defaults: new { controller = "Account", action = "PreRegister" });
+
             });
         }
     }
