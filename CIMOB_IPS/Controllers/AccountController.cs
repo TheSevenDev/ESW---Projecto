@@ -454,6 +454,7 @@ namespace CIMOB_IPS.Controllers
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
+        [HttpGet]
         public IActionResult UpdatePassword()
         {
             return View();
@@ -461,7 +462,8 @@ namespace CIMOB_IPS.Controllers
 
 
         [HttpPost]
-        public IActionResult ChangePassword([Bind("CurrentPassword, NewPassword, Confirmation")] UpdatePasswordViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdatePassword([Bind("CurrentPassword, NewPassword, Confirmation")] UpdatePasswordViewModel model)
         {
 
             string confirmation = Convert.ToString(model.Confirmation);
@@ -487,7 +489,7 @@ namespace CIMOB_IPS.Controllers
 
                     using (SqlCommand command = sqlConnection.CreateCommand())
                     {
-                        command.CommandText = "UPDATE Account SET password = @Password WHERE id_account = @IdAccount";
+                        command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @IdAccount";
                         command.Parameters.AddWithValue("@Password", model.NewPassword);
                         sqlConnection.Open();
                         command.ExecuteNonQuery();
@@ -506,7 +508,7 @@ namespace CIMOB_IPS.Controllers
 
 
 
-        private void SendEmailToStudent(String emailStudent)
+        private void SendEmailToStudent(string emailStudent, string guid)
         {
             string subject = "Registo no CIMOB-IPS";
             string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
