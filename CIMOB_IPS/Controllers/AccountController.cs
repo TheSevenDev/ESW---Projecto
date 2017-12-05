@@ -27,48 +27,56 @@ namespace CIMOB_IPS.Controllers
 
 
         [HttpPost]
-        public IActionResult RegisterStudent(IFormCollection form)
+        public IActionResult RegisterStudent(RegisterViewModel model)
         {
-            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
-            String password = Convert.ToString(form["Account.Password"]);
-
-            long idAccount = InsertAccount(email, password);
-
-
-            long studentNum = 150221014; //StudentNum pelo url
-            long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
-            String address = Convert.ToString(form["Student.Address"].ToString());
-            long ccNum = Convert.ToInt64(form["Student.Cc"]);
-            long telephone = Convert.ToInt64(form["Student.Telephone"]);
-            long idNacionality = Convert.ToInt64(form["Student.IdNationality"]);
-            int credits = Convert.ToInt32(form["Student.Credits"]);
-
-            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = "Ricardo Fernandes", Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
-
-            InsertStudent(student);
-
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
+
+
+                String email = model.Account.Email;
+                byte[] password = model.Account.Password;
+
+                long idAccount = 0;
+
+                
+                    InsertAccount(email, password);
+               
+
+                    long studentNum = model.Student.StudentNum;
+                    string name = model.Student.Name;
+                    long idCourse = model.Student.IdCourse;
+                    String address = model.Student.Address;
+                    long ccNum = model.Student.Cc;
+                    long telephone = model.Student.Telephone;
+                    long idNacionality = model.Student.IdNationality;
+                    int credits = model.Student.Credits;
+
+                    Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = name, Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
+
+                    InsertStudent(student);
+                
+            
+            
             //WelcomeEmail(email);
             return View("/Views/Home/Index.cshtml");
         }
 
         public IActionResult RegisterTechnician(IFormCollection form)
         {
-            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
+            //String email = DeletePendingAccount("1"); //Id vem do url
             String password = Convert.ToString(form["Account.Password"]);
 
-            long idAccount = InsertAccount(email, password);
+            //long idAccount = InsertAccount(email);
 
 
             bool isAdmin = true; //buscar IsAdmin pelo Url
             String name = Convert.ToString(form["Technician.Name"].ToString());
             long telephone = Convert.ToInt64(form["Technician.Telephone"]);
 
-            Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin };
+           // Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin };
 
-            InsertTechnician(technician);
+            //InsertTechnician(technician);
 
 
             if (User.Identity.IsAuthenticated)
@@ -274,28 +282,21 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public String GetEmailByIdPendingAccount(string idAccount)
+        public void DeletePendingAccount(string email)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "SELECT email FROM dbo.Pending_Account WHERE id_pending=@idAccount";
-                command.Parameters.AddWithValue("@idAccount", idAccount);
+                command.CommandText = "Delete FROM dbo.Pending_Account WHERE email=@Email";
+                command.Parameters.AddWithValue("@Email", email);
                 connection.Open();
-
-                String email = (String)command.ExecuteScalar();
-
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-
-                return email;
+                command.ExecuteNonQuery();
+                connection.Close();
 
             }
         }
 
-        public long InsertAccount(String email, String password)
+        public long InsertAccount(String email, byte[] password)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
@@ -349,7 +350,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public void InsertStudent(Student student)
+        private void InsertStudent(Student student)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -370,7 +371,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public void InsertTechnician(Technician technician)
+        private void InsertTechnician(Technician technician)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -495,7 +496,7 @@ namespace CIMOB_IPS.Controllers
             string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
 
             string body = "Olá, <br> Clique <a href =\"" + link + "\">aqui</a> para se registar na aplicação do CIMOB-IPS.<br> ";
-               
+            Console.WriteLine(body);
             Email.SendEmail(emailStudent, subject, body);
         }
 
