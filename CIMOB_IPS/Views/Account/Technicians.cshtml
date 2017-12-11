@@ -21,44 +21,46 @@
         <tbody>
             @foreach(var item in Model.PendingAccounts)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => item.IdPending)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Email)
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.IdPending)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Email)
+                </td>
+            </tr>
             }
         </tbody>
     </table>
+    <div class="main-container-invite">
+        <form asp-action="InviteTec" class="invite-form">
+            <table>
+                <tr> <td><label asp-for="Account.Email"></label></td></tr>
+                <tr> <td><input asp-for="Account.Email" type="text" placeholder="nome.apelido@ips.pt" /></td></tr>
+                <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
+                <tr></tr>
 
-    @if (Model.Technicians != null)
-    {
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().IdAccountNavigation.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().Name)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.PendingAccounts)
+                @if (User.IsInRole("tecnico_admin"))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.IdPending)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Email)
-                        </td>
-                    </tr>
+                <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
+                <tr> <td><input asp-for="Technician.IsAdmin" /></td></tr>
                 }
-            </tbody>
-        </table>
-    }
-</div>
+
+            </table>
+            <tr><td> @ViewData["email-sent"] <input type="submit" value="Enviar convite" /></td></tr>
+
+        </form>
+    </div>
+
+    <!--
+    <div class="box-invites">
+
+
+
+
+
+    </div>
+        -->
