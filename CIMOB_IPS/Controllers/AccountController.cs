@@ -17,6 +17,12 @@ namespace CIMOB_IPS.Controllers
 {
     public class AccountController : Controller
     {
+        private readonly CIMOB_IPS_DBContext _context;
+
+        public AccountController(CIMOB_IPS_DBContext context)
+        {
+            _context = context;
+        }
 
         #region Register
         /// <summary>
@@ -35,7 +41,23 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            return View("Technicians");
+            var pendingAccounts = _context.PendingAccount.ToList();
+
+            var isAdmin = from s in _context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
+
+            var technicians = new List<Technician>();
+
+            if(isAdmin != null)
+                technicians = _context.Technician.ToList();
+
+            TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = pendingAccounts };
+
+            if (technicians.Count() > 0)
+                viewModel.Technicians = technicians;
+            else
+                viewModel.Technicians = null;
+
+            return View("Technicians", viewModel);
         }
 
         [HttpPost]
