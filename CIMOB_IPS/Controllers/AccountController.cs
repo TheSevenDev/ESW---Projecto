@@ -250,12 +250,10 @@ namespace CIMOB_IPS.Controllers
 
             return View("Register");
         }
-        public IActionResult InviteTec(IFormCollection form)
+        public IActionResult InviteTec(RegisterViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || !User.IsInRole("tecnico"))
-                return RedirectToAction("Index", "Home");
 
-            string destination = Convert.ToString(form["email"]);
+            string destination = model.Account.Email;
             Guid guid;
             guid = Guid.NewGuid();
 
@@ -272,8 +270,8 @@ namespace CIMOB_IPS.Controllers
                     ViewData["error-message"] = "Técnico já convidado.";
                     ViewData["message"] = "";
                 }
-
-                return View("Register");
+                ViewData["email-sent"] = "sent";
+                return View("Technicians");
             }
             catch (SqlException e)
             {

@@ -64,7 +64,6 @@
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                     <tr> <td><label>Nacionalidade: </label></td></tr>
-                    <tr> <td> @Html.DropDownListFor(model => null, Model.Institutions, "-- Seleccione a Escola --")</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.IdCourse"></label></td></tr>
@@ -89,7 +88,7 @@
 
 @if (ViewData["register-type"].ToString() == "technician")
 {
-    <div class="middleSquare" hidden="hidden">
+    <div class="middleSquare">
         <h2>Registo</h2>
         <div>
             <form asp-action="RegisterTechnician" method="post">
