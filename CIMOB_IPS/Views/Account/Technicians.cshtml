@@ -8,55 +8,65 @@
 
 <h2 class="page-title">Convites Pendentes</h2>
 
-<div>
-    <table>
+<div style="text-align:center; margin: 0 auto; margin-top: 5%; width: 50%;">
+    <table style="margin: 0 auto; margin-top: 3%;">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.PendingAccounts.First().IdPending)
+                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Email)
+                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Guid)
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.PendingAccounts)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(model => item.IdPending)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => item.Email)
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Guid)
+                    </td>
+                </tr>   
             }
         </tbody>
     </table>
 </div>
 
-@if (Model.Technicians != null)
-{
-    <div>
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().Name)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Technicians)
-                {
+    @if (Model.Technicians != null)
+    {
+        <h2 class="page-title">Técnicos</h2>
+
+        <div style="text-align:center; margin: 0 auto; margin-top: 5%; width: 50%;">
+            <table style="margin: 0 auto; margin-top: 3%;">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.Name)
-                        </td>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Technicians.First().Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Technicians.First().IdAccountNavigation.Email)
+                        </th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-}
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Technicians)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => item.Name)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(model => item.IdAccountNavigation.Email)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
