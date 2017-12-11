@@ -1,7 +1,9 @@
-﻿@model CIMOB_IPS.Models.TechnicianManagementViewModel
+﻿@model CIMOB_IPS.Models.ViewModels.TechnicianManagementViewModel
+
 @{
-    ViewData["Title"] = "Invite";
+    ViewData["Title"] = "Manage Technicians";
 }
+
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <h2 class="page-title">Convites Pendentes</h2>
@@ -19,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var item in Model.PendingAccounts)
+            @foreach (var item in Model.PendingAccounts)
             {
                 <tr>
                     <td>

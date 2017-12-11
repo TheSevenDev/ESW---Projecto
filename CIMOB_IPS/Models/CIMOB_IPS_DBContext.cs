@@ -436,6 +436,6 @@ namespace CIMOB_IPS.Models
             });
         }
 
-        public DbSet<CIMOB_IPS.Models.ProfileViewModel> ProfileViewModel { get; set; }
+        //public DbSet<ProfileViewModel> ProfileViewModel { get; set; }
     }
 }

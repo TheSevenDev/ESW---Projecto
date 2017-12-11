@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CIMOB_IPS.Models
+namespace CIMOB_IPS.Models.ViewModels
 {
     public class TechnicianManagementViewModel
     {

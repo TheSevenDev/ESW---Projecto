@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using CIMOB_IPS.Models;
 using System.Security.Cryptography;
-using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
+using CIMOB_IPS.Models.ViewModels;
 
 namespace CIMOB_IPS.Controllers
 {
