@@ -21,14 +21,14 @@ namespace CIMOB_IPS.Controllers
 
         public ProfileViewModel GetAccountModelByID(int id)
         {
-            var viewModel = new ProfileViewModel{ };
+            var viewModel = new ProfileViewModel { };
 
             using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
                 sqlConnection.Open();
-                string sqlQueryStringStudent = "SELECT id_student, a.email, c.name, s.name, address, cc, telephone, "+
-                    "n.description, credits, student_num FROM Student s, Course c, Nationality n, Account a "+
-                    "WHERE s.id_account = @Id AND s.id_course = c.id_course AND s.id_nationality = n.id_nationality "+
+                string sqlQueryStringStudent = "SELECT id_student, a.email, c.name, s.name, address, cc, telephone, " +
+                    "n.description, credits, student_num FROM Student s, Course c, Nationality n, Account a " +
+                    "WHERE s.id_account = @Id AND s.id_course = c.id_course AND s.id_nationality = n.id_nationality " +
                     "AND s.id_account = a.id_account";
 
                 SqlCommand commandStudent = new SqlCommand(sqlQueryStringStudent, sqlConnection);
@@ -62,7 +62,7 @@ namespace CIMOB_IPS.Controllers
 
                 reader.Close();
 
-                SqlCommand commandtechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " + 
+                SqlCommand commandtechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " +
                     "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
                 commandtechnician.Parameters.AddWithValue("@Id", id);
                 SqlDataReader reader2 = commandtechnician.ExecuteReader();
@@ -120,7 +120,7 @@ namespace CIMOB_IPS.Controllers
         {
 
             if (GetCurrentUserID() != student.IdAccount)
-            {   
+            {
                 return BadRequest();
             }
 
@@ -162,6 +162,35 @@ namespace CIMOB_IPS.Controllers
             }
 
             return RedirectToAction("Index");
+        } 
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+            if (!TechnicianCheck())
+            {
+                return NotFound();
+            }
+
+            var accountViewModel = GetAccountModelByID((int)id);
+            return View(accountViewModel);
+        }
+
+        public bool TechnicianCheck()
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                SqlCommand commandtechnician = new SqlCommand("select t.id_technician from Technician t, Account a " +
+                    "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
+                commandtechnician.Parameters.AddWithValue("@Id", GetCurrentUserID());
+                SqlDataReader readerTechnician = commandtechnician.ExecuteReader();
+
+                return readerTechnician.HasRows;
+            }
         }
 
         [HttpPost]
