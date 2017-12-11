@@ -50,6 +50,12 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Technicians.First().IdAccountNavigation.Email)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Technicians.First().Telephone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Technicians.First().IsAdmin)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,10 +65,14 @@
                             <td>
                                 @Html.DisplayFor(model => item.Name)
                             </td>
-                        </tr>
-                        <tr>
                             <td>
                                 @Html.DisplayFor(model => item.IdAccountNavigation.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Telephone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.IsAdmin)
                             </td>
                         </tr>
                     }

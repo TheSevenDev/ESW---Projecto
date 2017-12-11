@@ -52,7 +52,9 @@ namespace CIMOB_IPS.Controllers
                 viewModel.Technicians = (from s in _context.Technician
                                    select new Technician
                                    {
-                                       Name = s.Name, IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                       Name = s.Name,
+                                       IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                       Telephone = s.Telephone,
                                        IsAdmin =  s.IsAdmin
                                    }).ToList();
             }
