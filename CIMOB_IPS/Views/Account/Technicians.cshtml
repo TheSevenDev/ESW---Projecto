@@ -1,40 +1,64 @@
-﻿@model CIMOB_IPS.Models.RegisterViewModel
+﻿@model CIMOB_IPS.Models.TechnicianManagementViewModel
 @{
     ViewData["Title"] = "Invite";
 }
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-<h2 class="page-title">Técnicos CIMOB</h2>
+<h2 class="page-title">Convites Pendentes</h2>
 
-<div class="main-container-invite">
-    <form asp-action="InviteTec" class="invite-form">
+<div>
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.PendingAccounts.First().IdPending)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Email)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.PendingAccounts)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.IdPending)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Email)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @if (Model.Technicians != null)
+    {
         <table>
-
-            <tr> <td><label asp-for="Account.Email"></label></td></tr>
-            <tr> <td><input asp-for="Account.Email" type="text" placeholder="nome.apelido@ips.pt" /></td></tr>
-            <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
-            <tr></tr>
-            <tr></tr>
-            <tr></tr>
-            <tr></tr>
-
-                    @if (User.IsInRole("tecnico_admin"))
-                    {
-                        <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
-                        <tr> <td><input asp-for="Technician.IsAdmin"/></td></tr>
-                    }
-
-                </table>
-          <input type="submit" value="Enviar convite" />
-     </form>
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Technicians.First().IdAccountNavigation.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Technicians.First().Name)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PendingAccounts)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.IdPending)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.Email)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 </div>
-
-<!--
-<div class="box-invites">
-
-
-
-
-
-</div>
-    -->

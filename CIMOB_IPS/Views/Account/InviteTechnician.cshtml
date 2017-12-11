@@ -1,0 +1,38 @@
+﻿@model CIMOB_IPS.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Invite";
+}
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+
+<h2 class="page-title">Convidar um Técnico</h2>
+
+<div class="main-container-invite">
+    <form asp-action="InviteTec" class="invite-form">
+        <table>
+
+            <tr> <td><label asp-for="Account.Email"></label></td></tr>
+            <tr> <td><input asp-for="Account.Email" type="text" placeholder="nome.apelido@ips.pt" /></td></tr>
+            <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+            <tr></tr>
+                    @if (User.IsInRole("tecnico_admin"))
+                    {
+                        <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
+                        <tr> <td><input asp-for="Technician.IsAdmin"/></td></tr>
+                    }
+                </table>
+          <input type="submit" value="Enviar convite" />
+     </form>
+</div>
+
+<!--
+<div class="box-invites">
+
+
+
+
+
+</div>
+    -->
