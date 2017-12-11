@@ -22,5 +22,7 @@ namespace CIMOB_IPS.Models
         /// <summary>Property used to represent the list of the nationalities selected from the database. </summary>
         /// <value>All the nationalities provided by the database. </value>
         public IEnumerable<SelectListItem> Nationalities { get; set; }
+
+        public IEnumerable<SelectListItem> Institutions { get; set; }
     }
 }

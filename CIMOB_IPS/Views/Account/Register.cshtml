@@ -63,8 +63,9 @@
                     <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --")</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
-                    <tr> <td><label for="school" name="labelSchool">Escola:</label></td></tr>
-                    <tr> <td><select name="school"><option value=1>Escola Superior de Tecnologia de Setúbal</option></select></td></tr>
+                    <tr> <td><label>Nacionalidade: </label></td></tr>
+                    <tr> <td> @Html.DropDownListFor(model => null, Model.Institutions, "-- Seleccione a Escola --")</td></tr>
+                    <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.IdCourse"></label></td></tr>
                     <tr> <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1>Licenciatura em Engenharia Informática</option></select></td></tr>
@@ -93,21 +94,21 @@
         <div>
             <form asp-action="RegisterTechnician" method="post">
                 <table>
-                    <tr>
-                        <td><label asp-for="Technician.Name"></label></td>
-                        <td><input asp-for="Technician.Name" /></td>
-                        <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td>
-                    </tr>
-                    <tr>
-                        <td><label asp-for="Technician.Telephone"></label></td>
-                        <td><input asp-for="Technician.Telephone" type="text" /></td>
-                        <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><input type="submit" value="Registar" /></td>
-                    </tr>
+                    <tr> <td><label asp-for="Account.Email"></label></td></tr>
+                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["technician-email"]" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+
+                    <tr> <td><label asp-for="Technician.Name"></label></td></tr>
+                    <tr> <td><input asp-for="Technician.Name" /></td></tr>
+                    <tr> <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td></tr>
+
+                    <tr> <td><label asp-for="Technician.Telephone"></label></td></tr>
+                    <tr> <td><input asp-for="Technician.Telephone" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td></tr>
+
+                    <tr> <td></td></tr>
+                    <tr> <td></td></tr>
+                    <tr> <td><input type="submit" value="Registar" /></td></tr>
                 </table>
             </form>
         </div>
