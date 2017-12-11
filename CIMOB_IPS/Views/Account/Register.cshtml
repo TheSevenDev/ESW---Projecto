@@ -27,11 +27,13 @@
         <div>
             <form asp-action="RegisterStudent" method="post" class="register-form">
                 <table>
-                    <tr> <td><label>Email:</label></td></tr>
-                    <tr> <td><input value="@ViewData["student-email"]" type="text" disabled/></td></tr>
+                    <tr> <td><label asp-for="Account.Email"></label></td></tr>
+                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["student-email"]" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
 
-                    <tr> <td><label>Número de Estudante:</label></td></tr>
-                    <tr> <td><input value="@ViewData["student-number"]" type="text" disabled /></td></tr>
+                    <tr> <td><label asp-for="Student.StudentNum"></label></td></tr>
+                    <tr> <td><input asp-for="Student.StudentNum" value="@ViewData["student-number"]" type="text" disabled/></td></tr>
+                    <tr> <td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Name"></label></td></tr>
                     <tr> <td><input asp-for="Student.Name" /></td></tr>
