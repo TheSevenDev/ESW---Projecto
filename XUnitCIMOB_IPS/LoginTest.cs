@@ -8,7 +8,7 @@ namespace XUnitCIMOB_IPS
 {
     public class UnitTest1
     {
-        public UserController userController = new UserController();
+        //public UserController userController = new UserController();
         LoginViewModel model1 = new LoginViewModel { Email = "teste@gmail.com", Password = "teste", RememberMe = true };
         LoginViewModel model2 = new LoginViewModel { Email = "teste@gmail.com", Password = "teste", RememberMe = false };
         LoginViewModel model3 = new LoginViewModel { Email = "teste@gmail.com", Password = "teste1", RememberMe = false };

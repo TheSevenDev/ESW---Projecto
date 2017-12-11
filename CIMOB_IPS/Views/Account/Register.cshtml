@@ -25,10 +25,10 @@
 {
     <div class="main-container-register" style="display:@ViewData["register-display"]">
         <div>
-            <form asp-action="RegisterStudent" method="post" class="register-form">
+            <form asp-action="RegisterStudent" method="post" class="user-form">
                 <table>
                     <tr> <td><label asp-for="Account.Email"></label></td></tr>
-                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["student-email"]" type="text" /></td></tr>
+                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["student-email"]" type="text"/></td></tr>
                     <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.StudentNum"></label></td></tr>

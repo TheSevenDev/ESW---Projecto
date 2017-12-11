@@ -88,7 +88,6 @@
     margin-top: 1%;
 }
 
-
 .main-container-register {
     position: relative;
     background-color: white;
@@ -101,20 +100,20 @@
     overflow-y: auto;
 }
 
-.register-form {
+.user-form {
     margin-left: 15%;
     margin-top:5%;
     padding-left: 3%;
     position: relative;
 }
 
-.register-form label {
+.user-form label {
     position: relative;
     margin-top: 20%;
     font-size: 1.1vmax;
 }
 
-.register-form input[type=text], input[type=password], select {
+.user-form input[type=text], input[type=password], select {
     width: 22.2vw;
     padding: 2% 3%;
     display: inline-block;
@@ -124,7 +123,7 @@
     font-size: 0.95vmax;
 }
 
-.register-form input[type=submit] {
+.user-form input[type=submit] {
     width: 100%;
     background-color: var(--blue-var4);
     color: white;
@@ -134,9 +133,8 @@
     cursor: pointer;
     font-size: 1.1vmax;
     margin-top:5%;
-
 }
 
-.register-form input[type=submit]:hover {
+.user-form input[type=submit]:hover {
     background-color: var(--blue-var3);
 }

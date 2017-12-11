@@ -1,15 +1,13 @@
 ﻿@model CIMOB_IPS.Models.Technician
 
-<form asp-action="EditProfileTechnician">
-    <div asp-validation-summary="ModelOnly" class="error-message"></div>
-    @Html.HiddenFor(model => Model.IdAccount)
-    @Html.HiddenFor(model => Model.Name)
-    <div class="form-group">
-        <label asp-for="Telephone" class="control-label"></label>
-        <input asp-for="Telephone" class="form-control" />
-        <span asp-validation-for="Telephone" class="error-message"></span>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Guardar" class="btn btn-default" />
-    </div>
+<form asp-action="EditProfileTechnician" method="post" class="user-form">
+    <table>
+        @Html.HiddenFor(model => Model.IdAccount)
+        @Html.HiddenFor(model => Model.Name)
+        <tr> <td><label asp-for="Telephone"></label></td></tr>
+        <tr> <td><input asp-for="Telephone" type="text" /></td></tr>
+        <tr> <td><span asp-validation-for="Telephone" class="error-message"></span></td></tr>
+
+        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
+    </table> 
 </form>

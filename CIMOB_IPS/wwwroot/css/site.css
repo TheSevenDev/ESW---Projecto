@@ -350,12 +350,38 @@ html, body {
     width: 100%;
     height: 88.5vmin;
 }
+
 /*
    PROFILE
 */
 
 .information {
     font-size: 95%;
+    width: 52%;
+    height: auto;
+    position: absolute;
+    top: 40%;
+    margin-left: 20%;
+    font-size: 1vmax;
+}
+
+.information tr>td {
+    padding-bottom: 2%;
+    padding-left: 3%;
+}
+
+.information a {
+    background-color: inherit;
+    color: var(--blue-var4);
+    text-decoration: none;
+}
+
+.information a:hover {
+    text-decoration: underline;
+}
+
+.editProfileForm {
+    font-size: 1.2vmax;
     width: Auto;
     height: auto;
     position: absolute;
@@ -363,7 +389,7 @@ html, body {
     margin-left: 20%;
 }
 
-.information tr {
+.editProfileForm tr {
     position:relative;
     margin-top:20%;
 }
@@ -410,11 +436,16 @@ html, body {
     background-color: white;
     border-bottom: 1px solid lightgray;
     width: 39%;
-    height: 59%;
+    height: 62%;
     position: absolute;
     top: 20%;
     margin-left: 30.3%;
     padding: 1% 1%;
+}
+
+.profileLabel
+{
+    font-weight: bold;
 }
 
 .page-title {

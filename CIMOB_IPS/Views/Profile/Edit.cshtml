@@ -16,14 +16,15 @@
     }
 }
 
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+
 <p id="title">Editar Perfil</p>
 
 <div class="profile">
     <div class="profileImage">
         <img id="img" src="~/images/user1.png" width="130" height="130" />
     </div>
-    <div class="information">
-        <div class="col-md-4">
+    <div style="margin-top: 23%;">
             @if (Model.AccountType == EnumAccountType.STUDENT)
             {
                 @Html.Partial("_EditProfileStudentForm", Model.Student)
@@ -32,7 +33,6 @@
             {
                 @Html.Partial("_EditProfileTechnicianForm", Model.Technician)
             }
-        </div>
     </div>
 </div>
 
