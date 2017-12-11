@@ -93,21 +93,21 @@
         <div>
             <form asp-action="RegisterTechnician" method="post">
                 <table>
-                    <tr>
-                        <td><label asp-for="Technician.Name"></label></td>
-                        <td><input asp-for="Technician.Name" /></td>
-                        <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td>
-                    </tr>
-                    <tr>
-                        <td><label asp-for="Technician.Telephone"></label></td>
-                        <td><input asp-for="Technician.Telephone" type="text" /></td>
-                        <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><input type="submit" value="Registar" /></td>
-                    </tr>
+                    <tr> <td><label asp-for="Account.Email"></label></td></tr>
+                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["technician-email"]" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+
+                    <tr> <td><label asp-for="Technician.Name"></label></td></tr>
+                    <tr> <td><input asp-for="Technician.Name" /></td></tr>
+                    <tr> <td><span asp-validation-for="Technician.Name" class="text-danger"></span></td></tr>
+
+                    <tr> <td><label asp-for="Technician.Telephone"></label></td></tr>
+                    <tr> <td><input asp-for="Technician.Telephone" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td></tr>
+
+                    <tr> <td></td></tr>
+                    <tr> <td></td></tr>
+                    <tr> <td><input type="submit" value="Registar" /></td></tr>
                 </table>
             </form>
         </div>
