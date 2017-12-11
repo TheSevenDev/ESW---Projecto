@@ -70,8 +70,9 @@ html, body {
 
 .session-name {
     position: fixed;
-    width:100%;
-    text-align:center;
+    width: 100%;
+    text-align: center;
+    font-size: 1vw;
 }
 .session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
     text-decoration: none;
@@ -85,7 +86,7 @@ html, body {
 
 #logout{
     color:var(--blue-var4);
-    font-size:0.9vw;
+    font-size:1.0vw;
 }
 
 #logout:hover, #logout:visited:hover, #logout:link:hover, #logout:active:hover {
@@ -350,7 +351,7 @@ html, body {
     height: 88.5vmin;
 }
 /*
-   PROFILE (VH = ALTURA DA JANELA) (VW = LARGURA DA JANELA)
+   PROFILE
 */
 
 .information {
@@ -364,25 +365,26 @@ html, body {
 
 .information tr {
     position:relative;
+    margin-top:20%;
 }
 
-
 .profileImage {
-    width: 30%;
+    width: 10%;
+    text-align:center;
     height: 30%;
     position: absolute;
-    margin-left: 17%;
+    margin-left:33.5%;
 }
 
 .profile button {
-        height: 7%;
-        width: 20%;
-        float: right;
-        border: none;
-        background-color: inherit;
-        color: var(--main-blue);
-        font-weight: bold;
-        font-size: 1vmax;
+    height: 7%;
+    width: 20%;
+    float: right;
+    border: none;
+    background-color: inherit;
+    color: var(--blue-var4);
+    font-weight: bold;
+    font-size: 1vmax;
 }
 
 .profile button:hover {
@@ -392,7 +394,6 @@ html, body {
 
 #img {
     display: block;
-    margin-left: 71%;
 }
 
 #title {
@@ -443,6 +444,7 @@ html, body {
     position: absolute;
     top: 55%;
     margin-left: 20%;
+    
 }
 
 #saveProfile {

@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Index</title>
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+	<style>
+		html,body {
+			margin: 0; padding: 0px;
+			height:100%; 
+			min-height:100%;
+			background-color: rgb(233,232,220);
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-style: normal;
+			font-weight: normal;
+			color: black;
+		}
+
+		body {font-size:75%;position:relative; margin-top:-1px; border-style: solid solid solid solid;	border-color: rgb(172,168,153);	border-width: 0px 0px 1px 0px;}
+		a { text-decoration:none; color:#06c }
+		form {padding:5px; margin:0px;}
+	</style>
+</head>
+<body style="direction: ltr;">
+	<form>
+	Look for:<br /><input style="width:100%" onKeyDown="check_input(this.value,get_match)" onKeyUp="check_input(this.value,get_match)"/>
+	</form>
+
+	<script>
+		var words = new Array(
+"About Method","Account Class","Account Constructor","Account Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Account Property {CIMOB_IPS.Models.RegisterViewModel}","AccountController Class","AccountID Method","AccountName Method","AccountType Method","AccountType Property","ActionName Property {CIMOB_IPS.Models.Help}","ActionName Property {CIMOB_IPS.Models.Notification}","Address Property","Application Class","Application Constructor","Application Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Application Property {CIMOB_IPS.Models.State}","Application Property {CIMOB_IPS.Models.Student}","BeginDate Property","BuildWebHost Method","CIMOB_IPS Namespace","CIMOB_IPS.Controllers Namespace","CIMOB_IPS.Models Namespace","CIMOB_IPS.Views.Shared Namespace","CIMOB_IPS_DBContext Class","CIMOB_IPS_DBContext Constructor","Cc Property","ClosingDate Property","Configuration Property","Configure Method","ConfigureServices Method","ConfirmPassword Property","Confirmation Property","ConnectionString Property","Contact Method","ControllerName Property {CIMOB_IPS.Models.Help}","ControllerName Property {CIMOB_IPS.Models.Notification}","Coordenator Class","Coordenator Property","Course Class","Course Constructor","Course Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Course Property {CIMOB_IPS.Models.Institution}","Create  Method","Create (Notification) Method","CreationDate Property","Credits Property","CurrentPassword Property","Delete Method","DeleteConfirmed Method","DeletePendingAccount Method","Description Property {CIMOB_IPS.Models.Help}","Description Property {CIMOB_IPS.Models.Nationality}","Description Property {CIMOB_IPS.Models.Notification}","Description Property {CIMOB_IPS.Models.State}","Details Method","Edit (Int64, Notification) Method","Edit (Nullable&lt;Int64&gt;) Method {CIMOB_IPS.Controllers.NotificationsController}","Edit Method {CIMOB_IPS.Controllers.ProfileController}","EditProfileStudent Method","EditProfileTechnician Method","Email Class","Email Property {CIMOB_IPS.Models.Account}","Email Property {CIMOB_IPS.Models.Coordenator}","Email Property {CIMOB_IPS.Models.LoginViewModel}","Email Property {CIMOB_IPS.Models.PendingAccount}","EmergencyContactName Property","EmergencyContactRelation Property","EmergencyContactTelephone Property","EncryptToMD5 Method","EndDate Property","EnumAccountType Enumeration","Error Method","ErrorViewModel Class","ExecFYP Method","FinalEvaluation Property","GetAccountModelByID Method","GetCurrentUserID Method {CIMOB_IPS.Controllers.AccountController}","GetCurrentUserID Method {CIMOB_IPS.Controllers.ProfileController}","GetHelpInformation Method","Guid Property","HasScholarship Property","Help Class","Help Property","HelpController Class","HomeController Class","IdAccount Property {CIMOB_IPS.Models.Account}","IdAccount Property {CIMOB_IPS.Models.Notification}","IdAccount Property {CIMOB_IPS.Models.Student}","IdAccount Property {CIMOB_IPS.Models.Technician}","IdAccount Property {CIMOB_IPS.Models.UpdatePasswordViewModel}","IdAccountNavigation Property {CIMOB_IPS.Models.Notification}","IdAccountNavigation Property {CIMOB_IPS.Models.Student}","IdAccountNavigation Property {CIMOB_IPS.Models.Technician}","IdApplication Property {CIMOB_IPS.Models.Application}","IdApplication Property {CIMOB_IPS.Models.Mobility}","IdApplicationNavigation Property","IdCoordenator Property","IdCourse Property {CIMOB_IPS.Models.Course}","IdCourse Property {CIMOB_IPS.Models.Student}","IdCourseNavigation Property","IdHelp Property","IdInstitution Property {CIMOB_IPS.Models.Course}","IdInstitution Property {CIMOB_IPS.Models.Institution}","IdInstitutionNavigation Property","IdMobility Property","IdNationality Property {CIMOB_IPS.Models.Institution}","IdNationality Property {CIMOB_IPS.Models.Nationality}","IdNationality Property {CIMOB_IPS.Models.Student}","IdNationalityNavigation Property {CIMOB_IPS.Models.Institution}","IdNationalityNavigation Property {CIMOB_IPS.Models.Student}","IdNotification Property","IdOutgoingInstitution Property {CIMOB_IPS.Models.InstitutionProgram}","IdOutgoingInstitution Property {CIMOB_IPS.Models.Mobility}","IdOutgoingInstitutionNavigation Property {CIMOB_IPS.Models.InstitutionProgram}","IdOutgoingInstitutionNavigation Property {CIMOB_IPS.Models.Mobility}","IdPending Property","IdProgram Property {CIMOB_IPS.Models.InstitutionProgram}","IdProgram Property {CIMOB_IPS.Models.Mobility}","IdProgram Property {CIMOB_IPS.Models.Program}","IdProgramNavigation Property {CIMOB_IPS.Models.InstitutionProgram}","IdProgramNavigation Property {CIMOB_IPS.Models.Mobility}","IdResponsibleTechnician Property","IdResponsibleTechnicianNavigation Property","IdState Property {CIMOB_IPS.Models.Application}","IdState Property {CIMOB_IPS.Models.Mobility}","IdState Property {CIMOB_IPS.Models.Program}","IdState Property {CIMOB_IPS.Models.State}","IdStateNavigation Property {CIMOB_IPS.Models.Application}","IdStateNavigation Property {CIMOB_IPS.Models.Program}","IdStudent Property {CIMOB_IPS.Models.Application}","IdStudent Property {CIMOB_IPS.Models.Student}","IdStudentNavigation Property","IdTechnician Property","Index Method {CIMOB_IPS.Controllers.HomeController}","Index Method {CIMOB_IPS.Controllers.NotificationsController}","Index Method {CIMOB_IPS.Controllers.ProfileController}","InsertAccount Method","InsertPreRegister Method","Institution Class","Institution Constructor","Institution Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Institution Property {CIMOB_IPS.Models.Nationality}","InstitutionProgram Class","InstitutionProgram Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","InstitutionProgram Property {CIMOB_IPS.Models.Institution}","InstitutionProgram Property {CIMOB_IPS.Models.Program}","InviteTec Method","IsAdmin Method","IsAdmin Property","IsRegistered Method","Login  Method","Login (LoginViewModel) Method","LoginState Enumeration","LoginViewModel Class","Logout Method","Main Method","Mobility Class","Mobility Property {CIMOB_IPS.Models.Application}","Mobility Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Mobility Property {CIMOB_IPS.Models.Institution}","Mobility Property {CIMOB_IPS.Models.Program}","Mobility Property {CIMOB_IPS.Models.Technician}","MotivationCard Property","Name Property {CIMOB_IPS.Models.Coordenator}","Name Property {CIMOB_IPS.Models.Course}","Name Property {CIMOB_IPS.Models.Institution}","Name Property {CIMOB_IPS.Models.Student}","Name Property {CIMOB_IPS.Models.Technician}","Nationalities Property","Nationality Class","Nationality Constructor","Nationality Property","NewPassword Property","Notification Class","Notification Property {CIMOB_IPS.Models.Account}","Notification Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","NotificationsController Class","NotificationsController Constructor","OnConfiguring Method","OnGet Method","OnModelCreating Method","OpenDate Property","Password Property {CIMOB_IPS.Models.Account}","Password Property {CIMOB_IPS.Models.LoginViewModel}","PendingAccount Class","PendingAccount Property","PreRegister Method","ProfileController Class","ProfileController Constructor","ProfileViewModel Class","ProfileViewModel Constructor","ProfileViewModel Property","Program Class {CIMOB_IPS.Models}","Program Class {CIMOB_IPS}","Program Constructor","Program Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Program Property {CIMOB_IPS.Models.State}","ReadNotification Property","Register Method","RegisterStudent (RegisterViewModel) Method","RegisterStudent (String) Method","RegisterTechnician Method","RegisterViewModel Class","RememberMe Property","RequestId Property","SOLUTION-WIDE PROPERTIES Reference","SendEmail Method","SessionBarModel Class","ShowRequestId Property","Startup Class","Startup Constructor","State Class","State Constructor","State Property","Student Class","Student Constructor","Student Property {CIMOB_IPS.Models.Account}","Student Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Student Property {CIMOB_IPS.Models.Course}","Student Property {CIMOB_IPS.Models.Nationality}","Student Property {CIMOB_IPS.Models.ProfileViewModel}","Student Property {CIMOB_IPS.Models.RegisterViewModel}","StudentNum Property","Technician Class","Technician Constructor","Technician Property {CIMOB_IPS.Models.Account}","Technician Property {CIMOB_IPS.Models.CIMOB_IPS_DBContext}","Technician Property {CIMOB_IPS.Models.ProfileViewModel}","Technician Property {CIMOB_IPS.Models.RegisterViewModel}","Tecnicos Method","Telephone Property {CIMOB_IPS.Models.Coordenator}","Telephone Property {CIMOB_IPS.Models.Student}","Telephone Property {CIMOB_IPS.Models.Technician}","TestStateEmailNotFound Method","TestStateValidState Method","TestStateWrongPassword Method","Title Property","ToHex Method","UnitTest1 Class","UpdatePassword  Method","UpdatePassword (UpdatePasswordViewModel) Method","UpdatePasswordViewModel Class","UserType Enumeration","XUnitCIMOB_IPS Namespace","_Help Method","userController Field"
+		);
+		
+		
+		var oldHighlight = 0;
+		var oldKey = "";
+		
+		function get_match(text) {
+		    var ltext = text.toLowerCase();
+		    for(i in words) {
+		        if(words[i].toLowerCase().indexOf(ltext) == "0") {
+		            return words[i];
+		        }
+		    }
+		    return "";
+		}
+		
+		function highlight(keyword) {
+		    if(oldHighlight) oldHighlight.className = "";
+		    var el = parent.frames['zindex'].document.getElementById("w_"+keyword);
+		    el.className="highlighted";
+		    oldHighlight = el;
+		}
+		
+		function check_input(text, matchfun) {
+		    if(text!=oldKey) {
+		        var keyword = matchfun(text);
+		        if(keyword) {       
+		            highlight(keyword);
+		            parent.frames['zindex'].document.getElementById('w_'+keyword).scrollIntoView();
+		        }
+		        oldKey = text;
+		    }
+		}
+	</script>
+</body>
+</html>
+

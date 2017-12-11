@@ -17,75 +17,15 @@ namespace CIMOB_IPS.Controllers
 {
     public class AccountController : Controller
     {
-        private const int NEW_PW_MAX_LENGTH = 8;
 
+        #region Register
+        /// <summary>
+        ///  
+        /// </summary>
+        /// <returns>View Register/Index</returns>
         public IActionResult Register()
         {
             ViewData["register-type"] = "student-preregister";
-            return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult RegisterStudent(IFormCollection form)
-        {
-            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
-            String password = Convert.ToString(form["Account.Password"]);
-
-            long idAccount = InsertAccount(email, password);
-
-
-            long studentNum = 150221014; //StudentNum pelo url
-            long idCourse = Convert.ToInt64(form["Student.IdCourse"]);
-            String address = Convert.ToString(form["Student.Address"].ToString());
-            long ccNum = Convert.ToInt64(form["Student.Cc"]);
-            long telephone = Convert.ToInt64(form["Student.Telephone"]);
-            long idNacionality = Convert.ToInt64(form["Student.IdNationality"]);
-            int credits = Convert.ToInt32(form["Student.Credits"]);
-
-            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = "Ricardo Fernandes", Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
-
-            InsertStudent(student);
-
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            //WelcomeEmail(email);
-            return View("/Views/Home/Index.cshtml");
-        }
-
-        public IActionResult RegisterTechnician(IFormCollection form)
-        {
-            String email = GetEmailByIdPendingAccount("1"); //Id vem do url
-            String password = Convert.ToString(form["Account.Password"]);
-
-            long idAccount = InsertAccount(email, password);
-
-
-            bool isAdmin = true; //buscar IsAdmin pelo Url
-            String name = Convert.ToString(form["Technician.Name"].ToString());
-            long telephone = Convert.ToInt64(form["Technician.Telephone"]);
-
-            Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin };
-
-            InsertTechnician(technician);
-
-
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            //WelcomeEmail(email);
-            return View();
-        }
-
-        public IActionResult Login()
-        {
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            ViewData["fyp-initial-display"] = "none";
-            ViewData["initial-email"] = "";
-
             return View();
         }
 
@@ -98,17 +38,68 @@ namespace CIMOB_IPS.Controllers
             return View("Technicians");
         }
 
-        public IActionResult InviteTec(IFormCollection form)
+        [HttpPost]
+        public IActionResult RegisterStudent(RegisterViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || !User.IsInRole("tecnico"))
+            if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            string destination = Convert.ToString(form["email"]);
-            SendEmailToTec(destination);
 
-            return View("Invite");
+
+            String email = model.Account.Email;
+            byte[] password = model.Account.Password;
+
+            long idAccount = 0;
+
+            idAccount = InsertAccount(email, password);
+
+            long studentNum = model.Student.StudentNum;
+            string name = model.Student.Name;
+            long idCourse = model.Student.IdCourse;
+            String address = model.Student.Address;
+            long ccNum = model.Student.Cc;
+            long telephone = model.Student.Telephone;
+            long idNacionality = model.Student.IdNationality;
+            int credits = model.Student.Credits;
+
+            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = name, Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
+
+            InsertStudent(student);
+
+
+
+            //WelcomeEmail(email);
+            return View("/Views/Home/Index.cshtml");
         }
-        
+
+        public IActionResult RegisterTechnician(RegisterViewModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+
+
+            String email = model.Account.Email;
+            byte[] password = model.Account.Password;
+
+            long idAccount = 0;
+
+            idAccount = InsertAccount(email, password);
+
+            bool isAdmin = model.Technician.IsAdmin;
+            string name = model.Technician.Name;
+            long telephone = model.Technician.Telephone;
+
+
+            Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin};
+
+            InsertTechnician(technician);
+
+
+
+            //WelcomeEmail(email);
+            return View("/Views/Home/Index.cshtml");
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -125,13 +116,14 @@ namespace CIMOB_IPS.Controllers
 
             try
             {
-                bool success = InsertPreRegister(studentEmail);
-                if(success)
+                bool success = InsertPendingAccount(studentEmail,EnumAccountType.STUDENT);
+                if (success)
                 {
                     ViewData["message"] = "Número registado.";
                     ViewData["error-message"] = "";
                 }
-                else{
+                else
+                {
                     ViewData["error-message"] = "Número já registado.";
                     ViewData["message"] = "";
                 }
@@ -142,7 +134,7 @@ namespace CIMOB_IPS.Controllers
             {
                 ViewData["error-message"] = "Conexão Falhada.";
             }
- 
+
             return View("Register");
         }
 
@@ -162,7 +154,7 @@ namespace CIMOB_IPS.Controllers
                 command.Parameters.AddWithValue("@guid", account_id);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
-                if(!reader.HasRows)//Invalid GUID
+                if (!reader.HasRows)//Invalid GUID
                     return RedirectToAction("Index", "Home");
                 else
                 {
@@ -177,22 +169,277 @@ namespace CIMOB_IPS.Controllers
                     }
                     reader.Close();
                     connection.Close();
-                    using (SqlCommand command2 = new SqlCommand("", connection))
+                }
+
+            }
+            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Institutions = PopulateInstitutions() });
+        }
+
+        private IEnumerable<SelectListItem> PopulateNationalities()
+        {
+            List<SelectListItem> nationalities = new List<SelectListItem>();
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                using (SqlCommand command2 = new SqlCommand("", connection))
+                {
+                    connection.Open();
+                    command2.CommandText = "Select * from dbo.Nationality";
+                    SqlDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
                     {
-                        connection.Open();
-                        command2.CommandText = "Select * from dbo.Nationality";
-                        SqlDataReader reader2 = command2.ExecuteReader();
-                        while (reader2.Read())
-                        {
-                            nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
-                        }
+                        nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
+                    }
+
+                }
+            }
+            return nationalities;
+        }
+
+        private IEnumerable<SelectListItem> PopulateInstitutions()
+        {
+            List<SelectListItem> institutions = new List<SelectListItem>();
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                using (SqlCommand command2 = new SqlCommand("", connection))
+                {
+                    connection.Open();
+                    command2.CommandText = "Select * from dbo.Institution";
+                    SqlDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        institutions.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
+                    }
+
+                }
+            }
+            return institutions;
+        }
+
+
+        public IActionResult RegisterTechnician([FromQuery] string account_id)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            ViewData["register-type"] = "technician";
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "Select email from dbo.Pending_Account where guid = @guid";
+                command.Parameters.AddWithValue("@guid", account_id);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (!reader.HasRows)//Invalid GUID
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    while (reader.Read())
+                    {
+                        string email = reader[0].ToString();
+
+                        ViewData["technician-email"] = email;
 
                     }
+                    reader.Close();
                     connection.Close();
-                 }
                 }
-      
-            return View("Register" , new RegisterViewModel { Nationalities = nationalities });
+            }
+
+            return View("Register");
+        }
+        public IActionResult InviteTec(IFormCollection form)
+        {
+            if (!User.Identity.IsAuthenticated || !User.IsInRole("tecnico"))
+                return RedirectToAction("Index", "Home");
+
+            string destination = Convert.ToString(form["email"]);
+            Guid guid;
+            guid = Guid.NewGuid();
+
+            try
+            {
+                bool success = InsertPendingAccount(destination, EnumAccountType.TECHNICIAN);
+                if (success)
+                {
+                    ViewData["message"] = "Técnico já registado.";
+                    ViewData["error-message"] = "";
+                }
+                else
+                {
+                    ViewData["error-message"] = "Técnico já convidado.";
+                    ViewData["message"] = "";
+                }
+
+                return View("Register");
+            }
+            catch (SqlException e)
+            {
+                ViewData["error-message"] = "Conexão Falhada.";
+            }
+
+            return View("Invite");
+        }
+
+        public void DeletePendingAccount(string email)
+        {
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "Delete FROM dbo.Pending_Account WHERE email=@Email";
+                command.Parameters.AddWithValue("@Email", email);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+            }
+        }
+
+        public long InsertAccount(String email, byte[] password)
+        {
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
+            {
+
+                command.Parameters.AddWithValue("@Email", email);
+                command.Parameters.AddWithValue("@Password", password);
+                connection.Open();
+                //command.ExecuteNonQuery();
+                long idAccount = (Int64)command.ExecuteScalar();
+
+                if (connection.State == System.Data.ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+
+                return idAccount;
+
+            }
+
+        }
+
+        public bool InsertPendingAccount(String email, EnumAccountType userType)
+        {
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "Select a.email , pa.email from dbo.Account a, dbo.Pending_Account pa where a.email = @email or pa.email = @email";
+                command.Parameters.AddWithValue("@email", email);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
+                    return false;
+                else
+                {
+                    using (SqlCommand command2 = new SqlCommand("", connection))
+                    {
+                        connection.Close();
+                        connection.Open();
+                        command2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid)";
+                        command2.Parameters.AddWithValue("@email", email);
+                        Guid guid;
+                        guid = Guid.NewGuid();
+                        command2.Parameters.AddWithValue("@guid", guid);
+                        command2.ExecuteNonQuery();
+                        connection.Close();
+                        if (userType == EnumAccountType.STUDENT)
+                        {
+                            SendEmailToStudent(email, guid.ToString());
+                        }
+                        else
+                        {
+                            SendEmailToTec(email, guid.ToString());
+                        }
+                        
+                        return true;
+                    }
+                }
+            }
+        }
+
+        private void InsertStudent(Student student)
+        {
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
+                command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
+                command.Parameters.AddWithValue("@IdCourse", student.IdCourse);
+                command.Parameters.AddWithValue("@Name", student.Name);
+                command.Parameters.AddWithValue("@Adress", student.Address);
+                command.Parameters.AddWithValue("@CC", student.Cc);
+                command.Parameters.AddWithValue("@Telephone", student.Telephone);
+                command.Parameters.AddWithValue("@IdNacionality", student.IdNationality);
+                command.Parameters.AddWithValue("@Credits", student.Credits);
+                command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        private void InsertTechnician(Technician technician)
+        {
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                command.CommandText = "INSERT INTO dbo.Technician VALUES (@IdAccount,@Name,@Telephone,@IsAdmin)";
+                command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
+                command.Parameters.AddWithValue("@Name", technician.Name);
+                command.Parameters.AddWithValue("@Telephone", technician.Telephone);
+                command.Parameters.AddWithValue("@IsAdmin", technician.IsAdmin);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        private void SendEmailToTec(string emailTec, string guid)
+        {
+            string subject = "[CIMOB-IPS] Convite para registo no CIMOB-IPS";
+            string link = "cimob-ips.azurewebsites.net/RegisterTechnician?account_id=" + guid;
+
+            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
+                "Clique <a href =\"" + link + "\">aqui</a> para confirmar";
+
+            Email.SendEmail(emailTec, subject, body);
+        }
+
+        private void WelcomeEmail(string targetEmail)
+        {
+            string subject = "[CIMOB-IPS] Bem-Vindo ao CIMOB-IPS";
+
+            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
+                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
+
+        }
+
+
+        private void SendEmailToStudent(string emailStudent, string guid)
+        {
+            string subject = "[CIMOB-IPS] Registo no CIMOB-IPS";
+            string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
+
+            string body = "Olá, <br> Clique <a href =\"" + link + "\">aqui</a> para se registar na aplicação do CIMOB-IPS.<br> ";
+           
+            Email.SendEmail(emailStudent, subject, body);
+        }
+
+
+        #endregion
+
+        #region Login
+        public IActionResult Login()
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            ViewData["fyp-initial-display"] = "none";
+            ViewData["initial-email"] = "";
+
+            return View();
         }
 
 
@@ -244,6 +491,17 @@ namespace CIMOB_IPS.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> Logout()
+        {
+            if (User.Identity.IsAuthenticated)
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region FYP
         public IActionResult ExecFYP(IFormCollection form)
         {
             string email = Convert.ToString(form["email"]);
@@ -268,126 +526,6 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Logout()
-        {
-            if (User.Identity.IsAuthenticated)
-                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        public String GetEmailByIdPendingAccount(string idAccount)
-        {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
-            {
-                command.CommandText = "SELECT email FROM dbo.Pending_Account WHERE id_pending=@idAccount";
-                command.Parameters.AddWithValue("@idAccount", idAccount);
-                connection.Open();
-
-                String email = (String)command.ExecuteScalar();
-
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-
-                return email;
-
-            }
-        }
-
-        public long InsertAccount(String email, String password)
-        {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
-            {
-
-                command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", password);
-                connection.Open();
-                //command.ExecuteNonQuery();
-                long idAccount = (Int64)command.ExecuteScalar();
-
-                if (connection.State == System.Data.ConnectionState.Open)
-                {
-                    connection.Close();
-                }
-
-                return idAccount;
-
-            }
-
-        }
-
-        public bool InsertPreRegister(String studentEmail)
-        {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
-            {
-                command.CommandText = "Select a.email , pa.email from dbo.Account a, dbo.Pending_Account pa where a.email = @email or pa.email = @email";
-                command.Parameters.AddWithValue("@email", studentEmail);
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
-                    return false;            
-                else
-                {
-                    using (SqlCommand command2 = new SqlCommand("", connection))
-                    {
-                        connection.Close();
-                        connection.Open();
-                        command2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid)";
-                        command2.Parameters.AddWithValue("@email", studentEmail);
-                        Guid guid;
-                        guid = Guid.NewGuid();
-                        command2.Parameters.AddWithValue("@guid", guid);
-                        command2.ExecuteNonQuery();
-                        connection.Close();
-                        SendEmailToStudent(studentEmail, guid.ToString());
-                        return true;
-                    }
-                }
-            }
-        }
-
-        public void InsertStudent(Student student)
-        {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
-            {
-                command.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
-                command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
-                command.Parameters.AddWithValue("@IdCourse", student.IdCourse);
-                command.Parameters.AddWithValue("@Name", student.Name);
-                command.Parameters.AddWithValue("@Adress", student.Address);
-                command.Parameters.AddWithValue("@CC", student.Cc);
-                command.Parameters.AddWithValue("@Telephone", student.Telephone);
-                command.Parameters.AddWithValue("@IdNacionality", student.IdNationality);
-                command.Parameters.AddWithValue("@Credits", student.Credits);
-                command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-
-        public void InsertTechnician(Technician technician)
-        {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
-            {
-                command.CommandText = "INSERT INTO dbo.Technician VALUES (@IdAccount,@Name,@Telephone,@IsAdmin)";
-                command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
-                command.Parameters.AddWithValue("@Name", technician.Name);
-                command.Parameters.AddWithValue("@Telephone", technician.Telephone);
-                command.Parameters.AddWithValue("@IsAdmin", technician.IsAdmin);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-
         private void ChangePassword(string _email, String _newpassword) {
 
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
@@ -401,6 +539,8 @@ namespace CIMOB_IPS.Controllers
                 connection.Close();
             }
         }
+
+        private const int NEW_PW_MAX_LENGTH = 8;
 
         private string GenerateNewPassword()
         {
@@ -418,57 +558,47 @@ namespace CIMOB_IPS.Controllers
             ChangePassword(_email, Account.EncryptToMD5(newPW));
 
             //SEND EMAIL WITH PASSWORD
-
-            string subject = "[CIMOB-IPS] Alteração da palavra-passe.";
+            string subject = "[CIMOB-IPS] Alteração da palavra-passe";
 
             string body = "Enviamos-lhe este email em resposta ao pedido de alteração da palavra-passe de acesso à plataforma do CIMOB-IPS.<br><br> A sua nova palavra-passe é:" + newPW
-                + "<br<br>>Caso não queira permanecer com a nova palavra-passe pode sempre alterá-la em: <a href=\"cimob-ips.azurewebsites.net/user/alterar_palavra_passe\"> cimob-ips.azurewebsites.net/user/alterar_palavra_passe </a>"
+                + "<br<br><br>Caso não queira permanecer com a nova palavra-passe pode sempre alterá-la em: <a href=\"cimob-ips.azurewebsites.net/user/alterar_palavra_passe\"> cimob-ips.azurewebsites.net/user/alterar_palavra_passe </a>"
                 + "<br><br> A Equipa do CIMOB-IPS.";
 
             Email.SendEmail(_email, subject, body);
 
         }
 
-        private void SendEmailToTec(string emailTec)
-        {
-            string subject = "Convite para registo no CIMOB-IPS";
-
-            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href=\"www.google.pt\">aqui</a> para confirmar";
-
-            Email.SendEmail(emailTec, subject, body);
-        }
-
-        private void WelcomeEmail(string targetEmail)
-        {
-            string subject = "Bem-Vindo ao CIMOB-IPS";
-
-            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
-                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
-
-        }
-
-
         public int GetCurrentUserID()
         {
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
-        [HttpPost]
-        public IActionResult UpdatePassword([Bind("Password")] Account account, UpdatePasswordViewModel model)
+        [HttpGet]
+        public IActionResult UpdatePassword()
         {
-            
+            return View();
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdatePassword([Bind("CurrentPassword, NewPassword, Confirmation")] UpdatePasswordViewModel model)
+        {
+
             string confirmation = Convert.ToString(model.Confirmation);
             string newPW = Convert.ToString(model.NewPassword);
 
-            if (GetCurrentUserID() != account.IdAccount)
+            if (GetCurrentUserID() != model.IdAccount)
             {
                 return BadRequest();
             }
 
-
             //não está a apresentar erros na pagina
-            if (confirmation.Equals(newPW))
+            if (!confirmation.Equals(newPW))
+            {
+                ViewData["message"] = "As Passwords não coincidem";
+            }
+
             {
 
 
@@ -478,29 +608,21 @@ namespace CIMOB_IPS.Controllers
 
                     using (SqlCommand command = sqlConnection.CreateCommand())
                     {
-                        command.CommandText = "UPDATE Account SET password = @Password WHERE id_account = @IdAccount";
-                        command.Parameters.AddWithValue("@Password", account.Password);
+                        command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @IdAccount";
+                        command.Parameters.AddWithValue("@Password", model.NewPassword);
                         sqlConnection.Open();
                         command.ExecuteNonQuery();
                         sqlConnection.Close();
                     }
+
+                    //PASSWORD ALTERADA COM SUCESSO
+                    ViewData["message"] = "Password Alterada Com Sucesso";
+
                 }
-                return RedirectToAction("Index");
             }
 
-            return RedirectToAction("UpdatePassword");
+            return View("Home");
         }
-
-        private void SendEmailToStudent(String emailStudent, string guid)
-        {
-            string subject = "Registo no CIMOB-IPS";
-            string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
-
-            string body = "Olá, <br> Clique <a href =\"" + link + "\">aqui</a> para se registar na aplicação do CIMOB-IPS.<br> ";
-               
-            Email.SendEmail(emailStudent, subject, body);
-        }
-
-
+        #endregion
     }
-    }
+}
