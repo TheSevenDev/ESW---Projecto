@@ -92,6 +92,10 @@ namespace CIMOB_IPS
                     defaults: new { controller = "Account", action = "RegisterStudent" });
 
                 routes.MapRoute(
+                    "RegisterTechnicianRoute", "RegisterTechnician",
+                    defaults: new { controller = "Account", action = "RegisterTechnician" });
+
+                routes.MapRoute(
                     "PreRegisterRoute", "Register",
                     defaults: new { controller = "Account", action = "PreRegister" });
 

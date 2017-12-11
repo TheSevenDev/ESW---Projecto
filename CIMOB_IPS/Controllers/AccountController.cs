@@ -94,6 +94,7 @@ namespace CIMOB_IPS.Controllers
             return View("/Views/Home/Index.cshtml");
         }
 
+        [HttpPost]
         public IActionResult RegisterTechnician(RegisterViewModel model)
         {
             if (User.Identity.IsAuthenticated)
@@ -237,7 +238,7 @@ namespace CIMOB_IPS.Controllers
             return courses;
         }
 
-
+                             
         public IActionResult RegisterTechnician([FromQuery] string account_id)
         {
             if (User.Identity.IsAuthenticated)
@@ -270,6 +271,13 @@ namespace CIMOB_IPS.Controllers
 
             return View("Register");
         }
+
+        public IActionResult InviteTec()
+        {
+            return View("InviteTechnician");
+        }
+
+        [HttpPost]
         public IActionResult InviteTec(RegisterViewModel model)
         {
 
