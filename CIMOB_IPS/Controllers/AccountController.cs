@@ -20,7 +20,7 @@ namespace CIMOB_IPS.Controllers
 
         #region Register
         /// <summary>
-        /// 
+        ///  
         /// </summary>
         /// <returns>View Register/Index</returns>
         public IActionResult Register()
@@ -169,22 +169,52 @@ namespace CIMOB_IPS.Controllers
                     }
                     reader.Close();
                     connection.Close();
-                    using (SqlCommand command2 = new SqlCommand("", connection))
-                    {
-                        connection.Open();
-                        command2.CommandText = "Select * from dbo.Nationality";
-                        SqlDataReader reader2 = command2.ExecuteReader();
-                        while (reader2.Read())
-                        {
-                            nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
-                        }
+                }
 
+            }
+            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Institutions = PopulateInstitutions() });
+        }
+
+        private IEnumerable<SelectListItem> PopulateNationalities()
+        {
+            List<SelectListItem> nationalities = new List<SelectListItem>();
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                using (SqlCommand command2 = new SqlCommand("", connection))
+                {
+                    connection.Open();
+                    command2.CommandText = "Select * from dbo.Nationality";
+                    SqlDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
                     }
-                    connection.Close();
+
                 }
             }
+            return nationalities;
+        }
 
-            return View("Register", new RegisterViewModel { Nationalities = nationalities });
+        private IEnumerable<SelectListItem> PopulateInstitutions()
+        {
+            List<SelectListItem> institutions = new List<SelectListItem>();
+
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                using (SqlCommand command2 = new SqlCommand("", connection))
+                {
+                    connection.Open();
+                    command2.CommandText = "Select * from dbo.Institution";
+                    SqlDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        institutions.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
+                    }
+
+                }
+            }
+            return institutions;
         }
 
 

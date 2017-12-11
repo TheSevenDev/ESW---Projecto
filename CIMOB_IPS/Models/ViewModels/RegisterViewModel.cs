@@ -13,5 +13,7 @@ namespace CIMOB_IPS.Models
         public Technician Technician { get; set; }       
 
         public IEnumerable<SelectListItem> Nationalities { get; set; }
+
+        public IEnumerable<SelectListItem> Institutions { get; set; }
     }
 }
