@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>Enum used to represent the different types of users in the application. They are either students or technicians from the CIMOB.</summary>
     public enum UserType
     {
-      STUDENT, TECHNICIAN
+        STUDENT, TECHNICIAN
     }
 }

@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>Class used to represent the Technician from CIMOB. This technician will contain an ID for both himself and for the account that is associated to him.
+    /// Al</summary>
     public partial class Technician
     {
         public Technician()
