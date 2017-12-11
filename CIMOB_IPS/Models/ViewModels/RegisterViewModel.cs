@@ -23,6 +23,6 @@ namespace CIMOB_IPS.Models
         /// <value>All the nationalities provided by the database. </value>
         public IEnumerable<SelectListItem> Nationalities { get; set; }
 
-        public IEnumerable<SelectListItem> Institutions { get; set; }
+        public IEnumerable<SelectListItem> Courses { get; set; }
     }
 }

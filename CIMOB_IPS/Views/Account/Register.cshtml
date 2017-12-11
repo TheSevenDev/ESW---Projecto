@@ -63,13 +63,9 @@
                     <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --")</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
-                    <tr> <td><label>Nacionalidade: </label></td></tr>
-                    <tr> <td> @Html.DropDownListFor(model => null, Model.Institutions, "-- Seleccione a Escola --")</td></tr>
-                    <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
-
-                    <tr> <td><label asp-for="Student.IdCourse"></label></td></tr>
-                    <tr> <td><select asp-for="Student.IdCourse" asp-items="ViewBag.IdCourse"><option value=1>Licenciatura em Engenharia Informática</option></select></td></tr>
-                    <tr> <td><span asp-validation-for="Student.IdCourse" class="text-danger"></span></td></tr>
+                    <tr> <td><label>Curso: </label></td></tr>
+                    <tr> <td> @Html.DropDownListFor(model => model.Student.IdCourse, Model.Courses, "-- Seleccione o Curso --")</td></tr>
+                    <tr> <td><span asp-validation-for="Student.IdCourse" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Credits"></label></td></tr>
                     <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3vw;" /> </td></tr>

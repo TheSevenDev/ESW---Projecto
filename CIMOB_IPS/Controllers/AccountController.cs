@@ -194,7 +194,7 @@ namespace CIMOB_IPS.Controllers
                 }
 
             }
-            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Institutions = PopulateInstitutions() });
+            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Courses = PopulateCourses() });
         }
 
         private IEnumerable<SelectListItem> PopulateNationalities()
@@ -212,31 +212,29 @@ namespace CIMOB_IPS.Controllers
                     {
                         nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
                     }
-
                 }
             }
             return nationalities;
         }
 
-        private IEnumerable<SelectListItem> PopulateInstitutions()
+        private IEnumerable<SelectListItem> PopulateCourses()
         {
-            List<SelectListItem> institutions = new List<SelectListItem>();
+            List<SelectListItem> courses = new List<SelectListItem>();
 
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
                 using (SqlCommand command2 = new SqlCommand("", connection))
                 {
                     connection.Open();
-                    command2.CommandText = "Select * from dbo.Institution";
+                    command2.CommandText = "Select * from dbo.Courses";
                     SqlDataReader reader2 = command2.ExecuteReader();
                     while (reader2.Read())
                     {
-                        institutions.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
+                        courses.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
                     }
-
                 }
             }
-            return institutions;
+            return courses;
         }
 
 
