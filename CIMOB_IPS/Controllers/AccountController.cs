@@ -45,17 +45,24 @@ namespace CIMOB_IPS.Controllers
 
             var isAdmin = from s in _context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
 
-            var technicians = new List<Technician>();
-
-            if(isAdmin != null)
-                technicians = _context.Technician.ToList();
-
             TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = pendingAccounts };
 
-            if (technicians.Count() > 0)
-                viewModel.Technicians = technicians;
+            if (isAdmin != null)
+            {
+                viewModel.Technicians = (from s in _context.Technician
+                                   select new Technician
+                                   {
+                                       Name = s.Name,
+                                       IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                       Telephone = s.Telephone,
+                                       IsAdmin =  s.IsAdmin
+                                   }).ToList();
+            }
             else
+            {
                 viewModel.Technicians = null;
+            }
+
 
             return View("Technicians", viewModel);
         }
