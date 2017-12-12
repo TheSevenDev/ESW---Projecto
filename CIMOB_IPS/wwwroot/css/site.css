@@ -543,6 +543,10 @@ html, body {
     font-size: 1.1vmax;
 }
 
+#submitButtonChangePassword {
+    margin-right:230%;
+}
+
 .invite-form input[type=submit]:hover {
     background-color: var(--blue-var3);
 }
