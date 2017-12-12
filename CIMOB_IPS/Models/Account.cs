@@ -26,12 +26,14 @@ namespace CIMOB_IPS.Models
 
         [Required(ErrorMessage = "A password não está preenchida")]
         [Display(Name = "Password:")]
+        [DataType(DataType.Password)]
         public byte[] Password { get; set; }
 
         [NotMapped] 
         [Required(ErrorMessage = "A confirmação da password não está preenchida")]
         [Compare("Password", ErrorMessage ="As passwords não coincidem.")]
         [Display(Name = "Confirme a Password:")]
+        [DataType(DataType.Password)]
         public byte[] ConfirmPassword { get; set; }
 
         public ICollection<Notification> Notification { get; set; }

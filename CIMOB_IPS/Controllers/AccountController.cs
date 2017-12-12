@@ -66,10 +66,9 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-
-
-            String email = model.Account.Email;
-            byte[] password = model.Account.Password;
+            Console.WriteLine(ModelState);
+            String email = model.EmailView;
+            string password = model.PasswordView;
 
             long idAccount = 0;
 
@@ -81,14 +80,13 @@ namespace CIMOB_IPS.Controllers
             String address = model.Student.Address;
             long ccNum = model.Student.Cc;
             long telephone = model.Student.Telephone;
-            long idNacionality = model.Student.IdNationality;
+            long idNationality = model.Student.IdNationality;
             int credits = model.Student.Credits;
 
-            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = name, Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNacionality, Credits = credits, StudentNum = studentNum };
+            Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = name, Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNationality, Credits = credits, StudentNum = studentNum };
 
             InsertStudent(student);
-
-
+            
 
             //WelcomeEmail(email);
             return View("/Views/Home/Index.cshtml");
@@ -103,7 +101,7 @@ namespace CIMOB_IPS.Controllers
 
 
             String email = model.Account.Email;
-            byte[] password = model.Account.Password;
+            string password = model.PasswordView;
 
             long idAccount = 0;
 
@@ -201,19 +199,10 @@ namespace CIMOB_IPS.Controllers
         private IEnumerable<SelectListItem> PopulateNationalities()
         {
             List<SelectListItem> nationalities = new List<SelectListItem>();
-
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            var nationalitiesList = _context.Nationality.OrderBy(x => x.Description).ToList();
+            foreach(Nationality n in nationalitiesList)
             {
-                using (SqlCommand command2 = new SqlCommand("", connection))
-                {
-                    connection.Open();
-                    command2.CommandText = "Select * from dbo.Nationality";
-                    SqlDataReader reader2 = command2.ExecuteReader();
-                    while (reader2.Read())
-                    {
-                        nationalities.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
-                    }
-                }
+                nationalities.Add(new SelectListItem { Value = n.IdNationality.ToString(), Text = n.Description });
             }
             return nationalities;
         }
@@ -221,20 +210,12 @@ namespace CIMOB_IPS.Controllers
         private IEnumerable<SelectListItem> PopulateCourses()
         {
             List<SelectListItem> courses = new List<SelectListItem>();
-
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            var coursesList = _context.Course.OrderBy(x=>x.Name).ToList();
+            foreach (Course n in coursesList)
             {
-                using (SqlCommand command2 = new SqlCommand("", connection))
-                {
-                    connection.Open();
-                    command2.CommandText = "Select * from dbo.Courses";
-                    SqlDataReader reader2 = command2.ExecuteReader();
-                    while (reader2.Read())
-                    {
-                        courses.Add(new SelectListItem { Value = reader2[0].ToString(), Text = (string)reader2[1] });
-                    }
-                }
+                courses.Add(new SelectListItem { Value = n.IdCourse.ToString(), Text = n.Name });
             }
+
             return courses;
         }
 
@@ -323,14 +304,15 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public long InsertAccount(String email, byte[] password)
+        public long InsertAccount(string email, string password)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(32), HashBytes('MD5', @Password), 2))", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(16),@Password)", connection))
             {
 
+                Console.WriteLine("============== EMAIL PROVIDED ================  " + email);
                 command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", password);
+                command.Parameters.AddWithValue("@Password", Account.EncryptToMD5(password));
                 connection.Open();
                 //command.ExecuteNonQuery();
                 long idAccount = (Int64)command.ExecuteScalar();

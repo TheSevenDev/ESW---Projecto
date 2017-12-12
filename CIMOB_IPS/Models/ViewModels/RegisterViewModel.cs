@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CIMOB_IPS.Models
 {
@@ -10,6 +12,26 @@ namespace CIMOB_IPS.Models
         /// <summary>Property used to represent the new account created. From this property there will be an email, password and password confirmation camps to fill.</summary>
         /// <value>New generated account with the given email and password.</value>
         public Account Account { get; set; }
+
+        public long IdAccount { get; set; }
+        [Required(ErrorMessage = "O email não preenchido")]
+        [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
+        [Display(Name = "E-mail:")]
+        public string EmailView { get; set; }
+
+
+        [Required(ErrorMessage = "A password não está preenchida")]
+        [Display(Name = "Password:")]
+        [DataType(DataType.Password)]
+        public String PasswordView { get; set; }
+
+
+        [Required(ErrorMessage = "A confirmação da password não está preenchida")]
+        [Compare("PasswordView", ErrorMessage = "As passwords não coincidem.")]
+        [Display(Name = "Confirme a Password:")]
+        [DataType(DataType.Password)]
+        public String ConfirmPasswordView { get; set; }
+
 
         /// <summary>Property used to represent the new Student created with the values provided in the form.  </summary>
         /// <value>New generated Student with the given data.</value>
@@ -24,5 +46,6 @@ namespace CIMOB_IPS.Models
         public IEnumerable<SelectListItem> Nationalities { get; set; }
 
         public IEnumerable<SelectListItem> Courses { get; set; }
+
     }
 }

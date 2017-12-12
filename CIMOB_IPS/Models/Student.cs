@@ -33,11 +33,13 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Morada:")]
         public string Address { get; set; }
 
+        [DataType(DataType.Text)]
         [Required(ErrorMessage = "O Cartão de Cidadão não está preenchido.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "O Cartão de Cidadão tem de ser expresso em algarismos.")]
         [Display(Name = "Cartão de Cidadão:")]
         public long Cc { get; set; }
 
+        [DataType(DataType.Text)]
         [Required(ErrorMessage = "O Nº Telemóvel não está preenchido.")]
         [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Telemovel tem de ser expresso em 9 algarismos.")]
         [Display(Name = "Nº Telemóvel:")]
@@ -47,6 +49,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nacionalidade:")]
         public long IdNationality { get; set; }
 
+        [DataType(DataType.Text)]
         [Required(ErrorMessage = "ECTS não está preenchido.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Os ECTS tem de ser expresso em algarismos.")]
         [Display(Name = "ECTS:")]
