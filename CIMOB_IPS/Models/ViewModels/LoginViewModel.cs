@@ -13,7 +13,7 @@ namespace CIMOB_IPS.Models
         /// </summary>
         /// <value>Email credential</value>
         [Required(ErrorMessage = "Campo email vazio")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "O campo tem de ser um email")]
         public string Email { get; set; }
 
         /// <summary>

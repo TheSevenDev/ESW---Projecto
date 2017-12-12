@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.Linq;
 using CIMOB_IPS.Models.ViewModels;
+using System.Text;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -79,7 +80,9 @@ namespace CIMOB_IPS.Controllers
 
             long idAccount = 0;
 
-            idAccount = InsertAccount(email, password);
+            idAccount = InsertAccount(email, Account.EncryptToMD5(password));
+
+            DeletePendingAccount(email);
 
             long studentNum = model.Student.StudentNum;
             string name = model.Student.Name;
@@ -93,10 +96,9 @@ namespace CIMOB_IPS.Controllers
             Student student = new Student { IdAccount = idAccount, IdCourse = idCourse, Name = name, Address = address, Cc = ccNum, Telephone = telephone, IdNationality = idNationality, Credits = credits, StudentNum = studentNum };
 
             InsertStudent(student);
-            
 
             //WelcomeEmail(email);
-            return View("/Views/Home/Index.cshtml");
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -125,7 +127,7 @@ namespace CIMOB_IPS.Controllers
 
 
 
-            //WelcomeEmail(email);
+            WelcomeEmail(email);
             return View("/Views/Home/Index.cshtml");
         }
 
@@ -311,15 +313,14 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public long InsertAccount(string email, string password)
+        public long InsertAccount(string email, String password)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email,CONVERT(VARBINARY(16),@Password)", connection))
+            using (SqlCommand command = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email, CONVERT(VARBINARY(16), @password, 2))", connection))
             {
 
-                Console.WriteLine("============== EMAIL PROVIDED ================  " + email);
                 command.Parameters.AddWithValue("@Email", email);
-                command.Parameters.AddWithValue("@Password", Account.EncryptToMD5(password));
+                command.Parameters.AddWithValue("@Password", password);
                 connection.Open();
                 //command.ExecuteNonQuery();
                 long idAccount = (Int64)command.ExecuteScalar();
@@ -413,21 +414,31 @@ namespace CIMOB_IPS.Controllers
 
         private void SendEmailToTec(string emailTec, string guid)
         {
-            string subject = "[CIMOB-IPS] Convite para registo no CIMOB-IPS";
-            string link = "cimob-ips.azurewebsites.net/RegisterTechnician?account_id=" + guid;
+            string subject = "[CIMOB-IPS] Registo no CIMOB-IPS";
+            string link = "http://cimob-ips.azurewebsites.net/RegisterTechnician?account_id=" + guid;
 
-            string body = "Olá, <br> Recebeu um convite para se registar na aplicação do CIMOB-IPS.<br> " +
-                "Clique <a href =\"" + link + "\">aqui</a> para confirmar";
+            var body = new StringBuilder();
+            body.AppendLine("Caro utilizador,<br><br>");
+            body.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
+            body.AppendLine("Clique <a href=\"" + link + "\"> aqui </a> para completar a criação da conta.<br>");
+            body.AppendLine("Caso não tenha efetuado nenhum pedido de ciração de conta, por favor, contacte a equipa do CIMOB-IPS");
 
-            Email.SendEmail(emailTec, subject, body);
+
+            body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+            Email.SendEmail(emailTec, subject, body.ToString());
         }
 
         private void WelcomeEmail(string targetEmail)
         {
             string subject = "[CIMOB-IPS] Bem-Vindo ao CIMOB-IPS";
 
-            string body = "Olá, <br> Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão.<br> " +
-                " Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão Pão";
+            var body = new StringBuilder();
+            body.AppendLine("Caro utilizador,<br><br>");
+            body.AppendFormat(@"O seu registo na plataforma do CIMOB-IPS foi efetuado com sucesso.<br><br>");
+            body.AppendLine("Pode entrar na aplicação em <a href=\"http://cimob-ips.azurewebsites.net/Login </a>." );
+
+            body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+            Email.SendEmail(targetEmail, subject, body.ToString());
 
         }
 
@@ -435,11 +446,17 @@ namespace CIMOB_IPS.Controllers
         private void SendEmailToStudent(string emailStudent, string guid)
         {
             string subject = "[CIMOB-IPS] Registo no CIMOB-IPS";
-            string link = "cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
+            string link = "http://cimob-ips.azurewebsites.net/RegisterStudent?account_id=" + guid;
 
-            string body = "Olá, <br> Clique <a href =\"" + link + "\">aqui</a> para se registar na aplicação do CIMOB-IPS.<br> ";
-           
-            Email.SendEmail(emailStudent, subject, body);
+            var body = new StringBuilder();
+            body.AppendLine("Caro utilizador,<br><br>");
+            body.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
+            body.AppendLine("Clique <a href=\""+link+"\"> aqui </a> para completar a criação da conta.<br>");
+            body.AppendLine("Caso não tenha efetuado nenhum pedido de ciração de conta, por favor, contacte a equipa do CIMOB-IPS");
+
+
+            body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+            Email.SendEmail(emailStudent, subject, body.ToString());
         }
 
 
@@ -575,11 +592,13 @@ namespace CIMOB_IPS.Controllers
             //SEND EMAIL WITH PASSWORD
             string subject = "[CIMOB-IPS] Alteração da palavra-passe";
 
-            string body = "Enviamos-lhe este email em resposta ao pedido de alteração da palavra-passe de acesso à plataforma do CIMOB-IPS.<br><br> A sua nova palavra-passe é:" + newPW
-                + "<br<br><br>Caso não queira permanecer com a nova palavra-passe pode sempre alterá-la em: <a href=\"cimob-ips.azurewebsites.net/user/alterar_palavra_passe\"> cimob-ips.azurewebsites.net/user/alterar_palavra_passe </a>"
-                + "<br><br> A Equipa do CIMOB-IPS.";
+            var body = new StringBuilder();
+            body.AppendLine("Caro utilizador,<br><br>");
+            body.AppendFormat(@"Enviamos-lhe este email em resposta ao pedido de alteração da palavra-passe de acesso à plataforma do CIMOB-IPS.<br><br> A sua nova palavra-passe é: {0}<br><br>", newPW);
+            body.AppendLine("Caso não queira permanecer com a nova palavra-passe pode sempre alterá-la em: <a href=\"http://cimob-ips.azurewebsites.net/user/alterar_palavra_passe\"> cimob-ips.azurewebsites.net/user/alterar_palavra_passe </a> <br><br>");
+            body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
 
-            Email.SendEmail(_email, subject, body);
+            Email.SendEmail(_email, subject, body.ToString());
 
         }
 
