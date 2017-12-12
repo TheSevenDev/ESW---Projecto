@@ -10,9 +10,9 @@
     <form asp-action="InviteTec" class="invite-form">
         <table>
 
-            <tr> <td><label asp-for="Account.Email"></label></td></tr>
-            <tr> <td><input asp-for="Account.Email" type="text" placeholder="nome.apelido@ips.pt" /></td></tr>
-            <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+            <tr> <td><label asp-for="EmailView"></label></td></tr>
+            <tr> <td><input asp-for="EmailView" type="text" placeholder="nome.apelido@ips.pt" /></td></tr>
+            <tr> <td><span asp-validation-for="EmailView" class="error-message"></span></td></tr>
             <tr></tr>
             <tr></tr>
             <tr></tr>
@@ -23,7 +23,7 @@
                         <tr> <td><input asp-for="Technician.IsAdmin"/></td></tr>
                     }
                 </table>
-          <input type="submit" value="Enviar convite" />
+          <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span></td><td><input type="submit" value="Enviar convite" /></td></tr>
      </form>
 </div>
 

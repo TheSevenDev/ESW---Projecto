@@ -114,7 +114,9 @@ namespace CIMOB_IPS.Controllers
 
             long idAccount = 0;
 
-            idAccount = InsertAccount(email, password);
+            idAccount = InsertAccount(email, Account.EncryptToMD5(password));
+
+            DeletePendingAccount(email);
 
             bool isAdmin = model.Technician.IsAdmin;
             string name = model.Technician.Name;
@@ -126,9 +128,8 @@ namespace CIMOB_IPS.Controllers
             InsertTechnician(technician);
 
 
-
-            WelcomeEmail(email);
-            return View("/Views/Home/Index.cshtml");
+            //WelcomeEmail(email);
+            return View("Index"); ///?????????????????????????????????????????????????????
         }
 
         [HttpPost]
@@ -280,7 +281,7 @@ namespace CIMOB_IPS.Controllers
                 bool success = InsertPendingAccount(destination, EnumAccountType.TECHNICIAN);
                 if (success)
                 {
-                    ViewData["message"] = "Técnico já registado.";
+                    ViewData["message"] = "Email enviado com sucesso!";
                     ViewData["error-message"] = "";
                 }
                 else
@@ -288,15 +289,15 @@ namespace CIMOB_IPS.Controllers
                     ViewData["error-message"] = "Técnico já convidado.";
                     ViewData["message"] = "";
                 }
-                ViewData["email-sent"] = "sent";
-                return View("Technicians");
+
+                return View("InviteTechnician");
             }
             catch (SqlException e)
             {
                 ViewData["error-message"] = "Conexão Falhada.";
             }
 
-            return View("Invite");
+            return View("InviteTechnician");
         }
 
         public void DeletePendingAccount(string email)

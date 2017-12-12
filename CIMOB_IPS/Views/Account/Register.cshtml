@@ -83,14 +83,21 @@
 
 @if (ViewData["register-type"].ToString() == "technician")
 {
-    <div class="middleSquare">
-        <h2>Registo</h2>
+    <div class="main-container-register">
         <div>
             <form asp-action="RegisterTechnician" method="post">
                 <table>
-                    <tr> <td><label asp-for="Account.Email"></label></td></tr>
-                    <tr> <td><input asp-for="Account.Email" disabled value="@ViewData["technician-email"]" type="text" /></td></tr>
-                    <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+                    <tr> <td><label asp-for="EmailView"></label></td></tr>
+                    <tr> <td><input asp-for="EmailView" readonly value="@ViewData["technician-email"]" type="text" /></td></tr>
+                    <tr> <td><span asp-validation-for="EmailView" class="error-message"></span></td></tr>
+
+                    <tr> <td><label asp-for="PasswordView"></label></td></tr>
+                    <tr> <td><input asp-for="PasswordView" /></td></tr>
+                    <tr> <td><span asp-validation-for="PasswordView" class="error-message"></span></td><tr>
+
+                    <tr> <td><label asp-for="ConfirmPasswordView"></label></td></tr>
+                    <tr> <td><input asp-for="ConfirmPasswordView" /></td></tr>
+                    <tr> <td><span asp-validation-for="ConfirmPasswordView" class="error-message"></span></td><tr>
 
                     <tr> <td><label asp-for="Technician.Name"></label></td></tr>
                     <tr> <td><input asp-for="Technician.Name" /></td></tr>
