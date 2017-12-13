@@ -30,9 +30,7 @@
             <tr>
                 <td><span class="error-message">@ViewData["Login-Message"]</span></td>
             </tr>
-        </table>
-
-        
+        </table>    
         <table>
             <tr>
                 <td>
@@ -56,7 +54,7 @@
 
 <div class="main-container-fyp" id="fyp" style="display: @ViewData["fyp-initial-display"]">
     <img id="fyp-close" src="~/images/icons/error.png" onclick="javascript: tooglefyp();" />
-    <form asp-action="ExecFYP" class="fyp-form">
+    <form asp-action="ForgotYourPassword" class="fyp-form">
         <table>
             <tr>
                 <td><label class="fyp-formlabel" for="email" > <b>Recuperação de senha</b></label></td>
@@ -72,8 +70,8 @@
             </tr>
         </table>
         <div class="form-error">
-            <label>@ViewData["FYP-Message-Error"]</label>
-            <label style="color:green">@Html.Raw(ViewData["FYP-Message"])</label>
+            <label id="fyp-message">@ViewData["FYP-Message-Error"]</label>
+            <label id="fyp-error" style="color:green">@Html.Raw(ViewData["FYP-Message"])</label>
         </div>
         <input type="submit" value="Enviar" class="submitButton" />
     </form>

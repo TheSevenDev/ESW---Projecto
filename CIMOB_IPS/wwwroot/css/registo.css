@@ -8,18 +8,18 @@
     min-height: 25vh;
 }
 
-#pre-register-message{
+#pre-register-message, #inviteTech-message {
     margin-left: 0%;
     margin-top: 3%;
-    font-size: 1.2vmax;
-    color:green;
+    font-size: 1.1vmax;
+    color: green;
     position: absolute;
 }
 
-#pre-register-message-error {
+#pre-register-message-error, #inviteTech-error {
     margin-left: 0%;
     margin-top: 3%;
-    font-size: 1.2vmax;
+    font-size: 1.1vmax;
     color: var(--red-var1);
     position: absolute;
 }
@@ -138,3 +138,68 @@
 .user-form input[type=submit]:hover {
     background-color: var(--blue-var3);
 }
+
+
+.main-container-pendingtech {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 50%;
+    margin-left:25%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.main-container-techs {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 10%;
+    width: 50%;
+    margin-left: 25%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/*TABLE STYLE*/
+.main-container-pendingtech table, .main-container-techs table {
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1vmax;
+
+}
+
+.main-container-pendingtech table th, .main-container-techs table th {
+    background-color: var(--dark-grey);
+    color: white;
+}
+
+.main-container-pendingtech table td a, .main-container-pendingtech table td a:hover, .main-container-pendingtech table td a:visited:hover, .main-container-pendingtech table td a:link:hover, .main-container-pendingtech table td a:active:hover {
+    color: var(--blue-var3);
+}
+
+.main-container-techs table td a, .main-container-techs table td a:hover, .main-container-techs table td a:visited:hover, .main-container-techs table td a:link:hover, .main-container-techs table td a:active:hover {
+    color: var(--blue-var3);
+}
+
+.main-container-pendingtech table tbody tr:nth-child(even), .main-container-techs table tbody tr:nth-child(even) {
+    background-color: #eeeeee;
+}
+
+.main-container-pendingtech table tbody tr:hover, .main-container-techs table tbody tr:hover {
+    background-color: var(--blue-var4);
+    cursor: default;
+}
+
+.add-technician {
+    cursor: pointer;
+    width: 1.4vw;
+    width: 1.4vw;
+    margin-left:75.2%;
+    margin-top:5%;
+    position:absolute;
+}
+
+
+

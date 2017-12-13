@@ -17,14 +17,15 @@ namespace CIMOB_IPS.Models
         public long IdAccount { get; set; }
         [Required(ErrorMessage = "O Nome não está preenchido.")]
         [StringLength(60, ErrorMessage = "O Nome deve conter no máximo 60 caracteres.")]
-        [Display(Name = "Nome:")]
+        [Display(Name = "Nome")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Nº Telemóvel não está preenchido")]
         [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Telemovel tem de ser expresso em 9 algarismos.")]
-        //[MinLength(9,ErrorMessage = "O Nº Telemóvel tem de conter no minimo 9 algarismos.")]
-        [Display(Name = "Nº Telemóvel:")]
+        [Display(Name = "Nº Telemóvel")]
         public long Telephone { get; set; }
+
+        [Display(Name = "Administrador")]
         public bool IsAdmin { get; set; }
 
         public Account IdAccountNavigation { get; set; }

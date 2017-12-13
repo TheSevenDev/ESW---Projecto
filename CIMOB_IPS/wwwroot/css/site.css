@@ -456,15 +456,6 @@ html, body {
     margin-top: 1%;
 }
 
-
-.main-container-invite {
-    /*background-color: white;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
-    width: 35%;
-    margin-left:31%;
-    min-height  : 20vh;
-}
-
 /*
     EDITAR PERFIL
 */
@@ -494,13 +485,31 @@ html, body {
     margin-top: 22%;
     font-size:0.95vmax;
 }
-    /*
-    PASSAR PARA O REGISTER CSS
+
+/**
+    INVITE TECHNICIAN
 */
-    .invite-form {
-    margin-left: 23%;
-    margin-top: 11%;
-    position: relative;
+.main-container-invite {
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 27%;
+    margin-left: 62%;
+    margin-top:6.8%;
+    min-height: 33.5vh;
+    display:none;
+    padding-top:0.5%;
+    position:absolute;
+}
+.title-invite-tech {
+    font-size: 1.2vmax;
+    width: 100%;
+    text-align: center;
+    margin-top: 2%;
+}
+
+.invite-form {
+    margin:0 6%;
+    position: absolute;
 }
 
 .invite-form label {
@@ -509,7 +518,7 @@ html, body {
     font-size: 1.2vmax;
 }
 
-.invite-form input[type=email] {
+.invite-form input[type=text] {
     width: 22.2vw;
     padding: 6px 10px;
     display: inline-block;
@@ -520,31 +529,29 @@ html, body {
 }
 
 .invite-form input[type=submit] {
-    width: 35%;
+    width: 40%;
     background-color: var(--blue-var4);
     color: white;
     padding: 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 48%;
     font-size: 1.1vmax;
+    margin-left:60%;
 }
 
-.invite-form .submitButton {
-    width: 35%;
-    background-color: var(--blue-var4);
-    color: white;
-    padding: 40px;
-    border: none;
-    border-radius: 4px;
+#invite-tech-close {
+    position: absolute;
+    width: 1.7vw;
+    height: 1.7vw;
+    top: -3%;
+    left: 95.5%;
+    z-index: 999;
     cursor: pointer;
-    margin-left: 48%;
-    font-size: 1.1vmax;
 }
 
 #submitButtonChangePassword {
-    margin-right:230%;
+    margin-right:23%;
 }
 
 .invite-form input[type=submit]:hover {
@@ -778,6 +785,32 @@ footer {
     z-index: 800;
 }
 
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    right: 105%;
+}
+
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
 
 /*
     MÁXIMO USÁVEL. RESPONSIVENESS(?)

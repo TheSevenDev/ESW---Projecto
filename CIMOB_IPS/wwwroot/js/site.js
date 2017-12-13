@@ -33,8 +33,29 @@ function tooglefyp() {
     closefyp.style.display = ((closefyp.style.display !== 'block') ? 'block' : 'none')
 }
 
+
+function toggleInviteTech() {
+    clearInviteTech();
+    var inviteTech = document.getElementById("invite-tech");
+    var closeInviteTech = document.getElementById("invite-tech-close");
+
+    inviteTech.style.display = ((inviteTech.style.display !== 'block') ? 'block' : 'none')
+    closeInviteTech.style.display = ((closeInviteTech.style.display !== 'block') ? 'block' : 'none')
+}
+
+function clearInviteTech() {
+    document.getElementById('email-invite-tech').value = "";
+    document.getElementById('isAdmin-invite-tech').value = false;
+
+    document.getElementById('inviteTech-message').innerText = "";
+    document.getElementById('inviteTech-error').innerText = "";
+}
+
+
 function clearfyp() {
     document.getElementById('email-fyp').value = "";
+    document.getElementById('fyp-message').innerText = "";
+    document.getElementById('fyp-error').innerText = "";
 }
 
 

@@ -27,12 +27,13 @@ namespace CIMOB_IPS.Models
         /// <summary> Property that representa the updated (new) password of the logged in account. </summary>
         /// <value>The new password of the logged in account.</value>
         [Display(Name = "Nova Password:")]
+        [Required(ErrorMessage = "Nova password não preenchida.")]
         public string NewPassword { get; set; }
 
         /// <summary> Property that represents the confirmation of the new password. In order to be valid, this property has to match the NewPassword one. </summary>
         /// <value>The confirmation of the new password for the logged in account.</value>
         [NotMapped]
-        [Required]
+        [Required(ErrorMessage = "Confirmação da password não preenchida.")]
         [Compare("NewPassword", ErrorMessage = "As Passwords não coincidem.")]
         [Display(Name = "Confirmar Password:")]
         public string Confirmation { get; set; }

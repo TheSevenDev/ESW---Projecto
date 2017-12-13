@@ -81,7 +81,7 @@ namespace CIMOB_IPS
                     defaults: new { controller = "Account", action = "ExecLoginAsync" });
                 routes.MapRoute(
                     "ExecFypRoute", "Login",
-                    defaults: new { controller = "Account", action = "ExecFYP" });
+                    defaults: new { controller = "Account", action = "ForgotYourPassword" });
 
                 routes.MapRoute(
                     "RegisterRoute", "Register",

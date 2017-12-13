@@ -42,30 +42,32 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            var pendingAccounts = _context.PendingAccount.ToList();
+            return View("Technicians", PopulateTechnicians());
+        }
 
+        private TechnicianManagementViewModel PopulateTechnicians()
+        {
             var isAdmin = from s in _context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
+
+            List<PendingAccount> pendingAccounts = null;
+            if (isAdmin != null)
+            {
+                pendingAccounts = _context.PendingAccount.ToList();
+            }
 
             TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = pendingAccounts };
 
-            if (isAdmin != null)
-            {
-                viewModel.Technicians = (from s in _context.Technician
-                                   select new Technician
-                                   {
-                                       Name = s.Name,
-                                       IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
-                                       Telephone = s.Telephone,
-                                       IsAdmin =  s.IsAdmin
-                                   }).ToList();
-            }
-            else
-            {
-                viewModel.Technicians = null;
-            }
 
+            viewModel.Technicians = (from s in _context.Technician
+                                        select new Technician
+                                        {
+                                            Name = s.Name,
+                                            IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                            Telephone = s.Telephone,
+                                            IsAdmin = s.IsAdmin
+                                        }).ToList();
 
-            return View("Technicians", viewModel);
+            return viewModel;
         }
 
         [HttpPost]
@@ -129,7 +131,7 @@ namespace CIMOB_IPS.Controllers
 
 
             //WelcomeEmail(email);
-            return View("Index"); ///?????????????????????????????????????????????????????
+            return View("Index"); 
         }
 
         [HttpPost]
@@ -269,10 +271,10 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpPost]
-        public IActionResult InviteTec(RegisterViewModel model)
+        public IActionResult InviteTec(TechnicianManagementViewModel model)
         {
 
-            string destination = model.Account.Email;
+            string destination = model.EmailView;
             Guid guid;
             guid = Guid.NewGuid();
 
@@ -281,23 +283,27 @@ namespace CIMOB_IPS.Controllers
                 bool success = InsertPendingAccount(destination, EnumAccountType.TECHNICIAN);
                 if (success)
                 {
-                    ViewData["message"] = "Email enviado com sucesso!";
+                    ViewData["message"] = "Email enviado.";
+                    ViewData["invite-tech-display"] = "block";
                     ViewData["error-message"] = "";
                 }
                 else
                 {
-                    ViewData["error-message"] = "Técnico já convidado.";
+                    ViewData["error-message"] = "Email já registado.";
+                    ViewData["invite-tech-display"] = "block";
+                    ViewData["invite-tech-email"] = destination;
                     ViewData["message"] = "";
                 }
 
-                return View("InviteTechnician");
+                return View("Technicians", PopulateTechnicians());
             }
             catch (SqlException e)
             {
+                ViewData["invite-tech-display"] = "block";
                 ViewData["error-message"] = "Conexão Falhada.";
             }
 
-            return View("InviteTechnician");
+            return View("Technicians", PopulateTechnicians());
         }
 
         public void DeletePendingAccount(string email)
@@ -368,8 +374,7 @@ namespace CIMOB_IPS.Controllers
                         else
                         {
                             SendEmailToTec(email, guid.ToString());
-                        }
-                        
+                        }                        
                         return true;
                     }
                 }
@@ -453,7 +458,7 @@ namespace CIMOB_IPS.Controllers
             body.AppendLine("Caro utilizador,<br><br>");
             body.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
             body.AppendLine("Clique <a href=\""+link+"\"> aqui </a> para completar a criação da conta.<br>");
-            body.AppendLine("Caso não tenha efetuado nenhum pedido de ciração de conta, por favor, contacte a equipa do CIMOB-IPS");
+            body.AppendLine("Caso não tenha efetuado nenhum pedido de criação de conta, por favor, contacte a equipa do CIMOB-IPS");
 
 
             body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
@@ -535,7 +540,7 @@ namespace CIMOB_IPS.Controllers
         #endregion
 
         #region FYP
-        public IActionResult ExecFYP(IFormCollection form)
+        public IActionResult ForgotYourPassword(IFormCollection form)
         {
             string email = Convert.ToString(form["email"]);
             LoginState state = Account.IsRegistered(email, "");
@@ -617,47 +622,70 @@ namespace CIMOB_IPS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdatePassword([Bind("CurrentPassword, NewPassword, Confirmation")] UpdatePasswordViewModel model)
+        public IActionResult UpdatePassword(UpdatePasswordViewModel model)
         {
+            string currentPassword = model.CurrentPassword;
+            string confirmation = model.Confirmation;
+            string newPW = model.NewPassword;
 
-            string confirmation = Convert.ToString(model.Confirmation);
-            string newPW = Convert.ToString(model.NewPassword);
-
-            if (GetCurrentUserID() != model.IdAccount)
+            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand command = new SqlCommand("", connection))
             {
-                return BadRequest();
-            }
-
-            //não está a apresentar erros na pagina
-            if (!confirmation.Equals(newPW))
-            {
-                ViewData["message"] = "As Passwords não coincidem";
-            }
-
-            {
-
-
-                using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                connection.Open();
+           
+                command.CommandText = "select * from Account where id_account = @idaccount";
+                command.Parameters.AddWithValue("@idaccount", GetCurrentUserID());
+                SqlDataReader reader = command.ExecuteReader();
+                if (reader.HasRows)
                 {
-                    //create await  
-
-                    using (SqlCommand command = sqlConnection.CreateCommand())
+                    while (reader.Read())
                     {
-                        command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @IdAccount";
-                        command.Parameters.AddWithValue("@Password", model.NewPassword);
-                        sqlConnection.Open();
-                        command.ExecuteNonQuery();
-                        sqlConnection.Close();
+                        string bdpw = Account.ToHex((byte[])reader[2], false);
+                        if (!bdpw.Equals(Account.EncryptToMD5(currentPassword)))
+                        {
+                            ViewData["UpdatePW-Error"] = "Password atual inválida";
+                            return View("UpdatePassword");
+                        }
+
                     }
-
-                    //PASSWORD ALTERADA COM SUCESSO
-                    ViewData["message"] = "Password Alterada Com Sucesso";
-
                 }
             }
+            using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                //create await  
 
-            return View("Home");
+                using (SqlCommand command = sqlConnection.CreateCommand())
+                {
+                    command.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @idaccount";
+                    command.Parameters.AddWithValue("@Password", Account.EncryptToMD5(newPW));
+                    command.Parameters.AddWithValue("@idaccount", GetCurrentUserID());
+                    sqlConnection.Open();
+                    command.ExecuteNonQuery();
+                    sqlConnection.Close();
+                }
+
+                //MANDAR EMAIL
+                //PASSWORD ALTERADA COM SUCESSO
+                ViewData["UpdatePW-Message"] = "Password alterada com sucesso";
+                return View("UpdatePassword");
+            }
         }
+
+
+        private void SendEmailToStudent(string emailStudent)
+        {
+            string subject = "[CIMOB-IPS] Pedido de mudança de palavra-passe";
+
+            var body = new StringBuilder();
+            body.AppendLine("Caro utilizador,<br><br>");
+            body.AppendFormat(@"O seu pedido de mudança de palavra-passe foi efetuado com sucesso.<br><br>");
+            body.AppendLine("Caso não tenha efetuado nenhum pedido de aletaração da palavra-passe, por favor, contacte a equipa do CIMOB-IPS");
+
+
+            body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+            Email.SendEmail(emailStudent, subject, body.ToString());
+        }
+
         #endregion
     }
 }
