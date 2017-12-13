@@ -45,7 +45,7 @@ function toggleInviteTech() {
 
 function clearInviteTech() {
     document.getElementById('email-invite-tech').value = "";
-    document.getElementById('isAdmin-invite-tech').value = false;
+    //document.getElementById('isAdmin-invite-tech').value = false;
 
     document.getElementById('inviteTech-message').innerText = "";
     document.getElementById('inviteTech-error').innerText = "";

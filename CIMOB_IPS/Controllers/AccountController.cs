@@ -122,7 +122,6 @@ namespace CIMOB_IPS.Controllers
             string name = model.Technician.Name;
             long telephone = model.Technician.Telephone;
 
-
             Technician technician = new Technician { IdAccount = idAccount, Name = name, Telephone = telephone, IsAdmin = isAdmin};
 
             InsertTechnician(technician);
@@ -147,7 +146,7 @@ namespace CIMOB_IPS.Controllers
 
             try
             {
-                bool success = InsertPendingAccount(studentEmail,EnumAccountType.STUDENT);
+                bool success = InsertPendingAccount(studentEmail,EnumAccountType.STUDENT, 0);
                 if (success)
                 {
                     ViewData["message"] = "Número registado.";
@@ -251,9 +250,10 @@ namespace CIMOB_IPS.Controllers
                     while (reader.Read())
                     {
                         string email = reader[0].ToString();
+                        bool isAdmin = Convert.ToBoolean(reader[1].ToString());
 
                         ViewData["technician-email"] = email;
-                        ViewData["technician-isAdmin"] = email;
+                        ViewData["technician-isAdmin"] = isAdmin;
                     }
                     reader.Close();
                     connection.Close();
@@ -273,13 +273,13 @@ namespace CIMOB_IPS.Controllers
         {
 
             string destination = model.EmailView;
-            bool isAdmin = model.IsAdmin;
+            int isAdmin = Convert.ToInt32(model.IsAdmin);
             Guid guid;
             guid = Guid.NewGuid();
 
             try
             {
-                bool success = InsertPendingAccount(destination, EnumAccountType.TECHNICIAN);
+                bool success = InsertPendingAccount(destination, EnumAccountType.TECHNICIAN, isAdmin);
                 if (success)
                 {
                     ViewData["message"] = "Email enviado.";
@@ -342,7 +342,7 @@ namespace CIMOB_IPS.Controllers
 
         }
 
-        public bool InsertPendingAccount(String email, EnumAccountType userType)
+        public bool InsertPendingAccount(String email, EnumAccountType userType, int isAdmin)
         {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
@@ -359,11 +359,12 @@ namespace CIMOB_IPS.Controllers
                     {
                         connection.Close();
                         connection.Open();
-                        command2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid)";
+                        command2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid, @isAdmin)";
                         command2.Parameters.AddWithValue("@email", email);
                         Guid guid;
                         guid = Guid.NewGuid();
                         command2.Parameters.AddWithValue("@guid", guid);
+                        command2.Parameters.AddWithValue("@isAdmin", isAdmin);
                         command2.ExecuteNonQuery();
                         connection.Close();
                         if (userType == EnumAccountType.STUDENT)
@@ -436,11 +437,12 @@ namespace CIMOB_IPS.Controllers
         private void WelcomeEmail(string targetEmail)
         {
             string subject = "[CIMOB-IPS] Bem-Vindo ao CIMOB-IPS";
+            string link = "http://cimob-ips.azurewebsites.net/Login";
 
             var body = new StringBuilder();
             body.AppendLine("Caro utilizador,<br><br>");
             body.AppendFormat(@"O seu registo na plataforma do CIMOB-IPS foi efetuado com sucesso.<br><br>");
-            body.AppendLine("Pode entrar na aplicação em <a href=\"http://cimob-ips.azurewebsites.net/Login </a>." );
+            body.AppendLine("Pode entrar na aplicação através do seguinte <a href=\"" + link + "\">link</a>.");
 
             body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
             Email.SendEmail(targetEmail, subject, body.ToString());
