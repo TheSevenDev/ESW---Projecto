@@ -9,7 +9,7 @@
 <div class="main-container-invite" id="invite-tech" style="display: @ViewData["invite-tech-display"]">
     <img id="invite-tech-close" src="~/images/icons/error.png" onclick="javascript: toggleInviteTech();" />
     <h2 class="title-invite-tech">Convidar um Técnico</h2>
-    <form asp-action="InviteTec" class="invite-form">
+    <form asp-action="InviteTec" class="invite-form" method="post">
         <table>
             <tr> <td><label asp-for="EmailView"></label></td></tr>
             <tr> <td><input asp-for="EmailView" type="text" placeholder="nome.apelido@ips.pt" id="email-invite-tech" value="@ViewData["invite-tech-email"]" /></td></tr>
@@ -17,7 +17,7 @@
             @if (User.IsInRole("tecnico_admin"))
             {
                 <tr> <td><label asp-for="IsAdmin"></label></td></tr>
-                <tr> <td><input asp-for="IsAdmin" id="isAdmin-invite-tech" /></td></tr>
+                <tr> <td><input asp-for="IsAdmin" type="checkbox" id="isAdmin-invite-tech" /></td></tr>
             }
             <tr><td><span id="inviteTech-message">@Html.Raw(ViewData["message"])</span><span id="inviteTech-error">@ViewData["error-message"]</span><input type="submit" value="Enviar convite" /></td></tr>
         </table>
