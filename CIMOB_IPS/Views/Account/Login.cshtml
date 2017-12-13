@@ -45,7 +45,7 @@
             </tr>
             <tr></tr>
             <tr>
-                <td><a style="cursor:pointer;" id="fyp-link" onclick="javascript: tooglefyp();">Esqueceu-se da palavra-passe?</a></td>
+                <td><a style="cursor:pointer;" id="fyp-link" onclick="javascript: openfyp();">Esqueceu-se da palavra-passe?</a></td>
             </tr>
         </table>
     </form>
@@ -53,7 +53,7 @@
 
 
 <div class="main-container-fyp" id="fyp" style="display: @ViewData["fyp-initial-display"]">
-    <img id="fyp-close" src="~/images/icons/error.png" onclick="javascript: tooglefyp();" />
+    <img id="fyp-close" src="~/images/icons/error.png" onclick="javascript: closefyp();" />
     <form asp-action="ForgotYourPassword" class="fyp-form">
         <table>
             <tr>

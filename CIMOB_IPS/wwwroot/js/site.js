@@ -24,24 +24,42 @@ function toogleHelp() {
     closeHelp.style.display = ((closeHelp.style.display !== 'block') ? 'block' : 'none')
 }
 
-function tooglefyp() {
+function openfyp() {
     clearfyp();
     var fyp = document.getElementById("fyp");
     var closefyp = document.getElementById("fyp-close");
 
-    fyp.style.display = ((fyp.style.display !== 'block') ? 'block' : 'none')
-    closefyp.style.display = ((closefyp.style.display !== 'block') ? 'block' : 'none')
+    fyp.style.display = "block";
+    closefyp.style.display = "block";
+}
+
+function closefyp() {
+    var fyp = document.getElementById("fyp");
+    var closefyp = document.getElementById("fyp-close");
+
+    fyp.style.display = "none";
+    closefyp.style.display = "none";
 }
 
 
-function toggleInviteTech() {
+function openInviteTech() {
     clearInviteTech();
     var inviteTech = document.getElementById("invite-tech");
     var closeInviteTech = document.getElementById("invite-tech-close");
 
-    inviteTech.style.display = ((inviteTech.style.display !== 'block') ? 'block' : 'none')
-    closeInviteTech.style.display = ((closeInviteTech.style.display !== 'block') ? 'block' : 'none')
+    inviteTech.style.display = "block";
+    closeInviteTech.style.display = "block";
 }
+
+function closeInviteTech() {
+    var inviteTech = document.getElementById("invite-tech");
+    var closeInviteTech = document.getElementById("invite-tech-close");
+
+    inviteTech.style.display = "none";
+    closeInviteTech.style.display = "none";
+}
+
+
 
 function clearInviteTech() {
     document.getElementById('email-invite-tech').value = "";

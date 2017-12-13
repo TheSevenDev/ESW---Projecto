@@ -585,7 +585,7 @@ namespace CIMOB_IPS.Controllers
 
             byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
             newpw.GetBytes(tokenBuffer);
-            return Convert.ToBase64String(tokenBuffer);
+            return Convert.ToBase64String(tokenBuffer).ToLower();
 
         }
 
