@@ -240,7 +240,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
-                command.CommandText = "Select email from dbo.Pending_Account where guid = @guid";
+                command.CommandText = "Select email, is_admin from dbo.Pending_Account where guid = @guid";
                 command.Parameters.AddWithValue("@guid", account_id);
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -253,14 +253,14 @@ namespace CIMOB_IPS.Controllers
                         string email = reader[0].ToString();
 
                         ViewData["technician-email"] = email;
-
+                        ViewData["technician-isAdmin"] = email;
                     }
                     reader.Close();
                     connection.Close();
                 }
             }
 
-            return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString() });
+            return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString(), Technician = new Technician { IsAdmin = (bool)ViewData["technician-isAdmin"] } });
         }
 
         public IActionResult InviteTec()
@@ -273,6 +273,7 @@ namespace CIMOB_IPS.Controllers
         {
 
             string destination = model.EmailView;
+            bool isAdmin = model.IsAdmin;
             Guid guid;
             guid = Guid.NewGuid();
 

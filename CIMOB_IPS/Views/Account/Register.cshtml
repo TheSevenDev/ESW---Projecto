@@ -106,6 +106,9 @@
                     <tr> <td><input asp-for="Technician.Telephone" type="text" /></td></tr>
                     <tr> <td><span asp-validation-for="Technician.Telephone" class="text-danger"></span></td></tr>
 
+                    <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
+                    <tr> <td><input asp-for="Technician.IsAdmin" type="checkbox" readonly class="disabled-input" /></td></tr>
+
                     <tr> <td></td></tr>
                     <tr> <td></td></tr>
                     <tr> <td><input type="submit" value="Registar" /></td></tr>

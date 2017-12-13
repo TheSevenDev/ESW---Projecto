@@ -1,4 +1,4 @@
-﻿@model CIMOB_IPS.Models.RegisterViewModel
+﻿@model CIMOB_IPS.Models.ViewModels.TechnicianManagementViewModel
 @{
     ViewData["Title"] = "Invite";
 }
@@ -17,11 +17,13 @@
             <tr></tr>
             <tr></tr>
             <tr></tr>
-                    @if (User.IsInRole("tecnico_admin"))
-                    {
-                        <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
-                        <tr> <td><input asp-for="Technician.IsAdmin"/></td></tr>
-                    }
+
+            @if (User.IsInRole("tecnico_admin"))
+            {
+                <tr> <td><label asp-for="IsAdmin"></label></td></tr>
+                <tr> <td><input asp-for="IsAdmin" type="checkbox" /></td></tr>
+            }
+            
                 </table>
           <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span></td><td><input type="submit" value="Enviar convite" /></td></tr>
      </form>

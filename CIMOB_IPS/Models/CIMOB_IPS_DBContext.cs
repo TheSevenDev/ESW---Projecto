@@ -318,8 +318,12 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.Guid)
                     .IsRequired()
                     .HasColumnName("guid")
-                    .HasMaxLength(32);
+                    .HasMaxLength(128)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsAdmin).HasColumnName("is_admin");
             });
+
 
             modelBuilder.Entity<Program>(entity =>
             {
@@ -369,7 +373,7 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.Address)
                     .IsRequired()
                     .HasColumnName("address")
-                    .HasMaxLength(99);
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.Cc).HasColumnName("cc");
 
@@ -384,12 +388,12 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasColumnName("name")
-                    .HasMaxLength(60);
+                    .HasMaxLength(255);
 
                 entity.Property(e => e.StudentNum).HasColumnName("student_num");
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
-                
+
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Student)
                     .HasForeignKey(d => d.IdAccount)
@@ -408,7 +412,6 @@ namespace CIMOB_IPS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_E_Nationality");
             });
-
 
             modelBuilder.Entity<Technician>(entity =>
             {
