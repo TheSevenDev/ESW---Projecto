@@ -99,7 +99,7 @@ namespace CIMOB_IPS.Controllers
 
             InsertStudent(student);
 
-            //WelcomeEmail(email);
+            WelcomeEmail(email);
             return RedirectToAction("Login", "Account");
         }
 
@@ -109,9 +109,7 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-
-
-            String email = model.Account.Email;
+            String email = model.EmailView;
             string password = model.PasswordView;
 
             long idAccount = 0;
@@ -130,8 +128,8 @@ namespace CIMOB_IPS.Controllers
             InsertTechnician(technician);
 
 
-            //WelcomeEmail(email);
-            return View("Index"); 
+            WelcomeEmail(email);
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -262,7 +260,7 @@ namespace CIMOB_IPS.Controllers
                 }
             }
 
-            return View("Register");
+            return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString() });
         }
 
         public IActionResult InviteTec()
@@ -426,7 +424,7 @@ namespace CIMOB_IPS.Controllers
             var body = new StringBuilder();
             body.AppendLine("Caro utilizador,<br><br>");
             body.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
-            body.AppendLine("Clique <a href=\"" + link + "\"> aqui </a> para completar a criação da conta.<br>");
+            body.AppendLine("Clique <a href=\"" + link + "\">aqui</a> para completar a criação da conta.<br>");
             body.AppendLine("Caso não tenha efetuado nenhum pedido de ciração de conta, por favor, contacte a equipa do CIMOB-IPS");
 
 
@@ -457,7 +455,7 @@ namespace CIMOB_IPS.Controllers
             var body = new StringBuilder();
             body.AppendLine("Caro utilizador,<br><br>");
             body.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
-            body.AppendLine("Clique <a href=\""+link+"\"> aqui </a> para completar a criação da conta.<br>");
+            body.AppendLine("Clique <a href=\""+link+"\">aqui</a> para completar a criação da conta.<br>");
             body.AppendLine("Caso não tenha efetuado nenhum pedido de criação de conta, por favor, contacte a equipa do CIMOB-IPS");
 
 

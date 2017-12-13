@@ -28,10 +28,10 @@
             <form asp-action="RegisterStudent" method="post" class="user-form">
                 <table>
                     <tr> <td><label asp-for="EmailView"></label></td></tr>
-                    <tr> <td><input asp-for="EmailView" value="@ViewData["student-email"]" type="text" readonly /></td></tr>
+                    <tr> <td><input asp-for="EmailView" value="@ViewData["student-email"]" type="text" readonly class="disabled-input" /></td></tr>
 
                     <tr> <td><label asp-for="Student.StudentNum"></label></td></tr>
-                    <tr> <td><input asp-for="Student.StudentNum" value="@ViewData["student-number"]" type="text" readonly /></td></tr>
+                    <tr> <td><input asp-for="Student.StudentNum" value="@ViewData["student-number"]" type="text" readonly class="disabled-input" /></td></tr>
 
                     <tr> <td><label asp-for="Student.Name"></label></td></tr>
                     <tr> <td><input asp-for="Student.Name" /></td></tr>
@@ -85,11 +85,10 @@
 {
     <div class="main-container-register">
         <div>
-            <form asp-action="RegisterTechnician" method="post">
+            <form asp-action="RegisterTechnician" method="post" class="user-form">
                 <table>
                     <tr> <td><label asp-for="EmailView"></label></td></tr>
-                    <tr> <td><input asp-for="EmailView" readonly value="@ViewData["technician-email"]" type="text" /></td></tr>
-                    <tr> <td><span asp-validation-for="EmailView" class="error-message"></span></td></tr>
+                    <tr> <td><input asp-for="EmailView" readonly value="@ViewData["technician-email"]" type="text" class="disabled-input"/></td></tr>
 
                     <tr> <td><label asp-for="PasswordView"></label></td></tr>
                     <tr> <td><input asp-for="PasswordView" /></td></tr>

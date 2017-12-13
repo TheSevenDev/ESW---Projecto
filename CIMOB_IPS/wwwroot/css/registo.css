@@ -201,5 +201,8 @@
     position:absolute;
 }
 
-
+.disabled-input {
+    background-color: #ddd;
+    pointer-events: none;
+}
 
