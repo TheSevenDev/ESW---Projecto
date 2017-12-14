@@ -1,0 +1,31 @@
+﻿#help-content {
+    display: none;
+    position: fixed;
+    z-index: 998;
+    background-color: white;
+    width: 50%;
+    height: 85%;
+    top: 10%;
+    left: 25%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+    #help-content h1 {
+        width: 100%;
+        text-align: center;
+    }
+
+#help-close {
+    display: none;
+    position: fixed;
+    width: 1.8vw;
+    height: 1.8vw;
+    top: 8.9%;
+    left: 74%;
+    z-index: 999;
+    cursor: pointer;
+}
+
+#help-content .li-title{
+    font-weight: bold;
+}
