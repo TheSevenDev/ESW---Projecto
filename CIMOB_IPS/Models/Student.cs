@@ -14,6 +14,7 @@ namespace CIMOB_IPS.Models
         public long IdStudent { get; set; }
         public long IdAccount { get; set; }
 
+        [DataType(DataType.Text)]
         [Required(ErrorMessage = "O Número de Estudante não está preenchido.")]
         [RegularExpression("^[0-9]{9}$", ErrorMessage = "O Nº Estudante tem de ser expresso em 9 algarismos.")]
         [Display(Name = "Número de Estudante:")]

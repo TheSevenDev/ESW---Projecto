@@ -100,6 +100,8 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Index()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
 
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
@@ -110,6 +112,9 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Get(int id)
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var accountViewModel = GetAccountModelByID(id);
             ViewData["edit-profile-display"] = "none";
             
@@ -122,6 +127,9 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Edit()
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             //add verificação

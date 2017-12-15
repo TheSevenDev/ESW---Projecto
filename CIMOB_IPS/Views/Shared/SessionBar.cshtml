@@ -1,4 +1,21 @@
-﻿
+﻿@{ 
+    string name = "";
+    if (User.Identity.Name != null)
+    {
+        var names = User.Identity.Name.Split(' ');
+        string firstName = names[0];
+        string lastName = names[names.Length - 1];
+        if (names.Length > 1)
+        {
+            name = firstName + " " + lastName;
+        }
+        else
+        {
+            name = firstName;
+        }
+
+    }
+}
 
 <div class="nav-session">
     <div id="session-logo">
@@ -16,7 +33,7 @@
     else
     {
         <div class="session-name">
-            Bem-vindo, <a asp-area="" asp-controller="Profile" asp-action="Index">@User.Identity.Name</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
+            Bem-vindo, <a asp-area="" asp-controller="Profile" asp-action="Index">@name</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
 
     }
