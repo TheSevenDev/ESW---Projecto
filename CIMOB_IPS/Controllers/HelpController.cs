@@ -56,16 +56,4 @@ namespace CIMOB_IPS.Controllers
             return PartialView();
         }
     }
-
-    //public class HelpViewComponent : ViewComponent
-    //{
-
-    //    public IActionResult _Help(string controllerName, string ActionName)
-    //    {
-    //        string html = HelpController.GetHelpInformation(controllerName, ActionName);
-
-    //        ViewData["Help"] = html;
-    //        return Redi
-    //    }
-    //}
 }

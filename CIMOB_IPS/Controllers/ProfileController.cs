@@ -136,13 +136,10 @@ namespace CIMOB_IPS.Controllers
             return View(accountViewModel);
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileStudent([Bind("IdAccount, Name, Telephone,StudentNum,Address")] Student student)
         {
-
             if (GetCurrentUserID() != student.IdAccount)
             {
                 return BadRequest();
