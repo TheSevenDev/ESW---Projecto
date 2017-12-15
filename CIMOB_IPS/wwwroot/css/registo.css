@@ -195,7 +195,6 @@
 .add-technician {
     cursor: pointer;
     width: 1.4vw;
-    width: 1.4vw;
     margin-left:75.2%;
     margin-top:5%;
     position:absolute;
@@ -206,3 +205,28 @@
     pointer-events: none;
 }
 
+.open-help-ects {
+    width: 1.2vw;
+    margin-left:0;
+    cursor:pointer;
+    position:relative;
+}
+
+.help-ects {
+    display:none;
+    width: 16.5vw;
+    margin-left: 0;
+    position: relative;
+    background-color: white;
+    box-shadow: 0px 8px 16px 3px rgba(0,0,0,0.2);
+    padding:1%;
+    font-size:1vmax;
+}
+
+.help-ects a,
+.help-ects :hover,
+.help-ects :visited:hover,
+.help-ects :link:hover,
+.help-ects :active:hover {
+    color: var(--blue-var3);
+}

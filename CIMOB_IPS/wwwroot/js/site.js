@@ -1,27 +1,22 @@
-﻿function toogleSettings()
+﻿
+function toogleSettings()
 {
     document.getElementById("submenu-notifications").style.display = "none";
-    var settingsMenu = document.getElementById("submenu-settings");
-    settingsMenu.style.display = ((settingsMenu.style.display !== 'block') ? 'block' : 'none')
+    $("#submenu-settings").slideToggle(250);
 }
 
 function toogleNotifications()
 {
     document.getElementById("submenu-settings").style.display = "none";
-    var notificationMenu = document.getElementById("submenu-notifications");
-
-    notificationMenu.style.display = ((notificationMenu.style.display !== 'block') ? 'block' : 'none')
+    $("#submenu-notifications").slideToggle(250);
 }
 
 function toogleHelp() {
     hideMenus();
-    var fade = document.getElementById("fade-background");
-    var help = document.getElementById("help-content");
-    var closeHelp = document.getElementById("help-close");
 
-    fade.style.display = ((fade.style.display !== 'block') ? 'block' : 'none')
-    help.style.display = ((help.style.display !== 'block') ? 'block' : 'none')
-    closeHelp.style.display = ((closeHelp.style.display !== 'block') ? 'block' : 'none')
+    $("#fade-background").toggle();
+    $("#help-content").toggle();
+    $("#help-close").toggle();
 }
 
 function openfyp() {
@@ -84,3 +79,11 @@ function hideMenus()
     document.getElementById("submenu-notifications").style.display = "none";
 }
 
+
+function toggleHelpEcts() {
+    $('.help-ects').slideToggle(450).css('display', 'inline-block');
+}
+
+function closeHelpEcts() {
+    $('.help-ects').fadeOut(550);
+}

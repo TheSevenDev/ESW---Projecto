@@ -50,7 +50,7 @@ namespace CIMOB_IPS.Models
         public long IdNationality { get; set; }
 
         [DataType(DataType.Text)]
-        [Required(ErrorMessage = "ECTS não está preenchido.")]
+        [Required(ErrorMessage = "OS ECTS não estão preenchidos.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Os ECTS tem de ser expresso em algarismos.")]
         [Display(Name = "ECTS:")]
         public int Credits { get; set; }

@@ -341,14 +341,9 @@ html, body {
     padding-left: 3%;
 }
 
-.information a {
+.information a, .information a :visited, .information a :link, .information a :active {
     background-color: inherit;
     color: var(--blue-var4);
-    text-decoration: none;
-}
-
-.information a:hover {
-    text-decoration: underline;
 }
 
 .editProfileForm {
@@ -547,19 +542,17 @@ html, body {
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     width: 35%;
-    margin-left: 32.5%;
+    margin-left: 33%;
     min-height: 44.5vh;
     margin-right: auto;
-    margin-left: auto;
 }
 
 .main-container-login table tr{
     line-height:5vh;
 }
 
-
 .login-form {
-    margin-left: 15%;
+    margin-left: 13%;
     margin-top: 20%;
     padding-top:3.5%;
     position: relative;
@@ -653,7 +646,7 @@ html, body {
     margin-left: 50.5%;
     min-height: 27vh;
     margin-right: auto;
-    margin-left: 67.5%;
+    margin-left: 68.070%;
     position: absolute;
     margin-top: -27vh;
     display: none;

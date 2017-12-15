@@ -100,10 +100,24 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Index()
         {
+
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
+            ViewData["edit-profile-display"] = "block";
             //add verificação
             return View(accountViewModel);
+        }
+
+        public IActionResult Get(int id)
+        {
+            var accountViewModel = GetAccountModelByID(id);
+            ViewData["edit-profile-display"] = "none";
+            
+            if(accountViewModel == null)
+                return RedirectToAction("Index", "Home");
+
+
+            return View("Index", accountViewModel);
         }
 
         public IActionResult Edit()
@@ -113,6 +127,8 @@ namespace CIMOB_IPS.Controllers
             //add verificação
             return View(accountViewModel);
         }
+
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -163,22 +179,6 @@ namespace CIMOB_IPS.Controllers
 
             return RedirectToAction("Index");
         } 
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-            
-            if (!TechnicianCheck())
-            {
-                return NotFound();
-            }
-
-            var accountViewModel = GetAccountModelByID((int)id);
-            return View(accountViewModel);
-        }
 
         public bool TechnicianCheck()
         {

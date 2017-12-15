@@ -65,8 +65,15 @@
                     <tr> <td> @Html.DropDownListFor(model => model.Student.IdCourse, Model.Courses, "-- Seleccione o Curso --")</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdCourse" class="error-message"></span></td></tr>
 
-                    <tr> <td><label asp-for="Student.Credits"></label></td></tr>
-                    <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3.5vw;" /> </td></tr>
+                    <tr>
+                        <td>
+                            <label asp-for="Student.Credits"></label>
+                            <img class="open-help-ects" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpEcts();"/>
+                            <div class="help-ects">Insira os créditos  obtidos até ao momento.<br />
+                                                   Clique <a target="_blank" href="https://www.ips.pt/ips_si/legislacao_geral.ver_legislacao?p_nr=27">aqui</a> para saber mais.</div>
+                        </td>
+                    </tr>
+                    <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3.5vw;"  onkeydown="javascript: closeHelpEcts();"/> </td></tr>
                     <tr> <td><span asp-validation-for="Student.Credits" class="error-message"></span> </td> </tr>
                     <tr> <td><input type="submit" value="Registar" /></td> </tr>
                     <tr> </tr>
@@ -117,8 +124,4 @@
         </div>
     </div>
 }
-@section Scripts {
-      @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
- }
-
 

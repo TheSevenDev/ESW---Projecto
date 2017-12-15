@@ -99,6 +99,13 @@ namespace CIMOB_IPS
                     "PreRegisterRoute", "Register",
                     defaults: new { controller = "Account", action = "PreRegister" });
 
+                routes.MapRoute(
+                    "Profile",
+                    "Profile/{id}",
+                    new { controller = "Profile", action = "Get" }
+               
+                );
+
             });
         }
     }

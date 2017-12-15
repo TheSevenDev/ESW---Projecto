@@ -7,12 +7,12 @@
 <p class="page-title">Perfil</p>
 
 <div class="profile">
-    <button type="button" onclick="location.href='@Url.Action("Edit", "Profile")'">Editar Perfil</button>
+    <button type="button" onclick="location.href='@Url.Action("Edit", "Profile")'" style="display:@ViewData["edit-profile-display"]">Editar Perfil</button>
     <div class="profileImage">
         <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw"/>
     </div>
     <table class="information">
-        @if(Model.AccountType == EnumAccountType.STUDENT)
+        @if(Model != null && Model.AccountType == EnumAccountType.STUDENT )
         {
                 <tr>
                     <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Name)</td>
