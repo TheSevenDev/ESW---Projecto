@@ -61,7 +61,5 @@ namespace CIMOB_IPS.Models
         public Course IdCourseNavigation { get; set; }
         public Nationality IdNationalityNavigation { get; set; }
         public ICollection<Application> Application { get; set; }
-
-
     }
 }

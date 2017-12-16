@@ -41,30 +41,35 @@ namespace CIMOB_IPS.Models
         public ICollection<Student> Student { get; set; }
         public ICollection<Technician> Technician { get; set; }
 
-        public static LoginState IsRegistered(string _email, string _password)
+        public static LoginState IsRegistered(string _strEmail, string _strPassword)
         {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                string accountID = "";
+                string strAccountID = "";
+
                 try { 
-                    connection.Open();
+                    scnConnection.Open();
                 }
                 catch(SqlException e)
                 {
                     return LoginState.CONNECTION_FAILED;
                 }
 
-                command.CommandText = "select * from Account where email=@email";
-                command.Parameters.AddWithValue("@email", _email);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                scmCommand.CommandText = "select * from Account where email=@email";
+                scmCommand.Parameters.AddWithValue("@email", _strEmail);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
                 {
-                    while (reader.Read())
+                    while (dtrReader.Read())
                     {
-                        accountID = reader[0].ToString();
-                        string bdpw = ToHex((byte[])reader[2], false);
-                        if (!bdpw.Equals(EncryptToMD5(_password)))
+                        strAccountID = dtrReader[0].ToString();
+
+                        string strBDPW = ToHex((byte[])dtrReader[2], false);
+
+                        if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
                         {
                             return LoginState.WRONG_PASSWORD;
                         }
@@ -75,8 +80,9 @@ namespace CIMOB_IPS.Models
                     return LoginState.EMAIL_NOTFOUND;
                 }
 
-                connection.Close();
-                if(AccountType(accountID) == EnumUserType.STUDENT)
+                scnConnection.Close();
+
+                if(AccountType(strAccountID) == EnumUserType.STUDENT)
                 {
                     return LoginState.CONNECTED_STUDENT;
                 }
@@ -87,38 +93,41 @@ namespace CIMOB_IPS.Models
             }    
         }
 
-        public static string AccountID(string email)
+        public static string AccountID(string strEmail)
         {
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                connection.Open();
+                scnConnection.Open();
 
-                command.CommandText = "select id_account from Account where email=@email";
-                command.Parameters.AddWithValue("@email", email);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                scmCommand.CommandText = "select id_account from Account where email=@email";
+                scmCommand.Parameters.AddWithValue("@email", strEmail);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
                 {
-                    while (reader.Read()) { 
-                        return reader[0].ToString();
+                    while (dtrReader.Read()) { 
+                        return dtrReader[0].ToString();
                     }
                 }
             }
             return "";
         }
 
-        public static EnumUserType AccountType(string _accountId)
+        public static EnumUserType AccountType(string _strAccountID)
         {
-
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                connection.Open();
+                scnConnection.Open();
 
-                command.CommandText = "select id_student from Student where id_account=@id_account";
-                command.Parameters.AddWithValue("@id_account", _accountId);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                scmCommand.CommandText = "select id_student from Student where id_account=@id_account";
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
                 {
                     return EnumUserType.STUDENT;
                 }
@@ -129,26 +138,27 @@ namespace CIMOB_IPS.Models
             }
         }
 
-        public static string AccountName(string _accountId)
+        public static string AccountName(string _strAccountID)
         {
-
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                connection.Open();
-                if(AccountType(_accountId) == EnumUserType.STUDENT)
-                    command.CommandText = "select name from Student where id_account=@id_account";
+                scnConnection.Open();
+
+                if(AccountType(_strAccountID) == EnumUserType.STUDENT)
+                    scmCommand.CommandText = "select name from Student where id_account=@id_account";
                 else
-                    command.CommandText = "select name from Technician where id_account=@id_account";
+                    scmCommand.CommandText = "select name from Technician where id_account=@id_account";
 
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
 
-                command.Parameters.AddWithValue("@id_account", _accountId);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
                 {
-                    while (reader.Read())
+                    while (dtrReader.Read())
                     {
-                        return reader[0].ToString();
+                        return dtrReader[0].ToString();
                     }             
                 }
 
@@ -156,22 +166,23 @@ namespace CIMOB_IPS.Models
             }
         }
 
-        public static string IsAdmin(string _accountId)
+        public static string IsAdmin(string _strAccountID)
         {
-
-            using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand command = new SqlCommand("", connection))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                connection.Open();
-                    command.CommandText = "select is_admin from Technician where id_account=@id_account";
+                scnConnection.Open();
+                scmCommand.CommandText = "select is_admin from Technician where id_account=@id_account";
 
-                command.Parameters.AddWithValue("@id_account", _accountId);
-                SqlDataReader reader = command.ExecuteReader();
-                if (reader.HasRows)
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
                 {
-                    while (reader.Read())
+                    while (dtrReader.Read())
                     {
-                        return reader[0].ToString();
+                        return dtrReader[0].ToString();
                     }
                 }
 
@@ -179,34 +190,32 @@ namespace CIMOB_IPS.Models
             }
         }
 
-        public static string EncryptToMD5(string password)
+        public static string EncryptToMD5(string strPassword)
         {
             MD5 md5 = new MD5CryptoServiceProvider();
-            Console.WriteLine(password);
-            md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(password));
+            Console.WriteLine(strPassword);
+            md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(strPassword));
 
             byte[] result = md5.Hash;
 
             StringBuilder strBuilder = new StringBuilder();
+
             for (int i = 0; i < result.Length; i++)
             {
                 strBuilder.Append(result[i].ToString("x2"));
             }
             
             return strBuilder.ToString();
-        
         }
 
         public static string ToHex(byte[] bytes, bool upperCase)
         {
-            StringBuilder result = new StringBuilder(bytes.Length * 2);
+            StringBuilder stringBuilder = new StringBuilder(bytes.Length * 2);
 
             for (int i = 0; i < bytes.Length; i++)
-                result.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
+                stringBuilder.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
 
-            return result.ToString();
+            return stringBuilder.ToString();
         }
     }
-
-    
 }

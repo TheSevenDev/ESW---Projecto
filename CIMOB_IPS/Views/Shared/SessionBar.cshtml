@@ -1,19 +1,18 @@
 ﻿@{ 
-    string name = "";
+    string strName = "";
     if (User.Identity.Name != null)
     {
-        var names = User.Identity.Name.Split(' ');
-        string firstName = names[0];
-        string lastName = names[names.Length - 1];
-        if (names.Length > 1)
+        var arrNames = User.Identity.Name.Split(' ');
+        string strFirstName = arrNames[0];
+        string strLastName = arrNames[arrNames.Length - 1];
+        if (arrNames.Length > 1)
         {
-            name = firstName + " " + lastName;
+            strName = strFirstName + " " + strLastName;
         }
         else
         {
-            name = firstName;
+            strName = strFirstName;
         }
-
     }
 }
 
@@ -33,7 +32,7 @@
     else
     {
         <div class="session-name">
-            Bem-vindo, <a asp-area="" asp-controller="Profile" asp-action="Index">@name</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
+            Bem-vindo, <a asp-area="" asp-controller="Profile" asp-action="Index">@strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
 
     }
