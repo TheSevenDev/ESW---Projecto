@@ -227,7 +227,7 @@ html, body {
     display: none;
     position: fixed;
     left: 86.9%;
-    top: 10.8%;
+    top: 10.5%;
     width: 13%;
     z-index: 700;
     background-color: white;
@@ -271,7 +271,7 @@ html, body {
     display: none;
     position: fixed;
     left: 79%;
-    top: 10.8%;
+    top: 10.5%;
     width: 18%;
     z-index: 700;
 }
