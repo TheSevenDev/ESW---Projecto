@@ -13,7 +13,7 @@
             <form asp-action="PreRegister" method="post" class="pre-register-form">
                 <table>
                     <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
-                    <tr><td><input asp-for="Student.StudentNum" placeholder="Número de Estudante" /></td></tr>
+                    <tr><td><input asp-for="Student.StudentNum" placeholder="Número de Estudante"/></td></tr>
                     <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
                     <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span><input type="submit" value="Enviar" /></td></tr>
                 </table>

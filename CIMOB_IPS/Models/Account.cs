@@ -19,6 +19,7 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdAccount { get; set; }
+
         [Required(ErrorMessage = "O email não preenchido")]
         [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
         [Display(Name = "E-mail")]
@@ -75,7 +76,7 @@ namespace CIMOB_IPS.Models
                 }
 
                 connection.Close();
-                if(AccountType(accountID) == UserType.STUDENT)
+                if(AccountType(accountID) == EnumUserType.STUDENT)
                 {
                     return LoginState.CONNECTED_STUDENT;
                 }
@@ -106,8 +107,7 @@ namespace CIMOB_IPS.Models
             return "";
         }
 
-
-        public static UserType AccountType(string _accountId)
+        public static EnumUserType AccountType(string _accountId)
         {
 
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
@@ -120,11 +120,11 @@ namespace CIMOB_IPS.Models
                 SqlDataReader reader = command.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    return UserType.STUDENT;
+                    return EnumUserType.STUDENT;
                 }
                 else
                 {
-                    return UserType.TECHNICIAN;
+                    return EnumUserType.TECHNICIAN;
                 }
             }
         }
@@ -136,7 +136,7 @@ namespace CIMOB_IPS.Models
             using (SqlCommand command = new SqlCommand("", connection))
             {
                 connection.Open();
-                if(AccountType(_accountId) == UserType.STUDENT)
+                if(AccountType(_accountId) == EnumUserType.STUDENT)
                     command.CommandText = "select name from Student where id_account=@id_account";
                 else
                     command.CommandText = "select name from Technician where id_account=@id_account";
@@ -178,8 +178,6 @@ namespace CIMOB_IPS.Models
                 return "";
             }
         }
-
-
 
         public static string EncryptToMD5(string password)
         {

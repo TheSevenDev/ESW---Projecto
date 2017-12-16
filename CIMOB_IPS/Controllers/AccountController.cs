@@ -32,21 +32,25 @@ namespace CIMOB_IPS.Controllers
         /// <returns>View Register/Index</returns>
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             ViewData["register-type"] = "student-preregister";
             return View();
         }
 
-        [ActionName("Tecnicos")]
-        public IActionResult Tecnicos()
+        [ActionName("Technicians")]
+        public IActionResult Technicians()
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account");
 
             return View("Technicians", PopulateTechnicians());
         }
 
         private TechnicianManagementViewModel PopulateTechnicians()
         {
+
             var isAdmin = from s in _context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
 
             List<PendingAccount> pendingAccounts = null;
@@ -135,7 +139,6 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult PreRegister(RegisterViewModel model)
         {
-
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
@@ -227,7 +230,6 @@ namespace CIMOB_IPS.Controllers
 
             return courses;
         }
-
                              
         public IActionResult RegisterTechnician([FromQuery] string account_id)
         {
@@ -271,7 +273,6 @@ namespace CIMOB_IPS.Controllers
         [HttpPost]
         public IActionResult InviteTec(TechnicianManagementViewModel model)
         {
-
             string destination = model.EmailView;
             int isAdmin = Convert.ToInt32(model.IsAdmin);
             Guid guid;
@@ -315,7 +316,6 @@ namespace CIMOB_IPS.Controllers
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
-
             }
         }
 
@@ -339,7 +339,6 @@ namespace CIMOB_IPS.Controllers
                 return idAccount;
 
             }
-
         }
 
         public bool InsertPendingAccount(String email, EnumAccountType userType, int isAdmin)
@@ -446,9 +445,7 @@ namespace CIMOB_IPS.Controllers
 
             body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
             Email.SendEmail(targetEmail, subject, body.ToString());
-
         }
-
 
         private void SendEmailToStudent(string emailStudent, string guid)
         {
@@ -466,7 +463,6 @@ namespace CIMOB_IPS.Controllers
             Email.SendEmail(emailStudent, subject, body.ToString());
         }
 
-
         #endregion
 
         #region Login
@@ -481,8 +477,6 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -494,7 +488,6 @@ namespace CIMOB_IPS.Controllers
             {
                 LoginState state = Account.IsRegistered(email, password);
 
-
                 if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
                 {
                     ViewData["Login-Message"] = state.GetMessage();
@@ -502,7 +495,6 @@ namespace CIMOB_IPS.Controllers
                     ViewData["initial-email"] = email;
 
                     return View("Login");
-
                 }
                 else
                 {
@@ -526,6 +518,7 @@ namespace CIMOB_IPS.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+
             ViewData["initial-email"] = email;
             return View(model);
         }
@@ -543,6 +536,9 @@ namespace CIMOB_IPS.Controllers
         #region FYP
         public IActionResult ForgotYourPassword(IFormCollection form)
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
             string email = Convert.ToString(form["email"]);
             LoginState state = Account.IsRegistered(email, "");
 
@@ -565,8 +561,8 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        private void ChangePassword(string _email, String _newpassword) {
-
+        private void ChangePassword(string _email, String _newpassword)
+        {
             using (SqlConnection connection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand command = new SqlCommand("", connection))
             {
@@ -588,7 +584,6 @@ namespace CIMOB_IPS.Controllers
             byte[] tokenBuffer = new byte[NEW_PW_MAX_LENGTH];
             newpw.GetBytes(tokenBuffer);
             return Convert.ToBase64String(tokenBuffer).ToLower();
-
         }
 
         private void SendFYPEmail(string _email)
@@ -606,7 +601,6 @@ namespace CIMOB_IPS.Controllers
             body.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
 
             Email.SendEmail(_email, subject, body.ToString());
-
         }
 
         public int GetCurrentUserID()
@@ -620,11 +614,13 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult UpdatePassword(UpdatePasswordViewModel model)
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
             string currentPassword = model.CurrentPassword;
             string confirmation = model.Confirmation;
             string newPW = model.NewPassword;

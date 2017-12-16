@@ -40,7 +40,7 @@
     font-size: 1.2vmax;
 }
 
-.pre-register-form input[type=number] {
+.pre-register-form input[type=text] {
     width: 22.2vw;
     padding: 2% 3%;
     display: inline-block;
