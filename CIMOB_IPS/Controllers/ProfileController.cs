@@ -19,75 +19,75 @@ namespace CIMOB_IPS.Controllers
             _context = context;
         }
 
-        public ProfileViewModel GetAccountModelByID(int id)
+        public ProfileViewModel GetAccountModelByID(int intId)
         {
             var viewModel = new ProfileViewModel { };
 
-            using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
-                sqlConnection.Open();
-                string sqlQueryStringStudent = "SELECT id_student, a.email, c.name, s.name, address, cc, telephone, " +
+                scnConnection.Open();
+                string strQueryStudent = "SELECT id_student, a.email, c.name, s.name, address, cc, telephone, " +
                     "n.description, credits, student_num FROM Student s, Course c, Nationality n, Account a " +
                     "WHERE s.id_account = @Id AND s.id_course = c.id_course AND s.id_nationality = n.id_nationality " +
                     "AND s.id_account = a.id_account";
 
-                SqlCommand commandStudent = new SqlCommand(sqlQueryStringStudent, sqlConnection);
-                commandStudent.Parameters.AddWithValue("@Id", id);
-                SqlDataReader reader = commandStudent.ExecuteReader();
+                SqlCommand scmCommandStudent = new SqlCommand(strQueryStudent, scnConnection);
+                scmCommandStudent.Parameters.AddWithValue("@Id", intId);
+                SqlDataReader dtrReader = scmCommandStudent.ExecuteReader();
 
-                while (reader.Read())
+                while (dtrReader.Read())
                 {
                     var modelStudent = new Student
                     {
-                        IdStudent = reader.GetInt64(0),
-                        IdAccount = id,
-                        IdCourseNavigation = new Course { Name = reader.GetString(2) },
-                        Name = reader.GetString(3),
-                        Address = reader.GetString(4),
-                        Cc = reader.GetInt64(5),
-                        Telephone = reader.GetInt64(6),
-                        IdNationalityNavigation = new Nationality { Description = reader.GetString(7) },
-                        Credits = reader.GetInt32(8),
-                        StudentNum = reader.GetInt64(9)
+                        IdStudent = dtrReader.GetInt64(0),
+                        IdAccount = intId,
+                        IdCourseNavigation = new Course { Name = dtrReader.GetString(2) },
+                        Name = dtrReader.GetString(3),
+                        Address = dtrReader.GetString(4),
+                        Cc = dtrReader.GetInt64(5),
+                        Telephone = dtrReader.GetInt64(6),
+                        IdNationalityNavigation = new Nationality { Description = dtrReader.GetString(7) },
+                        Credits = dtrReader.GetInt32(8),
+                        StudentNum = dtrReader.GetInt64(9)
                     };
 
-                    modelStudent.IdAccountNavigation = new Account { IdAccount = id, Email = reader.GetString(1) };
+                    modelStudent.IdAccountNavigation = new Account { IdAccount = intId, Email = dtrReader.GetString(1) };
                     viewModel.Student = modelStudent;
                     viewModel.AccountType = EnumAccountType.STUDENT;
 
-                    reader.Close();
+                    dtrReader.Close();
 
                     return viewModel;
                 }
 
-                reader.Close();
+                dtrReader.Close();
 
-                SqlCommand commandtechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " +
-                    "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
-                commandtechnician.Parameters.AddWithValue("@Id", id);
-                SqlDataReader reader2 = commandtechnician.ExecuteReader();
+                SqlCommand scmCommandTechnician = new SqlCommand("select t.id_technician, t.name, t.telephone, t.is_admin, a.email from Technician t, Account a " +
+                    "where t.id_account=@Id and a.id_account = t.id_account", scnConnection);
+                scmCommandTechnician.Parameters.AddWithValue("@Id", intId);
+                SqlDataReader dtrReader2 = scmCommandTechnician.ExecuteReader();
 
-                while (reader2.Read())
+                while (dtrReader2.Read())
                 {
                     var modelTech = new Technician
                     {
-                        IdTechnician = reader2.GetInt64(0),
-                        IdAccount = id,
-                        Name = reader2.GetString(1),
-                        Telephone = reader2.GetInt64(2),
-                        IsAdmin = reader2.GetBoolean(3)
+                        IdTechnician = dtrReader2.GetInt64(0),
+                        IdAccount = intId,
+                        Name = dtrReader2.GetString(1),
+                        Telephone = dtrReader2.GetInt64(2),
+                        IsAdmin = dtrReader2.GetBoolean(3)
                     };
 
-                    modelTech.IdAccountNavigation = new Account { IdAccount = id, Email = reader2.GetString(4) };
+                    modelTech.IdAccountNavigation = new Account { IdAccount = intId, Email = dtrReader2.GetString(4) };
                     viewModel.Technician = modelTech;
                     viewModel.AccountType = EnumAccountType.TECHNICIAN;
 
-                    reader2.Close();
+                    dtrReader2.Close();
 
                     return viewModel;
                 }
 
-                reader2.Close();
+                dtrReader2.Close();
             }
 
             return null;
@@ -110,17 +110,16 @@ namespace CIMOB_IPS.Controllers
             return View(accountViewModel);
         }
 
-        public IActionResult Get(int id)
+        public IActionResult Get(int intId)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(id);
+            var accountViewModel = GetAccountModelByID(intId);
             ViewData["edit-profile-display"] = "none";
             
             if(accountViewModel == null)
                 return RedirectToAction("Index", "Home");
-
 
             return View("Index", accountViewModel);
         }
@@ -132,7 +131,6 @@ namespace CIMOB_IPS.Controllers
 
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
-            //add verificação
             return View(accountViewModel);
         }
 
@@ -145,26 +143,23 @@ namespace CIMOB_IPS.Controllers
                 return BadRequest();
             }
 
-            //não está a apresentar erros na pagina
             if (ModelState.IsValid)
             {
                 try
                 {
-                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                     {
-                        //create await  
-
-                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        using (SqlCommand scmCommand = scnConnection.CreateCommand())
                         {
-                            command.CommandText = "UPDATE Student SET telephone = @Telephone, student_num = @StudentNum, address = @Address" +
+                            scmCommand.CommandText = "UPDATE Student SET telephone = @Telephone, student_num = @StudentNum, address = @Address" +
                                 " WHERE id_account = @IdAccount";
-                            command.Parameters.AddWithValue("@Telephone", student.Telephone);
-                            command.Parameters.AddWithValue("@StudentNum", student.StudentNum);
-                            command.Parameters.AddWithValue("@Address", student.Address);
-                            command.Parameters.AddWithValue("@IdAccount", student.IdAccount);
-                            sqlConnection.Open();
-                            command.ExecuteNonQuery();
-                            sqlConnection.Close();
+                            scmCommand.Parameters.AddWithValue("@Telephone", student.Telephone);
+                            scmCommand.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+                            scmCommand.Parameters.AddWithValue("@Address", student.Address);
+                            scmCommand.Parameters.AddWithValue("@IdAccount", student.IdAccount);
+                            scnConnection.Open();
+                            scmCommand.ExecuteNonQuery();
+                            scnConnection.Close();
                         }
                     }
                 }
@@ -187,14 +182,14 @@ namespace CIMOB_IPS.Controllers
 
         public bool TechnicianCheck()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
-                SqlCommand commandtechnician = new SqlCommand("select t.id_technician from Technician t, Account a " +
-                    "where t.id_account=@Id and a.id_account = t.id_account", sqlConnection);
-                commandtechnician.Parameters.AddWithValue("@Id", GetCurrentUserID());
-                SqlDataReader readerTechnician = commandtechnician.ExecuteReader();
+                SqlCommand scmCommandTechnician = new SqlCommand("select t.id_technician from Technician t, Account a " +
+                    "where t.id_account=@Id and a.id_account = t.id_account", scnConnection);
+                scmCommandTechnician.Parameters.AddWithValue("@Id", GetCurrentUserID());
+                SqlDataReader dtrReader = scmCommandTechnician.ExecuteReader();
 
-                return readerTechnician.HasRows;
+                return dtrReader.HasRows;
             }
         }
 
@@ -202,30 +197,26 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
         {
-
             if (GetCurrentUserID() != technician.IdAccount)
             {
                 return BadRequest();
             }
 
-            //não está a apresentar erros na pagina
             if (ModelState.IsValid)
             {
                 try
                 {
-                    using (SqlConnection sqlConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                    using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                     {
-                        //create await  
-
-                        using (SqlCommand command = sqlConnection.CreateCommand())
+                        using (SqlCommand scmCommand = scnConnection.CreateCommand())
                         {
-                            command.CommandText = "UPDATE Technician SET telephone = @Telephone" +
+                            scmCommand.CommandText = "UPDATE Technician SET telephone = @Telephone" +
                                 " WHERE id_account = @IdAccount";
-                            command.Parameters.AddWithValue("@Telephone", technician.Telephone);
-                            command.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
-                            sqlConnection.Open();
-                            command.ExecuteNonQuery();
-                            sqlConnection.Close();
+                            scmCommand.Parameters.AddWithValue("@Telephone", technician.Telephone);
+                            scmCommand.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
+                            scnConnection.Open();
+                            scmCommand.ExecuteNonQuery();
+                            scnConnection.Close();
                         }
                     }
                 }
@@ -246,9 +237,9 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index");
         }
 
-        private bool AccountExists(long id)
+        private bool AccountExists(long lngId)
         {
-            return _context.Account.Any(e => e.IdAccount == id);
+            return _context.Account.Any(e => e.IdAccount == lngId);
         }
     }
 }

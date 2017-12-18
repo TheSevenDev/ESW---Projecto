@@ -2,18 +2,6 @@
 
 @{
     ViewData["Title"] = "Edit";
-
-    Student studentModel = new Student();
-    Technician technicianModel = new Technician();
-
-    if(Model.AccountType == EnumAccountType.STUDENT)
-    {
-        studentModel = Model.Student;
-    }
-    else
-    {
-        technicianModel = Model.Technician;
-    }
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />

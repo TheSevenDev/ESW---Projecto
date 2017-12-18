@@ -5,22 +5,23 @@ namespace CIMOB_IPS
 {
     public class Email
     {
-        public static void SendEmail(string toEmail, string subject, string body)
+        public static void SendEmail(string strToEmail, string strSubject, string strBody)
         {
-            SmtpClient client = new SmtpClient("smtp.gmail.com");
-            client.UseDefaultCredentials = false;
-            client.EnableSsl = true;
-            client.Credentials = new NetworkCredential("cimob.ips.1718g1@gmail.com", "f00n!l06");
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+            smtpClient.UseDefaultCredentials = false;
+            smtpClient.EnableSsl = true;
+            smtpClient.Credentials = new NetworkCredential("cimob.ips.1718g1@gmail.com", "f00n!l06");
 
             MailMessage mailMessage = new MailMessage
             {
                 From = new MailAddress("cimob.ips.1718g1@gmail.com")
             };
-            mailMessage.To.Add(toEmail);
-            mailMessage.Body = body;
-            mailMessage.Subject = subject;
+
+            mailMessage.To.Add(strToEmail);
+            mailMessage.Body = strBody;
+            mailMessage.Subject = strSubject;
             mailMessage.IsBodyHtml = true;
-            client.Send(mailMessage);
+            smtpClient.Send(mailMessage);
         }
     }
 }
