@@ -170,7 +170,7 @@ namespace CIMOB_IPS.Controllers
             return View("Register");
         }
 
-        public IActionResult RegisterStudent([FromQuery] string strAccountId)
+        public IActionResult RegisterStudent([FromQuery] string account_id)
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
@@ -183,7 +183,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
                 scmCommand.CommandText = "Select email from dbo.Pending_Account where guid = @guid";
-                scmCommand.Parameters.AddWithValue("@guid", strAccountId);
+                scmCommand.Parameters.AddWithValue("@guid", account_id);
                 scnConnection.Open();
 
                 SqlDataReader dtrReader = scmCommand.ExecuteReader();
@@ -238,7 +238,7 @@ namespace CIMOB_IPS.Controllers
             return lisCourses;
         }
                              
-        public IActionResult RegisterTechnician([FromQuery] string strAccountId)
+        public IActionResult RegisterTechnician([FromQuery] string account_id)
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
@@ -249,7 +249,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
                 scmCommand.CommandText = "Select email, is_admin from dbo.Pending_Account where guid = @guid";
-                scmCommand.Parameters.AddWithValue("@guid", strAccountId);
+                scmCommand.Parameters.AddWithValue("@guid", account_id);
                 scnConnection.Open();
 
                 SqlDataReader dtrReader = scmCommand.ExecuteReader();

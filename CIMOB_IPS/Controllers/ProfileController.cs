@@ -110,12 +110,12 @@ namespace CIMOB_IPS.Controllers
             return View(accountViewModel);
         }
 
-        public IActionResult Get(int intId)
+        public IActionResult Get(int id)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(intId);
+            var accountViewModel = GetAccountModelByID(id);
             ViewData["edit-profile-display"] = "none";
             
             if(accountViewModel == null)
