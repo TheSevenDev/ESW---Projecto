@@ -1,0 +1,51 @@
+﻿@model CIMOB_IPS.Models.ViewModels.ApplicationViewModel
+    
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<p class="page-title">Nova Candidatura</p>
+
+<div class="main-application-container">
+
+    <form asp-action="EditProfileTechnician" method="post" class="application-form">
+        <table>
+            <tr> <td><label asp-for="Student.Name"></label></td></tr>
+            <tr> <td><input asp-for="Student.Name" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
+
+            <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
+            <tr> <td><input asp-for="Student.Telephone" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
+
+            <tr> <td><label asp-for="Account.Email"></label></td></tr>
+            <tr> <td><input asp-for="Account.Email" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+
+            <!--DATA DE NASCIMENTO ? _ ?
+            <tr> <td><label asp-for="Student."></label></td></tr>
+            <tr> <td><input asp-for="Student.Email" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Student.Email" class="error-message"></span></td></tr>
+            -->
+            <!--DATA DE GÉNERO ? _ ?
+            <tr> <td><label asp-for="Student."></label></td></tr>
+            <tr> <td><input asp-for="Student.Email" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Student.Email" class="error-message"></span></td></tr>
+            -->
+
+            <tr> <td><label asp-for="Student.IdNationalityNavigation"></label></td></tr>
+            <tr> <td><input asp-for="Student.IdNationalityNavigation" type="text" /></td></tr>
+            <tr> <td><span asp-validation-for="Student.IdNationalityNavigation" class="error-message"></span></td></tr>
+
+
+
+
+        </table>
+    </form>
+    <div class="application-form-pager">
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>4</button>
+        <button>< Anterior</button>
+        <button>Seguinte ></button>
+    </div>
+</div>
+

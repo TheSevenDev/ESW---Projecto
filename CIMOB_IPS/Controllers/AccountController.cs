@@ -34,7 +34,7 @@ namespace CIMOB_IPS.Controllers
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
-
+          
             ViewData["register-type"] = "student-preregister";
             return View();
         }

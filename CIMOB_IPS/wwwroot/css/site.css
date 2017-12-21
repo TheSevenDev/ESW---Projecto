@@ -59,6 +59,7 @@ html, body {
 #session-logo {
     position: fixed;
     margin-left:0.6vw;
+    width:100%;
 }
 
 #session-logo img {
@@ -111,6 +112,21 @@ html, body {
     position: relative;
     margin-right: 1.9vw;
 }
+
+.notifications-count{
+    position:fixed;
+    z-index:800;
+    background-color:red;
+    width:0.8vw;
+    color:white;
+    border-radius:50vw;
+    font-size:0.55vmax;
+    text-align:center;
+    margin-left:95.3vw;
+    margin-top:6.9vh;
+}
+
+
 
 #options {
     margin-right: 1vw;

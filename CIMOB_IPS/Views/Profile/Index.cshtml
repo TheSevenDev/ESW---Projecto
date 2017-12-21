@@ -12,7 +12,7 @@
         <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw"/>
     </div>
     <table class="information">
-        @if(Model != null && Model.AccountType == EnumAccountType.STUDENT )
+        @if(Model != null && Model.AccountType == EnumAccountType.STUDENT)
         {
                 <tr>
                     <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Name)</td>

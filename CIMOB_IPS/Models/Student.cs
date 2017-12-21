@@ -26,7 +26,7 @@ namespace CIMOB_IPS.Models
 
         [Required(ErrorMessage = "O Nome não está preenchido.")]
         [StringLength(60 ,ErrorMessage = "O Nome deve conter no máximo 60 caracteres.")]
-        [Display(Name = "Nome:")]
+        [Display(Name = "Nome Completo:")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "A morada não está preenchida.")]
@@ -59,7 +59,10 @@ namespace CIMOB_IPS.Models
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }
+
+        [Display(Name = "Nacionalidade:")]
         public Nationality IdNationalityNavigation { get; set; }
+
         public ICollection<Application> Application { get; set; }
     }
 }
