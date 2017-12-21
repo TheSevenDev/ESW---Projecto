@@ -217,5 +217,10 @@ namespace CIMOB_IPS.Models
 
             return stringBuilder.ToString();
         }
+
+        public static int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
     }
 }

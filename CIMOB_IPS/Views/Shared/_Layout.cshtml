@@ -1,6 +1,7 @@
 ﻿@{ 
     ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
     ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
+    ViewData["NotificationsCount"] = NotificationController.NotificationsCount();
 }
 
 <!DOCTYPE html>
@@ -37,7 +38,7 @@
                 <li>
                     <a asp-area="" asp-controller="Home" asp-action="About">Candidatura</a>
                     <ul class="sub-menu">
-                        <li><a asp-area="" asp-controller="Application" asp-action="New">Iniciar Candidatura</a></li>
+                        <li><a asp-area="" asp-controller="Application" asp-action="New">Nova Candidatura</a></li>
                         <li><a asp-area="" asp-controller="Home" asp-action="About">Minhas Candidaturas</a></li>
                         <li></li>
                     </ul>
@@ -76,8 +77,8 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         { 
-        <div class="notifications-count">
-            2
+        <div class="notifications-count" onclick="javascript: toogleNotifications();">
+            @ViewData["NotificationsCount"]
         </div>
         }
         <div class="menu-settings" id="submenu-settings">

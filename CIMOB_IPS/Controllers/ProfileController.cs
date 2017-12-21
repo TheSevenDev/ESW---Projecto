@@ -93,17 +93,14 @@ namespace CIMOB_IPS.Controllers
             return null;
         }
 
-        public int GetCurrentUserID()
-        {
-            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-        }
+
 
         public IActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
+            var accountViewModel = GetAccountModelByID(Account.GetCurrentUserID());
 
             ViewData["edit-profile-display"] = "block";
             //add verificação
@@ -129,7 +126,7 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
+            var accountViewModel = GetAccountModelByID(Account.GetCurrentUserID());
 
             return View(accountViewModel);
         }
@@ -138,7 +135,7 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileStudent([Bind("IdAccount, Name, Telephone,StudentNum,Address")] Student student)
         {
-            if (GetCurrentUserID() != student.IdAccount)
+            if (Account.GetCurrentUserID() != student.IdAccount)
             {
                 return BadRequest();
             }
@@ -186,7 +183,7 @@ namespace CIMOB_IPS.Controllers
             {
                 SqlCommand scmCommandTechnician = new SqlCommand("select t.id_technician from Technician t, Account a " +
                     "where t.id_account=@Id and a.id_account = t.id_account", scnConnection);
-                scmCommandTechnician.Parameters.AddWithValue("@Id", GetCurrentUserID());
+                scmCommandTechnician.Parameters.AddWithValue("@Id", Account.GetCurrentUserID());
                 SqlDataReader dtrReader = scmCommandTechnician.ExecuteReader();
 
                 return dtrReader.HasRows;
@@ -197,7 +194,7 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
         {
-            if (GetCurrentUserID() != technician.IdAccount)
+            if (Account.GetCurrentUserID() != technician.IdAccount)
             {
                 return BadRequest();
             }
