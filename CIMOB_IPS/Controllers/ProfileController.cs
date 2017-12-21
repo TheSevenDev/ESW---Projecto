@@ -19,6 +19,11 @@ namespace CIMOB_IPS.Controllers
             _context = context;
         }
 
+        public int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
         public ProfileViewModel GetAccountModelByID(int intId)
         {
             var viewModel = new ProfileViewModel { };
@@ -100,7 +105,7 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(Account.GetCurrentUserID());
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             ViewData["edit-profile-display"] = "block";
             //add verificação
@@ -126,7 +131,7 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            var accountViewModel = GetAccountModelByID(Account.GetCurrentUserID());
+            var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             return View(accountViewModel);
         }
@@ -135,7 +140,7 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileStudent([Bind("IdAccount, Name, Telephone,StudentNum,Address")] Student student)
         {
-            if (Account.GetCurrentUserID() != student.IdAccount)
+            if (GetCurrentUserID() != student.IdAccount)
             {
                 return BadRequest();
             }
@@ -183,7 +188,7 @@ namespace CIMOB_IPS.Controllers
             {
                 SqlCommand scmCommandTechnician = new SqlCommand("select t.id_technician from Technician t, Account a " +
                     "where t.id_account=@Id and a.id_account = t.id_account", scnConnection);
-                scmCommandTechnician.Parameters.AddWithValue("@Id", Account.GetCurrentUserID());
+                scmCommandTechnician.Parameters.AddWithValue("@Id", GetCurrentUserID());
                 SqlDataReader dtrReader = scmCommandTechnician.ExecuteReader();
 
                 return dtrReader.HasRows;
@@ -194,7 +199,7 @@ namespace CIMOB_IPS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
         {
-            if (Account.GetCurrentUserID() != technician.IdAccount)
+            if (GetCurrentUserID() != technician.IdAccount)
             {
                 return BadRequest();
             }

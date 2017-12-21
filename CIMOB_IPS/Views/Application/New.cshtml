@@ -44,6 +44,10 @@
                 <tr> <td><input asp-for="Student.Name" type="text" /></td></tr>
                 <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
 
+                <tr> <td><label asp-for="Student.Name"></label></td></tr>
+                <tr> <td><input asp-for="Student.Name" type="text" style="width:35%"/></td></tr>
+                <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
+
                 <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
                 <tr> <td><input asp-for="Student.Telephone" type="text" /></td></tr>
                 <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
@@ -52,11 +56,11 @@
 </form>
 
     <div class="application-form-pager">
+        <button>< Anterior</button>
         <button>1</button>
         <button>2</button>
         <button>3</button>
         <button>4</button>
-        <button>< Anterior</button>
         <button>Seguinte ></button>
     </div>
 </div>
