@@ -344,17 +344,22 @@ html, body {
 
 .information {
     font-size: 95%;
-    width: 52%;
+    width: 80%;
     height: auto;
     position: absolute;
     top: 23%;
-    margin-left: 20%;
+    margin-left: 15%;
     font-size: 1vmax;
+}
+
+.information tr {
+    width: 100%;
 }
 
 .information tr>td {
     padding-bottom: 2%;
     padding-left: 3%;
+
 }
 
 .information a, .information a :visited, .information a :link, .information a :active {
@@ -374,6 +379,7 @@ html, body {
 .editProfileForm tr {
     position:relative;
     margin-top:20%;
+    width:100%;
 }
 
 .profileImage {
@@ -420,6 +426,7 @@ html, body {
 .profileLabel
 {
     font-weight: bold;
+    width:20vw;
 }
 
 .page-title {

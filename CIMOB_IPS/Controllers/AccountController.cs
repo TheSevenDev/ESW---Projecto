@@ -86,7 +86,7 @@ namespace CIMOB_IPS.Controllers
 
             long lngIdAccount = 0;
 
-            lngIdAccount = InsertAccount(strEmail, Account.EncryptToMD5(strPassword));
+            lngIdAccount = InsertAccount(strEmail, EncryptToMD5(strPassword));
 
             DeletePendingAccount(strEmail);
 
@@ -118,7 +118,7 @@ namespace CIMOB_IPS.Controllers
 
             long lngIdAccount = 0;
 
-            lngIdAccount = InsertAccount(strEmail, Account.EncryptToMD5(strPassword));
+            lngIdAccount = InsertAccount(strEmail, EncryptToMD5(strPassword));
 
             DeletePendingAccount(strEmail);
 
@@ -179,32 +179,15 @@ namespace CIMOB_IPS.Controllers
 
             List<SelectListItem> lisNationalities = new List<SelectListItem>();
 
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            var email = _context.PendingAccount.Where(pa => pa.Guid == account_id).Select(p => p.Email).FirstOrDefault();  
+            if(email == null)
+                 return RedirectToAction("Index", "Home");
+            else
             {
-                scmCommand.CommandText = "Select email from dbo.Pending_Account where guid = @guid";
-                scmCommand.Parameters.AddWithValue("@guid", account_id);
-                scnConnection.Open();
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (!dtrReader.HasRows)//Invalid GUID
-                    return RedirectToAction("Index", "Home");
-                else
-                {
-                    while (dtrReader.Read())
-                    {
-                        string strEmail = dtrReader[0].ToString();
-                        string strStudentNumber = dtrReader[0].ToString().Substring(0, 9);
-
-                        ViewData["student-email"] = strEmail;
-                        ViewData["student-number"] = strStudentNumber;
-
-                    }
-
-                    dtrReader.Close();
-                    scnConnection.Close();
-                }
+                string strEmail = email.ToString();
+                string strStudentNumber = email.ToString().Substring(0, 9);
+                ViewData["student-email"] = strEmail;
+                ViewData["student-number"] = strStudentNumber;
             }
 
             return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Courses = PopulateCourses() });
@@ -245,31 +228,15 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["register-type"] = "technician";
 
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            var email = _context.PendingAccount.Where(pa => pa.Guid == account_id).Select(p => p.Email).FirstOrDefault();  
+            if(email == null)
+                 return RedirectToAction("Index", "Home");
+            else
             {
-                scmCommand.CommandText = "Select email, is_admin from dbo.Pending_Account where guid = @guid";
-                scmCommand.Parameters.AddWithValue("@guid", account_id);
-                scnConnection.Open();
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (!dtrReader.HasRows)//Invalid GUID
-                    return RedirectToAction("Index", "Home");
-                else
-                {
-                    while (dtrReader.Read())
-                    {
-                        string strEmail = dtrReader[0].ToString();
-                        bool bolIsAdmin = Convert.ToBoolean(dtrReader[1].ToString());
-
-                        ViewData["technician-email"] = strEmail;
-                        ViewData["technician-isAdmin"] = bolIsAdmin;
-                    }
-
-                    dtrReader.Close();
-                    scnConnection.Close();
-                }
+                string strEmail = email.ToString();
+                string strStudentNumber = email.ToString().Substring(0, 9);
+                ViewData["technician-email"] = strEmail;
+                ViewData["technician-isAdmin"] = strStudentNumber;
             }
 
             return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString(), Technician = new Technician { IsAdmin = (bool)ViewData["technician-isAdmin"] } });
@@ -389,6 +356,8 @@ namespace CIMOB_IPS.Controllers
                     }
                 }
             }
+
+
         }
 
         private void InsertStudent(Student student)
@@ -497,7 +466,7 @@ namespace CIMOB_IPS.Controllers
 
             if (ModelState.IsValid)
             {
-                LoginState state = Account.IsRegistered(strEmail, strPassword);
+                LoginState state = IsRegistered(strEmail, strPassword);
 
                 if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED || state == LoginState.WRONG_PASSWORD)
                 {
@@ -509,17 +478,17 @@ namespace CIMOB_IPS.Controllers
                 }
                 else
                 {
-                    string strAccountId = Account.AccountID(strEmail);
+                    string strAccountId = AccountID(strEmail);
                     var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
                     identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, strAccountId));
-                    identity.AddClaim(new Claim(ClaimTypes.Name, Account.AccountName(strAccountId)));
+                    identity.AddClaim(new Claim(ClaimTypes.Name, AccountName(strAccountId)));
 
                     if (state == LoginState.CONNECTED_STUDENT)
                         identity.AddClaim(new Claim(ClaimTypes.Role, "estudante"));
                     else
                     {
 
-                        if (Account.IsAdmin(strAccountId) == "True")
+                        if (IsAdmin(strAccountId) == "True")
                             identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico_admin"));
                         else
                             identity.AddClaim(new Claim(ClaimTypes.Role, "tecnico"));
@@ -553,7 +522,7 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             string strEmail = Convert.ToString(form["email"]);
-            LoginState state = Account.IsRegistered(strEmail, "");
+            LoginState state = IsRegistered(strEmail, "");
 
             if (state == LoginState.EMAIL_NOTFOUND || state == LoginState.CONNECTION_FAILED)
             {
@@ -601,7 +570,7 @@ namespace CIMOB_IPS.Controllers
         private void SendFYPEmail(string strEmail)
         {
             string strNewPw = GenerateNewPassword();
-            ChangePassword(strEmail, Account.EncryptToMD5(strNewPw));
+            ChangePassword(strEmail, EncryptToMD5(strNewPw));
 
             //SEND EMAIL WITH PASSWORD
             string strSubject = "[CIMOB-IPS] Alteração da palavra-passe";
@@ -649,8 +618,8 @@ namespace CIMOB_IPS.Controllers
                 {
                     while (dtrReader.Read())
                     {
-                        string strBdpw = Account.ToHex((byte[])dtrReader[2], false);
-                        if (!strBdpw.Equals(Account.EncryptToMD5(strCurrentPassword)))
+                        string strBdpw = ToHex((byte[])dtrReader[2], false);
+                        if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
                         {
                             ViewData["UpdatePW-Error"] = "Password atual inválida";
                             return View("UpdatePassword");
@@ -664,7 +633,7 @@ namespace CIMOB_IPS.Controllers
                 using (SqlCommand scmCommand = scnConnection2.CreateCommand())
                 {
                     scmCommand.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @idaccount";
-                    scmCommand.Parameters.AddWithValue("@Password", Account.EncryptToMD5(strNewPw));
+                    scmCommand.Parameters.AddWithValue("@Password", EncryptToMD5(strNewPw));
                     scmCommand.Parameters.AddWithValue("@idaccount", GetCurrentUserID());
                     scnConnection2.Open();
                     scmCommand.ExecuteNonQuery();
@@ -693,5 +662,183 @@ namespace CIMOB_IPS.Controllers
         }
 
         #endregion
+
+
+        public LoginState IsRegistered(string _strEmail, string _strPassword)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            {
+                string strAccountID = "";
+
+                try { 
+                    scnConnection.Open();
+                }
+                catch(SqlException e)
+                {
+                    return LoginState.CONNECTION_FAILED;
+                }
+
+                scmCommand.CommandText = "select * from Account where email=@email";
+                scmCommand.Parameters.AddWithValue("@email", _strEmail);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
+                {
+                    while (dtrReader.Read())
+                    {
+                        strAccountID = dtrReader[0].ToString();
+
+                        string strBDPW = ToHex((byte[])dtrReader[2], false);
+
+                        if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
+                        {
+                            return LoginState.WRONG_PASSWORD;
+                        }
+                    }
+                }
+                else
+                {
+                    return LoginState.EMAIL_NOTFOUND;
+                }
+
+                scnConnection.Close();
+
+                if(AccountType(strAccountID) == EnumUserType.STUDENT)
+                {
+                    return LoginState.CONNECTED_STUDENT;
+                }
+                else
+                {
+                    return LoginState.CONNECTED_TECH;
+                }              
+            }    
+        }
+
+        public string AccountID(string strEmail)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            {
+                scnConnection.Open();
+
+                scmCommand.CommandText = "select id_account from Account where email=@email";
+                scmCommand.Parameters.AddWithValue("@email", strEmail);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
+                {
+                    while (dtrReader.Read()) { 
+                        return dtrReader[0].ToString();
+                    }
+                }
+            }
+            return "";
+        }
+
+        public EnumUserType AccountType(string _strAccountID)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            {
+                scnConnection.Open();
+
+                scmCommand.CommandText = "select id_student from Student where id_account=@id_account";
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
+                {
+                    return EnumUserType.STUDENT;
+                }
+                else
+                {
+                    return EnumUserType.TECHNICIAN;
+                }
+            }
+        }
+
+        public string AccountName(string _strAccountID)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            {
+                scnConnection.Open();
+
+                if(AccountType(_strAccountID) == EnumUserType.STUDENT)
+                    scmCommand.CommandText = "select name from Student where id_account=@id_account";
+                else
+                    scmCommand.CommandText = "select name from Technician where id_account=@id_account";
+
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
+                {
+                    while (dtrReader.Read())
+                    {
+                        return dtrReader[0].ToString();
+                    }             
+                }
+
+                return "";
+            }
+        }
+
+        public string IsAdmin(string _strAccountID)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            {
+                scnConnection.Open();
+                scmCommand.CommandText = "select is_admin from Technician where id_account=@id_account";
+
+                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
+
+                SqlDataReader dtrReader = scmCommand.ExecuteReader();
+
+                if (dtrReader.HasRows)
+                {
+                    while (dtrReader.Read())
+                    {
+                        return dtrReader[0].ToString();
+                    }
+                }
+
+                return "";
+            }
+        }
+
+        public string EncryptToMD5(string strPassword)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            Console.WriteLine(strPassword);
+            md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(strPassword));
+
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+            
+            return strBuilder.ToString();
+        }
+
+        public string ToHex(byte[] bytes, bool upperCase)
+        {
+            StringBuilder stringBuilder = new StringBuilder(bytes.Length * 2);
+
+            for (int i = 0; i < bytes.Length; i++)
+                stringBuilder.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
+
+            return stringBuilder.ToString();
+        }
     }
 }
