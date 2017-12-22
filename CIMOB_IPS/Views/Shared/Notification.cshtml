@@ -1,7 +1,8 @@
 ﻿@{ 
-    //string count = NotificationController.NotificationsCount(int.Parse(User.IdentityClaims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value));
-    //NotificationController nc = new NotificationController();
-    //string count = nc.NotificationsCount().ToString();
+       NotificationController nc = new NotificationController();
 }
 
-<div class="notifications-count" onclick="javascript: toogleNotifications();">2</div>
+@if (User.Identity.IsAuthenticated && nc.NotificationsCount(User) > 0)
+{
+    <div class="notifications-count" onclick="javascript: toogleNotifications();">@nc.NotificationsCount(User)</div>
+}

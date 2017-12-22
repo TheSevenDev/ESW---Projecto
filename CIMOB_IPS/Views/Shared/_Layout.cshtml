@@ -1,8 +1,9 @@
 ﻿@{ 
     ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
     ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
-    //int notificationsCount = NotificationController.NotificationsCount();
-    
+    //int notificationsCount = NotificationController.NotificationsCount();7
+    NotificationController nc = new NotificationController();
+
 }
 
 <!DOCTYPE html>
@@ -77,9 +78,9 @@
 
         </div>
         @if (User.Identity.IsAuthenticated)
-    {
-        @await Html.PartialAsync("/Views/Shared/Notification.cshtml")    
-}
+        {
+            @await Html.PartialAsync("/Views/Shared/Notification.cshtml")    
+        }
         <div class="menu-settings" id="submenu-settings">
             <ul>
                 <li> <a asp-area="" asp-controller="Profile" asp-action="Index">Perfil</a> </li>

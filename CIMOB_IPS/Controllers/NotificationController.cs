@@ -12,15 +12,15 @@ namespace CIMOB_IPS.Controllers
 {
     public class NotificationController : Controller
     {
-        public int NotificationsCount()
+        public int NotificationsCount(ClaimsPrincipal user)
         {
             using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
                 scnConnection.Open();
-                string strQuery = "SELECT COUNT(*) FROM Notification where id_account = @AccountId AND ReadNotification = false";
+                string strQuery = "SELECT COUNT(*) FROM Notification where id_account = @AccountId AND read_notification = 0";
 
                 SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
-                scmCommand.Parameters.AddWithValue("@AccountId", GetCurrentUserID());
+                scmCommand.Parameters.AddWithValue("@AccountId", GetCurrentUserID(user));
                 SqlDataReader dtrReader = scmCommand.ExecuteReader();
                 if (dtrReader.HasRows)
                 {
@@ -34,9 +34,9 @@ namespace CIMOB_IPS.Controllers
             return 0;
         }
 
-     public int GetCurrentUserID()
+     public int GetCurrentUserID(ClaimsPrincipal user)
      {
-        return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        return int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
      }
 
 
