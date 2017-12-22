@@ -15,7 +15,8 @@
                     <tr><td><label asp-for="Student.StudentNum"></label></td></tr>
                     <tr><td><input asp-for="Student.StudentNum" placeholder="Número de Estudante"/></td></tr>
                     <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>
-                    <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span><input type="submit" value="Enviar" /></td></tr>
+                    <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span>
+                        <input type="submit" value="Enviar" /></td></tr>
                 </table>
             </form>
     </div>
@@ -45,6 +46,30 @@
                     <tr> <td><input asp-for="ConfirmPasswordView" /></td></tr>
                     <tr> <td><span asp-validation-for="ConfirmPasswordView" class="error-message"></span></td><tr>
 
+                    <tr><td><label asp-for="Student.Gender" class="control-label"></label></td></tr>
+                    <tr><td>
+                        @foreach (EnumGender gender in Enum.GetValues(typeof(EnumGender)))
+                        {
+                            @if (gender == EnumGender.Masculino)
+                            {
+                                <input asp-for="Student.Gender" type="radio" value="@gender" checked/>
+                                @gender
+                            }
+                            else
+                            {
+                                <input asp-for="Student.Gender" type="radio" value="@gender" />
+                                @gender
+                            }
+
+                        }
+                    </td></tr>
+                    <!--<tr><td><select asp-for="Student.Gender" asp-items="Html.get<EnumGender>()" class="form-control"></select></td></tr>-->
+                    <tr><td><span asp-validation-for="Student.Gender" class="error-message"></span></td></tr>
+
+                    <tr><td><label asp-for="Student.BirthDate" class="control-label"></label></td></tr>
+                    <tr><td><input asp-for="Student.BirthDate"/></td></tr>
+                    <tr><td><span asp-validation-for="Student.BirthDate" class="error-message"></span></td></tr>
+
                     <tr> <td><label asp-for="Student.Cc"></label></td></tr>
                     <tr> <td><input asp-for="Student.Cc" style="width: 15vw;"/></td></tr>
                     <tr> <td><span asp-validation-for="Student.Cc" class="error-message"></span></td></tr>
@@ -73,6 +98,7 @@
                                                    Clique <a target="_blank" href="https://www.ips.pt/ips_si/legislacao_geral.ver_legislacao?p_nr=27">aqui</a> para saber mais.</div>
                         </td>
                     </tr>
+
                     <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3.5vw;"  onkeydown="javascript: closeHelpEcts();"/> </td></tr>
                     <tr> <td><span asp-validation-for="Student.Credits" class="error-message"></span> </td> </tr>
                     <tr> <td><input type="submit" value="Registar" /></td> </tr>

@@ -375,9 +375,20 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("address")
                     .HasMaxLength(255);
 
+                entity.Property(e => e.BirthDate)
+                    .HasColumnName("birth_date")
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("('1997-09-13')");
+
                 entity.Property(e => e.Cc).HasColumnName("cc");
 
                 entity.Property(e => e.Credits).HasColumnName("credits");
+
+                entity.Property(e => e.Gender)
+                    .IsRequired()
+                    .HasColumnName("gender")
+                    .HasMaxLength(9)
+                    .HasDefaultValueSql("('Masculino')");
 
                 entity.Property(e => e.IdAccount).HasColumnName("id_account");
 

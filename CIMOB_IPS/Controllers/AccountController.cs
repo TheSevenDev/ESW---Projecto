@@ -98,8 +98,10 @@ namespace CIMOB_IPS.Controllers
             long lngTelephone = model.Student.Telephone;
             long lngIdNationality = model.Student.IdNationality;
             int intCredits = model.Student.Credits;
+            DateTime dtBithDate = model.Student.BirthDate;
+            string strGender = model.Student.Gender;
 
-            Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Address = strAddress, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum };
+            Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Address = strAddress, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum, BirthDate = dtBithDate, Gender = strGender };
 
             InsertStudent(student);
 
@@ -396,7 +398,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
             {
-                scmCommand.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum)";
+                scmCommand.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum, @Gender, @BirthDate)";
                 scmCommand.Parameters.AddWithValue("@IdAccount", student.IdAccount);
                 scmCommand.Parameters.AddWithValue("@IdCourse", student.IdCourse);
                 scmCommand.Parameters.AddWithValue("@Name", student.Name);
@@ -406,6 +408,8 @@ namespace CIMOB_IPS.Controllers
                 scmCommand.Parameters.AddWithValue("@IdNacionality", student.IdNationality);
                 scmCommand.Parameters.AddWithValue("@Credits", student.Credits);
                 scmCommand.Parameters.AddWithValue("@StudentNum", student.StudentNum);
+                scmCommand.Parameters.AddWithValue("@Gender", student.Gender);
+                scmCommand.Parameters.AddWithValue("@BirthDate", student.BirthDate);
                 scnConnection.Open();
                 scmCommand.ExecuteNonQuery();
                 scnConnection.Close();

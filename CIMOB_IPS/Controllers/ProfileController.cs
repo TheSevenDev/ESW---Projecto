@@ -32,7 +32,7 @@ namespace CIMOB_IPS.Controllers
             {
                 scnConnection.Open();
                 string strQueryStudent = "SELECT id_student, a.email, c.name, s.name, address, cc, telephone, " +
-                    "n.description, credits, student_num FROM Student s, Course c, Nationality n, Account a " +
+                    "n.description, credits, student_num, gender, birth_date FROM Student s, Course c, Nationality n, Account a " +
                     "WHERE s.id_account = @Id AND s.id_course = c.id_course AND s.id_nationality = n.id_nationality " +
                     "AND s.id_account = a.id_account";
 
@@ -53,7 +53,9 @@ namespace CIMOB_IPS.Controllers
                         Telephone = dtrReader.GetInt64(6),
                         IdNationalityNavigation = new Nationality { Description = dtrReader.GetString(7) },
                         Credits = dtrReader.GetInt32(8),
-                        StudentNum = dtrReader.GetInt64(9)
+                        StudentNum = dtrReader.GetInt64(9),
+                        Gender = dtrReader.GetString(10),
+                        BirthDate = dtrReader.GetDateTime(11)
                     };
 
                     modelStudent.IdAccountNavigation = new Account { IdAccount = intId, Email = dtrReader.GetString(1) };

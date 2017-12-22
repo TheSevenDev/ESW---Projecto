@@ -56,6 +56,16 @@ namespace CIMOB_IPS.Models
         [Display(Name = "ECTS:")]
         public int Credits { get; set; }
 
+        //required?
+        [Display(Name = "Género:")]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "Insira a sua data de nascimento.")]
+        [Display(Name = "Data de Nascimento:")]
+        [DataType(DataType.Date)]
+        [CheckDateRange(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
+        public DateTime BirthDate { get; set; }
+
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }
