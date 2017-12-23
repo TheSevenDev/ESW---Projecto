@@ -310,7 +310,6 @@ namespace CIMOB_IPS.Controllers
                 scmCommand.Parameters.AddWithValue("@Email", strEmail);
                 scmCommand.Parameters.AddWithValue("@Password", strPassword);
                 scnConnection.Open();
-                //command.ExecuteNonQuery();
 
                 long lngIdAccount = (Int64)scmCommand.ExecuteScalar();
 
@@ -673,152 +672,68 @@ namespace CIMOB_IPS.Controllers
 
 
         public LoginState IsRegistered(string _strEmail, string _strPassword)
-        {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                string strAccountID = "";
+        {           
+            var accountWEmail = from a in _context.Account where a.Email == _strEmail select a;
+            var account = accountWEmail.FirstOrDefault();
+            
+            if (account != null)
+            {          
+                var strAccountID = account.IdAccount.ToString();
 
-                try { 
-                    scnConnection.Open();
-                }
-                catch(SqlException e)
-                {
-                    return LoginState.CONNECTION_FAILED;
-                }
+                string strBDPW = ToHex((byte[])account.Password, false);
 
-                scmCommand.CommandText = "select * from Account where email=@email";
-                scmCommand.Parameters.AddWithValue("@email", _strEmail);
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (dtrReader.HasRows)
-                {
-                    while (dtrReader.Read())
-                    {
-                        strAccountID = dtrReader[0].ToString();
-
-                        string strBDPW = ToHex((byte[])dtrReader[2], false);
-
-                        if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
-                        {
-                            return LoginState.WRONG_PASSWORD;
-                        }
-                    }
-                }
-                else
-                {
-                    return LoginState.EMAIL_NOTFOUND;
-                }
-
-                scnConnection.Close();
-
+                if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
+                    return LoginState.WRONG_PASSWORD;
+ 
                 if(AccountType(strAccountID) == EnumUserType.STUDENT)
-                {
                     return LoginState.CONNECTED_STUDENT;
-                }
                 else
-                {
                     return LoginState.CONNECTED_TECH;
-                }              
-            }    
-        }
+                
+            }
+            else
+            {
+                return LoginState.EMAIL_NOTFOUND;
+            }     
+            
+         }    
+        
 
         public string AccountID(string strEmail)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                scnConnection.Open();
+            var accoundId = from a in _context.Account where a.Email == strEmail select a;
 
-                scmCommand.CommandText = "select id_account from Account where email=@email";
-                scmCommand.Parameters.AddWithValue("@email", strEmail);
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (dtrReader.HasRows)
-                {
-                    while (dtrReader.Read()) { 
-                        return dtrReader[0].ToString();
-                    }
-                }
-            }
-            return "";
+            return accoundId.FirstOrDefault().IdAccount.ToString();
         }
 
         public EnumUserType AccountType(string _strAccountID)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                scnConnection.Open();
+            var student = from s in _context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s;
 
-                scmCommand.CommandText = "select id_student from Student where id_account=@id_account";
-                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (dtrReader.HasRows)
-                {
-                    return EnumUserType.STUDENT;
-                }
-                else
-                {
-                    return EnumUserType.TECHNICIAN;
-                }
-            }
+            var isStudent = student.FirstOrDefault();
+            if (isStudent != null)
+                return EnumUserType.STUDENT;
+            
+           return EnumUserType.TECHNICIAN;
         }
 
         public string AccountName(string _strAccountID)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                scnConnection.Open();
+            var name = "";
+            if (AccountType(_strAccountID) == EnumUserType.STUDENT)
+                name = (from s in _context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
+            else
+                name = (from s in _context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
 
-                if(AccountType(_strAccountID) == EnumUserType.STUDENT)
-                    scmCommand.CommandText = "select name from Student where id_account=@id_account";
-                else
-                    scmCommand.CommandText = "select name from Technician where id_account=@id_account";
-
-                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (dtrReader.HasRows)
-                {
-                    while (dtrReader.Read())
-                    {
-                        return dtrReader[0].ToString();
-                    }             
-                }
-
-                return "";
-            }
+            return name;
         }
 
         public string IsAdmin(string _strAccountID)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                scnConnection.Open();
-                scmCommand.CommandText = "select is_admin from Technician where id_account=@id_account";
+          var isAdmin = "";
+          isAdmin = (from s in _context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.IsAdmin).FirstOrDefault().ToString();
 
-                scmCommand.Parameters.AddWithValue("@id_account", _strAccountID);
-
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-
-                if (dtrReader.HasRows)
-                {
-                    while (dtrReader.Read())
-                    {
-                        return dtrReader[0].ToString();
-                    }
-                }
-
-                return "";
-            }
+          return isAdmin;
         }
 
         public string EncryptToMD5(string strPassword)
