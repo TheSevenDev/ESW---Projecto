@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CIMOB_IPS.Models.ViewModels;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -50,28 +51,30 @@ namespace CIMOB_IPS.Controllers
 
         private TechnicianManagementViewModel PopulateTechnicians()
         {
-
-            var lisIdAdmin = from s in _context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
-
-            List<PendingAccount> lisPendingAccounts = null;
-
-            if (lisIdAdmin != null)
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                lisPendingAccounts = _context.PendingAccount.ToList();
+                var lisIdAdmin = from s in context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
+
+                List<PendingAccount> lisPendingAccounts = null;
+
+                if (lisIdAdmin != null)
+                {
+                    lisPendingAccounts = context.PendingAccount.ToList();
+                }
+
+                TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = lisPendingAccounts };
+
+                viewModel.Technicians = (from s in context.Technician
+                                         select new Technician
+                                         {
+                                             Name = s.Name,
+                                             IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                             Telephone = s.Telephone,
+                                             IsAdmin = s.IsAdmin
+                                         }).ToList();
+
+                return viewModel;
             }
-
-            TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = lisPendingAccounts };
-
-            viewModel.Technicians = (from s in _context.Technician
-                                        select new Technician
-                                        {
-                                            Name = s.Name,
-                                            IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
-                                            Telephone = s.Telephone,
-                                            IsAdmin = s.IsAdmin
-                                        }).ToList();
-
-            return viewModel;
         }
 
         [HttpPost]
@@ -87,7 +90,7 @@ namespace CIMOB_IPS.Controllers
 
             long lngIdAccount = 0;
 
-            lngIdAccount = InsertAccount(strEmail, EncryptToMD5(strPassword));
+            lngIdAccount = InsertAccountGetId(strEmail, strPassword);
 
             DeletePendingAccount(strEmail);
 
@@ -104,7 +107,7 @@ namespace CIMOB_IPS.Controllers
 
             Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Address = strAddress, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum, BirthDate = dtBithDate, Gender = strGender };
 
-            InsertStudent(student);
+            InsertStudent(student, strEmail);
 
             WelcomeEmail(strEmail);
             return RedirectToAction("Login", "Account");
@@ -116,12 +119,10 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            String strEmail = model.EmailView;
+            string strEmail = model.EmailView;
             string strPassword = model.PasswordView;
 
-            long lngIdAccount = 0;
-
-            lngIdAccount = InsertAccount(strEmail, EncryptToMD5(strPassword));
+            long lngIdAccount = InsertAccountGetId(strEmail, strPassword);
 
             DeletePendingAccount(strEmail);
 
@@ -131,7 +132,7 @@ namespace CIMOB_IPS.Controllers
 
             Technician technician = new Technician { IdAccount = lngIdAccount, Name = strName, Telephone = lngTelephone, IsAdmin = bolIsAdmin};
 
-            InsertTechnician(technician);
+            InsertTechnician(technician, strEmail);
 
             WelcomeEmail(strEmail);
             return RedirectToAction("Login", "Account");
@@ -182,15 +183,19 @@ namespace CIMOB_IPS.Controllers
 
             List<SelectListItem> lisNationalities = new List<SelectListItem>();
 
-            var email = _context.PendingAccount.Where(pa => pa.Guid == account_id).Select(p => p.Email).FirstOrDefault();  
-            if(email == null)
-                 return RedirectToAction("Index", "Home");
-            else
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                string strEmail = email.ToString();
-                string strStudentNumber = email.ToString().Substring(0, 9);
-                ViewData["student-email"] = strEmail;
-                ViewData["student-number"] = strStudentNumber;
+                var email = context.PendingAccount.Where(pa => pa.Guid == account_id).Select(p => p.Email).FirstOrDefault();
+
+                if (email == null)
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    string strEmail = email.ToString();
+                    string strStudentNumber = email.ToString().Substring(0, 9);
+                    ViewData["student-email"] = strEmail;
+                    ViewData["student-number"] = strStudentNumber;
+                }
             }
 
             return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Courses = PopulateCourses() });
@@ -198,30 +203,36 @@ namespace CIMOB_IPS.Controllers
 
         private IEnumerable<SelectListItem> PopulateNationalities()
         {
-            List<SelectListItem> lisNationalities = new List<SelectListItem>();
-
-            var listNationalities = _context.Nationality.OrderBy(x => x.Description).ToList();
-
-            foreach(Nationality n in listNationalities)
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                lisNationalities.Add(new SelectListItem { Value = n.IdNationality.ToString(), Text = n.Description });
-            }
+                List<SelectListItem> lisNationalities = new List<SelectListItem>();
 
-            return lisNationalities;
+                var listNationalities = context.Nationality.OrderBy(x => x.Description).ToList();
+
+                foreach (Nationality n in listNationalities)
+                {
+                    lisNationalities.Add(new SelectListItem { Value = n.IdNationality.ToString(), Text = n.Description });
+                }
+
+                return lisNationalities;
+            }
         }
 
         private IEnumerable<SelectListItem> PopulateCourses()
         {
-            List<SelectListItem> lisCourses = new List<SelectListItem>();
-
-            var listCourses = _context.Course.OrderBy(x=>x.Name).ToList();
-
-            foreach (Course n in listCourses)
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                lisCourses.Add(new SelectListItem { Value = n.IdCourse.ToString(), Text = n.Name });
-            }
+                List<SelectListItem> lisCourses = new List<SelectListItem>();
 
-            return lisCourses;
+                var listCourses = context.Course.OrderBy(x => x.Name).ToList();
+
+                foreach (Course n in listCourses)
+                {
+                    lisCourses.Add(new SelectListItem { Value = n.IdCourse.ToString(), Text = n.Name });
+                }
+
+                return lisCourses;
+            }
         }
                              
         public IActionResult RegisterTechnician([FromQuery] string account_id)
@@ -231,19 +242,23 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["register-type"] = "technician";
 
-            var email = _context.PendingAccount.Where(pa => pa.Guid == account_id).Select(p => p.Email).FirstOrDefault();  
-            if(email == null)
-                 return RedirectToAction("Index", "Home");
-            else
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                string strEmail = email.ToString();
-                string strStudentNumber = email.ToString().Substring(0, 9);
-                ViewData["technician-email"] = strEmail;
-                ViewData["technician-isAdmin"] = strStudentNumber;
-            }
 
-            return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString(), Technician = new Technician { IsAdmin = (bool)ViewData["technician-isAdmin"] } });
-        }
+                PendingAccount pendingAccount = context.PendingAccount.Where(pa => pa.Guid == account_id).FirstOrDefault();
+
+                if (pendingAccount == null)
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    string strEmail = pendingAccount.Email.ToString();
+                    ViewData["technician-email"] = strEmail;
+                    ViewData["technician-isAdmin"] = pendingAccount.IsAdmin;
+                }
+
+                return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString(), Technician = new Technician { IsAdmin = (bool)ViewData["technician-isAdmin"] } });
+            }
+         }
 
         public IActionResult InviteTec()
         {
@@ -286,118 +301,85 @@ namespace CIMOB_IPS.Controllers
             return View("Technicians", PopulateTechnicians());
         }
 
-        public void DeletePendingAccount(string strEmail)
+        public async void DeletePendingAccount(string strEmail)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                scmCommand.CommandText = "Delete FROM dbo.Pending_Account WHERE email=@Email";
-                scmCommand.Parameters.AddWithValue("@Email", strEmail);
-                scnConnection.Open();
-                scmCommand.ExecuteNonQuery();
-                scnConnection.Close();
-            }
+                PendingAccount pendingAccount = await context.PendingAccount.SingleOrDefaultAsync(p => p.Email == strEmail);
+
+                context.PendingAccount.Remove(pendingAccount);
+                await context.SaveChangesAsync();
+            }   
         }
 
-        public long InsertAccount(string strEmail, string strPassword)
+        public long InsertAccountGetId(string strEmail, string strPassword)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("INSERT INTO dbo.Account(Email,Password) OUTPUT INSERTED.id_account VALUES (@Email, CONVERT(VARBINARY(16), @password, 2))", scnConnection))
+            Account account = new Account { Email = strEmail, Password = StrToArrByte(strPassword) };
+
+            InsertAccount(account);
+
+            return account.IdAccount;
+        }
+
+        public async void InsertAccount(Account account)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                scmCommand.Parameters.AddWithValue("@Email", strEmail);
-                scmCommand.Parameters.AddWithValue("@Password", strPassword);
-                scnConnection.Open();
-
-                long lngIdAccount = (Int64)scmCommand.ExecuteScalar();
-
-                if (scnConnection.State == System.Data.ConnectionState.Open)
-                {
-                    scnConnection.Close();
-                }
-
-                return lngIdAccount;
+                context.Add(account);
+                await context.SaveChangesAsync();
             }
         }
 
         public bool InsertPendingAccount(string strEmail, EnumAccountType enUserType, int intIsAdmin)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                scmCommand.CommandText = "Select a.email , pa.email from dbo.Account a, dbo.Pending_Account pa where a.email = @email or pa.email = @email";
-                scmCommand.Parameters.AddWithValue("@email", strEmail);
-                scnConnection.Open();
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-                if (dtrReader.HasRows)
+                if (context.PendingAccount.Any(p => p.Email == strEmail))
                     return false;
+
+                Guid guid = Guid.NewGuid();
+
+                PendingAccount pendingAccount = new PendingAccount { Email = strEmail, Guid = guid.ToString(), IsAdmin = Convert.ToBoolean(intIsAdmin) };
+
+                context.Add(pendingAccount);
+                context.SaveChanges();
+
+                if (enUserType == EnumAccountType.STUDENT)
+                {
+                    SendEmailToStudent(strEmail, guid.ToString());
+                }
                 else
                 {
-                    using (SqlCommand scmCommand2 = new SqlCommand("", scnConnection))
-                    {
-                        scnConnection.Close();
-                        scnConnection.Open();
-                        scmCommand2.CommandText = "INSERT INTO dbo.Pending_Account VALUES (@email,@guid, @isAdmin)";
-                        scmCommand2.Parameters.AddWithValue("@email", strEmail);
-                        Guid guid;
-                        guid = Guid.NewGuid();
-                        scmCommand2.Parameters.AddWithValue("@guid", guid);
-                        scmCommand2.Parameters.AddWithValue("@isAdmin", intIsAdmin);
-                        scmCommand2.ExecuteNonQuery();
-                        scnConnection.Close();
-
-                        if (enUserType == EnumAccountType.STUDENT)
-                        {
-                            SendEmailToStudent(strEmail, guid.ToString());
-                        }
-                        else
-                        {
-                            SendEmailToTec(strEmail, guid.ToString());
-                        }              
-                        
-                        return true;
-                    }
+                    SendEmailToTec(strEmail, guid.ToString());
                 }
-            }
 
-
-        }
-
-        private void InsertStudent(Student student)
-        {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
-            {
-                scmCommand.CommandText = "INSERT INTO dbo.Student VALUES (@IdAccount,@IdCourse,@Name,@Adress,@CC,@Telephone,@IdNacionality,@Credits,@StudentNum, @Gender, @BirthDate)";
-                scmCommand.Parameters.AddWithValue("@IdAccount", student.IdAccount);
-                scmCommand.Parameters.AddWithValue("@IdCourse", student.IdCourse);
-                scmCommand.Parameters.AddWithValue("@Name", student.Name);
-                scmCommand.Parameters.AddWithValue("@Adress", student.Address);
-                scmCommand.Parameters.AddWithValue("@CC", student.Cc);
-                scmCommand.Parameters.AddWithValue("@Telephone", student.Telephone);
-                scmCommand.Parameters.AddWithValue("@IdNacionality", student.IdNationality);
-                scmCommand.Parameters.AddWithValue("@Credits", student.Credits);
-                scmCommand.Parameters.AddWithValue("@StudentNum", student.StudentNum);
-                scmCommand.Parameters.AddWithValue("@Gender", student.Gender);
-                scmCommand.Parameters.AddWithValue("@BirthDate", student.BirthDate);
-                scnConnection.Open();
-                scmCommand.ExecuteNonQuery();
-                scnConnection.Close();
+                return true;
             }
         }
 
-        private void InsertTechnician(Technician technician)
+        private async void InsertStudent(Student student, string strEmail)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                scmCommand.CommandText = "INSERT INTO dbo.Technician VALUES (@IdAccount,@Name,@Telephone,@IsAdmin)";
-                scmCommand.Parameters.AddWithValue("@IdAccount", technician.IdAccount);
-                scmCommand.Parameters.AddWithValue("@Name", technician.Name);
-                scmCommand.Parameters.AddWithValue("@Telephone", technician.Telephone);
-                scmCommand.Parameters.AddWithValue("@IsAdmin", technician.IsAdmin);
-                scnConnection.Open();
-                scmCommand.ExecuteNonQuery();
-                scnConnection.Close();
+                long lngId = await context.Account.Where(a => a.Email == strEmail).Select(a => a.IdAccount).SingleOrDefaultAsync();
+
+                student.IdAccount = lngId;
+
+                context.Add(student);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        private async void InsertTechnician(Technician technician, string strEmail)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                long lngId = await context.Account.Where(a => a.Email == strEmail).Select(a => a.IdAccount).SingleOrDefaultAsync();
+
+                technician.IdAccount = lngId;
+
+                context.Add(technician);
+                await context.SaveChangesAsync();
             }
         }
 
@@ -546,17 +528,18 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        private void ChangePassword(string strEmail, string strPassword)
+        private async void ChangePassword(string strEmail, string strPassword)
         {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                scmCommand.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2)  where email = @email";
-                scmCommand.Parameters.AddWithValue("@password", strPassword);
-                scmCommand.Parameters.AddWithValue("@email", strEmail);
-                scnConnection.Open();
-                scmCommand.ExecuteReader();
-                scnConnection.Close();
+                Account account = context.Account.SingleOrDefault(a => a.Email == strEmail);
+
+                if (account != null)
+                {
+                    account.Password = StrToArrByte(strPassword);
+                    context.Update(account);
+                    await context.SaveChangesAsync();
+                }
             }
         }
 
@@ -574,7 +557,7 @@ namespace CIMOB_IPS.Controllers
         private void SendFYPEmail(string strEmail)
         {
             string strNewPw = GenerateNewPassword();
-            ChangePassword(strEmail, EncryptToMD5(strNewPw));
+            ChangePassword(strEmail, strNewPw);
 
             //SEND EMAIL WITH PASSWORD
             string strSubject = "[CIMOB-IPS] Alteração da palavra-passe";
@@ -601,7 +584,7 @@ namespace CIMOB_IPS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdatePassword(UpdatePasswordViewModel model)
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -610,36 +593,28 @@ namespace CIMOB_IPS.Controllers
             string strConfirmation = model.Confirmation;
             string strNewPw = model.NewPassword;
 
-            var oldPassword = (from a in _context.Account where a.IdAccount == GetCurrentUserID() select a).FirstOrDefault();
-            
-            if(oldPassword != null)
+            Account account = await (from a in _context.Account where a.IdAccount == GetCurrentUserID() select a).FirstOrDefaultAsync();
+
+            if(account != null)
             {
-                string strBdpw = ToHex((byte[])oldPassword.Password, false);
+                string strBdpw = ToHex(account.Password, false);
                 if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
                 {
                     ViewData["UpdatePW-Error"] = "Password atual inválida";
                     return View("UpdatePassword");
                 }
-            }
 
-            using (SqlConnection scnConnection2 = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            {
-                //create await  
-                using (SqlCommand scmCommand = scnConnection2.CreateCommand())
-                {
-                    scmCommand.CommandText = "update dbo.Account set password = CONVERT(VARBINARY(16),@password, 2) WHERE id_account = @idaccount";
-                    scmCommand.Parameters.AddWithValue("@Password", EncryptToMD5(strNewPw));
-                    scmCommand.Parameters.AddWithValue("@idaccount", GetCurrentUserID());
-                    scnConnection2.Open();
-                    scmCommand.ExecuteNonQuery();
-                    scnConnection2.Close();
-                }
-
-                //MANDAR EMAIL
-                //PASSWORD ALTERADA COM SUCESSO
+                ChangePassword(account.Email, strNewPw);
                 ViewData["UpdatePW-Message"] = "Password alterada com sucesso";
-                return View("UpdatePassword");
             }
+            else
+            {
+                ViewData["UpdatePW-Error"] = "Conta não existente";
+            }
+
+            //MANDAR EMAIL
+            //PASSWORD ALTERADA COM SUCESSO
+            return View("UpdatePassword");
         }
 
         private void SendEmailToStudent(string strEmailStudent)
@@ -658,79 +633,88 @@ namespace CIMOB_IPS.Controllers
 
         #endregion
 
-
         public LoginState IsRegistered(string _strEmail, string _strPassword)
-        {           
-            var accountWEmail = from a in _context.Account where a.Email == _strEmail select a;
-            var account = accountWEmail.FirstOrDefault();
-            
-            if (account != null)
-            {          
-                var strAccountID = account.IdAccount.ToString();
-
-                string strBDPW = ToHex((byte[])account.Password, false);
-
-                if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
-                    return LoginState.WRONG_PASSWORD;
- 
-                if(AccountType(strAccountID) == EnumUserType.STUDENT)
-                    return LoginState.CONNECTED_STUDENT;
-                else
-                    return LoginState.CONNECTED_TECH;
-                
-            }
-            else
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                return LoginState.EMAIL_NOTFOUND;
-            }     
-            
+                var accountWEmail = from a in context.Account where a.Email == _strEmail select a;
+                var account = accountWEmail.FirstOrDefault();
+
+                if (account != null)
+                {
+                    var strAccountID = account.IdAccount.ToString();
+
+                    string strBDPW = ToHex(account.Password, false);
+
+                    if (!strBDPW.Equals(EncryptToMD5(_strPassword)))
+                        return LoginState.WRONG_PASSWORD;
+
+                    if (AccountType(strAccountID) == EnumUserType.STUDENT)
+                        return LoginState.CONNECTED_STUDENT;
+                    else
+                        return LoginState.CONNECTED_TECH;
+
+                }
+                else
+                {
+                    return LoginState.EMAIL_NOTFOUND;
+                }
+            }
          }    
         
 
         public string AccountID(string strEmail)
         {
-            var accoundId = from a in _context.Account where a.Email == strEmail select a;
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var accoundId = from a in context.Account where a.Email == strEmail select a;
 
-            return accoundId.FirstOrDefault().IdAccount.ToString();
+                return accoundId.FirstOrDefault().IdAccount.ToString();
+            }
         }
 
         public EnumUserType AccountType(string _strAccountID)
         {
-            var student = from s in _context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s;
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var student = from s in context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s;
 
-            var isStudent = student.FirstOrDefault();
-            if (isStudent != null)
-                return EnumUserType.STUDENT;
-            
-           return EnumUserType.TECHNICIAN;
+                var isStudent = student.FirstOrDefault();
+                if (isStudent != null)
+                    return EnumUserType.STUDENT;
+
+                return EnumUserType.TECHNICIAN;
+            }
         }
 
         public string AccountName(string _strAccountID)
         {
-            var name = "";
-            if (AccountType(_strAccountID) == EnumUserType.STUDENT)
-                name = (from s in _context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
-            else
-                name = (from s in _context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var name = "";
+                if (AccountType(_strAccountID) == EnumUserType.STUDENT)
+                    name = (from s in context.Student where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
+                else
+                    name = (from s in context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.Name).FirstOrDefault().ToString();
 
-            return name;
+                return name;
+            }
         }
 
         public string IsAdmin(string _strAccountID)
         {
-          var isAdmin = "";
-          isAdmin = (from s in _context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.IsAdmin).FirstOrDefault().ToString();
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var isAdmin = "";
+                isAdmin = (from s in context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.IsAdmin).FirstOrDefault().ToString();
 
-          return isAdmin;
+                return isAdmin;
+            }
         }
 
         public string EncryptToMD5(string strPassword)
         {
-            MD5 md5 = new MD5CryptoServiceProvider();
-            Console.WriteLine(strPassword);
-            md5.ComputeHash(System.Text.ASCIIEncoding.ASCII.GetBytes(strPassword));
-
-            byte[] result = md5.Hash;
+            byte[] result = StrToArrByte(strPassword);
 
             StringBuilder strBuilder = new StringBuilder();
 
@@ -750,6 +734,15 @@ namespace CIMOB_IPS.Controllers
                 stringBuilder.Append(bytes[i].ToString(upperCase ? "X2" : "x2"));
 
             return stringBuilder.ToString();
+        }
+
+        public byte[] StrToArrByte(string str)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+            Console.WriteLine(str);
+            md5.ComputeHash(Encoding.ASCII.GetBytes(str));
+
+            return md5.Hash;
         }
     }
 }
