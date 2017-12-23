@@ -376,6 +376,7 @@ namespace CIMOB_IPS.Models
                     .HasMaxLength(255);
 
                 entity.Property(e => e.BirthDate)
+                    .IsRequired()
                     .HasColumnName("birth_date")
                     .HasColumnType("date")
                     .HasDefaultValueSql("('1997-09-13')");

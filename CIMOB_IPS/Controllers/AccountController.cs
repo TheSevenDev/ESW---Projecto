@@ -81,6 +81,7 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             Console.WriteLine(ModelState);
+
             string strEmail = model.EmailView;
             string strPassword = model.PasswordView;
 
@@ -107,6 +108,9 @@ namespace CIMOB_IPS.Controllers
 
             WelcomeEmail(strEmail);
             return RedirectToAction("Login", "Account");
+            
+
+            return View(model);
         }
 
         [HttpPost]

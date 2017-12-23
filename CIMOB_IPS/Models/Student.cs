@@ -63,7 +63,7 @@ namespace CIMOB_IPS.Models
         [Required(ErrorMessage = "Insira a sua data de nascimento.")]
         [Display(Name = "Data de Nascimento:")]
         [DataType(DataType.Date)]
-        [CheckDateRange(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
+        [CheckDateRangeAttribute(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
         public DateTime BirthDate { get; set; }
 
         public Account IdAccountNavigation { get; set; }
