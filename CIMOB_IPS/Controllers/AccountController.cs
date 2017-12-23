@@ -613,27 +613,18 @@ namespace CIMOB_IPS.Controllers
             string strConfirmation = model.Confirmation;
             string strNewPw = model.NewPassword;
 
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            using (SqlCommand scmCommand = new SqlCommand("", scnConnection))
+            var oldPassword = (from a in _context.Account where a.IdAccount == GetCurrentUserID() select a).FirstOrDefault();
+            
+            if(oldPassword != null)
             {
-                scnConnection.Open();
-           
-                scmCommand.CommandText = "select * from Account where id_account = @idaccount";
-                scmCommand.Parameters.AddWithValue("@idaccount", GetCurrentUserID());
-                SqlDataReader dtrReader = scmCommand.ExecuteReader();
-                if (dtrReader.HasRows)
+                string strBdpw = ToHex((byte[])oldPassword.Password, false);
+                if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
                 {
-                    while (dtrReader.Read())
-                    {
-                        string strBdpw = ToHex((byte[])dtrReader[2], false);
-                        if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
-                        {
-                            ViewData["UpdatePW-Error"] = "Password atual inválida";
-                            return View("UpdatePassword");
-                        }
-                    }
+                    ViewData["UpdatePW-Error"] = "Password atual inválida";
+                    return View("UpdatePassword");
                 }
             }
+
             using (SqlConnection scnConnection2 = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
                 //create await  
