@@ -12,6 +12,7 @@ namespace CIMOB_IPS.Controllers
     {
         private static string strError = "<h1>Oops!</h1><hr><p>Ocorreu um erro a resgatar ajuda para esta página. É possível ainda não existir nenhuma informação de ajuda para a mesma, por favor tente mais tarde.</p>";
 
+
         public static string GetHelpInformation(string strController, string strAction)
         {
             string strHtmlResult;

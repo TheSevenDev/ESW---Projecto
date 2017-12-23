@@ -108,9 +108,6 @@ namespace CIMOB_IPS.Controllers
 
             WelcomeEmail(strEmail);
             return RedirectToAction("Login", "Account");
-            
-
-            return View(model);
         }
 
         [HttpPost]
