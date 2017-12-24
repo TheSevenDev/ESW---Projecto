@@ -27,84 +27,14 @@
 
 @if (Model.PendingAccounts != null && Model.PendingAccounts.Count > 0)
 {
-<h2 class="page-title" style="margin-top:2%;">Convites Pendentes</h2>
-<img class="add-technician" src="~/images/icons/001-plus-symbol-in-a-rounded-black-square_black.png" title="Adicionar um Técnico" onclick="javascript: openInviteTech();" />
-<div class="main-container-pendingtech">
-    <table style="margin: 0 auto;">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PendingAccounts.First().IsAdmin)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PendingAccounts.First().Guid)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.PendingAccounts)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(model => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.IsAdmin)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(model => item.Guid)
-                    </td>
-                </tr>   
-            }
-        </tbody>
-    </table>
-</div>
+    <h2 class="page-title" style="margin-top:2%;">Convites Pendentes</h2>
+    <img class="add-technician" src="~/images/icons/001-plus-symbol-in-a-rounded-black-square_black.png" title="Adicionar um Técnico" onclick="javascript: openInviteTech();" />
+    @Html.Partial("_PendingAccounts", Model.PendingAccounts)
 }
 
 @if (Model.Technicians.Count > 0)
 {
     <h2 class="page-title" style="margin-top:7%;">Técnicos</h2>
-    <div class="main-container-techs">    
-        <table style="margin: 0 auto; margin-top: 3%;">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().IdAccountNavigation.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().Telephone)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Technicians.First().IsAdmin)
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Technicians)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.IdAccountNavigation.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.Telephone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.IsAdmin)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    @Html.Partial("_Technicians", Model.Technicians)
 }
 

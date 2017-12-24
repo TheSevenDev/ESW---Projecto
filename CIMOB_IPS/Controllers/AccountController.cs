@@ -14,6 +14,7 @@ using System.Linq;
 using CIMOB_IPS.Models.ViewModels;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -41,39 +42,62 @@ namespace CIMOB_IPS.Controllers
         }
 
         [ActionName("Technicians")]
-        public IActionResult Technicians()
+        public IActionResult Technicians(int? pagePending, int? pageTechnicians)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            return View("Technicians", PopulateTechnicians());
+            int intPageSize = 10;
+            int intPagePendingNumber = (pagePending ?? 1);
+            int intPageTechniciansNumber = (pageTechnicians ?? 1);
+
+            return View("Technicians", PopulateTechnicians(intPagePendingNumber, intPageTechniciansNumber, intPageSize));
         }
 
-        private TechnicianManagementViewModel PopulateTechnicians()
+        private TechnicianManagementViewModel PopulateTechnicians(int intPendingPageNumber, int intTechniciansPageNumber, int intPendingPageSize)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var lisIdAdmin = from s in context.Technician where s.IdAccount == GetCurrentUserID() && s.IdTechnician == 1 select s;
 
-                List<PendingAccount> lisPendingAccounts = null;
+                var lisPendingAccounts = GetPendingAccountsPaginated(intPendingPageNumber, intPendingPageSize);
+
+                TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = lisPendingAccounts.Result };
 
                 if (lisIdAdmin != null)
                 {
-                    lisPendingAccounts = context.PendingAccount.ToList();
+                    viewModel.Technicians = GetTechniciansPaginated(intTechniciansPageNumber, intPendingPageSize).Result;
                 }
 
-                TechnicianManagementViewModel viewModel = new TechnicianManagementViewModel { PendingAccounts = lisPendingAccounts };
-
-                viewModel.Technicians = (from s in context.Technician
-                                         select new Technician
-                                         {
-                                             Name = s.Name,
-                                             IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
-                                             Telephone = s.Telephone,
-                                             IsAdmin = s.IsAdmin
-                                         }).ToList();
-
                 return viewModel;
+            }
+        }
+
+        private async Task<PaginatedList<PendingAccount>> GetPendingAccountsPaginated(int intPendingPageNumber, int intPendingPageSize)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var pendingAccounts = from s in context.PendingAccount
+                                      select s;
+
+                return await PaginatedList<PendingAccount>.CreateAsync(pendingAccounts.AsNoTracking(), intPendingPageNumber, intPendingPageSize);
+            }
+        }
+
+        private async Task<PaginatedList<Technician>> GetTechniciansPaginated(int intTechniciansPageNumber, int intPendingPageSize)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var technicians = (from s in context.Technician
+                                       select new Technician
+                                       {
+                                           Name = s.Name,
+                                           IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                           Telephone = s.Telephone,
+                                           IsAdmin = s.IsAdmin
+                                       });
+
+                return await PaginatedList<Technician>.CreateAsync(technicians.AsNoTracking(), intTechniciansPageNumber, intPendingPageSize);
             }
         }
 
@@ -290,7 +314,7 @@ namespace CIMOB_IPS.Controllers
                     ViewData["message"] = "";
                 }
 
-                return View("Technicians", PopulateTechnicians());
+                return View("Technicians", PopulateTechnicians(1, 1, 3));
             }
             catch (SqlException e)
             {
@@ -298,7 +322,7 @@ namespace CIMOB_IPS.Controllers
                 ViewData["error-message"] = "Conexão Falhada.";
             }
 
-            return View("Technicians", PopulateTechnicians());
+            return View("Technicians", PopulateTechnicians(1, 1, 3));
         }
 
         public async void DeletePendingAccount(string strEmail)

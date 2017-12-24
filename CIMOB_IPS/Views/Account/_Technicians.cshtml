@@ -1,0 +1,58 @@
+﻿@model PaginatedList<CIMOB_IPS.Models.Technician>
+
+<div class="main-container-techs">
+    <table style="margin: 0 auto; margin-top: 3%;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdAccountNavigation.Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Telephone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IsAdmin)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.IdAccountNavigation.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Telephone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.IsAdmin)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    Página @Model.PageIndex de @Model.TotalPages
+    <br />
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+    }
+    &nbsp;&nbsp;&nbsp;
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+    }
+</div>

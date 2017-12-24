@@ -1,0 +1,52 @@
+﻿@model PaginatedList<CIMOB_IPS.Models.PendingAccount>
+
+<div class="main-container-pendingtech">
+    <table style="margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IsAdmin)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Guid)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.IsAdmin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Guid)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    Página @Model.PageIndex de @Model.TotalPages
+    <br />
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+    }
+    &nbsp;&nbsp;&nbsp;
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+    }
+</div>

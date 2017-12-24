@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using PagedList;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models.ViewModels
 {
     public class TechnicianManagementViewModel
     {
-        public List<PendingAccount> PendingAccounts { get; set; }
+        public PaginatedList<PendingAccount> PendingAccounts { get; set; }
 
-        public List<Technician> Technicians { get; set; }
+        public PaginatedList<Technician> Technicians { get; set; }
 
         public long IdAccount { get; set; }
         [Required(ErrorMessage = "O email não está preenchido")]
