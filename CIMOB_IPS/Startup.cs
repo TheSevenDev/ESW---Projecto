@@ -100,6 +100,10 @@ namespace CIMOB_IPS
                     defaults: new { controller = "Account", action = "PreRegister" });
 
                 routes.MapRoute(
+                    "MyApplicationsRoute", "MinhasCandidaturas",
+                    defaults: new { controller = "Application", action = "MyApplications" });
+
+                routes.MapRoute(
                     "Profile",
                     "Profile/{id}",
                     new { controller = "Profile", action = "Get" }

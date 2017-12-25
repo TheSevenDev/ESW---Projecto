@@ -14,7 +14,11 @@ namespace CIMOB_IPS.Models
         public long IdApplication { get; set; }
         public long IdStudent { get; set; }
         public long IdState { get; set; }
+
+        [Display(Name = "Bolseiro")]
         public bool HasScholarship { get; set; }
+
+        [Display(Name = "Avaliação Final")]
         public short FinalEvaluation { get; set; }
 
         [Display(Name = "Carta de Motivação")]
@@ -29,8 +33,11 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nº Telemóvel")]
         public long EmergencyContactTelephone { get; set; }
 
+        [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
+
         public Student IdStudentNavigation { get; set; }
+
         public ICollection<Mobility> Mobility { get; set; }
     }
 }

@@ -12,11 +12,16 @@ namespace CIMOB_IPS.Controllers
 {
     public class ProfileController : Controller
     {
-        private readonly CIMOB_IPS_DBContext _context;
+        /*private readonly CIMOB_IPS_DBContext _context;
 
         public ProfileController(CIMOB_IPS_DBContext context)
         {
             _context = context;
+        }
+        */
+        public ProfileController()
+        {
+
         }
 
         public int GetCurrentUserID()

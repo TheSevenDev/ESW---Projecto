@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using CIMOB_IPS.Models;
 using CIMOB_IPS.Models.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -18,6 +20,11 @@ namespace CIMOB_IPS.Controllers
             _context = context;
         }
 
+        public int GetCurrentUserID()
+        {
+            return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
         public IActionResult New()
         {
             if (!User.Identity.IsAuthenticated)
@@ -28,16 +35,42 @@ namespace CIMOB_IPS.Controllers
 
         private IEnumerable<SelectListItem> PopulateNationalities()
         {
-            List<SelectListItem> lisNationalities = new List<SelectListItem>();
-
-            var listNationalities = _context.Nationality.OrderBy(x => x.Description).ToList();
-
-            foreach (Nationality n in listNationalities)
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                lisNationalities.Add(new SelectListItem { Value = n.IdNationality.ToString(), Text = n.Description });
-            }
+                List<SelectListItem> lisNationalities = new List<SelectListItem>();
 
-            return lisNationalities;
+                var listNationalities = context.Nationality.OrderBy(x => x.Description).ToList();
+
+                foreach (Nationality n in listNationalities)
+                {
+                    lisNationalities.Add(new SelectListItem { Value = n.IdNationality.ToString(), Text = n.Description });
+                }
+
+                return lisNationalities;
+            }
+        }
+
+        public async Task<IActionResult> MyApplications()
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            AccountController ac = new AccountController();
+            ProfileController pc = new ProfileController();
+
+            int lngCurrentUserId = GetCurrentUserID();
+
+            if (!ac.IsStudent(lngCurrentUserId))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var lisApplications = await context.Application.Where(a => a.IdStudent == lngCurrentUserId)
+                    .Include(a => a.IdStateNavigation)
+                    .ToListAsync();
+
+                return View(lisApplications);
+            }
         }
     }
 }

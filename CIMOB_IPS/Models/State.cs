@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
@@ -12,6 +13,8 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdState { get; set; }
+
+        [Display(Name = "Estado")]
         public string Description { get; set; }
 
         public ICollection<Application> Application { get; set; }

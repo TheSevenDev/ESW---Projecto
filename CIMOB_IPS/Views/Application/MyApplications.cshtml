@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CIMOB_IPS.Models.Application>
+
+@{
+    ViewData["Title"] = "Minhas Candidaturas";
+}
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+
+<h2 class="page-title" style="margin-top:2%;">Minhas Candidaturas</h2>
+
+<!--ALTERAR-->
+<button type="button" onclick="location.href='@Url.Action("MyApplications", "Application")'" >Ver Programas</button>
+
+<div class="main-container-pendingtech">
+    <!--Programa, instituicao, data de candidatura?, -->
+    <table style="margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinalEvaluation)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdStateNavigation.Description)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalEvaluation)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -19,12 +19,16 @@ using PagedList;
 namespace CIMOB_IPS.Controllers
 {
     public class AccountController : Controller
-    {
+    {/*
         private readonly CIMOB_IPS_DBContext _context;
 
         public AccountController(CIMOB_IPS_DBContext context)
         {
             _context = context;
+        }*/
+
+        public AccountController()
+        {
         }
 
         #region Register
@@ -617,28 +621,31 @@ namespace CIMOB_IPS.Controllers
             string strConfirmation = model.Confirmation;
             string strNewPw = model.NewPassword;
 
-            Account account = await (from a in _context.Account where a.IdAccount == GetCurrentUserID() select a).FirstOrDefaultAsync();
-
-            if(account != null)
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                string strBdpw = ToHex(account.Password, false);
-                if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
+                Account account = await (from a in context.Account where a.IdAccount == GetCurrentUserID() select a).FirstOrDefaultAsync();
+
+                if (account != null)
                 {
-                    ViewData["UpdatePW-Error"] = "Password atual inválida";
-                    return View("UpdatePassword");
+                    string strBdpw = ToHex(account.Password, false);
+                    if (!strBdpw.Equals(EncryptToMD5(strCurrentPassword)))
+                    {
+                        ViewData["UpdatePW-Error"] = "Password atual inválida";
+                        return View("UpdatePassword");
+                    }
+
+                    ChangePassword(account.Email, strNewPw);
+                    ViewData["UpdatePW-Message"] = "Password alterada com sucesso";
+                }
+                else
+                {
+                    ViewData["UpdatePW-Error"] = "Conta não existente";
                 }
 
-                ChangePassword(account.Email, strNewPw);
-                ViewData["UpdatePW-Message"] = "Password alterada com sucesso";
+                //MANDAR EMAIL
+                //PASSWORD ALTERADA COM SUCESSO
+                return View("UpdatePassword");
             }
-            else
-            {
-                ViewData["UpdatePW-Error"] = "Conta não existente";
-            }
-
-            //MANDAR EMAIL
-            //PASSWORD ALTERADA COM SUCESSO
-            return View("UpdatePassword");
         }
 
         private void SendEmailToStudent(string strEmailStudent)
@@ -733,6 +740,30 @@ namespace CIMOB_IPS.Controllers
                 isAdmin = (from s in context.Technician where s.IdAccount == Int32.Parse(_strAccountID) select s.IsAdmin).FirstOrDefault().ToString();
 
                 return isAdmin;
+            }
+        }
+
+        public bool IsTechnician(int intId)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return context.Technician.Any(t => t.IdAccount == intId);
+            }
+        }
+
+        public bool IsStudent(int intId)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return context.Student.Any(t => t.IdAccount == intId);
+            }
+        }
+
+        public long GetStudentId(int intId)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return (from x in context.Student where x.IdAccount == intId select x.IdStudent).First();
             }
         }
 
