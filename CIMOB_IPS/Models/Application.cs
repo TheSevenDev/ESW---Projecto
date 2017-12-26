@@ -38,10 +38,15 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
 
+        [Display(Name = "Data de Candidatura")]
         public DateTime ApplicationDate { get; set; }
 
         public Student IdStudentNavigation { get; set; }
+
+        [Display(Name = "Programa")]
         public Program IdProgramNavigation { get; set; }
+
+        [Display(Name = "Instituições")]
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
 

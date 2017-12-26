@@ -379,6 +379,8 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdState)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_P_State");
+
+                entity.Property(e => e.Name).HasColumnName("name");
             });
 
             modelBuilder.Entity<State>(entity =>

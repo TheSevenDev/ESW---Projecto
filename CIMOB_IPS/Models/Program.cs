@@ -16,6 +16,7 @@ namespace CIMOB_IPS.Models
         public DateTime CreationDate { get; set; }
         public DateTime? OpenDate { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public string Name { get; set; }
 
         public State IdStateNavigation { get; set; }
         public ICollection<Application> Application { get; set; }
