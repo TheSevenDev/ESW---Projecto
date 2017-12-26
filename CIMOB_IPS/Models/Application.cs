@@ -8,12 +8,14 @@ namespace CIMOB_IPS.Models
     {
         public Application()
         {
+            ApplicationInstitutions = new HashSet<ApplicationInstitutions>();
             Mobility = new HashSet<Mobility>();
         }
 
         public long IdApplication { get; set; }
         public long IdStudent { get; set; }
         public long IdState { get; set; }
+        public long? IdProgram { get; set; }
 
         [Display(Name = "Bolseiro")]
         public bool HasScholarship { get; set; }
@@ -36,8 +38,12 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
 
-        public Student IdStudentNavigation { get; set; }
+        public DateTime ApplicationDate { get; set; }
 
+        public Student IdStudentNavigation { get; set; }
+        public Program IdProgramNavigation { get; set; }
+        public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
+
     }
 }
