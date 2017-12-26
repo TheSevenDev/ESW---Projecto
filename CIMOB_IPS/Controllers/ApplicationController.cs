@@ -25,12 +25,58 @@ namespace CIMOB_IPS.Controllers
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
-        public IActionResult New()
+        public IActionResult New(ApplicationViewModel model)
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Login", "Account");
 
-            return View(new ApplicationViewModel { Nationalities = PopulateNationalities()});
+            ViewData["app_form"] = "NewApplication";
+            ViewData["submit_form"] = "NewApplication";
+            ApplicationViewModel viewModel = new ApplicationViewModel { Student = new Student(), Account = new Account(), Application = new Application() };
+            if (model.Student == null)
+            {
+                viewModel.Student.Name = "ASD";
+                viewModel.Student.Telephone = 912345;
+                viewModel.Account.Email = "ASD";
+            }
+            else
+                viewModel = model;
+
+
+            viewModel.Nationalities = PopulateNationalities();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult NewApplication(ApplicationViewModel model)
+        {
+            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Login", "Account");
+
+            ViewData["app_form"] = "NewApplication_Mob";
+            ViewData["submit_form"] = "NewApplicationMotiv";
+
+            return View("New", model);
+        }
+
+        public IActionResult NewApplicationMotiv(ApplicationViewModel model)
+        {
+            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Login", "Account");
+
+            ViewData["app_form"] = "NewApplication_Motiv";
+            ViewData["submit_form"] = "RegisterApplication";
+
+            return View("New", model);
+        }
+
+        public IActionResult RegisterApplication(ApplicationViewModel model)
+        {
+            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Login", "Account");
+
+           
+            return View("New", model);
         }
 
         private IEnumerable<SelectListItem> PopulateNationalities()
