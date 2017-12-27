@@ -13,6 +13,7 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<Help> Help { get; set; }
         public virtual DbSet<Institution> Institution { get; set; }
+        public virtual DbSet<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public virtual DbSet<InstitutionProgram> InstitutionProgram { get; set; }
         public virtual DbSet<Mobility> Mobility { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
@@ -72,6 +73,10 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("emergency_contact_relation")
                     .HasMaxLength(30);
 
+                entity.Property(e => e.ApplicationDate)
+                    .HasColumnName("application_date")
+                    .HasColumnType("date");
+
                 entity.Property(e => e.EmergencyContactTelephone).HasColumnName("emergency_contact_telephone");
 
                 entity.Property(e => e.FinalEvaluation).HasColumnName("final_evaluation");
@@ -81,6 +86,13 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.IdState).HasColumnName("id_state");
 
                 entity.Property(e => e.IdStudent).HasColumnName("id_student");
+
+                entity.Property(e => e.IdProgram).HasColumnName("id_program");
+
+                entity.HasOne(d => d.IdProgramNavigation)
+                    .WithMany(p => p.Application)
+                    .HasForeignKey(d => d.IdProgram)
+                    .HasConstraintName("fk_A_Program");
 
                 entity.Property(e => e.MotivationCard)
                     .IsRequired()
@@ -98,6 +110,31 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdStudent)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_C_Student");
+            });
+
+            modelBuilder.Entity<ApplicationInstitutions>(entity =>
+            {
+                entity.HasKey(e => new { e.IdApplication, e.IdInstitution });
+
+                entity.ToTable("Application_Institutions");
+
+                entity.Property(e => e.IdApplication).HasColumnName("id_application");
+
+                entity.Property(e => e.IdInstitution).HasColumnName("id_institution");
+
+                entity.Property(e => e.InstitutionOrder).HasColumnName("institution_order");
+
+                entity.HasOne(d => d.IdApplicationNavigation)
+                    .WithMany(p => p.ApplicationInstitutions)
+                    .HasForeignKey(d => d.IdApplication)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_AI_Application");
+
+                entity.HasOne(d => d.IdInstitutionNavigation)
+                    .WithMany(p => p.ApplicationInstitutions)
+                    .HasForeignKey(d => d.IdInstitution)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_AI_Institution");
             });
 
             modelBuilder.Entity<Coordenator>(entity =>
@@ -227,8 +264,6 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdOutgoingInstitution).HasColumnName("id_outgoing_institution");
 
-                entity.Property(e => e.IdProgram).HasColumnName("id_program");
-
                 entity.Property(e => e.IdResponsibleTechnician).HasColumnName("id_responsible_technician");
 
                 entity.Property(e => e.IdState).HasColumnName("id_state");
@@ -244,12 +279,6 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdOutgoingInstitution)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_M_Institution");
-
-                entity.HasOne(d => d.IdProgramNavigation)
-                    .WithMany(p => p.Mobility)
-                    .HasForeignKey(d => d.IdProgram)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_M_Program");
 
                 entity.HasOne(d => d.IdResponsibleTechnicianNavigation)
                     .WithMany(p => p.Mobility)
@@ -350,6 +379,10 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdState)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_P_State");
+
+                entity.Property(e => e.Name).HasColumnName("name");
+
+                entity.Property(e => e.Vacancies).HasColumnName("vacancies");
             });
 
             modelBuilder.Entity<State>(entity =>

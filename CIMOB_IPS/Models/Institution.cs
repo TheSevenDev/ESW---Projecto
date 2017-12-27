@@ -7,6 +7,7 @@ namespace CIMOB_IPS.Models
     {
         public Institution()
         {
+            ApplicationInstitutions = new HashSet<ApplicationInstitutions>();
             Course = new HashSet<Course>();
             InstitutionProgram = new HashSet<InstitutionProgram>();
             Mobility = new HashSet<Mobility>();
@@ -17,6 +18,7 @@ namespace CIMOB_IPS.Models
         public long IdNationality { get; set; }
 
         public Nationality IdNationalityNavigation { get; set; }
+        public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Course> Course { get; set; }
         public ICollection<InstitutionProgram> InstitutionProgram { get; set; }
         public ICollection<Mobility> Mobility { get; set; }

@@ -164,6 +164,7 @@ html, body {
     list-style: none;
 }
 
+
 .navbar-menu li {
     display: flex;
     align-items: center;
@@ -304,9 +305,14 @@ html, body {
     margin-right: 5%;
     list-style: none;
     width: 100%;
-    box-shadow:  0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
     border-bottom: 1px solid lightgray;
+}
+
+.notifications li:hover {
+    background-color: lightgray;
+    cursor:pointer;
 }
 
 .notifications li:first-child {
@@ -319,7 +325,6 @@ html, body {
     font-weight: 500;
     font-size: 1.1vmax;
 }
-
 
 #fade-background {
     display: none;
@@ -534,6 +539,7 @@ html, body {
 
 #submitButtonChangePassword {
     margin-right:23%;
+    margin-bottom:3%;
 }
 
 .invite-form input[type=submit]:hover {
