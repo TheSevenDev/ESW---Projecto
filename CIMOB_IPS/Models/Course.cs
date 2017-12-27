@@ -16,5 +16,6 @@ namespace CIMOB_IPS.Models
 
         public Institution IdInstitutionNavigation { get; set; }
         public ICollection<Student> Student { get; set; }
+        public ICollection<Coordenator> Coordenator { get; set; }
     }
 }

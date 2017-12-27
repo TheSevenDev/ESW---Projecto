@@ -154,6 +154,13 @@ namespace CIMOB_IPS.Models
                     .HasMaxLength(60);
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
+
+                entity.Property(e => e.IdCourse).HasColumnName("id_course");
+
+                entity.HasOne(d => d.IdCourseNavigation)
+                    .WithMany(p => p.Coordenator)
+                    .HasForeignKey(d => d.IdCourse)
+                    .HasConstraintName("fk_C_Course");
             });
 
             modelBuilder.Entity<Course>(entity =>
