@@ -1,0 +1,42 @@
+﻿
+.programs-display {
+    text-align: center;
+    margin-top: 3%;
+    margin-left: 21%;
+    width: 100%;
+    font-size: 1.1vmax;
+}
+
+.TitleDiv {
+    margin-left: 28%;
+    margin-top: 4%;
+    margin-bottom: 7%;
+    width: 40vw;
+    height: 20vh;
+}
+
+.programs-display table {
+    background-color: white;
+}
+
+.programs-display button {
+    height: 7%;
+    width: 40%;
+    margin-top: 2%;
+    float: right;
+    border: none;
+    background-color: var(--blue-var4);
+    color: var(--dark-grey);
+    font-weight: bold;
+    font-size: 1vmax;
+}
+
+.programs-display table img {
+    width: 40vw;
+    height: 10vw;
+}
+
+.programs-display button:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
