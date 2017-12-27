@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 using CIMOB_IPS.Models;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
-
+using System.Data;
 namespace CIMOB_IPS.Controllers
 {
     public class NotificationController : Controller
@@ -40,7 +40,22 @@ namespace CIMOB_IPS.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult ReadNotifications()
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                scnConnection.Open();
+                string strQuery = "UPDATE Notification SET read_notification = 1 where id_account = @AccountId";
 
+                SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                scmCommand.Parameters.AddWithValue("@AccountId", GetCurrentUserID(User));
+
+                scmCommand.ExecuteNonQuery();
+            }
+
+            return PartialView("~/views/Shared/Notification.cshtml", NotificationsCount(User).ToString());
+        }
 
 
     }

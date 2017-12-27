@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
     ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
     NotificationController nc = new NotificationController();
@@ -11,30 +11,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CIMOB-IPS</title>
 
-        <link rel="stylesheet" href="~/css/site.css" />
-        <link rel="stylesheet" href="~/css/help.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/help.css" />
 
-        <link rel="shortcut icon" type="image/png" href="~/favicon.ico" />
+    <link rel="shortcut icon" type="image/png" href="~/favicon.ico" />
     <script type="text/javascript">
-        $(function () {
-            $("[#submenu-notifications]").bind("click", function () {
-                var user = {};
-                user.Username = $("[id*=txtUsername]").val();
-                user.Password = $("[id*=txtPassword]").val();
-                $.ajax({
-                    type: "POST",
-                    url: "Default.aspx/SaveUser",
-                    data: '{user: ' + JSON.stringify(user) + '}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        alert("User has been added successfully.");
-                        window.location.reload();
-                    }
-                });
-                return false;
-            });
-        });
     </script>
 </head>
 <body>
@@ -44,9 +25,9 @@
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li>
-                    <a asp-area="" asp-controller="Home" asp-action="About">Programa</a>
+                    <a>Programa</a>
                     <ul class="sub-menu">
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Instituições</a></li>
+                        <li><a asp-area="" asp-controller="Program" asp-action="ChooseProgram">Ver Programas</a></li>
                         <li></li>
                     </ul>
                 </li>
@@ -54,30 +35,30 @@
                 @if (User.Identity.IsAuthenticated)
                 {
 
-                @if (User.IsInRole("estudante"))
-                {
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="About">Candidatura</a>
-                    <ul class="sub-menu">
-                        <li><a asp-area="" asp-controller="Application" asp-action="New">Nova Candidatura</a></li>
-                        <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
-                        <li></li>
-                    </ul>
-                    </li>
+                    @if (User.IsInRole("estudante"))
+                    {
+                        <li>
+                            <a>Candidatura</a>
+                            <ul class="sub-menu">
+                                <li><a asp-area="" asp-controller="Application" asp-action="New">Nova Candidatura</a></li>
+                                <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
+                                <li></li>
+                            </ul>
+                        </li>
+                    }
+                    @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                    {
+                        <li>
+                            <a>Listagens</a>
+                            <ul class="sub-menu">
+                                <li><a asp-area="" asp-controller="Home" asp-action="About">Candidaturas</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="About">Emergências</a></li>
+                                <li></li>
+                            </ul>
+                        </li>
+                    }
                 }
-                @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                {
-                <li>
-                    <a asp-area="" asp-controller="Home" asp-action="About">Listagens</a>
-                    <ul class="sub-menu">
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Candidaturas</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">Emergências</a></li>
-                        <li></li>
-                    </ul>
-                </li>
-                }
-               }
 
                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
             </ul>
@@ -85,29 +66,31 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-            <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
-            <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" />
+                <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
+                <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" />
 
-            <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();" />
+                <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();" />
             }
-    else
-    {
-        <img class="option-button" id="help" style="margin-right: 1vw;" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
-}
+            else
+            {
+                <img class="option-button" id="help" style="margin-right: 1vw;" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
+            }
 
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            @await Html.PartialAsync("/Views/Shared/Notification.cshtml")    
+            <div id="notificationsCount">
+                @await Html.PartialAsync("/Views/Shared/Notification.cshtml")
+            </div>
         }
         <div class="menu-settings" id="submenu-settings">
             <ul>
                 <li> <a asp-area="" asp-controller="Profile" asp-action="Index">Perfil</a> </li>
                 <li> <a asp-area="" asp-controller="Account" asp-action="UpdatePassword">Alterar Palavra-Passe</a> </li>
                 @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-            {
-                <li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>
-        }
+                {
+                    <li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>
+                }
                 <li> <a asp-area="" asp-controller="Account" asp-action="Logout">Sair</a></li>
             </ul>
         </div>
@@ -120,7 +103,7 @@
         </div>
     </nav>
     <div id="fade-background" onclick="javascript: toogleHelp();"></div>
-    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />   
+    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />
     <div id="help-content">
         @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
@@ -129,9 +112,9 @@
         <img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.8vmax; opacity:0.7;" src="~/images/cimobips.png" />
         @RenderBody()
     </div>
-        <footer>
-            <p>&copy; @DateTime.Now.Year &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>         
-        </footer>
+    <footer>
+        <p>&copy; @DateTime.Now.Year &nbsp; CIMOB - Instituto Politécnico de Setúbal</p>
+    </footer>
 
     @RenderSection("Scripts", required: false)
 

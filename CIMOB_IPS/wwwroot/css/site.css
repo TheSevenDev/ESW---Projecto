@@ -182,11 +182,13 @@ html, body {
     color: var(--grey-var1);
     font-weight:bold;
     font-size: 1.2vmax;
+    cursor:pointer;
 }
 
 
 .navbar-menu li:hover, .navbar-menu li:hover a {
-    color: var(--light-grey)
+    color: var(--light-grey);
+    cursor:pointer;
 }
 
 

@@ -7,6 +7,18 @@ function toogleSettings()
 
 function toogleNotifications()
 {
+    var actionUrl = '/Notification/ReadNotifications';
+
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+        }).done(function (res) {
+            $("#notificationsCount").html("");
+        });;
+    
+
     document.getElementById("submenu-settings").style.display = "none";
     $("#submenu-notifications").slideToggle(250);
 }

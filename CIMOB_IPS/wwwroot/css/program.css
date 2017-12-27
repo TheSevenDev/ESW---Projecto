@@ -8,11 +8,16 @@
 }
 
 .TitleDiv {
-    margin-left: 28%;
+    margin-left: 26%;
     margin-top: 4%;
     margin-bottom: 7%;
-    width: 40vw;
-    height: 20vh;
+
+}
+
+.TitleDiv img {
+    width: 48vw;
+    height: 15vw;
+    user-select: none;
 }
 
 .programs-display table {
@@ -25,18 +30,21 @@
     margin-top: 2%;
     float: right;
     border: none;
-    background-color: var(--blue-var4);
-    color: var(--dark-grey);
+    background-color: #222222;
+    border-radius: 3%;
+    border: 0.7px solid #222222;
     font-weight: bold;
     font-size: 1vmax;
+    color: #f1f1f1;
 }
 
 .programs-display table img {
     width: 40vw;
     height: 10vw;
+    user-select: none;
 }
 
 .programs-display button:hover {
+    background-color: var(--blue-var4);
     cursor: pointer;
-    text-decoration: underline;
 }

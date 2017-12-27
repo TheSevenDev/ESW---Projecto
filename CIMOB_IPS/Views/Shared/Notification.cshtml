@@ -1,6 +1,8 @@
-﻿@{ 
+﻿
+@{ 
        NotificationController nc = new NotificationController();
 }
+
 
 @if (User.Identity.IsAuthenticated && nc.NotificationsCount(User) > 0)
 {
