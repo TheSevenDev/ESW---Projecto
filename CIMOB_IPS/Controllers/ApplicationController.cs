@@ -63,13 +63,21 @@ namespace CIMOB_IPS.Controllers
             if (!ac.IsStudent(lngCurrentUserId))
                 return RedirectToAction("Index", "Home");
 
+            long studentId = ac.GetStudentId(lngCurrentUserId);
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                var lisApplications = await context.Application.Where(a => a.IdStudent == lngCurrentUserId)
+                var lisApplications = await context.Application.Where(a => a.IdStudent == studentId)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
                     .ToListAsync();
+
+                foreach(Application app in lisApplications)
+                {
+                    app.ApplicationInstitutions = await context.ApplicationInstitutions
+                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).ToListAsync();
+                }
 
                 return View(lisApplications);
             }
