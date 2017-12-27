@@ -6,7 +6,7 @@
         @Html.HiddenFor(model => Model.IdAccount)
         @Html.HiddenFor(model => Model.Name)
         <tr> <td><label asp-for="Telephone"></label></td></tr>
-        <tr> <td><input asp-for="Telephone" type="text"/></td></tr>
+        <tr> <td><input asp-for="Telephone" type="text" /></td></tr>
         <tr> <td><span asp-validation-for="Telephone" class="error-message"></span></td></tr>
 
         <tr><td><label asp-for="StudentNum"></label></td></tr>
@@ -17,6 +17,19 @@
         <tr><td><input asp-for="Address" placeholder="Número de Estudante" /></td></tr>
         <tr><td><span asp-validation-for="Address" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar"/></td> </tr>
+        <tr>
+            <td>
+                <label asp-for="Credits"></label>
+                <img class="open-help-ects" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpEcts();" />
+                <div class="help-ects">
+                    Insira os créditos  obtidos até ao momento.<br />
+                    Clique <a target="_blank" href="https://www.ips.pt/ips_si/legislacao_geral.ver_legislacao?p_nr=27">aqui</a> para saber mais.
+                </div>
+            </td>
+        </tr>
+        <tr><td><input asp-for="Credits" placeholder="ECTS" /></td></tr>
+        <tr><td><span asp-validation-for="Credits" class="error-message"></span></td></tr>
+
+        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
     </table>
 </form>

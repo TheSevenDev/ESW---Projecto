@@ -33,10 +33,10 @@
                 </li>
 
                 @if (User.Identity.IsAuthenticated)
-            {
+                {
 
                 @if (User.IsInRole("estudante"))
-            {
+                {
                 <li>
                     <a asp-area="" asp-controller="Home" asp-action="About">Candidatura</a>
                     <ul class="sub-menu">
@@ -44,10 +44,10 @@
                         <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
                         <li></li>
                     </ul>
-                </li>
-        }
+                    </li>
+                }
                 @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-            {
+                {
                 <li>
                     <a asp-area="" asp-controller="Home" asp-action="About">Listagens</a>
                     <ul class="sub-menu">
@@ -57,20 +57,20 @@
                         <li></li>
                     </ul>
                 </li>
-        }
-        }
+                }
+               }
 
                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
             </ul>
 
 
             @if (User.Identity.IsAuthenticated)
-        {
+            {
             <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
             <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" />
 
             <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();" />
-    }
+            }
     else
     {
         <img class="option-button" id="help" style="margin-right: 1vw;" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
