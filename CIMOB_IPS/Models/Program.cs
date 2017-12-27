@@ -24,6 +24,11 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? ClosingDate { get; set; }
 
+        [Display(Name = "Data prevista de Mobilidade")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
+        public DateTime MobilityDate { get; set; }
+
+        [Display(Name = "Programa")]
         public string Name { get; set; }
         public int Vacancies { get; set; }
 

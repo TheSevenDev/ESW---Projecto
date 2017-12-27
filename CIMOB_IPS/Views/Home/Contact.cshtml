@@ -8,6 +8,8 @@
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+
 
 <h2 class="page-title">Coordenadores de curso</h2>
 
@@ -15,26 +17,26 @@
     @foreach(var item in orderedCoordenators)
     {
         <p>
-            <img src="~/images/course.png" /> @item.IdCourseNavigation.Name 
-            <img src="~/images/name.png" /> @item.Name 
-            <img src="~/images/email.png" /> @item.Email
-            @if(item.Telephone != null)
+            <img src="~/images/course.png" class="icon-img" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name)
+            <img src="~/images/name.png" class="icon-img" /> @Html.DisplayFor(model => item.Name)
+            <img src="~/images/email.png" class="icon-img" /> @Html.DisplayFor(model => item.Email)
+            @if (item.Telephone != null)
             {
-                <img src = "~/images/telephone.png" /> @item.Telephone 
+                <img src="~/images/telephone.png" class="icon-img" /> @Html.DisplayFor(model => item.Telephone)
             }
         </p>
     }
 </div>
 
-<h2 class="page-title" style="margin-top:2%;">Técnicos do CIMOB</h2>
+<h2 class="page-title">Técnicos do CIMOB</h2>
 
 <div class="main-container-pendingtech">
     @foreach (var item in orderedTechnicians)
     {
         <p>
-            <img src="~/images/name.png" /> @item.Name
-            <img src="~/images/email.png" /> @item.IdAccountNavigation.Email
-            <img src="~/images/telephone.png" /> @item.Telephone
+            <img src="~/images/name.png" class="icon-img" /> @Html.DisplayFor(model => item.Name)
+            <img src="~/images/email.png" class="icon-img" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)
+            <img src="~/images/telephone.png" class="icon-img" /> @Html.DisplayFor(model => item.Telephone) 
         </p>
     }
 </div>
