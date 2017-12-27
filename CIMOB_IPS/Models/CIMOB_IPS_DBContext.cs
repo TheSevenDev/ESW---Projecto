@@ -381,6 +381,8 @@ namespace CIMOB_IPS.Models
                     .HasConstraintName("fk_P_State");
 
                 entity.Property(e => e.Name).HasColumnName("name");
+
+                entity.Property(e => e.Vacancies).HasColumnName("vacancies");
             });
 
             modelBuilder.Entity<State>(entity =>
