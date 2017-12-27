@@ -27,17 +27,26 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult New(ApplicationViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
 
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplication";
             ApplicationViewModel viewModel = new ApplicationViewModel { Student = new Student(), Account = new Account(), Application = new Application() };
+
+            int userID = GetCurrentUserID();
+            Student student = GetStudentById(userID);
+
+
             if (model.Student == null)
             {
-                viewModel.Student.Name = "ASD";
-                viewModel.Student.Telephone = 912345;
-                viewModel.Account.Email = "ASD";
+                viewModel.Student.Name = student.Name;
+                viewModel.Student.Telephone = student.Telephone;
+                viewModel.Account.Email = GetEmail(userID);
+                viewModel.Student.IdNationality = student.IdNationality;
             }
             else
                 viewModel = model;
@@ -47,11 +56,24 @@ namespace CIMOB_IPS.Controllers
             return View(viewModel);
         }
 
+        public Student GetStudentById(int intId)
+        {
+            return _context.Student.Where(s => s.IdAccount == intId).FirstOrDefault();
+        }
+
+        public string GetEmail(int intId)
+        {
+            return _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
+        }
+
         [HttpPost]
         public IActionResult NewApplication(ApplicationViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
 
             ViewData["app_form"] = "NewApplication_Mob";
             ViewData["submit_form"] = "NewApplicationMotiv";
@@ -61,8 +83,11 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult NewApplicationMotiv(ApplicationViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
 
             ViewData["app_form"] = "NewApplication_Motiv";
             ViewData["submit_form"] = "RegisterApplication";
@@ -72,8 +97,11 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult RegisterApplication(ApplicationViewModel model)
         {
-            if (!User.Identity.IsAuthenticated || User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
 
            
             return View("New", model);
@@ -100,6 +128,9 @@ namespace CIMOB_IPS.Controllers
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
+
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
 
             AccountController ac = new AccountController();
             ProfileController pc = new ProfileController();

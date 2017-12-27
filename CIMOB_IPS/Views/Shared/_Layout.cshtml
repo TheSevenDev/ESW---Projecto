@@ -1,9 +1,7 @@
 ﻿@{ 
     ViewData["Controller"] = this.ViewContext.RouteData.Values["controller"].ToString();
     ViewData["Action"] = this.ViewContext.RouteData.Values["action"].ToString();
-    //int notificationsCount = NotificationController.NotificationsCount();7
     NotificationController nc = new NotificationController();
-
 }
 
 <!DOCTYPE html>
@@ -17,6 +15,27 @@
         <link rel="stylesheet" href="~/css/help.css" />
 
         <link rel="shortcut icon" type="image/png" href="~/favicon.ico" />
+    <script type="text/javascript">
+        $(function () {
+            $("[#submenu-notifications]").bind("click", function () {
+                var user = {};
+                user.Username = $("[id*=txtUsername]").val();
+                user.Password = $("[id*=txtPassword]").val();
+                $.ajax({
+                    type: "POST",
+                    url: "Default.aspx/SaveUser",
+                    data: '{user: ' + JSON.stringify(user) + '}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        alert("User has been added successfully.");
+                        window.location.reload();
+                    }
+                });
+                return false;
+            });
+        });
+    </script>
 </head>
 <body>
     <nav>
