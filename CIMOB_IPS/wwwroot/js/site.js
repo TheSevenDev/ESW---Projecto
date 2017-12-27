@@ -36,7 +36,6 @@ function closefyp() {
     closefyp.style.display = "none";
 }
 
-
 function openInviteTech() {
     clearInviteTech();
     var inviteTech = document.getElementById("invite-tech");
@@ -54,8 +53,6 @@ function closeInviteTech() {
     closeInviteTech.style.display = "none";
 }
 
-
-
 function clearInviteTech() {
     document.getElementById('email-invite-tech').value = "";
     //document.getElementById('isAdmin-invite-tech').value = false;
@@ -64,21 +61,17 @@ function clearInviteTech() {
     document.getElementById('inviteTech-error').innerText = "";
 }
 
-
 function clearfyp() {
     document.getElementById('email-fyp').value = "";
     document.getElementById('fyp-message').innerText = "";
     document.getElementById('fyp-error').innerText = "";
 }
 
-
-
 function hideMenus()
 {
     document.getElementById("submenu-settings").style.display = "none";
     document.getElementById("submenu-notifications").style.display = "none";
 }
-
 
 function toggleHelpEcts() {
     $('.help-ects').slideToggle(450).css('display', 'inline-block');

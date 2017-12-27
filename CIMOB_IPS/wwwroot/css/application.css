@@ -9,12 +9,17 @@
 }
 
 .application-form {
-    width:90%;
-    margin-left:5%;
+    width:80%;
+    margin-left:10%;
     margin-top: 5%;
     padding-top: 4%;
     position: relative;
 }
+
+.application-form p {
+    font-size: 1.1vmax;
+}
+
 
 .application-form table {
     margin-left: 0.5%;
@@ -40,7 +45,7 @@
 
 
 textarea {
-    width: 42vw;
+    width: 38.5vw;
     padding: 1% 2%;
     display: inline-block;
     border: 1px solid #ccc;
@@ -67,7 +72,7 @@ textarea {
 
 .application-form-pager{
     margin-top:5%;
-    margin-left:69%;
+    margin-left:65.4%;
     padding-bottom:2%;
     position:relative;
 }
@@ -113,4 +118,23 @@ legend {
 .disabled-input {
     background-color: #ddd;
     pointer-events: none;
+}
+
+.application-form-pager a, .application-form-pager a:visited, .application-form-pager a:link, .application-form-pager a:active {
+    background-color: #222222;
+    border-radius: 3%;
+    border: 0.7px solid #222222;
+    color: #f1f1f1;
+    padding: 2%;
+    font-size: 1vmax;
+    width: 6.5vw;
+    display: inline-block;
+    text-align:center;
+    text-decoration:none;
+}
+
+
+.application-form-pager a:hover {
+    background-color: var(--blue-var4);
+    cursor: pointer;
 }

@@ -31,14 +31,16 @@ namespace CIMOB_IPS.Controllers
                 }
             }
 
-            
             return 0;
         }
 
-    public int GetCurrentUserID(ClaimsPrincipal user)
-    {
-        return int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-    }
+        public int GetCurrentUserID(ClaimsPrincipal user)
+        {
+            return int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+        }
+
+
+
 
 
     }
