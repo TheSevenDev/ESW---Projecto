@@ -12,32 +12,35 @@
 <!--ALTERAR-->
 <button type="button" onclick="location.href='@Url.Action("MyApplications", "Application")'" >Ver Programas</button>
 
-<div class="main-container-pendingtech">
-    <!--Programa, instituicao, data de candidatura?, -->
-    <table style="margin: 0 auto;">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FinalEvaluation)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.IdStateNavigation.Description)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+@if (Model.Count() == 0)
+{
+    <p>Não existem candidaturas efectuadas!</p>
+}
+else
+{
+    @foreach (var item in Model)
+    {
+        <h4>@Html.DisplayNameFor(model => item.IdProgramNavigation) @Html.DisplayFor(modelItem => item.IdProgramNavigation.Name)</h4>
+
+        <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
+        <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
+        <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
+        <ul>
+            @foreach (var institution in item.ApplicationInstitutions)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FinalEvaluation)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
-                    </td>
-                </tr>
+                <li>
+                    @Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)
+                </li>
             }
-        </tbody>
-    </table>
-</div>
+        </ul>
+
+        @if (item.FinalEvaluation == 0)
+        {
+            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> N/A</p>
+        }
+        else
+        {
+            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> @Html.DisplayFor(modelItem => item.FinalEvaluation)</p>
+        }
+    }
+}

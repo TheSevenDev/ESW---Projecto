@@ -7,7 +7,6 @@ namespace CIMOB_IPS.Models
     {
         public long IdMobility { get; set; }
         public long IdApplication { get; set; }
-        public long IdProgram { get; set; }
         public long IdState { get; set; }
         public long IdResponsibleTechnician { get; set; }
         public long IdOutgoingInstitution { get; set; }
@@ -16,7 +15,6 @@ namespace CIMOB_IPS.Models
 
         public Application IdApplicationNavigation { get; set; }
         public Institution IdOutgoingInstitutionNavigation { get; set; }
-        public Program IdProgramNavigation { get; set; }
         public Technician IdResponsibleTechnicianNavigation { get; set; }
     }
 }

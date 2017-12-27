@@ -113,6 +113,8 @@ namespace CIMOB_IPS.Controllers
             {
                 var lisApplications = await context.Application.Where(a => a.IdStudent == lngCurrentUserId)
                     .Include(a => a.IdStateNavigation)
+                    .Include(a => a.IdProgramNavigation)
+                    .Include(a => a.ApplicationInstitutions)
                     .ToListAsync();
 
                 return View(lisApplications);

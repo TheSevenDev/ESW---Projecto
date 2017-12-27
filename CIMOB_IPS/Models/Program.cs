@@ -7,8 +7,8 @@ namespace CIMOB_IPS.Models
     {
         public Program()
         {
+            Application = new HashSet<Application>();
             InstitutionProgram = new HashSet<InstitutionProgram>();
-            Mobility = new HashSet<Mobility>();
         }
 
         public long IdProgram { get; set; }
@@ -16,9 +16,10 @@ namespace CIMOB_IPS.Models
         public DateTime CreationDate { get; set; }
         public DateTime? OpenDate { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public string Name { get; set; }
 
         public State IdStateNavigation { get; set; }
+        public ICollection<Application> Application { get; set; }
         public ICollection<InstitutionProgram> InstitutionProgram { get; set; }
-        public ICollection<Mobility> Mobility { get; set; }
     }
 }
