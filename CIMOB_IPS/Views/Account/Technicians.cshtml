@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <div class="main-container-invite" id="invite-tech" style="display: @ViewData["invite-tech-display"]">
-    <img id="invite-tech-close" src="~/images/icons/error.png" onclick="javascript: closeInviteTech();" />
+    <img id="invite-tech-close" src="~/images/icons/error.png" onclick="javascript: closeInviteTech();" draggable="false"/>
     <h2 class="title-invite-tech">Convidar um Técnico</h2>
     <form asp-action="InviteTec" class="invite-form" method="post">
         <table>
@@ -28,7 +28,7 @@
 @if (Model.PendingAccounts != null && Model.PendingAccounts.Count > 0)
 {
     <h2 class="page-title" style="margin-top:2%;">Convites Pendentes</h2>
-    <img class="add-technician" src="~/images/icons/001-plus-symbol-in-a-rounded-black-square_black.png" title="Adicionar um Técnico" onclick="javascript: openInviteTech();" />
+    <img class="add-technician" src="~/images/icons/001-plus-symbol-in-a-rounded-black-square_black.png" title="Adicionar um Técnico" onclick="javascript: openInviteTech();" draggable="false" />
     @Html.Partial("_PendingAccounts", Model.PendingAccounts)
 }
 

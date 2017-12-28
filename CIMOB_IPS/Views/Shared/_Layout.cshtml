@@ -66,14 +66,14 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
-                <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" />
+                <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" draggable="false" />
+                <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" draggable="false" />
 
-                <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();" />
+                <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();"  draggable="false"/>
             }
             else
             {
-                <img class="option-button" id="help" style="margin-right: 1vw;" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" />
+                <img class="option-button" id="help" style="margin-right: 1vw;" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" draggable="false"/>
             }
 
         </div>
@@ -96,7 +96,7 @@
         @await Html.PartialAsync("_Notifications.cshtml")
     </nav>
     <div id="fade-background" onclick="javascript: toogleHelp();"></div>
-    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />
+    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" draggable="false" />
     <div id="help-content">
         @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
