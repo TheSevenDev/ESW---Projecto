@@ -11,6 +11,7 @@ namespace CIMOB_IPS.Models
         public bool ReadNotification { get; set; }
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
+        public DateTime NotificationDate { get; set; }
 
         public Account IdAccountNavigation { get; set; }
     }

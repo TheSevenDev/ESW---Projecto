@@ -28,10 +28,14 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityDate { get; set; }
 
-        [Display(Name = "Programa")]
-        public string Name { get; set; }
         public int Vacancies { get; set; }
 
+        public long IdProgramType { get; set; }
+
+        [Display(Name = "Programa")]
+        public ProgramType IdProgramTypeNavigation { get; set; }
+
+        [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
         public ICollection<Application> Application { get; set; }
         public ICollection<InstitutionProgram> InstitutionProgram { get; set; }

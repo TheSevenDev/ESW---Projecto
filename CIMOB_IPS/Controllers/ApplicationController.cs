@@ -166,6 +166,8 @@ namespace CIMOB_IPS.Controllers
                 {
                     app.ApplicationInstitutions = await context.ApplicationInstitutions
                         .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).ToListAsync();
+
+                    app.IdProgramNavigation.IdProgramTypeNavigation = await context.ProgramType.Where(p => p.IdProgramType == app.IdProgramNavigation.IdProgramType).SingleOrDefaultAsync();
                 }
 
                 return View(lisApplications);

@@ -10,15 +10,15 @@
 <div class="programs-display">
 
     @*
-        @foreach (var item in Model)
-        {
-            <h4>@Html.DisplayNameFor(model => item.Name) @Html.DisplayFor(model => item.Name)</h4>
-            <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
-            <p><b>@Html.DisplayNameFor(modelItem => item.OpenDate): </b>@Html.DisplayFor(modelItem => item.OpenDate)</p>
-            <p><b>@Html.DisplayNameFor(modelItem => item.ClosingDate): </b>@Html.DisplayFor(modelItem => item.ClosingDate)</p>
-            <p><b>@Html.DisplayNameFor(modelItem => item.MobilityDate): </b>@Html.DisplayFor(modelItem => item.MobilityDate)</p>
-            <p><b>@Html.DisplayNameFor(modelItem => item.Vacancies): </b>@Html.DisplayFor(modelItem => item.Vacancies)</p>
-        }
+    @foreach (var item in Model)
+    {
+        <h4>@Html.DisplayNameFor(model => item.IdProgramTypeNavigation) @Html.DisplayFor(model => item.IdProgramTypeNavigation.Name)</h4>
+        <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
+        <p><b>@Html.DisplayNameFor(modelItem => item.OpenDate): </b>@Html.DisplayFor(modelItem => item.OpenDate)</p>
+        <p><b>@Html.DisplayNameFor(modelItem => item.ClosingDate): </b>@Html.DisplayFor(modelItem => item.ClosingDate)</p>
+        <p><b>@Html.DisplayNameFor(modelItem => item.MobilityDate): </b>@Html.DisplayFor(modelItem => item.MobilityDate)</p>
+        <p><b>@Html.DisplayNameFor(modelItem => item.Vacancies): </b>@Html.DisplayFor(modelItem => item.Vacancies)</p>
+    }
     *@
 
 

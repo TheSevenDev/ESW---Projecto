@@ -14,6 +14,7 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Help> Help { get; set; }
         public virtual DbSet<Institution> Institution { get; set; }
         public virtual DbSet<ApplicationInstitutions> ApplicationInstitutions { get; set; }
+        public virtual DbSet<ProgramType> ProgramType { get; set; }
         public virtual DbSet<InstitutionProgram> InstitutionProgram { get; set; }
         public virtual DbSet<Mobility> Mobility { get; set; }
         public virtual DbSet<Nationality> Nationality { get; set; }
@@ -97,7 +98,7 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.MotivationCard)
                     .IsRequired()
                     .HasColumnName("motivation_card")
-                    .HasMaxLength(255);
+                    .HasMaxLength(1024);
 
                 entity.HasOne(d => d.IdStateNavigation)
                     .WithMany(p => p.Application)
@@ -228,6 +229,8 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdNationality)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_I_Nationality");
+
+                entity.Property(e => e.Hyperlink).HasColumnName("hyperlink");
             });
 
             modelBuilder.Entity<InstitutionProgram>(entity =>
@@ -331,6 +334,10 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.ReadNotification).HasColumnName("read_notification");
 
+                entity.Property(e => e.NotificationDate)
+                    .HasColumnName("notification_date")
+                    .HasColumnType("date");
+
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Notification)
                     .HasForeignKey(d => d.IdAccount)
@@ -391,9 +398,34 @@ namespace CIMOB_IPS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_P_State");
 
-                entity.Property(e => e.Name).HasColumnName("name");
-
                 entity.Property(e => e.Vacancies).HasColumnName("vacancies");
+
+                entity.Property(e => e.IdProgramType).HasColumnName("id_program_type");
+
+                entity.HasOne(d => d.IdProgramTypeNavigation)
+                                    .WithMany(p => p.Program)
+                                    .HasForeignKey(d => d.IdProgramType)
+                                    .OnDelete(DeleteBehavior.ClientSetNull)
+                                    .HasConstraintName("fk_P_PT");
+            });
+
+            modelBuilder.Entity<ProgramType>(entity =>
+            {
+                entity.HasKey(e => e.IdProgramType);
+
+                entity.ToTable("Program_Type");
+
+                entity.Property(e => e.IdProgramType).HasColumnName("id_program_type");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasColumnName("description")
+                    .HasMaxLength(512);
+
+                entity.Property(e => e.Name)
+                    .IsRequired()
+                    .HasColumnName("name")
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<State>(entity =>

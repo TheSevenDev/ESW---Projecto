@@ -23,7 +23,7 @@
     {
         @foreach (var item in Model)
         {
-            <h4>@Html.DisplayNameFor(model => item.IdProgramNavigation) @Html.DisplayFor(modelItem => item.IdProgramNavigation.Name)</h4>
+            <h4>@Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</h4>
 
             <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
             <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
