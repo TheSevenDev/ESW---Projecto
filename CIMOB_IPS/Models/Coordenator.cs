@@ -11,6 +11,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nome")]
         public string Name { get; set; }
 
+        [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
 

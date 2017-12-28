@@ -381,6 +381,10 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("open_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.MobilityDate)
+                    .HasColumnName("mobility_date")
+                    .HasColumnType("date");
+
                 entity.HasOne(d => d.IdStateNavigation)
                     .WithMany(p => p.Program)
                     .HasForeignKey(d => d.IdState)
