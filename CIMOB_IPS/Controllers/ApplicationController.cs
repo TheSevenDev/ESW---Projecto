@@ -34,7 +34,7 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             ViewData["app_form"] = "NewApplication";
-            ViewData["submit_form"] = "NewApplication";
+            ViewData["submit_form"] = "NewApplicationMob";
             ApplicationViewModel viewModel = new ApplicationViewModel { Student = new Student(), Account = new Account(), Application = new Application() };
 
             int userID = GetCurrentUserID();
@@ -67,7 +67,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpPost]
-        public IActionResult NewApplication(ApplicationViewModel model)
+        public IActionResult NewApplicationMob(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -77,6 +77,11 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["app_form"] = "NewApplication_Mob";
             ViewData["submit_form"] = "NewApplicationMotiv";
+
+            var institutions = _context.Institution;
+
+            model.Institutions = institutions.ToList();
+
 
             return View("New", model);
         }

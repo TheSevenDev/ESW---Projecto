@@ -1,11 +1,11 @@
 ﻿@model CIMOB_IPS.Models.ViewModels.ApplicationViewModel
-
 <script>
-    function myConfirmation() {
-        return "";
-    }
-
-    window.onbeforeunload = myConfirmation;
+    var limit = 3;
+    $('input.single-checkbox').on('change', function (evt) {
+        if ($("input[name='institution']:checked").length > limit) {
+            this.checked = false;
+        }
+    });
 </script>
 
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
@@ -80,7 +80,18 @@
                 <table style="width:100%;">
                     <tr></tr>
                     <tr><td><label>Indique as 3 instituições a que se candidata.</label></td></tr>
-                    <tr><td><label style="margin-left:5%;font-weight:600;">Atenção: A ordem das instituições atribui uma ordem de preferência.</label> </td></tr>
+                    <tr><td><label style="margin-left:5%;font-weight:600;font-size:1vmax">Atenção: A ordem das instituições atribui uma ordem de preferência.</label> </td></tr>
+                    <tr><td>
+                    <div style="margin-left:30%;margin-top:5%;">
+                      <span>Instituições Disponíveis</span><br />
+                      @foreach (var inst in Model.Institutions)
+                      {
+                         <br /><input type="checkbox" class="single-checkbox" name="institution" value="@inst.IdInstitution" /> @inst.Name
+                      }  
+                    
+                    </div>
+                        
+                        </td></tr>                   
                 </table>
             </fieldset>
         }
