@@ -141,3 +141,61 @@ legend {
     cursor: pointer;
     border: 0.7px solid var(--blue-var4);
 }
+
+
+.box-available-inst {
+    margin-left: 12%;
+    width: 65%;
+    min-height: 10vw;
+}
+
+.box-chosen-inst {
+    margin-left: 12%;
+    width: 65%;
+    min-height: 10vw;
+}
+
+.box-chosen-inst ul {
+    width: 88%;
+    margin:0;
+}
+
+.available-inst {
+    display: block;
+    border: 1px solid #CCC;
+    text-align: left;
+    border-radius: 0.2vw;
+    opacity: 1;
+    margin-top: 0.8%;
+    color: #222222;
+    cursor: default;
+    font-size: 1.25vmax;
+
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.available-inst:hover {
+    background-color: var(--blue-var5);
+    cursor: default;
+}
+
+.connected  {
+    margin-top:0;
+}
+
+.connected li {
+    border: 1px solid #CCC;
+    background: #F6F6F6;
+    color: var(--blue-var2);
+    padding: 0.4vw;
+}
+
+li.sortable-placeholder {
+    border: 1px dashed #CCC;
+    background: none;
+}

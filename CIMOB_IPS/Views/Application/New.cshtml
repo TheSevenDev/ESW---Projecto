@@ -1,19 +1,18 @@
 ﻿@model CIMOB_IPS.Models.ViewModels.ApplicationViewModel
-<script>
-    var limit = 3;
-    $('input.single-checkbox').on('change', function (evt) {
-        if ($("input[name='institution']:checked").length > limit) {
-            this.checked = false;
-        }
-    });
-</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="~/js/sortableList.js"></script>
+
+
+
+
 
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
 <p class="page-title">Nova Candidatura - Erasmus+</p>
 
 <div class="main-application-container">
-    <form asp-action="@ViewData["submit_form"]" method="post" class="application-form" >
+    <form asp-action="@ViewData["submit_form"]" method="post" class="application-form">
         @if ((string)ViewData["app_form"] == "NewApplication")
         {
             <fieldset style="margin-top:3%">
@@ -24,7 +23,7 @@
                     <tr> <td><label asp-for="Student.Name"></label></td></tr>
                     <tr> <td><input asp-for="Student.Name" type="text" readonly class="disabled-input" /></td></tr>
                     <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
-                    
+
 
                     <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
                     <tr> <td><input asp-for="Student.Telephone" type="text" readonly class="disabled-input" /></td></tr>
@@ -34,19 +33,8 @@
                     <tr> <td><input asp-for="Account.Email" type="text" readonly class="disabled-input" /></td></tr>
                     <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
 
-                    <!--DATA DE NASCIMENTO ? _ ?
-                    <tr> <td><label asp-for="Student."></label></td></tr>
-                    <tr> <td><input asp-for="Student.Email" type="text" /></td></tr>
-                    <tr> <td><span asp-validation-for="Student.Email" class="error-message"></span></td></tr>
-                    -->
-                    <!--GÉNERO ? _ ?
-                    <tr> <td><label asp-for="Student."></label></td></tr>
-                    <tr> <td><input asp-for="Student.Email" type="text" /></td></tr>
-                    <tr> <td><span asp-validation-for="Student.Email" class="error-message"></span></td></tr>
-                    -->
-
                     <tr> <td><label>Nacionalidade: </label></td></tr>
-                    <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @disabled = "disabled" , @class = "disabled-input" })</td></tr>
+                    <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @disabled = "disabled", @class = "disabled-input" })</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Address"></label></td></tr>
@@ -59,23 +47,38 @@
                 <legend>Contacto em caso de emergência</legend>
                 <table style="margin-left:11%">
                     <tr> <td><label asp-for="Application.EmergencyContactName"></label></td></tr>
-                    <tr> <td><div class="on-focus clearfix" ><input asp-for="Application.EmergencyContactName" type="text" />
-                                 <div class="tool-tip slideIn right">Insira o nome completo do contacto de emergência</div>
-                         </div></td></tr>
+                    <tr>
+                        <td>
+                            <div class="on-focus clearfix">
+                                <input asp-for="Application.EmergencyContactName" type="text" />
+                                <div class="tool-tip slideIn right">Insira o nome completo do contacto de emergência</div>
+                            </div>
+                        </td>
+                    </tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactName" class="error-message"></span></td></tr>
 
 
 
                     <tr> <td><label asp-for="Application.EmergencyContactRelation"></label></td></tr>
-                    <tr> <td><div class="on-focus clearfix"><input asp-for="Application.EmergencyContactRelation" type="text" />
-                                 <div class="tool-tip slideIn right">Insira o grau de parentesco do contacto de emergência</div>
-                         </div></td></tr>
+                    <tr>
+                        <td>
+                            <div class="on-focus clearfix">
+                                <input asp-for="Application.EmergencyContactRelation" type="text" />
+                                <div class="tool-tip slideIn right">Insira o grau de parentesco do contacto de emergência</div>
+                            </div>
+                        </td>
+                    </tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactRelation" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Application.EmergencyContactTelephone"></label></td></tr>
-                    <tr> <td><div class="on-focus clearfix"><input asp-for="Application.EmergencyContactTelephone" type="text" />
-                        <div class="tool-tip slideIn right">Insira o número de telefone de parentesco do contacto de emergência</div>
-                        </div></td></tr>
+                    <tr>
+                        <td>
+                            <div class="on-focus clearfix">
+                                <input asp-for="Application.EmergencyContactTelephone" type="text" />
+                                <div class="tool-tip slideIn right">Insira o número de telefone de parentesco do contacto de emergência</div>
+                            </div>
+                        </td>
+                    </tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactTelephone" class="error-message"></span></td></tr>
                 </table>
             </fieldset>
@@ -87,25 +90,37 @@
                 <table>
                     <tr>
                         <td><label asp-for="Application.HasScholarship"></label></td>
-                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "Sim") <label> Sim</label></td>
-                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "Não") <label> Não</label></td>
+                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "false") <label> Não</label></td>
+                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "true") <label> Sim</label></td>
                     </tr>
                 </table>
                 <table style="width:100%;">
                     <tr></tr>
-                    <tr><td><label>Indique as 3 instituições a que se candidata.</label></td></tr>
+                    <tr><td><label>Seleccione as 3 instituições a que se candidata.</label></td></tr>
                     <tr><td><label style="margin-left:5%;font-weight:600;font-size:1vmax">Atenção: A ordem das instituições atribui uma ordem de preferência.</label> </td></tr>
-                    <tr><td>
-                    <div style="margin-left:30%;margin-top:5%;">
-                      <span>Instituições Disponíveis</span><br />
-                      @foreach (var inst in Model.Institutions)
-                      {
-                         <br /><input type="checkbox" class="single-checkbox" name="institution" value="@inst.IdInstitution" /> <a href="asdasdasd" target="_blank" >@inst.Name</a>@*LINKS PARA AS INSTITUIÇOES*@
-                      }  
-                    
-                    </div>
-                        
-                        </td></tr>                   
+                    <tr>
+                        <td>
+                            <section id="connected" style="margin-top:2.5%;">
+                                <span style="margin-left:30%">Instituições Disponíveis</span>
+                                <div class="box-available-inst">
+                                    <ul class="connected">
+                                        @foreach (var inst in Model.Institutions)
+                                        {
+                                            <li class="available-inst">@inst.Name  </li>             @*LINKS PARA AS INSTITUIÇOES*@
+                                        }
+                                    </ul>
+                                </div>
+
+                                <span style="margin-left:30%;">Instituições Escolhidas</span>
+                                <div class="box-chosen-inst" >
+                                    <ul class="connected">
+                                        &nbsp;
+                                    </ul>
+
+                                </div>
+                            </section>
+                        </td>
+                    </tr>
                 </table>
             </fieldset>
         }
@@ -117,7 +132,7 @@
                 <p style="width:100%;text-align:center;">Indique as suas motivações para participar no Programa de Mobilidade</p>
                 <p style="width:100%;text-align:center;">Este é um dos elementos de avaliação da sua candidatura</p>
                 <table>
-                    <tr><td><textarea asp-for="Application.MotivationCard" style="resize:none;" cols="75" rows="35"></textarea></td></tr>
+                    <tr><td><textarea asp-for="Application.MotivationCard" style="resize:none;" cols="75" rows="35" maxlength="1024"></textarea></td></tr>
                     <tr> <td><span asp-validation-for="Application.MotivationCard" class="error-message"></span></td></tr>
                 </table>
             </fieldset>
@@ -160,3 +175,13 @@
     </form>
 </div>
 
+
+
+
+
+<script>
+    $('.sortable').sortable();
+    $('.connected').sortable({
+        connectWith: '.connected'
+    });
+</script>

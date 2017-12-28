@@ -115,6 +115,17 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
+            Application app = new Application
+            {
+                ApplicationDate = DateTime.Now,
+
+
+            };
+
+            
+            _context.Application.Add(app);
+
+
            
             return View("New", model);
         }

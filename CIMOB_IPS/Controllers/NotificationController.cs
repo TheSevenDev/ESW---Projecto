@@ -37,7 +37,6 @@ namespace CIMOB_IPS.Controllers
         public int GetCurrentUserID(ClaimsPrincipal user)
         {
             return int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            //return int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
 

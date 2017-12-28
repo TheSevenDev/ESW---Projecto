@@ -10,6 +10,7 @@ namespace CIMOB_IPS.Models
         {
             ApplicationInstitutions = new HashSet<ApplicationInstitutions>();
             Mobility = new HashSet<Mobility>();
+            HasScholarship = false;
         }
 
         public long IdApplication { get; set; }
