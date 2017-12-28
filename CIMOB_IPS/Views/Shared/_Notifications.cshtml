@@ -1,0 +1,12 @@
+﻿@{ 
+    NotificationController nc = new NotificationController();
+}
+
+<div class="notifications" id="submenu-notifications">
+    <ul>
+        @foreach (var not in nc.GetNotifications(User))
+        {
+            <li> <a asp-area="" asp-controller="@not.ControllerName" asp-action="@not.ActionName">@not.Description</a> </li>
+        }
+    </ul>
+</div>

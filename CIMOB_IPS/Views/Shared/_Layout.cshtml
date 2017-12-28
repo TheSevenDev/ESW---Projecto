@@ -79,9 +79,7 @@
         </div>
         @if (User.Identity.IsAuthenticated)
         {
-            <div id="notificationsCount">
-                @await Html.PartialAsync("/Views/Shared/Notification.cshtml")
-            </div>
+            @await Html.PartialAsync("_NotificationsCount.cshtml")
         }
         <div class="menu-settings" id="submenu-settings">
             <ul>
@@ -95,12 +93,7 @@
             </ul>
         </div>
 
-        <div class="notifications" id="submenu-notifications">
-            <ul>
-                <li> <a asp-area="" asp-controller="Home" asp-action="Index">SAMONASTANASTANASTaaI</a> </li>
-                <li> <a asp-area="" asp-controller="Home" asp-action="Index">Candidatura submetida a 16/11/2017</a> </li>
-            </ul>
-        </div>
+        @await Html.PartialAsync("_Notifications.cshtml")
     </nav>
     <div id="fade-background" onclick="javascript: toogleHelp();"></div>
     <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" />
@@ -109,7 +102,7 @@
     </div>
 
     <div class="body-panel" onclick="javascript: hideMenus();">
-        <img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.8vmax; opacity:0.7;" src="~/images/cimobips.png" />
+        <img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.8vmax; opacity:0.7;" draggable="false" src="~/images/cimobips.png" />
         @RenderBody()
     </div>
     <footer>

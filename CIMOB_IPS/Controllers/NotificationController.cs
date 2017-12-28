@@ -54,7 +54,32 @@ namespace CIMOB_IPS.Controllers
                 scmCommand.ExecuteNonQuery();
             }
 
-            return PartialView("~/views/Shared/Notification.cshtml", NotificationsCount(User).ToString());
+            return PartialView("~/Views/Shared/_Notifications.cshtml", NotificationsCount(User).ToString());
+        }
+
+        public List<Notification> GetNotifications(ClaimsPrincipal user)
+        {
+            List<Notification> list = new List<Notification>();
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                scnConnection.Open();
+                string strQuery = "Select * FROM Notification where id_account = @AccountId";
+
+                SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                scmCommand.Parameters.AddWithValue("@AccountId", GetCurrentUserID(user));
+
+                Notification aux = null;
+
+                SqlDataReader reader = scmCommand.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    aux = new Notification {IdNotification = (long)reader[0], IdAccount = (long)reader[1], Description = (string)reader[2], ReadNotification = (bool)reader[3], ControllerName = (string)reader[4], ActionName = (string)reader[5] }; // FALTA A DATA
+                    list.Add(aux);
+                }
+            }
+
+            return list;
         }
 
 

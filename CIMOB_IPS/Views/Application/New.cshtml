@@ -12,7 +12,7 @@
 <p class="page-title">Nova Candidatura - Erasmus+</p>
 
 <div class="main-application-container">
-    <form asp-action="@ViewData["submit_form"]" method="post" class="application-form">
+    <form asp-action="@ViewData["submit_form"]" method="post" class="application-form" >
         @if ((string)ViewData["app_form"] == "NewApplication")
         {
             <fieldset style="margin-top:3%">
@@ -46,6 +46,10 @@
                     <tr> <td><label>Nacionalidade: </label></td></tr>
                     <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @disabled = "disabled" , @class = "disabled-input" })</td></tr>
                     <tr> <td><span asp-validation-for="Student.IdNationality" class="error-message"></span></td></tr>
+
+                    <tr> <td><label asp-for="Student.Address"></label></td></tr>
+                    <tr> <td><input asp-for="Student.Address" type="text" readonly class="disabled-input" /></td></tr>
+                    <tr> <td><span asp-validation-for="Student.Address" class="error-message"></span></td></tr>
                 </table>
             </fieldset>
 
@@ -86,7 +90,7 @@
                       <span>Instituições Disponíveis</span><br />
                       @foreach (var inst in Model.Institutions)
                       {
-                         <br /><input type="checkbox" class="single-checkbox" name="institution" value="@inst.IdInstitution" /> @inst.Name
+                         <br /><input type="checkbox" class="single-checkbox" name="institution" value="@inst.IdInstitution" /> <a href="asdasdasd" target="_blank" >@inst.Name</a>@*LINKS PARA AS INSTITUIÇOES*@
                       }  
                     
                     </div>
@@ -127,7 +131,7 @@
                 @Html.ActionLink("< Anterior", "Application", "New", Model, null)
                 <input type="submit" style="width:2vw" value="1">
                 <input type="submit" style="width:2vw;background-color:var(--blue-var4);" value="2">
-                <input type="submit" style="width:2vw;" value="3" disabled="disabled">
+                <input type="submit" style="width:2vw;" value="3">
                 <input type="submit" value="Seguinte >">
             </div>
         }

@@ -1,22 +1,21 @@
 ﻿
 .programs-display {
     text-align: center;
-    margin-top: 3%;
-    margin-left: 21%;
+    margin-left: 15%;
     width: 100%;
     font-size: 1.1vmax;
 }
 
 .TitleDiv {
-    margin-left: 26%;
-    margin-top: 4%;
+    margin-left: 30%;
+    margin-top: 3%;
     margin-bottom: 7%;
 
 }
 
 .TitleDiv img {
-    width: 48vw;
-    height: 15vw;
+    width: 40vw;
+    height: 13vw;
     user-select: none;
 }
 
@@ -24,9 +23,9 @@
     background-color: white;
 }
 
-.programs-display button {
+.programs-display button  {
     height: 7%;
-    width: 40%;
+    width: 100%;
     margin-top: 2%;
     float: right;
     border: none;
@@ -39,12 +38,13 @@
 }
 
 .programs-display table img {
-    width: 40vw;
-    height: 10vw;
+    width: 25vw;
+    height: 8vw;
     user-select: none;
 }
 
 .programs-display button:hover {
     background-color: var(--blue-var4);
     cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
 }

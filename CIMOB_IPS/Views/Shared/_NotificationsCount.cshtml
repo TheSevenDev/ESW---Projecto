@@ -1,0 +1,11 @@
+﻿@{
+    NotificationController nc = new NotificationController();
+}
+
+
+<div id="notificationsCount">
+    @if (User.Identity.IsAuthenticated && nc.NotificationsCount(User) > 0)
+    {
+        <div class="notifications-count" onclick="javascript: toogleNotifications();">@nc.NotificationsCount(User)</div>
+    }
+</div>

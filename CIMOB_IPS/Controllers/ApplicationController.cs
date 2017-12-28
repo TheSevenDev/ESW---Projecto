@@ -47,6 +47,7 @@ namespace CIMOB_IPS.Controllers
                 viewModel.Student.Telephone = student.Telephone;
                 viewModel.Account.Email = GetEmail(userID);
                 viewModel.Student.IdNationality = student.IdNationality;
+                viewModel.Student.Address = student.Address;
             }
             else
                 viewModel = model;
@@ -66,7 +67,7 @@ namespace CIMOB_IPS.Controllers
             return _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
         }
 
-        [HttpPost]
+        
         public IActionResult NewApplicationMob(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
@@ -74,6 +75,9 @@ namespace CIMOB_IPS.Controllers
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
+
+            if (model.Student == null)
+                return RedirectToAction("New", "Application");
 
             ViewData["app_form"] = "NewApplication_Mob";
             ViewData["submit_form"] = "NewApplicationMotiv";
@@ -93,6 +97,9 @@ namespace CIMOB_IPS.Controllers
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
+
+            if (model.Student == null)
+                return RedirectToAction("New", "Application");
 
             ViewData["app_form"] = "NewApplication_Motiv";
             ViewData["submit_form"] = "RegisterApplication";
