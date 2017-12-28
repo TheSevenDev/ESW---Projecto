@@ -1,0 +1,102 @@
+﻿.tool-tip {
+    color: #fff;
+    background-color: var(--dark-grey);
+    text-shadow: none;
+    font-size: 1.0em;
+    visibility: hidden;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    text-align: center;
+    opacity: 0;
+    z-index: 999;
+    padding: 3px 8px;
+    position: relative;
+    cursor: default;
+    -webkit-transition: all 240ms ease-in-out;
+    -moz-transition: all 240ms ease-in-out;
+    -o-transition: all 240ms ease-in-out;
+    transition: all 240ms ease-in-out;
+}
+
+    .tool-tip,
+    .tool-tip.top {
+        top: auto;
+        bottom: 14%;
+        left: -20%;
+    }
+
+        .tool-tip.top:after,
+        .tool-tip:after {
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            margin-left: -7px;
+            content: ' ';
+            height: 0px;
+            width: 0px;
+            border: 6px solid transparent;
+            border-top-color: var(--dark-grey);
+        }
+
+        .tool-tip,
+        .tool-tip.top {
+            width: 50%;
+            height: 10%;
+            margin-left: -43px;
+        }
+
+            .tool-tip.right {
+                top: 50%;
+                right: auto;
+                left: 106%;
+                margin-top: -9%; /*Mudar altura */
+                margin-right: auto;
+                margin-left: auto;
+            }
+
+                .tool-tip.right:after {
+                    left: -5px;
+                    top: 50%;
+                    margin-top: -6px;
+                    bottom: auto;
+                    border-top-color: transparent;
+                    border-right-color: var(--dark-grey);
+                }
+
+.on-focus .tool-tip.left .on-focus .tool-tip.right {
+    margin-top: 0%;
+}
+
+*:not(.on-focus):hover > .tool-tip,
+.on-focus input:focus + .tool-tip {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: all 240ms ease-in-out;
+    -moz-transition: all 240ms ease-in-out;
+    -o-transition: all 240ms ease-in-out;
+    transition: all 240ms ease-in-out;
+}
+
+*:not(.on-focus) > .tool-tip.slideIn,
+.on-focus > .tool-tip {
+    display: block;
+}
+
+    .on-focus > .tool-tip.slideIn {
+        z-index: -1;
+    }
+
+.on-focus > input:focus + .tool-tip.slideIn {
+    z-index: 1;
+}
+
+*:not(.on-focus) > .tool-tip.slideIn.right,
+.on-focus > .tool-tip.slideIn.right {
+    left: 50%;
+}
+
+*:not(.on-focus):hover > .tool-tip.slideIn.right,
+.on-focus > input:focus + .tool-tip.slideIn.right {
+    left: 72%; /* ANDA PARA A DIREITA*/
+}
