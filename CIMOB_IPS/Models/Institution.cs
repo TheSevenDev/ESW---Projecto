@@ -16,6 +16,7 @@ namespace CIMOB_IPS.Models
         public long IdInstitution { get; set; }
         public string Name { get; set; }
         public long IdNationality { get; set; }
+        public string Hyperlink { get; set; }
 
         public Nationality IdNationalityNavigation { get; set; }
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }

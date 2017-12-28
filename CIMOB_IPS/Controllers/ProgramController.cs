@@ -15,6 +15,7 @@ namespace CIMOB_IPS.Controllers
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var programs = await context.Program
+                    .Include(p => p.IdProgramTypeNavigation)
                     .Include(p => p.IdStateNavigation)
                     .ToListAsync();
 
