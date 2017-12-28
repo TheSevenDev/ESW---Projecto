@@ -9,6 +9,7 @@
 </script>
 
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
 <p class="page-title">Nova Candidatura - Erasmus+</p>
 
 <div class="main-application-container">
@@ -23,6 +24,7 @@
                     <tr> <td><label asp-for="Student.Name"></label></td></tr>
                     <tr> <td><input asp-for="Student.Name" type="text" readonly class="disabled-input" /></td></tr>
                     <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
+                    
 
                     <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
                     <tr> <td><input asp-for="Student.Telephone" type="text" readonly class="disabled-input" /></td></tr>
@@ -53,15 +55,23 @@
                 <legend>Contacto em caso de emergência</legend>
                 <table style="margin-left:11%">
                     <tr> <td><label asp-for="Application.EmergencyContactName"></label></td></tr>
-                    <tr> <td><input asp-for="Application.EmergencyContactName" type="text" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix" ><input asp-for="Application.EmergencyContactName" type="text" />
+                                 <div class="tool-tip slideIn right">Insira o nome completo do contacto de emergência</div>
+                         </div></td></tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactName" class="error-message"></span></td></tr>
 
+
+
                     <tr> <td><label asp-for="Application.EmergencyContactRelation"></label></td></tr>
-                    <tr> <td><input asp-for="Application.EmergencyContactRelation" type="text" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix"><input asp-for="Application.EmergencyContactRelation" type="text" />
+                                 <div class="tool-tip slideIn right">Insira o grau de parentesco do contacto de emergência</div>
+                         </div></td></tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactRelation" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Application.EmergencyContactTelephone"></label></td></tr>
-                    <tr> <td><input asp-for="Application.EmergencyContactTelephone" type="text" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix"><input asp-for="Application.EmergencyContactTelephone" type="text" />
+                        <div class="tool-tip slideIn right">Insira o número de telefone de parentesco do contacto de emergência</div>
+                        </div></td></tr>
                     <tr> <td><span asp-validation-for="Application.EmergencyContactTelephone" class="error-message"></span></td></tr>
                 </table>
             </fieldset>
