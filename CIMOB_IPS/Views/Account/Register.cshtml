@@ -35,15 +35,27 @@
                     <tr> <td><input asp-for="Student.StudentNum" value="@ViewData["student-number"]" type="text" readonly class="disabled-input" /></td></tr>
 
                     <tr> <td><label asp-for="Student.Name"></label></td></tr>
-                    <tr> <td><input asp-for="Student.Name" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Student.Name" /> 
+                        <div class="tool-tip slideIn right">Insira o seu nome e apelido</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Student.Name" class="error-message"></span></td></tr>
 
+                    
+
+                        
                     <tr> <td><label asp-for="PasswordView"></label></td></tr>
-                    <tr> <td><input asp-for="PasswordView" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="PasswordView" />
+                        <div class="tool-tip slideIn right">Insira uma password</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="PasswordView" class="error-message"></span></td><tr>
 
                     <tr> <td><label asp-for="ConfirmPasswordView"></label></td></tr>
-                    <tr> <td><input asp-for="ConfirmPasswordView" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="ConfirmPasswordView" />
+                        <div class="tool-tip slideIn right">Confirme a password</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="ConfirmPasswordView" class="error-message"></span></td><tr>
 
                     <tr><td><label asp-for="Student.Gender" class="control-label"></label></td></tr>
@@ -67,15 +79,24 @@
                     <tr><td><span asp-validation-for="Student.Gender" class="error-message"></span></td></tr>
 
                     <tr><td><label asp-for="Student.BirthDate"></label></td></tr>
-                    <tr><td><input asp-for="Student.BirthDate"/></td></tr>
+                    <tr><td><div class="on-focus clearfix">
+                           <input asp-for="Student.BirthDate" />
+                        <div class="tool-tip slideIn right">Insira a sua data de nascimento</div>
+                    </div></td></tr>
                     <tr><td><span asp-validation-for="Student.BirthDate" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Cc"></label></td></tr>
-                    <tr> <td><input asp-for="Student.Cc" style="width: 15vw;"/></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Student.Cc" style="width: 15vw;" />
+                        <div class="tool-tip slideIn right">Insira o número de cartão de cidadão</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Student.Cc" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
-                    <tr> <td><input asp-for="Student.Telephone" style="width: 15vw;"/></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Student.Telephone" style="width: 15vw;" />
+                        <div class="tool-tip slideIn right">Insira o número de telefone</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Student.Address"></label></td></tr>
@@ -94,12 +115,15 @@
                         <td>
                             <label asp-for="Student.Credits"></label>
                             <img class="open-help-ects" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpEcts();" draggable="false"/>
-                            <div class="help-ects">Insira os créditos  obtidos até ao momento.<br />
+                            <div class="help-ects">Insira os créditos obtidos até ao momento.<br />
                                                    Clique <a target="_blank" href="https://www.ips.pt/ips_si/legislacao_geral.ver_legislacao?p_nr=27">aqui</a> para saber mais.</div>
                         </td>
                     </tr>
 
-                    <tr> <td><input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3.5vw;"  onkeydown="javascript: closeHelpEcts();"/> </td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Student.Credits" type="text" maxlength="3" style="width: 3.5vw;" onkeydown="javascript: closeHelpEcts();" />
+                        <div class="tool-tip slideIn right">Insira os créditos obtidos até ao momento</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Student.Credits" class="error-message"></span> </td> </tr>
                     <tr> <td><input type="submit" value="Registar" /></td> </tr>
                     <tr> </tr>
@@ -124,19 +148,31 @@
                     <tr> <td><input asp-for="EmailView" readonly value="@ViewData["technician-email"]" type="text" class="disabled-input"/></td></tr>
 
                     <tr> <td><label asp-for="PasswordView"></label></td></tr>
-                    <tr> <td><input asp-for="PasswordView" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="PasswordView" />
+                        <div class="tool-tip slideIn right">Insira uma password</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="PasswordView" class="error-message"></span></td><tr>
 
                     <tr> <td><label asp-for="ConfirmPasswordView"></label></td></tr>
-                    <tr> <td><input asp-for="ConfirmPasswordView" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="ConfirmPasswordView" />
+                        <div class="tool-tip slideIn right">Confirme a password</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="ConfirmPasswordView" class="error-message"></span></td><tr>
 
                     <tr> <td><label asp-for="Technician.Name"></label></td></tr>
-                    <tr> <td><input asp-for="Technician.Name" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Technician.Name" />
+                        <div class="tool-tip slideIn right">Insira o seu nome e apelido</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Technician.Name" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Technician.Telephone"></label></td></tr>
-                    <tr> <td><input asp-for="Technician.Telephone" type="text" /></td></tr>
+                    <tr> <td><div class="on-focus clearfix">
+                            <input asp-for="Technician.Telephone" type="text" />
+                        <div class="tool-tip slideIn right">Insira o número de telefone</div>
+                    </div></td></tr>
                     <tr> <td><span asp-validation-for="Technician.Telephone" class="error-message"></span></td></tr>
 
                     <tr> <td><label asp-for="Technician.IsAdmin"></label></td></tr>
