@@ -19,6 +19,8 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Descrição")]
         public string Description { get; set; }
 
+        public string ImageFile { get; set; }
+
         public ICollection<Program> Program { get; set; }
     }
 }

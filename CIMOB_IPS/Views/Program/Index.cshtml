@@ -9,18 +9,26 @@
 
 <div class="programs-display">
 
-    @*
+    
     @foreach (var item in Model)
     {
-        <h4>@Html.DisplayNameFor(model => item.IdProgramTypeNavigation) @Html.DisplayFor(model => item.IdProgramTypeNavigation.Name)</h4>
+        <h4>@Html.DisplayFor(model => item.IdProgramTypeNavigation.Name)</h4>
         <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
-        <p><b>@Html.DisplayNameFor(modelItem => item.OpenDate): </b>@Html.DisplayFor(modelItem => item.OpenDate)</p>
-        <p><b>@Html.DisplayNameFor(modelItem => item.ClosingDate): </b>@Html.DisplayFor(modelItem => item.ClosingDate)</p>
-        <p><b>@Html.DisplayNameFor(modelItem => item.MobilityDate): </b>@Html.DisplayFor(modelItem => item.MobilityDate)</p>
-        <p><b>@Html.DisplayNameFor(modelItem => item.Vacancies): </b>@Html.DisplayFor(modelItem => item.Vacancies)</p>
-    }
-    *@
+        @if (item.IdStateNavigation.Description == "Aberto")
+        {
+            <p><b>@Html.DisplayNameFor(modelItem => item.ClosingDate): </b>@Html.DisplayFor(modelItem => item.ClosingDate)</p>
+        }
+        else if (item.ClosingDate > DateTime.Today)
+        {
+            <p><b>@Html.DisplayNameFor(modelItem => item.OpenDate): </b>@Html.DisplayFor(modelItem => item.OpenDate)</p>
+        }
+        else
+        {
+            <p><b>Programa encerrado!</b></p>
+        }
 
+        <input type="button" value="Ver Informações" onclick="location.href='@Url.Action("Details", "Program" , new {programId = item.IdProgram})'" />
+    }
 
     <table style="width:60%; background-color:transparent">
         <tr>

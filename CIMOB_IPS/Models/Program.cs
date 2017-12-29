@@ -18,9 +18,11 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime CreationDate { get; set; }
 
+        [Display(Name = "Data de Abertura")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? OpenDate { get; set; }
 
+        [Display(Name = "Data de Fecho")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? ClosingDate { get; set; }
 
@@ -28,6 +30,7 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityDate { get; set; }
 
+        [Display(Name = "Vagas")]
         public int Vacancies { get; set; }
 
         public long IdProgramType { get; set; }
@@ -38,6 +41,8 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
         public ICollection<Application> Application { get; set; }
+
+        [Display(Name = "Instituições disponíveis para mobilidade")]
         public ICollection<InstitutionProgram> InstitutionProgram { get; set; }
     }
 }

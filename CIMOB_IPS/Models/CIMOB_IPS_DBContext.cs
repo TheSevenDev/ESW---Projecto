@@ -230,7 +230,10 @@ namespace CIMOB_IPS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_I_Nationality");
 
-                entity.Property(e => e.Hyperlink).HasColumnName("hyperlink");
+                entity.Property(e => e.Hyperlink)
+                    .IsRequired()
+                    .HasColumnName("hyperlink")
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<InstitutionProgram>(entity =>
@@ -426,6 +429,11 @@ namespace CIMOB_IPS.Models
                     .IsRequired()
                     .HasColumnName("name")
                     .HasMaxLength(50);
+
+                entity.Property(e => e.ImageFile)
+                    .IsRequired()
+                    .HasColumnName("image_file")
+                    .HasMaxLength(255);
             });
 
             modelBuilder.Entity<State>(entity =>
