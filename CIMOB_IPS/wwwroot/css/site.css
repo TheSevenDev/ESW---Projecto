@@ -817,3 +817,12 @@ footer {
     height: 2%;
     padding-left: 1em;
 }
+
+.tableContact{
+    border: 2.5px;
+}
+
+.tableContact td {
+    padding: 7px;
+    float:left none;
+}
