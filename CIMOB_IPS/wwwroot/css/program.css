@@ -34,6 +34,25 @@
     color: #f1f1f1;
 }
 
+.closed-program-btn {
+    width: 25% !important;
+    margin-top: 2%;
+    border: none;
+    background-color: grey !important;
+    border-radius: 3%;
+    border: 0.7px solid grey !important;
+    font-weight: bold;
+    font-size: 1vmax;
+    color: #f1f1f1;
+}
+
+    .closed-program-btn:hover {
+        cursor: initial !important;
+        border-radius: 3% !important;
+        border: 0.7px solid grey !important;
+    }
+
+
 .programs-display table img {
     width: 25vw;
     height: 8vw;
