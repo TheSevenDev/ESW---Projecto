@@ -88,11 +88,11 @@ textarea {
     display:inline-block;
 }
 
-    .application-form-pager input[type=submit]:hover:enabled {
-        background-color: var(--blue-var4);
-        cursor: pointer;
-        border: 0.7px solid var(--blue-var4);
-    }
+.application-form-pager input[type=submit]:hover:enabled {
+    background-color: var(--blue-var4);
+    cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
+}
 
 input[type=submit]:disabled {
     background-color: #AAAAAA;
@@ -198,4 +198,17 @@ legend {
 li.sortable-placeholder {
     border: 1px dashed #CCC;
     background: none;
+}
+
+.myApp-institutions {
+    margin-left:0;
+}
+
+.myApp-institutions li {
+    list-style: decimal;
+    border: 1px solid #CCC;
+    background: #F6F6F6;
+    color: var(--blue-var2);
+    width:30%;
+    cursor:default;
 }

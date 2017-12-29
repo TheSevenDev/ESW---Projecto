@@ -176,7 +176,7 @@ namespace CIMOB_IPS.Controllers
                 foreach(Application app in lisApplications)
                 {
                     app.ApplicationInstitutions = await context.ApplicationInstitutions
-                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).ToListAsync();
+                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).Where(i=>i.IdApplication == app.IdApplication).ToListAsync();
 
                     app.IdProgramNavigation.IdProgramTypeNavigation = await context.ProgramType.Where(p => p.IdProgramType == app.IdProgramNavigation.IdProgramType).SingleOrDefaultAsync();
                 }

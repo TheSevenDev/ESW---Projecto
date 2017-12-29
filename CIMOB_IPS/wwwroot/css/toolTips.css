@@ -2,7 +2,7 @@
     color: #fff;
     background-color: var(--dark-grey);
     text-shadow: none;
-    font-size: 1.0em;
+    font-size: 1.15vmax;
     visibility: hidden;
     -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
@@ -47,10 +47,11 @@
         }
 
             .tool-tip.right {
+                position:relative;
                 top: 50%;
                 right: auto;
-                left: 106%;
-                margin-top: -9%; /*Mudar altura */
+                left: 100%;
+                margin-top: -9%; 
                 margin-right: auto;
                 margin-left: auto;
             }

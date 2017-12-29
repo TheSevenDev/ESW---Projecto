@@ -18,7 +18,7 @@ namespace CIMOB_IPS.Models
         public long IdState { get; set; }
         public long? IdProgram { get; set; }
 
-        [Display(Name = "É Candidato a bolsa")]
+        [Display(Name = "Candidato a bolsa")]
         public bool HasScholarship { get; set; }
 
         [Display(Name = "Avaliação Final")]
@@ -44,7 +44,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Estado")]
         public State IdStateNavigation { get; set; }
 
-        [Display(Name = "Data de Candidatura")]
+        [Display(Name = "Submetida a")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime ApplicationDate { get; set; }
 
