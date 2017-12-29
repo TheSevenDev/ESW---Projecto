@@ -81,7 +81,10 @@ function clearfyp() {
 
 function hideMenus()
 {
-    document.getElementById("submenu-settings").style.display = "none";
+    if (document.getElementById("submenu-settings") !== null)
+        document.getElementById("submenu-settings").style.display = "none";
+
+    if (document.getElementById("submenu-notifications") !== null)
     document.getElementById("submenu-notifications").style.display = "none";
 }
 
