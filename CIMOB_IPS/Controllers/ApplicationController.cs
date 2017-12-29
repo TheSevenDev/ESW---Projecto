@@ -25,7 +25,7 @@ namespace CIMOB_IPS.Controllers
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
-        public IActionResult New(ApplicationViewModel model)
+        public async Task<IActionResult> New()
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -35,25 +35,25 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplicationMob";
-            ApplicationViewModel viewModel = new ApplicationViewModel { Student = new Student(), Account = new Account(), Application = new Application() };
+            
 
             int userID = GetCurrentUserID();
-            Student student = GetStudentById(userID);
 
+            ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = GetStudentById(userID) } };
+            viewModel.Account.Email = GetEmail(userID);
+            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1); 
 
-            if (model.Student == null)
+            foreach(var ip in program.InstitutionProgram)
             {
-                viewModel.Student.Name = student.Name;
-                viewModel.Student.Telephone = student.Telephone;
-                viewModel.Account.Email = GetEmail(userID);
-                viewModel.Student.IdNationality = student.IdNationality;
-                viewModel.Student.Address = student.Address;
+                ip.IdOutgoingInstitutionNavigation = await _context.Institution
+                    .Include(i => i.IdNationalityNavigation)
+                    .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
             }
-            else
-                viewModel = model;
 
 
+            viewModel.Institutions = program.InstitutionProgram.ToList();
             viewModel.Nationalities = PopulateNationalities();
+            viewModel.Application.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS
             return View(viewModel);
         }
 
@@ -67,53 +67,8 @@ namespace CIMOB_IPS.Controllers
             return _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
         }
 
-        
+      
         [HttpPost]
-        public async Task<IActionResult> NewApplicationMob(ApplicationViewModel model)
-        {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
-
-            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                return RedirectToAction("Index", "Home");
-
-            if (model.Student == null)
-                return RedirectToAction("New", "Application");
-
-            ViewData["app_form"] = "NewApplication_Mob";
-            ViewData["submit_form"] = "NewApplicationMotiv";
-
-            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1); //ERASMUS
-
-            foreach(var ip in program.InstitutionProgram)
-            {
-                ip.IdOutgoingInstitutionNavigation = await _context.Institution
-                    .Include(i => i.IdNationalityNavigation)
-                    .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
-            }
-
-            model.Institutions = program.InstitutionProgram.ToList();
-
-            return View("New", model);
-        }
-
-        public IActionResult NewApplicationMotiv(ApplicationViewModel model)
-        {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
-
-            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                return RedirectToAction("Index", "Home");
-
-            if (model.Student == null)
-                return RedirectToAction("New", "Application");
-
-            ViewData["app_form"] = "NewApplication_Motiv";
-            ViewData["submit_form"] = "RegisterApplication";
-
-            return View("New", model);
-        }
-
         public IActionResult RegisterApplication(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
@@ -122,19 +77,18 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
-            Application app = new Application
+
+            /*Application app = new Application
             {
                 ApplicationDate = DateTime.Now,
+                HasScholarship = model.Application.HasScholarship,
+            };*/
 
 
-            };
+            //_context.Application.Add(app);
 
+            return RedirectToAction("MyApplications", "Application");
             
-            _context.Application.Add(app);
-
-
-           
-            return View("New", model);
         }
 
         private IEnumerable<SelectListItem> PopulateNationalities()
