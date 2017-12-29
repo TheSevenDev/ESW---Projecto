@@ -106,7 +106,7 @@
                                     <ul class="connected">
                                         @foreach (var inst in Model.Institutions)
                                         {
-                                            <li class="available-inst">@inst.Name  </li>             @*LINKS PARA AS INSTITUIÇOES*@
+                                        <li class="available-inst">@inst.IdOutgoingInstitutionNavigation.Name (@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description) </li>             @*LINKS PARA AS INSTITUIÇOES*@
                                         }
                                     </ul>
                                 </div>

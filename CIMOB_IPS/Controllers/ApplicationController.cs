@@ -68,7 +68,8 @@ namespace CIMOB_IPS.Controllers
         }
 
         
-        public IActionResult NewApplicationMob(ApplicationViewModel model)
+        [HttpPost]
+        public async Task<IActionResult> NewApplicationMob(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -82,10 +83,16 @@ namespace CIMOB_IPS.Controllers
             ViewData["app_form"] = "NewApplication_Mob";
             ViewData["submit_form"] = "NewApplicationMotiv";
 
-            var institutions = _context.Institution;
+            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1); //ERASMUS
 
-            model.Institutions = institutions.ToList();
+            foreach(var ip in program.InstitutionProgram)
+            {
+                ip.IdOutgoingInstitutionNavigation = await _context.Institution
+                    .Include(i => i.IdNationalityNavigation)
+                    .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
+            }
 
+            model.Institutions = program.InstitutionProgram.ToList();
 
             return View("New", model);
         }

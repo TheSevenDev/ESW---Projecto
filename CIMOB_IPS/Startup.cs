@@ -14,18 +14,10 @@ namespace CIMOB_IPS
 {
     public class Startup
     {
-        //public static string connection = @"Data Source=esw-cimob-db.database.windows.net;Database=CIMOB_IPS_DB;
-        //        Integrated Security=False;User ID=adminUser; Password=f00n!l06;Connect Timeout=60;Encrypt=False;
-        //        TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
+       
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-            //Email.SendEmail("xthe.seven@gmail.com");
-            //Email.SendEmail("barb.97@hotmail.com");
-            //Email.SendEmail("brunop.esac@hotmail.com");
-            //Email.SendEmail("fernandes_.10@hotmail.com");
         }
 
         public IConfiguration Configuration { get; }
