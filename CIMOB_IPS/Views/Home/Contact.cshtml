@@ -37,10 +37,18 @@
 <div class="main-container-pendingtech">
     @foreach (var item in orderedTechnicians)
     {
-        <p>
-            <img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)<br />
-            <img src="~/images/email.png" class="icon-img" draggable="false"/> @Html.DisplayFor(model => item.IdAccountNavigation.Email)<br />
-            <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone) <br />
-        </p>
+        <table class="tableContact">
+            <tr style="background: none">
+                <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)</td>
+
+                <td>
+                    <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)
+                </td>
+                <td>
+                    <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)</td>
+
+
+</tr>
+        </table>
     }
 </div>

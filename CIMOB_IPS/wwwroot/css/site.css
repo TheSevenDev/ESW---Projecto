@@ -812,17 +812,13 @@ footer {
 
 
 /* CONTACT */
-.icon-img{
-    width: 2%;
-    height: 2%;
+.icon-img {
+    height: 14px;
+    width: 14px;
     padding-left: 1em;
-}
-
-.tableContact{
-    border: 2.5px;
 }
 
 .tableContact td {
     padding: 7px;
-    float:left none;
+    text-align:left;    
 }
