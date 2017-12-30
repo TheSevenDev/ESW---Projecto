@@ -24,6 +24,8 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Avaliação Final")]
         public short FinalEvaluation { get; set; }
 
+        [Required(ErrorMessage = "Preencha a carta de motivação.")]
+        [MinLength(40, ErrorMessage = "Insira, no mínimo, 40 caracteres.")]
         [Display(Name = "Carta de Motivação")]
         [DataType(DataType.MultilineText)]
         public string MotivationCard { get; set; }
