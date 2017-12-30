@@ -98,17 +98,17 @@
                                         &nbsp;
                                         @foreach (var inst in Model.Institutions)
                                         {
-                                        <li class="available-inst">@inst.IdOutgoingInstitutionNavigation.Name (@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description) </li>             @*LINKS PARA AS INSTITUIÇOES*@
+                                            <li class="available-inst">@inst.IdOutgoingInstitutionNavigation.Name (@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)
+                                                <input type="hidden" name="chosen-institutions" value="@inst.IdOutgoingInstitutionNavigation.IdInstitution"/></li>                                             
                                         }
                                     </ul>
                                 </div>
 
                                 <span style="margin-left:32.5%;font-size:1.15vmax;">Instituições Escolhidas</span>
                                 <div class="box-chosen-inst" >
-                                    <ul class="connected"style="width:88%; margin-left:0;" >
+                                    <ul class="connected"style="width:88%; margin-left:0;" runat="server" id="institutions-chosen">
                                         &nbsp;
                                     </ul>
-
                                 </div>
                             </section>
                         </td>

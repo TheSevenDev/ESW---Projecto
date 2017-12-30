@@ -19,5 +19,7 @@ namespace CIMOB_IPS.Models.ViewModels
         public IEnumerable<SelectListItem> Courses { get; set; }
 
         public IEnumerable<InstitutionProgram> Institutions { get; set; }
+
+        public long[] ChosenInstitutions { get; set; }
     }
 }

@@ -308,7 +308,7 @@ html, body {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     background-color: white;
     border-bottom: 1px solid lightgray;
-    height:4vh;
+    min-height:4vh;
     padding-top:3%;
 }
 

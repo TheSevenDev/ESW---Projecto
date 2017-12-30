@@ -8,6 +8,7 @@ using CIMOB_IPS.Models;
 using CIMOB_IPS.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.IO;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -33,14 +34,23 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
-            ViewData["app_form"] = "NewApplication";
-            ViewData["submit_form"] = "NewApplicationMob";
-            
-
             int userID = GetCurrentUserID();
 
-            ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = GetStudentById(userID) } };
+            Student student = GetStudentById(userID);
+            var app = _context.Application.Where(ap => ap.IdStudent == student.IdStudent);
+
+            if(app.Count() >= 3)
+              return RedirectToAction("Index", "Home");
+
+
+            ViewData["app_form"] = "NewApplication";
+            ViewData["submit_form"] = "NewApplicationMob";
+                
+
+            ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = student } };
             viewModel.Account.Email = GetEmail(userID);
+
+
             var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1); 
 
             foreach(var ip in program.InstitutionProgram)
@@ -53,7 +63,6 @@ namespace CIMOB_IPS.Controllers
 
             viewModel.Institutions = program.InstitutionProgram.ToList();
             viewModel.Nationalities = PopulateNationalities();
-            viewModel.Application.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS
             return View(viewModel);
         }
 
@@ -77,18 +86,39 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
+            Application app = model.Application;
+            app.IdProgramNavigation =  _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS
+            app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
+            app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
+            app.ApplicationDate = DateTime.Now;
 
-            /*Application app = new Application
-            {
-                ApplicationDate = DateTime.Now,
-                HasScholarship = model.Application.HasScholarship,
-            };*/
+
+            _context.Application.Add(model.Application);
+            _context.SaveChanges();
+
+            AddApplicationNotification();
 
 
-            //_context.Application.Add(app);
+            //var list = new HtmlGenericControl("div");
+
 
             return RedirectToAction("MyApplications", "Application");
             
+        }
+
+        private void AddApplicationNotification()
+        {
+            Notification not = new Notification
+            {
+                ReadNotification = false,
+                Description = "Candidatura a mobilidade submetida a " + DateTime.Now.ToString("dd/MM/yyyy"),
+                ControllerName = "Application",
+                ActionName = "MyApplications",
+                NotificationDate = DateTime.Now,
+                IdAccountNavigation = _context.Account.Where(a => a.IdAccount == GetCurrentUserID()).FirstOrDefault()
+            };
+            _context.Notification.Add(not);
+            _context.SaveChanges();
         }
 
         private IEnumerable<SelectListItem> PopulateNationalities()
