@@ -15,14 +15,21 @@
     <p>As candidaturas abrirão dia @Html.DisplayFor(model => model.OpenDate) às 00:00h.</p>
     <p>As candidaturas encerrarão dia @Html.DisplayFor(model => model.ClosingDate) às 23:59h.</p>
     <p>@Html.DisplayNameFor(model => model.IdStateNavigation): @Html.DisplayFor(model => model.IdStateNavigation.Description)</p>
-    <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
-    <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
-    <ul>
-        @foreach(var item in Model.InstitutionProgram)
-        {
-            <li>@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</li>
-        }
-    </ul>
+    
+    @if (Model.InstitutionProgram.Count > 0)
+    {
+        <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
+        <ul>
+            @foreach (var item in Model.InstitutionProgram)
+            {
+                <li>@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>Sem informações sobre as instituições associadas ao programa!</p>
+    }
 
     @if(!User.Identity.IsAuthenticated && Model.IdStateNavigation.Description == "Aberto")
     {
@@ -30,10 +37,12 @@
     }
     else if (Model.IdStateNavigation.Description == "Aberto" && Model.Vacancies > 0)
     {
+        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
         <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application" , new {appId = Model.IdProgram})'" />
     }
-    else if(Model.IdStateNavigation.Description == "Aberto")
+    else if (Model.IdStateNavigation.Description == "Aberto")
     {
+        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
         <p>Programa sem vagas disponíveis! Tente mais tarde ou consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
     }
     else
