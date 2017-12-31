@@ -31,9 +31,9 @@
                     <tr> <td> @Html.DropDownListFor(model => model.Application.IdStudentNavigation.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @readonly = "readonly", @class = "disabled-input" })</td></tr>
                     <tr> <td><span asp-validation-for="Application.IdStudentNavigation.IdNationality" class="error-message"></span></td></tr>
 
-                    <tr> <td><label asp-for="Application.IdStudentNavigation.Address"></label></td></tr>
-                    <tr> <td><input asp-for="Application.IdStudentNavigation.Address" type="text" readonly class="disabled-input" /></td></tr>
-                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.Address" class="error-message"></span></td></tr>
+                    <tr> <td><label asp-for="Application.IdStudentNavigation.PostalCode"></label></td></tr>
+                    <tr> <td><input asp-for="Application.IdStudentNavigation.PostalCode" type="text" readonly class="disabled-input" /></td></tr>
+                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.PostalCode" class="error-message"></span></td></tr>
                 </table>
             </fieldset>
 

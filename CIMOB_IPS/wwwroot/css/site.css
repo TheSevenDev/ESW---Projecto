@@ -884,3 +884,12 @@ footer {
     width: 14px;
     padding-left: 1em;
 }
+
+
+.signature-pad > canvas {
+    display: block;
+    width: 300px;
+    height: 150px;
+    margin-bottom: 5px;
+    border: 1px solid black;
+}

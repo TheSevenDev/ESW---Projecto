@@ -19,7 +19,6 @@ namespace XUnitCIMOB_IPS
             student.StudentNum = 150221066;
             student.IdCourse = 1;
             student.Name = "Estudante";
-            student.Address = "Morada";
             student.Cc = 15131610;
             student.Telephone = 911111111;
             student.IdNationality = 1;
@@ -35,7 +34,6 @@ namespace XUnitCIMOB_IPS
             Assert.Equal("Estudante", student.Name);
             Assert.Equal(150221066, student.StudentNum);
             Assert.Equal(1, student.IdCourse);
-            Assert.Equal("Morada", student.Address);
             Assert.Equal(911111111, student.Telephone);
             Assert.Equal(15131610, student.Cc);
             Assert.Equal(1, student.IdNationality);

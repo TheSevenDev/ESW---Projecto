@@ -67,7 +67,6 @@ function closeInviteTech() {
 
 function clearInviteTech() {
     document.getElementById('email-invite-tech').value = "";
-    //document.getElementById('isAdmin-invite-tech').value = false;
 
     document.getElementById('inviteTech-message').innerText = "";
     document.getElementById('inviteTech-error').innerText = "";
@@ -92,14 +91,31 @@ function toggleHelpEcts() {
     $('.help-ects').slideToggle(450).css('display', 'inline-block');
 }
 
+function toggleHelpPostal() {
+    $('.help-postal').slideToggle(450).css('display', 'inline-block');
+}
+
+function closeHelpPostal() {
+    $('.help-postal').fadeOut(550);
+}
+
 function closeHelpEcts() {
     $('.help-ects').fadeOut(550);
 }
 
+function clearAdresses() {
+    document.getElementById('county').value = "";
+    document.getElementById('district').value = "";
+    document.getElementById('parish').value = "";
+
+    document.getElementById('street').value = "";
+}
 
 function adressCode() {
 
-    //if(postal_code) MATHCES REGEX
+    clearAdresses();
+
+
     var code1 = document.getElementById('input-code1').value;
     var code2 = document.getElementById('input-code2').value;
 
@@ -125,10 +141,7 @@ function adressCode() {
 
                 $('Rua', response).each(function () {
                     var street = $(this).find('Designacao').first().text();                   
-                    if(street!=null)
                         document.getElementById('street').value = street;
-                    else
-                        document.getElementById('street').value = "";
 
                 });
             });

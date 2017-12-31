@@ -152,7 +152,6 @@ namespace CIMOB_IPS.Controllers
             long lngStudentNum = model.Student.StudentNum;
             string strName = model.Student.Name;
             long lngIdCourse = model.Student.IdCourse;
-            String strAddress = model.Student.Address;
             long lngCcNum = model.Student.Cc;
             long lngTelephone = model.Student.Telephone;
             long lngIdNationality = model.Student.IdNationality;
@@ -160,7 +159,7 @@ namespace CIMOB_IPS.Controllers
             DateTime dtBithDate = model.Student.BirthDate;
             string strGender = model.Student.Gender;
 
-            Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Address = strAddress, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum, BirthDate = dtBithDate, Gender = strGender };
+            Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum, BirthDate = dtBithDate, Gender = strGender };
 
             InsertStudent(student, strEmail);
 

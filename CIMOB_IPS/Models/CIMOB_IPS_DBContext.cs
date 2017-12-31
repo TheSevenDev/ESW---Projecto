@@ -455,11 +455,6 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdStudent).HasColumnName("id_student");
 
-                entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasColumnName("address")
-                    .HasMaxLength(255);
-
                 entity.Property(e => e.BirthDate)
                     .IsRequired()
                     .HasColumnName("birth_date")
@@ -490,6 +485,12 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.StudentNum).HasColumnName("student_num");
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
+
+                entity.Property(e => e.PostalCode)
+                    .IsRequired()
+                    .HasColumnName("postal_code")
+                    .HasMaxLength(8);
+
 
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Student)

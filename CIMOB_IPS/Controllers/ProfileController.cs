@@ -100,7 +100,7 @@ namespace CIMOB_IPS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProfileStudent([Bind("IdAccount, Name, Telephone, Credits, StudentNum, Address")] Student student)
+        public async Task<IActionResult> UpdateProfileStudent([Bind("IdAccount, Name, Telephone, Credits, StudentNum, PostalCode")] Student student)
         {
             if (GetCurrentUserID() != student.IdAccount)
                 return BadRequest();
@@ -117,7 +117,7 @@ namespace CIMOB_IPS.Controllers
                             return NotFound();
 
                         newStudent.Telephone = student.Telephone;
-                        newStudent.Address = student.Address;
+                        newStudent.PostalCode = student.PostalCode;
                         newStudent.StudentNum = student.StudentNum;
                         newStudent.Credits = student.Credits;
 

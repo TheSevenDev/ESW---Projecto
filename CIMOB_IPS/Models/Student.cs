@@ -29,11 +29,6 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Nome Completo:")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "A morada não está preenchida.")]
-        [StringLength(99, ErrorMessage = "A morada deverá conter no máximo 99 caracteres.")]
-        [Display(Name = "Morada:")]
-        public string Address { get; set; }
-
         [DataType(DataType.Text)]
         [Required(ErrorMessage = "O Cartão de Cidadão não está preenchido.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "O Cartão de Cidadão tem de ser expresso em algarismos.")]
@@ -65,6 +60,9 @@ namespace CIMOB_IPS.Models
         [DataType(DataType.Date)]
         [CheckDateRangeAttribute(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
         public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Código Postal:")]
+        public string PostalCode { get; set; }
 
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]
