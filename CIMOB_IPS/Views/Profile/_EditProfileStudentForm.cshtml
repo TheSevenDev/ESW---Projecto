@@ -23,10 +23,14 @@
             </td>
         </tr>
 
-        <tr> <td><input  asp-for="PostalCode1" id="input-code1"type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
-            &nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" /></td></tr>
-            <tr><td><span asp-validation-for="PostalCode1" class="error-message"></span></td></tr>
-            <tr><td><span asp-validation-for="PostalCode2" class="error-message"></span></td></tr>
+        <tr>
+            <td>
+                <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
+                &nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
+            </td>
+        </tr>
+        <tr><td><span asp-validation-for="PostalCode1" class="error-message"></span></td></tr>
+        <tr><td><span asp-validation-for="PostalCode2" class="error-message"></span></td></tr>
 
         <tr>
             <td>
