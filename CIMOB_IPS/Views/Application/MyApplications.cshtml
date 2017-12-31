@@ -21,7 +21,8 @@
 {
     <div class="main-application-container" style="padding:1vw;">
         <p>Não existem candidaturas submetidas!</p>
-        <button type="button" onclick="location.href='@Url.Action("Export", "Application")'" value="Download" />
+
+        @Html.Partial("_Signature", new Signature { })
     </div>
 }
 else

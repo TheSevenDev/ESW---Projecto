@@ -822,3 +822,11 @@ footer {
     padding: 7px;
     text-align:left;    
 }
+
+.signature-pad > canvas {
+    display: block;
+    width: 300px;
+    height: 150px;
+    margin-bottom: 5px;
+    border: 1px solid black;
+}
