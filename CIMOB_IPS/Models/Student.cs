@@ -66,6 +66,8 @@ namespace CIMOB_IPS.Models
         [CheckDateRangeAttribute(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
         public DateTime BirthDate { get; set; }
 
+        public string PostalCode { get; set; }
+
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }
