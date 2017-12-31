@@ -13,6 +13,7 @@ using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
+using Microsoft.AspNetCore.Http;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -232,8 +233,9 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return null;
 
-            var base64 = Convert.ToBase64String(signature.MySignature);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            var img = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(signature.MySignature));
+
+            Image image = Image.GetInstance(signature.MySignature);
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -252,8 +254,8 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade, ");
                 strbHtml.AppendLine("tendo o perfeito conhecimento dos regulamentos associados com o mesmo, bem como os meus deveres e direitos.</p>");
                 strbHtml.AppendLine("<br><br><br><p><b>O estudante</b></p><br><br>");
-                strbHtml.AppendLine("<img src='" + imgSrc + "' />");
-                strbHtml.AppendLine(DateTime.Now.ToString("dd") + " " + strMes + " de " + DateTime.Now.ToString("yyyy"));
+                //strbHtml.AppendLine("<img src='" + String.Format("data:image/gif;base64,{0}", Convert.ToBase64String(signature.MySignature)).Replace("/", "//") + "' />");
+                
 
                 MemoryStream ms = new MemoryStream();
                 TextReader txtReader = new StringReader(strbHtml.ToString());
@@ -272,6 +274,13 @@ namespace CIMOB_IPS.Controllers
                 htmlWorker.StartDocument();
 
                 // 5: parse the html into the document  
+                htmlWorker.Parse(txtReader);
+
+                doc.Add(image);
+
+                strbHtml = new StringBuilder();
+                strbHtml.AppendLine(DateTime.Now.ToString("dd") + " " + strMes + " de " + DateTime.Now.ToString("yyyy"));
+                txtReader = new StringReader(strbHtml.ToString());
                 htmlWorker.Parse(txtReader);
 
                 // 6: close the document and the worker  
