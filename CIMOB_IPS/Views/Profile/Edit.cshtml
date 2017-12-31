@@ -15,11 +15,11 @@
     <div style="margin-top: 30%;">
             @if (Model.AccountType == EnumAccountType.STUDENT)
             {
-                @Html.Partial("_EditProfileStudentForm", Model.Student)
+                @Html.Partial("_EditProfileStudentForm", Model)
             }
             else
             {
-                @Html.Partial("_EditProfileTechnicianForm", Model.Technician)
+                @Html.Partial("_EditProfileTechnicianForm", Model)
             }
     </div>
 </div>

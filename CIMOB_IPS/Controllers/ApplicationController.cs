@@ -68,6 +68,13 @@ namespace CIMOB_IPS.Controllers
 
             viewModel.Institutions = program.InstitutionProgram.ToList();
             viewModel.Nationalities = PopulateNationalities();
+
+            var postalCode = student.PostalCode;
+
+            viewModel.PostalCode1 = postalCode.Substring(0, 4);
+            viewModel.PostalCode2 = postalCode.Substring(5, 3);
+
+
             return View(viewModel);
         }
 

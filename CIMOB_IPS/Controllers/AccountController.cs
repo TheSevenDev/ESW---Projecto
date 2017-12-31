@@ -158,8 +158,21 @@ namespace CIMOB_IPS.Controllers
             int intCredits = model.Student.Credits;
             DateTime dtBithDate = model.Student.BirthDate;
             string strGender = model.Student.Gender;
+            string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
 
-            Student student = new Student { IdAccount = lngIdAccount, IdCourse = lngIdCourse, Name = strName, Cc = lngCcNum, Telephone = lngTelephone, IdNationality = lngIdNationality, Credits = intCredits, StudentNum = lngStudentNum, BirthDate = dtBithDate, Gender = strGender };
+            Student student = new Student {
+                IdAccount = lngIdAccount,
+                IdCourse = lngIdCourse,
+                Name = strName,
+                Cc = lngCcNum,
+                Telephone = lngTelephone,
+                IdNationality = lngIdNationality,
+                Credits = intCredits,
+                StudentNum = lngStudentNum,
+                BirthDate = dtBithDate,
+                Gender = strGender,
+                PostalCode = postalCode
+            };
 
             InsertStudent(student, strEmail);
 

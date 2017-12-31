@@ -31,9 +31,30 @@
                     <tr> <td> @Html.DropDownListFor(model => model.Application.IdStudentNavigation.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @readonly = "readonly", @class = "disabled-input" })</td></tr>
                     <tr> <td><span asp-validation-for="Application.IdStudentNavigation.IdNationality" class="error-message"></span></td></tr>
 
-                    <tr> <td><label asp-for="Application.IdStudentNavigation.PostalCode"></label></td></tr>
-                    <tr> <td><input asp-for="Application.IdStudentNavigation.PostalCode" type="text" readonly class="disabled-input" /></td></tr>
-                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.PostalCode" class="error-message"></span></td></tr>
+                    <tr>
+                        <td>
+                            <label>Código Postal</label>
+                        </td>
+                    </tr>
+                    <tr> <td><input asp-for="PostalCode1" id="input-code1" type="text" style="width:4.2vw;"readonly class="disabled-input"  />
+                        &nbsp;<label>-</label>&nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" readonly class="disabled-input" /></td></tr>
+
+                    <tr>
+                        <td>
+                            <label>Distrito</label>
+                            <input id="district" type="text" style="width:8vw;" readonly class="disabled-input" />
+
+                            <label>Concelho</label>
+                            <input id="county" type="text" style="width:8vw;" readonly class="disabled-input" />
+                        </td>
+                    </tr>
+                    <tr></tr>
+
+                    <tr> <td><label>Freguesia</label></tr>
+                    <tr><td><input id="parish" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
+
+                    <tr> <td><label>Rua</label></tr>
+                    <tr><td><input id="street" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
                 </table>
             </fieldset>
 

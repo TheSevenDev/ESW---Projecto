@@ -137,13 +137,13 @@
                             <label>Código Postal</label>
                             <img class="open-help" src="~/images/icons/002-question-mark.png" id="open-help-postal" onclick="javascript: toggleHelpPostal();" draggable="false" />
                             <div class="help-postal">
-                                    Insira o código postal e os restantes campos serão preenchidos automaticamente.
+                                    Insira o código postal e os restantes campos serão automaticamente preenchidos.
                             </div>
                         </td>
                     </tr>
-
-                    <tr> <td><input id="input-code1" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();"/>&nbsp;<label>-</label>&nbsp;<input id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" /></td></tr>
-                    <tr><td></td></tr>
+                    <tr> <td><input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" />&nbsp;<label>-</label>&nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" /></td></tr>
+                    <tr><td><span asp-validation-for="PostalCode1" class="error-message"></span></td></tr>
+                    <tr><td><span asp-validation-for="PostalCode2" class="error-message"></span></td></tr>
 
                      <tr> <td>
                               <label>Distrito</label>

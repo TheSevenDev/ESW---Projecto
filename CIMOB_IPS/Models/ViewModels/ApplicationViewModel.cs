@@ -10,9 +10,10 @@ namespace CIMOB_IPS.Models.ViewModels
     {
         public Application Application {get; set;}
         public Account Account { get; set; }
-
         public Program Program { get; set; }
 
+        public string PostalCode1 { get; set; }
+        public string PostalCode2 { get; set; }
 
         public IEnumerable<SelectListItem> Nationalities { get; set; }
 
