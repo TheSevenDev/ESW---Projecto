@@ -23,14 +23,22 @@ namespace CIMOB_IPS.Models
         [Required(ErrorMessage = "A password não está preenchida")]
         [Display(Name = "Password:")]
         [DataType(DataType.Password)]
-        public String PasswordView { get; set; }
+        public string PasswordView { get; set; }
 
 
         [Required(ErrorMessage = "A confirmação da password não está preenchida")]
         [Compare("PasswordView", ErrorMessage = "As passwords não coincidem.")]
         [Display(Name = "Confirme a Password:")]
         [DataType(DataType.Password)]
-        public String ConfirmPasswordView { get; set; }
+        public string ConfirmPasswordView { get; set; }
+
+        [Required(ErrorMessage = "É necessário preencher o código postal")]
+        [RegularExpression("^[0-9]{4}$",ErrorMessage =("O código postal deve ter 4 algarismos"))]
+        public string PostalCode1 { get; set; }
+
+        [Required(ErrorMessage = "É necessário preencher o código postal")]
+        [RegularExpression("^[0-9]{3}$", ErrorMessage = ("O código postal deve ter 3 algarismos"))]
+        public string PostalCode2 { get; set; }
 
 
         /// <summary>Property used to represent the new Student created with the values provided in the form.  </summary>
