@@ -16,7 +16,7 @@ namespace CIMOB_IPS.Models
         public long IdApplication { get; set; }
         public long IdStudent { get; set; }
         public long IdState { get; set; }
-        public long? IdProgram { get; set; }
+        public long IdProgram { get; set; }
 
         [Display(Name = "Candidato a bolsa")]
         public bool HasScholarship { get; set; }
