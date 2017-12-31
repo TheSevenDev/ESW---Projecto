@@ -14,22 +14,22 @@
 <h2 class="page-title">Coordenadores de curso</h2>
 
 <div class="main-container-pendingtech">
-    
-            @foreach (var item in orderedCoordenators)
-            {
-                <table class="tableContact">
-                    <tr style="background: none">
-                        <td><img src="~/images/course.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name)</td>
-                        <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)</td>
-                        <td><img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Email)</td>
-                        @if (item.Telephone != null)
-                        {
-                            <td><img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)</td>
-                        }
-                    </tr>
-                </table>
-            }
-        
+
+    @foreach (var item in orderedCoordenators)
+    {
+        <table class="tableContact">
+            <tr>
+                <td><img src="~/images/course.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name) </td>
+                <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name) </td>
+                <td><img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Email)  </td>
+                @if (item.Telephone != null)
+                {
+                    <td><img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)</td>
+                }
+            </tr>
+        </table>
+    }
+
 </div>
 
 <h2 class="page-title">Técnicos do CIMOB</h2>
@@ -38,17 +38,18 @@
     @foreach (var item in orderedTechnicians)
     {
         <table class="tableContact">
-            <tr style="background: none">
+            <tr>
                 <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)</td>
 
                 <td>
                     <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)
                 </td>
                 <td>
-                    <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)</td>
+                    <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)
+                </td>
 
 
-</tr>
+            </tr>
         </table>
     }
 </div>

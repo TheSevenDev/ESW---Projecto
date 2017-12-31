@@ -26,6 +26,7 @@ namespace CIMOB_IPS.Models
 
         [Required(ErrorMessage = "Preencha a carta de motivação.")]
         [MinLength(40, ErrorMessage = "Insira, no mínimo, 40 caracteres.")]
+        [MaxLength(2048, ErrorMessage = "Insira, no máximo, 2048 caracteres.")]
         [Display(Name = "Carta de Motivação")]
         [DataType(DataType.MultilineText)]
         public string MotivationCard { get; set; }

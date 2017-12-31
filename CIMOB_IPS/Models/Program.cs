@@ -30,7 +30,7 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityDate { get; set; }
 
-        [Display(Name = "Vagas")]
+        [Display(Name = "Vagas para candidaturas")]
         public int Vacancies { get; set; }
 
         public long IdProgramType { get; set; }

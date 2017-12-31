@@ -23,7 +23,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Details(int programId)
+        public async Task<IActionResult> Details(string programID)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -31,7 +31,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(p => p.IdProgramTypeNavigation)
                     .Include(p => p.IdStateNavigation)
                     .Include(p => p.InstitutionProgram)
-                    .FirstOrDefaultAsync(p => p.IdProgram == programId);
+                    .FirstOrDefaultAsync(p => p.IdProgram == Int32.Parse(programID));
 
                 foreach(var ip in program.InstitutionProgram)
                 {
