@@ -115,7 +115,6 @@ function adressCode() {
 
     clearAdresses();
 
-
     var code1 = document.getElementById('input-code1').value;
     var code2 = document.getElementById('input-code2').value;
 
