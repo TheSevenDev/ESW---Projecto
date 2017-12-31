@@ -132,12 +132,17 @@
                     </tr>
                     <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
 
-                    @*<tr> <td><label asp-for="Student.Address"></label></td></tr>
-                        <tr> <td><input asp-for="Student.Address" id="input-code" onfocusout="javascript:adressCode()"/></td></tr>
-                        <tr> <td><span asp-validation-for="Student.Address" class="error-message"></span></td></tr>*@
+                    <tr>
+                        <td>
+                            <label>Código Postal</label>
+                            <img class="open-help" src="~/images/icons/002-question-mark.png" id="open-help-postal" onclick="javascript: toggleHelpPostal();" draggable="false" />
+                            <div class="help-postal">
+                                    Insira o código postal e os restantes campos serão preenchidos automaticamente.
+                            </div>
+                        </td>
+                    </tr>
 
-                    <tr> <td><label>Código Postal</label></td></tr>
-                    <tr> <td><input id="input-code1" type="text" style="width:4vw;" />&nbsp;<label>-</label>&nbsp;<input id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" /></td></tr>
+                    <tr> <td><input id="input-code1" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();"/>&nbsp;<label>-</label>&nbsp;<input id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" /></td></tr>
                     <tr><td></td></tr>
 
                      <tr> <td>
@@ -165,7 +170,7 @@
                     <tr>
                         <td>
                             <label asp-for="Student.Credits"></label>
-                            <img class="open-help-ects" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpEcts();" draggable="false" />
+                            <img class="open-help" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpEcts();" draggable="false" />
                             <div class="help-ects">
                                 Insira os créditos obtidos até ao momento.<br />
                                 Clique <a target="_blank" href="https://www.ips.pt/ips_si/legislacao_geral.ver_legislacao?p_nr=27">aqui</a> para saber mais.
