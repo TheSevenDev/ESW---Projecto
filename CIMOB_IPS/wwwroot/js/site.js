@@ -148,3 +148,12 @@ function adressCode() {
         }
     })  
 }
+
+$(document).ready(function () {
+    try {
+        adressCode();
+    }
+    catch (e) {
+
+    }
+});

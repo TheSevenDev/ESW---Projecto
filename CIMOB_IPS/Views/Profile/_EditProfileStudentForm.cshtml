@@ -1,6 +1,5 @@
 ﻿@model CIMOB_IPS.Models.ProfileViewModel
 
-
 <form asp-action="UpdateProfileStudent" method="post" class="user-form">
     <table>
         @Html.HiddenFor(model => Model.Student.IdAccount)
@@ -25,7 +24,7 @@
 
         <tr>
             <td>
-                <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
+                <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onfocusout="javascript:adressCode()"  onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
                 &nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
             </td>
         </tr>

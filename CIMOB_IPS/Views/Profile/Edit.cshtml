@@ -4,6 +4,10 @@
     ViewData["Title"] = "Edit";
 }
 
+<script>
+
+</script>
+
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <p class="page-title">Editar Perfil</p>
@@ -12,7 +16,7 @@
     <div class="profileImage">
         <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw" draggable="false" />
     </div>
-    <div style="margin-top: 30%;">
+    <div id="edit-partial" style="margin-top: 30%;">
             @if (Model.AccountType == EnumAccountType.STUDENT)
             {
                 @Html.Partial("_EditProfileStudentForm", Model)
@@ -24,6 +28,3 @@
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
