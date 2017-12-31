@@ -15,6 +15,9 @@ using CIMOB_IPS.Models.ViewModels;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
 using PagedList;
+using System.Xml;
+using System.Net;
+using System.IO;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -40,7 +43,7 @@ namespace CIMOB_IPS.Controllers
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
-          
+
             ViewData["register-type"] = "student-preregister";
             return View();
         }
@@ -56,6 +59,30 @@ namespace CIMOB_IPS.Controllers
             int intPageTechniciansNumber = (pageTechnicians ?? 1);
 
             return View("Technicians", PopulateTechnicians(intPagePendingNumber, intPageTechniciansNumber, intPageSize));
+        }
+
+
+        public ContentResult Address([FromQuery] string code)
+        {
+            if (!String.IsNullOrEmpty(code))
+            {
+                var url = "http://www.ctt.pt/pdcp/xml_pdcp?incodpos=" + code;
+                var xmlDoc = new XmlDocument();       
+                xmlDoc.Load(url);
+                return Content(XmlToString(xmlDoc), "application/xml", Encoding.UTF8);             
+            }
+            return Content("" , "");
+        }
+
+        private string XmlToString(XmlDocument doc)
+        {
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                doc.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                return stringWriter.GetStringBuilder().ToString();
+            }
         }
 
         private TechnicianManagementViewModel PopulateTechnicians(int intPendingPageNumber, int intTechniciansPageNumber, int intPendingPageSize)
@@ -93,13 +120,13 @@ namespace CIMOB_IPS.Controllers
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var technicians = (from s in context.Technician
-                                       select new Technician
-                                       {
-                                           Name = s.Name,
-                                           IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
-                                           Telephone = s.Telephone,
-                                           IsAdmin = s.IsAdmin
-                                       });
+                                   select new Technician
+                                   {
+                                       Name = s.Name,
+                                       IdAccountNavigation = new Account { Email = s.IdAccountNavigation.Email },
+                                       Telephone = s.Telephone,
+                                       IsAdmin = s.IsAdmin
+                                   });
 
                 return await PaginatedList<Technician>.CreateAsync(technicians.AsNoTracking(), intTechniciansPageNumber, intPendingPageSize);
             }
@@ -158,7 +185,7 @@ namespace CIMOB_IPS.Controllers
             string strName = model.Technician.Name;
             long lngTelephone = model.Technician.Telephone;
 
-            Technician technician = new Technician { IdAccount = lngIdAccount, Name = strName, Telephone = lngTelephone, IsAdmin = bolIsAdmin};
+            Technician technician = new Technician { IdAccount = lngIdAccount, Name = strName, Telephone = lngTelephone, IsAdmin = bolIsAdmin };
 
             InsertTechnician(technician, strEmail);
 
@@ -180,7 +207,7 @@ namespace CIMOB_IPS.Controllers
 
             try
             {
-                bool success = InsertPendingAccount(strStudentEmail,EnumAccountType.STUDENT, 0);
+                bool success = InsertPendingAccount(strStudentEmail, EnumAccountType.STUDENT, 0);
                 if (success)
                 {
                     ViewData["message"] = "Número registado.";
@@ -262,7 +289,7 @@ namespace CIMOB_IPS.Controllers
                 return lisCourses;
             }
         }
-                             
+
         public IActionResult RegisterTechnician([FromQuery] string account_id)
         {
             if (User.Identity.IsAuthenticated)
@@ -286,7 +313,7 @@ namespace CIMOB_IPS.Controllers
 
                 return View("Register", new RegisterViewModel { EmailView = ViewData["technician-email"].ToString(), Technician = new Technician { IsAdmin = (bool)ViewData["technician-isAdmin"] } });
             }
-         }
+        }
 
         public IActionResult InviteTec()
         {
@@ -337,7 +364,7 @@ namespace CIMOB_IPS.Controllers
 
                 context.PendingAccount.Remove(pendingAccount);
                 await context.SaveChangesAsync();
-            }   
+            }
         }
 
         public long InsertAccountGetId(string strEmail, string strPassword)
@@ -449,7 +476,7 @@ namespace CIMOB_IPS.Controllers
             var strbBody = new StringBuilder();
             strbBody.AppendLine("Caro utilizador,<br><br>");
             strbBody.AppendFormat(@"O seu pedido de registo na plataforma do CIMOB-IPS foi aprovado.<br><br>");
-            strbBody.AppendLine("Clique <a href=\""+strLink+"\">aqui</a> para completar a criação da conta.<br>");
+            strbBody.AppendLine("Clique <a href=\"" + strLink + "\">aqui</a> para completar a criação da conta.<br>");
             strbBody.AppendLine("Caso não tenha efetuado nenhum pedido de criação de conta, por favor, contacte a equipa do CIMOB-IPS");
 
 
@@ -691,8 +718,8 @@ namespace CIMOB_IPS.Controllers
                     return LoginState.EMAIL_NOTFOUND;
                 }
             }
-         }    
-        
+        }
+
 
         public string AccountID(string strEmail)
         {
@@ -777,7 +804,7 @@ namespace CIMOB_IPS.Controllers
             {
                 strBuilder.Append(result[i].ToString("x2"));
             }
-            
+
             return strBuilder.ToString();
         }
 

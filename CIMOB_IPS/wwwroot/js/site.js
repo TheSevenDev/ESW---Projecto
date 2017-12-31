@@ -95,3 +95,46 @@ function toggleHelpEcts() {
 function closeHelpEcts() {
     $('.help-ects').fadeOut(550);
 }
+
+
+function adressCode() {
+
+    //if(postal_code) MATHCES REGEX
+    var code1 = document.getElementById('input-code1').value;
+    var code2 = document.getElementById('input-code2').value;
+
+    var postal_code = code1 + "-" + code2;
+
+    var url = "http://www.ctt.pt/pdcp/xml_pdcp?incodpos=" + postal_code;
+    $.ajax({
+        type: 'POST',
+        url: "/Account/Address?code=" + postal_code,
+        contentType: 'application/xml; charset=utf-8',
+        crossDomain: true,
+        success: function (response) {
+            $('Localidade', response).each(function () {
+                var distrito = $(this).find('Distrito').text();
+                var concelho = $(this).find('Concelho').text();
+                var freguesia = $(this).find('Freguesia').text();
+                
+
+                document.getElementById('county').value = concelho;
+                document.getElementById('district').value = distrito;
+                document.getElementById('parish').value = freguesia;
+
+
+                $('Rua', response).each(function () {
+                    var street = $(this).find('Designacao').first().text();                   
+                    if(street!=null)
+                        document.getElementById('street').value = street;
+                    else
+                        document.getElementById('street').value = "";
+
+                });
+            });
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })  
+}

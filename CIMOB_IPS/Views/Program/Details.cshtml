@@ -7,14 +7,16 @@
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
-<h2 class="page-title">@Html.DisplayFor(model => model.IdProgramTypeNavigation.Name)</h2>
+<div class="programDetails">
 
-<div class="profile">
-    <p>@Html.DisplayFor(model => model.IdProgramTypeNavigation.Description)</p>
+    <img draggable="false" src="~/images/Erasmus-logo1.jpg" />
+
+    <p style="width:80%;margin-left:10%;">@Html.DisplayFor(model => model.IdProgramTypeNavigation.Description)</p>
+
     <br />
-    <p>As candidaturas abrirão dia @Html.DisplayFor(model => model.OpenDate) às 00:00h.</p>
-    <p>As candidaturas encerrarão dia @Html.DisplayFor(model => model.ClosingDate) às 23:59h.</p>
-    <p>@Html.DisplayNameFor(model => model.IdStateNavigation): @Html.DisplayFor(model => model.IdStateNavigation.Description)</p>
+    <p>As candidaturas abrirão dia <b>@Html.DisplayFor(model => model.OpenDate)</b>. às 00:00h</p>
+    <p>As candidaturas encerrarão dia <b>@Html.DisplayFor(model => model.ClosingDate)</b>. às 23:59h.</p>
+    <p>@Html.DisplayNameFor(model => model.IdStateNavigation): <b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b>.</p>
     
     @if (Model.InstitutionProgram.Count > 0)
     {
@@ -37,8 +39,9 @@
     }
     else if (Model.IdStateNavigation.Description == "Aberto" && Model.Vacancies > 0)
     {
-        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
-        <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application" , new {appId = Model.IdProgram})'" />
+        <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
+
+        <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application" , new {programID = Model.IdProgram})'" />
     }
     else if (Model.IdStateNavigation.Description == "Aberto")
     {

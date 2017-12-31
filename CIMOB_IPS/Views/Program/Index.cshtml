@@ -10,7 +10,7 @@
 <div class="programs-display">
 
     
-    @foreach (var item in Model)
+    @*@foreach (var item in Model)
     {
         <h4>@Html.DisplayFor(model => item.IdProgramTypeNavigation.Name)</h4>
         <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
@@ -28,7 +28,9 @@
         }
 
         <input type="button" value="Ver Informações" onclick="location.href='@Url.Action("Details", "Program" , new {programId = item.IdProgram})'" />
+
     }
+        *@
 
     <table style="width:60%; background-color:transparent">
         <tr>
@@ -42,7 +44,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-controller="Application" asp-action="New">Mais Informações</button>
+                            <button asp-area="" onclick="location.href='@Url.Action("Details", "Program",new { programID = "1" })'">Mais Informações</button>
                         </td>
                     </tr>
                 </table>

@@ -180,7 +180,7 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> FileTest([Bind("File")] FileViewModel viewModel)
         {
