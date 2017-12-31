@@ -205,14 +205,15 @@
     pointer-events: none;
 }
 
-.open-help-ects {
+.open-help {
     width: 1.2vw;
     margin-left:0.5%;
     cursor:pointer;
     position:relative;
 }
 
-.help-ects {
+.help-ects,
+.help-postal{
     display:none;
     width: 16.5vw;
     margin-left: 0;
