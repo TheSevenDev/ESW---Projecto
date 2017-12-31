@@ -94,6 +94,14 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Login", "Account");
 
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
+            
+            if(accountViewModel.AccountType == EnumAccountType.STUDENT)
+            {
+                var postalCode = accountViewModel.Student.PostalCode;
+
+                accountViewModel.PostalCode1 = postalCode.Substring(0, 4);
+                accountViewModel.PostalCode2 = postalCode.Substring(5, 3);
+            }
 
             return View(accountViewModel);
         }
