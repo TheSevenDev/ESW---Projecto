@@ -213,3 +213,21 @@ li.sortable-placeholder {
     width:30%;
     cursor:default;
 }
+
+#motivationCard-title {
+    position: relative;
+    display: inline-block;
+}
+
+#motivationCard {
+    width: 100%;
+    overflow-y: auto;
+    height: 21vh;
+    position: relative;
+    display: block;
+    font-size: 1.10vmax;
+}
+
+.main-application-container p{
+    font-size:1.12vmax;
+}

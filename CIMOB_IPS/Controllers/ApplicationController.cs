@@ -14,6 +14,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
 using Microsoft.AspNetCore.Http;
+using System.Data.SqlClient;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -110,13 +111,73 @@ namespace CIMOB_IPS.Controllers
 
             AddApplicationNotification();
 
-
-            //var list = new HtmlGenericControl("div");
-
-
             return RedirectToAction("MyApplications", "Application");
             
         }
+
+        [HttpPost]
+        public IActionResult RegisterApplicationInstitutions([FromQuery] string inst1,[FromQuery] string inst2,[FromQuery] string inst3)
+        {
+            var applicationID = GetNewApplicationID();
+            if (!String.IsNullOrEmpty(inst1))
+            {
+                //Console.WriteLine("===========================" + inst1); 
+                using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                {
+                    scnConnection.Open();
+                    string strQuery = "INSERT INTO Application_Institutions Values(@Application, @Institution, 1)";
+
+                    SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                    scmCommand.Parameters.AddWithValue("@Application", applicationID);
+                    scmCommand.Parameters.AddWithValue("@Institution", GetIdByInstitution(inst1));
+                    scmCommand.ExecuteNonQuery();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(inst2))
+            {
+                //Console.WriteLine("===========================" + inst2);
+                using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                {
+                    scnConnection.Open();
+                    string strQuery = "INSERT INTO Application_Institutions Values(@Application, @Institution, 2)";
+
+                    SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                    scmCommand.Parameters.AddWithValue("@Application", applicationID);
+                    scmCommand.Parameters.AddWithValue("@Institution", GetIdByInstitution(inst2));
+                    scmCommand.ExecuteNonQuery();
+                }
+            }
+
+            if (!String.IsNullOrEmpty(inst3))
+            {
+                //Console.WriteLine("===========================" + inst3);
+
+                using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+                {
+                    scnConnection.Open();
+                    string strQuery = "INSERT INTO Application_Institutions Values(@Application, @Institution, 3)";
+
+                    SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                    scmCommand.Parameters.AddWithValue("@Application", applicationID);
+                    scmCommand.Parameters.AddWithValue("@Institution", GetIdByInstitution(inst3));
+                    scmCommand.ExecuteNonQuery();
+                }
+            }
+
+            return Json("Sucess");
+        }
+
+        private long GetIdByInstitution(string institutionName)
+        {
+            return _context.Institution.Where(i => i.Name == institutionName).FirstOrDefault().IdInstitution;
+        }
+
+        private long GetNewApplicationID()
+        {
+            return _context.Application.Max(i => i.IdApplication) + 1;
+        }
+
 
         private void AddApplicationNotification()
         {

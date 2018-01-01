@@ -9,19 +9,20 @@ function toogleNotifications()
 {
     var actionUrl = '/Notification/ReadNotifications';
 
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            contentType: "application/json; charset=utf-8",
-            dataType: "html",
-        }).done(function (res) {
-            $("#notificationsCount").html("");
-        });;
+    $.ajax({
+        type: "POST",
+        url: actionUrl,
+        contentType: "application/json; charset=utf-8",
+        dataType: "html",
+    }).done(function (res) {
+        $("#notificationsCount").html("");
+    });;
     
 
     document.getElementById("submenu-settings").style.display = "none";
     $("#submenu-notifications").slideToggle(250);
 }
+
 
 function toogleHelp() {
     hideMenus();
@@ -148,6 +149,38 @@ function adressCode() {
         }
     })  
 }
+
+function applicationInstitutions() {
+
+    if ($("#form-application").valid()) {
+
+        var actionUrl = '/Application/RegisterApplicationInstitutions';
+
+        var list = document.getElementById("chosen-institutions").getElementsByTagName("li");
+
+        for (var i = 0; i < list.length; i++) {
+            var institution = list[i].innerText;
+            if(i==0)
+                actionUrl += "?inst" + (i + 1) + "=" + institution;
+            else
+                actionUrl += "&inst" + (i + 1) + "=" + institution;
+        }
+   
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (res) {
+           
+        });;
+
+    }
+
+
+}
+
+
 
 $(document).ready(function () {
     try {

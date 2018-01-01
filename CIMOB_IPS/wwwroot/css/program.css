@@ -46,11 +46,11 @@
     color: #f1f1f1;
 }
 
-    .closed-program-btn:hover {
-        cursor: initial !important;
-        border-radius: 3% !important;
-        border: 0.7px solid grey !important;
-    }
+.closed-program-btn:hover {
+    cursor: initial !important;
+    border-radius: 3% !important;
+    border: 0.7px solid grey !important;
+}
 
 
 .programs-display table img {

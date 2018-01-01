@@ -8,48 +8,35 @@
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
-<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
-
 
 <h2 class="page-title">Coordenadores de curso</h2>
 
-<div class="main-container-pendingtech">
+<div class="main-container-contacts">
 
     @foreach (var item in orderedCoordenators)
     {
-        <table class="tableContact">
-            <tr>
-                <td><img src="~/images/course.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name) </td>
-                <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name) </td>
-                <td><img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Email)  </td>
-                @if (item.Telephone != null)
-                {
-                    <td><img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)</td>
-                }
-            </tr>
-        </table>
+        <div class="tableContact">
+            <img src="~/images/course.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name)<br />
+            <img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name) <br />
+            <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Email)  <br />
+            @if (item.Telephone != null)
+            {
+                <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)<br />
+            }
+        </div>
     }
 
 </div>
 
 <h2 class="page-title">Técnicos do CIMOB</h2>
 
-<div class="main-container-pendingtech">
+<div class="main-container-contacts">
     @foreach (var item in orderedTechnicians)
     {
-        <table class="tableContact">
-            <tr>
-                <td><img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)</td>
-
-                <td>
-                    <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)
-                </td>
-                <td>
-                    <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)
-                </td>
-
-
-            </tr>
-        </table>
+        <div class="tableContact">
+            <img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)<br />
+            <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)<br />
+            <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)<br />
+        </div>
     }
 </div>

@@ -25,7 +25,7 @@
             <ul>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                 <li>
-                    <a>Programa</a>
+                    <a>Programas</a>
                     <ul class="sub-menu">
                         <li><a asp-area="" asp-controller="Program" asp-action="Index">Ver Programas</a></li>
                         <li></li>
@@ -38,12 +38,7 @@
                     @if (User.IsInRole("estudante"))
                     {
                         <li>
-                            <a>Candidatura</a>
-                            <ul class="sub-menu">
-                                <li><a asp-area="" asp-controller="Application" asp-action="New">Nova Candidatura</a></li>
-                                <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
-                                <li></li>
-                            </ul>
+                            <a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a>
                         </li>
                     }
                     @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))

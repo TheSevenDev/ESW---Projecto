@@ -8,10 +8,10 @@
 <p class="page-title">Nova Candidatura - Erasmus+</p>
 
 <div class="main-application-container">
-    <form asp-action="RegisterApplication" method="post" class="application-form">
+    <form asp-action="RegisterApplication" method="post" class="application-form" id="form-application" onsubmit="javascript: applicationInstitutions();">
             <fieldset style="margin-top:3%">
                 <legend>Candidato</legend>
-                <p style="width:100%;text-align:center;">Confirme os seus dados pessoais antes de prosseguir. </p>
+                <p style="width:100%;text-align:center;">Antes de prosseguir, confirme os seus dados pessoais. </p>
                 <p style="width:100%;text-align:center;">Caso queira efetuar alterações, aceda ao seu perfil.</p>
                 <table style="margin-left:11%">
                     <tr> <td><label asp-for="Application.IdStudentNavigation.Name"></label></td></tr>
@@ -119,14 +119,14 @@
                                         &nbsp;
                                         @foreach (var inst in Model.Institutions)
                                         {
-                                            <li class="available-inst">@inst.IdOutgoingInstitutionNavigation.Name (@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)
+                                            <li class="available-inst" title="@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description">@inst.IdOutgoingInstitutionNavigation.Name
                                                 <input type="hidden" name="chosen-institutions" value="@inst.IdOutgoingInstitutionNavigation.IdInstitution"/></li>                                             
                                         }
                                     </ul>
                                 </div>
 
                                 <span style="margin-left:32.5%;font-size:1.15vmax;">Instituições Escolhidas</span>
-                                <div class="box-chosen-inst" >
+                                <div class="box-chosen-inst" id="chosen-institutions">
                                     <ul class="connected"style="width:88%; margin-left:0;" runat="server" id="institutions-chosen">
                                         &nbsp;
                                     </ul>

@@ -66,6 +66,14 @@ else
                         <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> @Html.DisplayFor(modelItem => item.FinalEvaluation)</p>
                     }
 
+                    <p>
+                        <span id="motivationCard-title">
+                            <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
+                        </span>
+                    </p>
+                    <div id="motivationCard">
+                        @Html.DisplayFor(modelItem => item.MotivationCard)
+                    </div>
 
                 </div>
             </fieldset>

@@ -879,10 +879,32 @@ footer {
 
 
 /* CONTACT */
+.main-container-contacts {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 32%;
+    margin-left: 34%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding-bottom: 1%;
+    padding-top: 0.1%;
+}
+
+
+
+.main-container-contacts a{
+    color: var(--blue-var3)
+}
+
 .icon-img {
     height: 14px;
     width: 14px;
     padding-left: 1em;
+}
+
+.tableContact {
+    margin-top: 3%;
 }
 
 
@@ -893,3 +915,5 @@ footer {
     margin-bottom: 5px;
     border: 1px solid black;
 }
+
+
