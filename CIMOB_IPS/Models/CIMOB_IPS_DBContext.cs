@@ -79,6 +79,8 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("application_date")
                     .HasColumnType("date");
 
+                entity.Property(e => e.SignedAppFile).HasColumnName("signed_app_file");
+
                 entity.Property(e => e.EmergencyContactTelephone).HasColumnName("emergency_contact_telephone");
 
                 entity.Property(e => e.FinalEvaluation).HasColumnName("final_evaluation");
@@ -204,7 +206,7 @@ namespace CIMOB_IPS.Models
                 entity.Property(e => e.Description)
                     .IsRequired()
                     .HasColumnName("description")
-                    .HasMaxLength(1024);
+                    .HasMaxLength(2048);
 
                 entity.Property(e => e.Title)
                     .IsRequired()

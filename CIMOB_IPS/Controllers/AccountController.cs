@@ -22,14 +22,7 @@ using System.IO;
 namespace CIMOB_IPS.Controllers
 {
     public class AccountController : Controller
-    {/*
-        private readonly CIMOB_IPS_DBContext _context;
-
-        public AccountController(CIMOB_IPS_DBContext context)
-        {
-            _context = context;
-        }*/
-
+    {
         public AccountController()
         {
         }

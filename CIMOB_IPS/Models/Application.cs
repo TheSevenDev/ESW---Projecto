@@ -56,9 +56,11 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Programa")]
         public Program IdProgramNavigation { get; set; }
 
+        [Display(Name = "Comprovativo de candidatura")]
+        public byte[] SignedAppFile { get; set; }
+
         [Display(Name = "Instituições")]
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
-
     }
 }
