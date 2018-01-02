@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,5 +23,9 @@ namespace CIMOB_IPS.Models.ViewModels
         public IEnumerable<InstitutionProgram> Institutions { get; set; }
 
         public long[] ChosenInstitutions { get; set; }
+
+        [UIHint("SignaturePad")]
+        [Required(ErrorMessage = "É necessário a sua assinatura digital.")]
+        public byte[] Signature { get; set; }
     }
 }

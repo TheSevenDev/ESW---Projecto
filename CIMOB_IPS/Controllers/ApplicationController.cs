@@ -91,7 +91,7 @@ namespace CIMOB_IPS.Controllers
 
       
         [HttpPost]
-        public IActionResult RegisterApplication(ApplicationViewModel model)
+        public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -100,11 +100,11 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             Application app = model.Application;
-            app.IdProgramNavigation =  _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS
+            app.IdProgramNavigation =  _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS MUDAR PROX FASE
             app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
             app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
             app.ApplicationDate = DateTime.Now;
-
+            app.SignedAppFile = await CreateSignedApplication(model);
 
             _context.Application.Add(model.Application);
             _context.SaveChanges();
@@ -112,7 +112,6 @@ namespace CIMOB_IPS.Controllers
             AddApplicationNotification();
 
             return RedirectToAction("MyApplications", "Application");
-            
         }
 
         [HttpPost]
@@ -296,14 +295,14 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpPost]
-        public async Task<FileResult> Export(Signature signature)
+        public async Task<byte[]> CreateSignedApplication(ApplicationViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
                 return null;
 
-            var img = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(signature.MySignature));
+            var img = String.Format("data:image/jpg;base64,{0}", Convert.ToBase64String(viewModel.Signature));
 
-            Image image = Image.GetInstance(signature.MySignature);
+            Image image = Image.GetInstance(viewModel.Signature);
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -312,6 +311,9 @@ namespace CIMOB_IPS.Controllers
                     .Include(s => s.IdCourseNavigation)
                     .SingleOrDefaultAsync(s => s.IdAccount == GetCurrentUserID());
 
+                viewModel.Program.IdProgramTypeNavigation = await context.ProgramType
+                    .SingleOrDefaultAsync(s => s.IdProgramType == 1); //erasmus, mudar prox fase
+
                 var strMes = DateTime.Now.ToString("MMMM");
                 strMes = strMes.First().ToString().ToUpper() + strMes.Substring(1);
 
@@ -319,11 +321,10 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine("<h2 style='text-align: center;'>Declaração de candidatura a mobilidade</h2>");
                 //incluir morada
                 strbHtml.AppendLine("<br><br><p>Eu, " + student.Name + ", portador(a) do n.º de cartão de cidadão " + student.Cc + ", nascido(a) na data " + student.BirthDate.ToString("dd/MM/yyyy"));
-                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade, ");
+                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade" + viewModel.Program.IdProgramTypeNavigation.Name + ", ");
                 strbHtml.AppendLine("tendo o perfeito conhecimento dos regulamentos associados com o mesmo, bem como os meus deveres e direitos.</p>");
                 strbHtml.AppendLine("<br><br><br><p><b>O estudante</b></p><br><br>");
                 //strbHtml.AppendLine("<img src='" + String.Format("data:image/gif;base64,{0}", Convert.ToBase64String(signature.MySignature)).Replace("/", "//") + "' />");
-                
 
                 MemoryStream ms = new MemoryStream();
                 TextReader txtReader = new StringReader(strbHtml.ToString());
@@ -356,7 +357,8 @@ namespace CIMOB_IPS.Controllers
                 htmlWorker.Close();
                 doc.Close();
 
-                return File(ms.ToArray(), "application/pdf", "teste.pdf");
+                //return File(ms.ToArray(), "application/pdf", "teste.pdf");
+                return ms.ToArray();
             }
         }
     }
