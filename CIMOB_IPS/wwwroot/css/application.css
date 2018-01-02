@@ -253,3 +253,10 @@ li.sortable-placeholder {
     font-size: 1vmax;
     z-index:900;
 }
+
+
+.help-inst video {
+    width: 22vw;
+    left:1.5vw;
+    position: relative;
+}
