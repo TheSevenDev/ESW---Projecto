@@ -21,8 +21,6 @@
 {
     <div class="main-application-container" style="padding:1vw;">
         <p>Não existem candidaturas submetidas!</p>
-
-        @Html.Partial("_Signature", new Signature { })
     </div>
 }
 else
@@ -58,9 +56,6 @@ else
                         <p><b>@Html.DisplayNameFor(modelItem => item.HasScholarship): </b>Não</p>
                     }
 
-
-
-
                     @if (item.IdStateNavigation.Description != "Em Avaliação")
                     {
                         <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> @Html.DisplayFor(modelItem => item.FinalEvaluation)</p>
@@ -74,7 +69,12 @@ else
                     <div id="motivationCard">
                         @Html.DisplayFor(modelItem => item.MotivationCard)
                     </div>
-
+                    @if(item.SignedAppFile != null)
+                    { 
+                    <div>
+                        <a class="hyperlink" asp-action="OpenSignedAppFile" asp-route-fileId=@item.IdApplication>Ver Comprovativo de Candidatura</a>
+                    </div>
+                    }
                 </div>
             </fieldset>
         </div>

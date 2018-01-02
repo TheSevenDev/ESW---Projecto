@@ -907,13 +907,59 @@ footer {
     margin-top: 3%;
 }
 
-
 .signature-pad > canvas {
     display: block;
     width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
     height: 150px;
     margin-bottom: 5px;
-    border: 1px solid black;
+    user-select: none;
 }
 
+.hyperlink {
+    background-color: inherit;
+    color: var(--blue-var4);
+    font-weight: bold;
+    font-size: 1vmax;
+    text-decoration: none;
+}
 
+.hyperlink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn-clear-canvas {
+    background-color: #222222;
+    border-radius: 3%;
+    border: 0.7px solid #222222;
+    color: #f1f1f1;
+    padding: 4%;
+    font-size: 1vmax;
+    width: 8vw;
+    display: inline-block;
+}
+
+.btn-clear-canvas:hover {
+    background-color: var(--blue-var4);
+    cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
+}
+
+.application-form-pager input[type=submit] {
+    background-color: #222222;
+    border-radius: 3%;
+    border: 0.7px solid #222222;
+    color: #f1f1f1;
+    padding: 4%;
+    font-size: 1vmax;
+    width: 12vw;
+    display: inline-block;
+}
+
+    .application-form-pager input[type=submit]:hover:enabled {
+        background-color: var(--blue-var4);
+        cursor: pointer;
+        border: 0.7px solid var(--blue-var4);
+    }
