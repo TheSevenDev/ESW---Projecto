@@ -802,7 +802,7 @@ footer {
 }
 
 /*
-    MÁXIMO USÁVEL. RESPONSIVENESS(?)
+    MÁXIMO USÁVEL.
 */
 @media screen and (max-width: 720px) {
     .navbar-menu,.nav-session, footer {

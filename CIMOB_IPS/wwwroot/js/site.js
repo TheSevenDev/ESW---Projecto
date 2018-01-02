@@ -7,7 +7,7 @@ function toogleSettings()
 
 function toogleNotifications()
 {
-    if (document.getElementById("submenu-notifications").style.display == "none") {
+    if (document.getElementById("submenu-notifications").style.display !== "block") {
         var actionUrl = '/Notification/ReadNotifications';
 
         $.ajax({
