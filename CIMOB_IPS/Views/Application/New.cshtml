@@ -9,156 +9,177 @@
 
 <div class="main-application-container">
     <form asp-action="RegisterApplication" method="post" class="application-form" id="form-application" onsubmit="javascript: applicationInstitutions();">
-            <fieldset style="margin-top:3%">
-                <legend>Candidato</legend>
-                <p style="width:100%;text-align:center;">Antes de prosseguir, confirme os seus dados pessoais. </p>
-                <p style="width:100%;text-align:center;">Caso queira efetuar alterações, aceda ao seu perfil.</p>
-                <table style="margin-left:11%">
-                    <tr> <td><label asp-for="Application.IdStudentNavigation.Name"></label></td></tr>
-                    <tr> <td><input asp-for="Application.IdStudentNavigation.Name" type="text" readonly class="disabled-input" /></td></tr>
-                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.Name" class="error-message"></span></td></tr>
+        <fieldset style="margin-top:3%">
+            <legend>Candidato</legend>
+            <p style="width:100%;text-align:center;">Antes de prosseguir, confirme os seus dados pessoais. </p>
+            <p style="width:100%;text-align:center;">Caso queira efetuar alterações, aceda ao seu perfil.</p>
+            <table style="margin-left:11%">
+                <tr> <td><label asp-for="Application.IdStudentNavigation.Name"></label></td></tr>
+                <tr> <td><input asp-for="Application.IdStudentNavigation.Name" type="text" readonly class="disabled-input" /></td></tr>
+                <tr> <td><span asp-validation-for="Application.IdStudentNavigation.Name" class="error-message"></span></td></tr>
 
 
-                    <tr> <td><label asp-for="Application.IdStudentNavigation.Telephone"></label></td></tr>
-                    <tr> <td><input asp-for="Application.IdStudentNavigation.Telephone" type="text" readonly class="disabled-input" /></td></tr>
-                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.Telephone" class="error-message"></span></td></tr>
+                <tr> <td><label asp-for="Application.IdStudentNavigation.Telephone"></label></td></tr>
+                <tr> <td><input asp-for="Application.IdStudentNavigation.Telephone" type="text" readonly class="disabled-input" /></td></tr>
+                <tr> <td><span asp-validation-for="Application.IdStudentNavigation.Telephone" class="error-message"></span></td></tr>
 
-                    <tr> <td><label asp-for="Account.Email"></label></td></tr>
-                    <tr> <td><input asp-for="Account.Email" type="text" readonly class="disabled-input" /></td></tr>
-                    <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
+                <tr> <td><label asp-for="Account.Email"></label></td></tr>
+                <tr> <td><input asp-for="Account.Email" type="text" readonly class="disabled-input" /></td></tr>
+                <tr> <td><span asp-validation-for="Account.Email" class="error-message"></span></td></tr>
 
-                    <tr> <td><label>Nacionalidade: </label></td></tr>
-                    <tr> <td> @Html.DropDownListFor(model => model.Application.IdStudentNavigation.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @readonly = "readonly", @class = "disabled-input" })</td></tr>
-                    <tr> <td><span asp-validation-for="Application.IdStudentNavigation.IdNationality" class="error-message"></span></td></tr>
+                <tr> <td><label>Nacionalidade: </label></td></tr>
+                <tr> <td> @Html.DropDownListFor(model => model.Application.IdStudentNavigation.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --", new { @readonly = "readonly", @class = "disabled-input" })</td></tr>
+                <tr> <td><span asp-validation-for="Application.IdStudentNavigation.IdNationality" class="error-message"></span></td></tr>
 
-                    <tr>
-                        <td>
-                            <label>Código Postal</label>
-                        </td>
-                    </tr>
-                    <tr> <td><input asp-for="PostalCode1" id="input-code1" type="text" style="width:4.2vw;"readonly class="disabled-input"  />
-                        &nbsp;<label>-</label>&nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" readonly class="disabled-input" /></td></tr>
+                <tr>
+                    <td>
+                        <label>Código Postal</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4.2vw;" readonly class="disabled-input" />
+                        &nbsp;<label>-</label>&nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" readonly class="disabled-input" />
+                    </td>
+                </tr>
 
-                    <tr>
-                        <td>
-                            <label>Distrito</label>
-                            <input id="district" type="text" style="width:8vw;" readonly class="disabled-input" />
+                <tr>
+                    <td>
+                        <label>Distrito</label>
+                        <input id="district" type="text" style="width:8vw;" readonly class="disabled-input" />
 
-                            <label>Concelho</label>
-                            <input id="county" type="text" style="width:8vw;" readonly class="disabled-input" />
-                        </td>
-                    </tr>
-                    <tr></tr>
+                        <label>Concelho</label>
+                        <input id="county" type="text" style="width:8vw;" readonly class="disabled-input" />
+                    </td>
+                </tr>
+                <tr></tr>
 
-                    <tr> <td><label>Freguesia</label></tr>
-                    <tr><td><input id="parish" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
+                <tr> <td><label>Freguesia</label></tr>
+                <tr><td><input id="parish" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
 
-                    <tr> <td><label>Rua</label></tr>
-                    <tr><td><input id="street" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
-                </table>
-            </fieldset>
+                <tr> <td><label>Rua</label></tr>
+                <tr><td><input id="street" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
+            </table>
+        </fieldset>
 
-            <fieldset style="margin-top:7%;">
-                <legend>Contacto em caso de emergência</legend>
-                <table style="margin-left:11%">
-                    <tr> <td><label asp-for="Application.EmergencyContactName"></label></td></tr>
-                    <tr>
-                        <td>
-                            <div class="on-focus clearfix">
-                                <input asp-for="Application.EmergencyContactName" type="text" />
-                                <div class="tool-tip slideIn right">Insira o nome completo do contacto de emergência</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr> <td><span asp-validation-for="Application.EmergencyContactName" class="error-message"></span></td></tr>
+        <fieldset style="margin-top:7%;">
+            <legend>Contacto em caso de emergência</legend>
+            <table style="margin-left:11%">
+                <tr> <td><label asp-for="Application.EmergencyContactName"></label></td></tr>
+                <tr>
+                    <td>
+                        <div class="on-focus clearfix">
+                            <input asp-for="Application.EmergencyContactName" type="text" />
+                            <div class="tool-tip slideIn right">Insira o nome completo do contacto de emergência</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr> <td><span asp-validation-for="Application.EmergencyContactName" class="error-message"></span></td></tr>
 
 
 
-                    <tr> <td><label asp-for="Application.EmergencyContactRelation"></label></td></tr>
-                    <tr>
-                        <td>
-                            <div class="on-focus clearfix">
-                                <input asp-for="Application.EmergencyContactRelation" type="text" />
-                                <div class="tool-tip slideIn right">Insira o grau de parentesco do contacto de emergência</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr> <td><span asp-validation-for="Application.EmergencyContactRelation" class="error-message"></span></td></tr>
+                <tr> <td><label asp-for="Application.EmergencyContactRelation"></label></td></tr>
+                <tr>
+                    <td>
+                        <div class="on-focus clearfix">
+                            <input asp-for="Application.EmergencyContactRelation" type="text" />
+                            <div class="tool-tip slideIn right">Insira o grau de parentesco do contacto de emergência</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr> <td><span asp-validation-for="Application.EmergencyContactRelation" class="error-message"></span></td></tr>
 
-                    <tr> <td><label asp-for="Application.EmergencyContactTelephone"></label></td></tr>
-                    <tr>
-                        <td>
-                            <div class="on-focus clearfix">
-                                <input asp-for="Application.EmergencyContactTelephone" type="text" />
-                                <div class="tool-tip slideIn right">Insira o número de telefone de parentesco do contacto de emergência</div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr> <td><span asp-validation-for="Application.EmergencyContactTelephone" class="error-message"></span></td></tr>
-                </table>
-            </fieldset>
-            <fieldset>
-                <legend>Dados da Mobilidade</legend>
-                <table>
-                    <tr>
-                        <td><label asp-for="Application.HasScholarship"></label></td>
-                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "false") <label> Não</label></td>
-                        <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "true") <label> Sim</label></td>
-                    </tr>
-                </table>
-                <table style="width:100%;">
-                    <tr></tr>
-                    <tr><td><label>Seleccione as 3 instituições a que se candidata.</label></td></tr>
-                    <tr><td><label style="margin-left:5%;font-weight:600;font-size:1vmax">Atenção: A ordem das instituições atribui uma ordem de preferência.</label> </td></tr>
-                    <tr>
-                        <td>
-                            <section id="connected" style="margin-top:2.5%;">
-                                <span style="margin-left:32.5%; font-size:1.15vmax" >Instituições Disponíveis</span>
-                                <div class="box-available-inst">
-                                    <ul class="connected">
-                                        &nbsp;
-                                        @foreach (var inst in Model.Institutions)
-                                        {
-                                            <li class="available-inst" title="@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description">@inst.IdOutgoingInstitutionNavigation.Name
-                                                <input type="hidden" name="chosen-institutions" value="@inst.IdOutgoingInstitutionNavigation.IdInstitution"/></li>                                             
-                                        }
-                                    </ul>
-                                </div>
-
-                                <span style="margin-left:32.5%;font-size:1.15vmax;">Instituições Escolhidas</span>
-                                <div class="box-chosen-inst" id="chosen-institutions">
-                                    <ul class="connected"style="width:88%; margin-left:0;" runat="server" id="institutions-chosen">
-                                        &nbsp;
-                                    </ul>
-                                </div>
-                            </section>
-                        </td>
-                    </tr>
-                </table>
-            </fieldset>
-            <fieldset>
-                <legend>Carta de Motivação</legend>
-                <p style="width:100%;text-align:center;">Indique as suas motivações para participar no Programa de Mobilidade</p>
-                <p style="width:100%;text-align:center;">Este é um dos elementos de avaliação da sua candidatura</p>
-                <table>
-                    <tr> <td><textarea asp-for="Application.MotivationCard" style="resize:none;" cols="75" rows="35" maxlength="2048"></textarea></td></tr>
-                    <tr> <td><span asp-validation-for="Application.MotivationCard" class="error-message"></span></td></tr>
-                </table>
-            </fieldset>
-            
-            <fieldset>
-                <legend>Comprovativo de candidatura</legend>
-                <p style="width:100%;text-align:center;">Como prova do seu consentimento de candidatura, é necessário a sua assinatura digital.</p>
-                <p style="width:100%;text-align:center;">Esta assinatura produzirá um documento que poderá visualizar na página das suas candidaturas.</p>
-                <table>
-                    <tr> <td>@Html.EditorFor(model => model.Signature)</td></tr>
-                    <tr> <td><span asp-validation-for="Signature" class="error-message"></span></td></tr>
-                </table>
-            </fieldset>
-
-            <div class="application-form-pager">
-                <input type="submit" value="Submeter Candidatura">
+                <tr> <td><label asp-for="Application.EmergencyContactTelephone"></label></td></tr>
+                <tr>
+                    <td>
+                        <div class="on-focus clearfix">
+                            <input asp-for="Application.EmergencyContactTelephone" type="text" />
+                            <div class="tool-tip slideIn right">Insira o número de telefone de parentesco do contacto de emergência</div>
+                        </div>
+                    </td>
+                </tr>
+                <tr> <td><span asp-validation-for="Application.EmergencyContactTelephone" class="error-message"></span></td></tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Dados da Mobilidade</legend>
+            <div style="display:inline-block;margin-left:92%;">
+                <img class="open-help" src="~/images/icons/002-question-mark.png" id="open-help-ects" onclick="javascript: toggleHelpInst();" draggable="false" />
+                <div class="help-inst">
+                    <br />
+                    Arraste as instituições a que se candidata para <b>Instituições Escolhidas</b>.<br />
+                    <br />Exemplo:
+                    <video autoplay loop>
+                        <source src="~/videos/help_application.mp4" type="video/mp4" />
+                    </video>
+                </div>
             </div>
+            <table>
+                <tr>
+                    <td><label asp-for="Application.HasScholarship"></label></td>
+                    <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "false") <label> Não</label></td>
+                    <td>@Html.RadioButtonFor(model => model.Application.HasScholarship, "true") <label> Sim</label></td>
+                </tr>
+            </table>
+            <table style="width:100%;">
+                <tr></tr>
+                <tr>
+                    <td>
+                        <label>Seleccione as 3 instituições a que se candidata.</label>
+                    </td>
+                </tr>
+                <tr><td><label style="margin-left:5%;font-weight:600;font-size:1vmax">Atenção: A ordem das instituições atribui uma ordem de preferência.</label> </td></tr>
+                <tr>
+                    <td>
+                        <section id="connected" style="margin-top:2.5%;">
+                            <span style="margin-left:32%; font-size:1.15vmax">Instituições Disponíveis</span>
+                            <div class="box-available-inst">
+                                <ul class="connected">
+                                    &nbsp;
+                                    @foreach (var inst in Model.Institutions)
+                                    {
+                                        <li class="available-inst" ondrag="javascript: closeHelpInst();" title="@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description">
+                                            @inst.IdOutgoingInstitutionNavigation.Name
+                                            <input type="hidden" name="chosen-institutions" value="@inst.IdOutgoingInstitutionNavigation.IdInstitution" />
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+
+                            <span style="margin-left:32%;font-size:1.15vmax;">Instituições Escolhidas</span>
+                            <div class="box-chosen-inst" id="chosen-institutions">
+                                <ul class="connected" style="width:88%; margin-left:0;" runat="server" id="institutions-chosen">
+                                    &nbsp;
+                                </ul>
+                            </div>
+                        </section>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset>
+            <legend>Carta de Motivação</legend>
+            <p style="width:100%;text-align:center;">Indique as suas motivações para participar no Programa de Mobilidade</p>
+            <p style="width:100%;text-align:center;">Este é um dos elementos de avaliação da sua candidatura</p>
+            <table>
+                <tr> <td><textarea asp-for="Application.MotivationCard" style="resize:none;" cols="75" rows="35" maxlength="2048"></textarea></td></tr>
+                <tr> <td><span asp-validation-for="Application.MotivationCard" class="error-message"></span></td></tr>
+            </table>
+        </fieldset>
+
+        <fieldset>
+            <legend>Comprovativo de candidatura</legend>
+            <p style="width:100%;text-align:center;">Como prova do seu consentimento de candidatura, é necessário a sua assinatura digital.</p>
+            <p style="width:100%;text-align:center;">Esta assinatura produzirá um documento que poderá visualizar na página das suas candidaturas.</p>
+            <table>
+                <tr> <td>@Html.EditorFor(model => model.Signature)</td></tr>
+                <tr> <td><span asp-validation-for="Signature" class="error-message"></span></td></tr>
+            </table>
+        </fieldset>
+
+        <div class="application-form-pager">
+            <input type="submit" value="Submeter Candidatura">
+        </div>
     </form>
 </div>
 
