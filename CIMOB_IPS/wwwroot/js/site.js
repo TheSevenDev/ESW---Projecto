@@ -7,17 +7,19 @@ function toogleSettings()
 
 function toogleNotifications()
 {
-    var actionUrl = '/Notification/ReadNotifications';
+    if (document.getElementById("submenu-notifications").style.display == "none") {
+        var actionUrl = '/Notification/ReadNotifications';
 
-    $.ajax({
-        type: "POST",
-        url: actionUrl,
-        contentType: "application/json; charset=utf-8",
-        dataType: "html",
-    }).done(function (res) {
-        $("#notificationsCount").html("");
-    });;
-    
+        $.ajax({
+            type: "POST",
+            url: actionUrl,
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+        }).done(function (res) {
+            $("#notificationsCount").html("");
+        });;
+
+    }
 
     document.getElementById("submenu-settings").style.display = "none";
     $("#submenu-notifications").slideToggle(250);
@@ -86,6 +88,14 @@ function hideMenus()
 
     if (document.getElementById("submenu-notifications") !== null)
     document.getElementById("submenu-notifications").style.display = "none";
+}
+
+function toggleHelpInst() {
+    $('.help-inst').slideToggle(450).css('display', 'inline-block');
+}
+
+function closeHelpInst() {
+    $('.help-inst').fadeOut(550);
 }
 
 function toggleHelpEcts() {
