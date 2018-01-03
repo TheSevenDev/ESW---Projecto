@@ -120,7 +120,6 @@ namespace CIMOB_IPS.Controllers
             var applicationID = GetNewApplicationID();
             if (!String.IsNullOrEmpty(inst1))
             {
-                //Console.WriteLine("===========================" + inst1); 
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
@@ -135,7 +134,6 @@ namespace CIMOB_IPS.Controllers
 
             if (!String.IsNullOrEmpty(inst2))
             {
-                //Console.WriteLine("===========================" + inst2);
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
@@ -150,8 +148,6 @@ namespace CIMOB_IPS.Controllers
 
             if (!String.IsNullOrEmpty(inst3))
             {
-                //Console.WriteLine("===========================" + inst3);
-
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
