@@ -40,6 +40,10 @@
     font-size: 1.2vmax;
 }
 
+input[type=date] {
+    font-family: Arial,Helvetica, sans-serif;
+}
+
 .pre-register-form input[type=text], input[type=date] {
     width: 22.2vw;
     padding: 2% 3%;

@@ -40,24 +40,24 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
+            ProfileController pc = new ProfileController();
+            int intEcts = await pc.GetCurrentStudentECTS(User);
+
+            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1);
+
             int userID = GetCurrentUserID();
 
             Student student = GetStudentById(userID);
             var app = _context.Application.Where(ap => ap.IdStudent == student.IdStudent);
 
-            if(app.Count() >= 3)
+            if(app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
               return RedirectToAction("Index", "Home");
-
 
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplicationMob";
-                
 
             ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = student } };
             viewModel.Account.Email = GetEmail(userID);
-
-
-            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1); 
 
             foreach(var ip in program.InstitutionProgram)
             {
@@ -89,6 +89,17 @@ namespace CIMOB_IPS.Controllers
             return _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
         }
 
+        public async Task<int> GetNumberPendentApplications(ClaimsPrincipal user)
+        {
+            var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return await context.Application
+                    .CountAsync(a => a.IdStudent == GetStudentById(intCurrentId).IdStudent
+                    && a.IdState == (from s in context.State where s.Description == "Pendente" select s.IdState).SingleOrDefault());
+            }
+        }
       
         [HttpPost]
         public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)

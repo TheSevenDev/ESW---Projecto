@@ -178,5 +178,15 @@ namespace CIMOB_IPS.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<int> GetCurrentStudentECTS(ClaimsPrincipal user)
+        {
+            var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return await context.Student.Where(s => s.IdAccount == intCurrentId).Select(s => s.Credits).SingleOrDefaultAsync();
+            }
+        }
     }
 }

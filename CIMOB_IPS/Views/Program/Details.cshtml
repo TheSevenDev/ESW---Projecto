@@ -1,7 +1,26 @@
 ﻿@model CIMOB_IPS.Models.Program
+@using Microsoft.EntityFrameworkCore;
 
 @{
     ViewData["Title"] = "Details";
+
+    var intEcts = 0;
+    var intApplications = 30;
+
+    if(User.Identity.IsAuthenticated)
+    {
+        ProfileController pc = new ProfileController();
+        intEcts = await pc.GetCurrentStudentECTS(User);
+
+        ApplicationController ac = new ApplicationController(new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()));
+        intApplications = await ac.GetNumberPendentApplications(User);
+    }
+
+    bool bolIsLoggedOff = !User.Identity.IsAuthenticated;
+    bool bolNoVacancies = Model.Vacancies <= 0;
+    bool bolClosedProgram = !(Model.IdStateNavigation.Description == "Aberto");
+    bool bolNoCredits = intEcts < 45;
+    bool bolMaxApplications = intApplications >= 3;
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
@@ -33,24 +52,35 @@
         <p>Sem informações sobre as instituições associadas ao programa!</p>
     }
 
-    @if(!User.Identity.IsAuthenticated && Model.IdStateNavigation.Description == "Aberto")
-    {
-        <p>Caso desejar candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
-    }
-    else if (Model.IdStateNavigation.Description == "Aberto" && Model.Vacancies > 0)
+    @if (!bolClosedProgram && !bolMaxApplications && !bolNoVacancies && !bolNoCredits && !bolIsLoggedOff)
     {
         <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
-
         <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application" , new {programID = Model.IdProgram})'" />
     }
-    else if (Model.IdStateNavigation.Description == "Aberto")
+    else if (bolIsLoggedOff && !bolClosedProgram)
+    {
+        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
+        <p>Caso desejar candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
+    }
+    else if (bolClosedProgram)
+    {
+        <p>Programa encerrado! Consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
+    }
+    else if (bolNoVacancies && !bolIsLoggedOff)
     {
         <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
         <p>Programa sem vagas disponíveis! Tente mais tarde ou consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
     }
-    else
+    else if (bolNoCredits && !bolIsLoggedOff)
     {
-        <p>Programa encerrado! Consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
+
+        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
+        <p>Não possui ECTS suficientes para se candidatar a um programa de mobilidade! Para obter ECTS, terá de concluir Unidades Curriculares.</p>
+    }
+    else if (bolMaxApplications && !bolIsLoggedOff)
+    {
+        <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
+        <p>Já possui o máximo de 3 candidaturas pendentes!</p>
     }
 
 </div>
