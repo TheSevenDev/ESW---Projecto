@@ -170,7 +170,7 @@
             <legend>Comprovativo de candidatura</legend>
             <p style="width:100%;text-align:center;">Como prova do seu consentimento de candidatura, é necessário a sua assinatura digital.</p>
             <p style="width:100%;text-align:center;">Esta assinatura produzirá um documento que poderá visualizar na página das suas candidaturas.</p>
-            <table>
+            <table style="margin-left:25%;">
                 <tr> <td>@Html.EditorFor(model => model.Signature)</td></tr>
                 <tr> <td><span asp-validation-for="Signature" class="error-message"></span></td></tr>
             </table>
