@@ -94,8 +94,8 @@ html, body {
 }
 
 .option-button {
-    height: 2.5vmin;
-    width: 2.5vmin;
+    height: 1.3vmax;
+    width: 1.3vmax;
     user-select:none;
 }
 
@@ -919,7 +919,7 @@ footer {
 
 .hyperlink {
     background-color: inherit;
-    color: var(--blue-var4);
+    color: var(--blue-var2);
     font-weight: bold;
     font-size: 1vmax;
     text-decoration: none;

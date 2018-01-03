@@ -131,7 +131,6 @@ namespace CIMOB_IPS.Controllers
             var applicationID = GetNewApplicationID();
             if (!String.IsNullOrEmpty(inst1))
             {
-                //Console.WriteLine("===========================" + inst1); 
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
@@ -146,7 +145,6 @@ namespace CIMOB_IPS.Controllers
 
             if (!String.IsNullOrEmpty(inst2))
             {
-                //Console.WriteLine("===========================" + inst2);
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
@@ -161,8 +159,6 @@ namespace CIMOB_IPS.Controllers
 
             if (!String.IsNullOrEmpty(inst3))
             {
-                //Console.WriteLine("===========================" + inst3);
-
                 using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
                 {
                     scnConnection.Open();
@@ -332,28 +328,24 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine("<h2 style='text-align: center;'>Declaração de candidatura a mobilidade</h2>");
                 //incluir morada
                 strbHtml.AppendLine("<br><br><p>Eu, " + student.Name + ", portador(a) do n.º de cartão de cidadão " + student.Cc + ", nascido(a) na data " + student.BirthDate.ToString("dd/MM/yyyy"));
-                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade" + programType.Name + ", ");
+                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao programa de mobilidade " + programType.Name + ", ");
                 strbHtml.AppendLine("tendo o perfeito conhecimento dos regulamentos associados com o mesmo, bem como os meus deveres e direitos.</p>");
-                strbHtml.AppendLine("<br><br><br><p><b>O estudante</b></p><br><br>");
+                strbHtml.AppendLine("<br><br><br><p><b>O estudante,</b></p><br><br>");
                 //strbHtml.AppendLine("<img src='" + String.Format("data:image/gif;base64,{0}", Convert.ToBase64String(signature.MySignature)).Replace("/", "//") + "' />");
 
                 MemoryStream ms = new MemoryStream();
                 TextReader txtReader = new StringReader(strbHtml.ToString());
 
-                // 1: create object of a itextsharp document class  
                 Document doc = new Document(PageSize.A4, 25, 25, 25, 25);
 
-                // 2: we create a itextsharp pdfwriter that listens to the document and directs a XML-stream to a file  
+
                 PdfWriter oPdfWriter = PdfWriter.GetInstance(doc, ms);
 
-                // 3: we create a worker parse the document  
                 HTMLWorker htmlWorker = new HTMLWorker(doc);
 
-                // 4: we open document and start the worker on the document  
                 doc.Open();
                 htmlWorker.StartDocument();
 
-                // 5: parse the html into the document  
                 htmlWorker.Parse(txtReader);
 
                 doc.Add(image);
@@ -362,8 +354,6 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine(DateTime.Now.ToString("dd") + " " + strMes + " de " + DateTime.Now.ToString("yyyy"));
                 txtReader = new StringReader(strbHtml.ToString());
                 htmlWorker.Parse(txtReader);
-
-                // 6: close the document and the worker  
                 htmlWorker.EndDocument();
                 htmlWorker.Close();
                 doc.Close();

@@ -212,6 +212,7 @@ li.sortable-placeholder {
     color: var(--blue-var2);
     width:30%;
     cursor:default;
+    font-size:1.1vmax;
 }
 
 #motivationCard-title {
