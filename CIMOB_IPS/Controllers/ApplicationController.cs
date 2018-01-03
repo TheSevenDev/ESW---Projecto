@@ -280,13 +280,13 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<FileResult> OpenFile(int fileId)
+        public async Task<FileResult> OpenSignedAppFile(int fileId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                var file = await context.TestFile.SingleOrDefaultAsync(f => f.IdFile == fileId);
+                var file = await context.Application.Where(a => a.IdApplication == fileId).Select(a => a.SignedAppFile).SingleOrDefaultAsync();
 
-                return File(file.FileTest, "application/pdf", "teste.pdf");
+                return File(file, "application/pdf", "ComprovativoDeCandidatura.pdf");
             }
         }
 
@@ -307,7 +307,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(s => s.IdCourseNavigation)
                     .SingleOrDefaultAsync(s => s.IdAccount == GetCurrentUserID());
 
-                viewModel.Program.IdProgramTypeNavigation = await context.ProgramType
+                var programType = await context.ProgramType
                     .SingleOrDefaultAsync(s => s.IdProgramType == 1); //erasmus, mudar prox fase
 
                 var strMes = DateTime.Now.ToString("MMMM");
@@ -317,7 +317,7 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine("<h2 style='text-align: center;'>Declaração de candidatura a mobilidade</h2>");
                 //incluir morada
                 strbHtml.AppendLine("<br><br><p>Eu, " + student.Name + ", portador(a) do n.º de cartão de cidadão " + student.Cc + ", nascido(a) na data " + student.BirthDate.ToString("dd/MM/yyyy"));
-                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade" + viewModel.Program.IdProgramTypeNavigation.Name + ", ");
+                strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao seguinte programa de mobilidade" + programType.Name + ", ");
                 strbHtml.AppendLine("tendo o perfeito conhecimento dos regulamentos associados com o mesmo, bem como os meus deveres e direitos.</p>");
                 strbHtml.AppendLine("<br><br><br><p><b>O estudante</b></p><br><br>");
                 //strbHtml.AppendLine("<img src='" + String.Format("data:image/gif;base64,{0}", Convert.ToBase64String(signature.MySignature)).Replace("/", "//") + "' />");

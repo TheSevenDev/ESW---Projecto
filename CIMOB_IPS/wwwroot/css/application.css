@@ -55,7 +55,7 @@ textarea {
     margin-left:2%;
 }
 
-.application-form input[type=submit], application-form-pager a {
+.application-form input[type=submit], application-form-pager a, application-form-pager button {
     width: 100%;
     background-color: var(--blue-var4);
     color: white;
