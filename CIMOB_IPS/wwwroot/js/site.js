@@ -190,6 +190,11 @@ function applicationInstitutions() {
 
 }
 
+function countUp() {
+    var length = $('#textareaCarta').val().length;
+    var maxLength = document.getElementById("textareaCarta").maxLength;
+    var myCounter = document.getElementById("count").textContent = length + "/" + maxLength;
+}
 
 
 $(document).ready(function () {
