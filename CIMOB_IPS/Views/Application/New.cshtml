@@ -161,7 +161,7 @@
             <p style="width:100%;text-align:center;">Indique as suas motivações para participar no Programa de Mobilidade</p>
             <p style="width:100%;text-align:center;">Este é um dos elementos de avaliação da sua candidatura</p>
             <table>
-                <tr> <td><textarea asp-for="Application.MotivationCard" style="resize:none;" cols="75" rows="35" maxlength="2048"></textarea></td></tr>
+                <tr> <td><textarea asp-for="Application.MotivationCard" id="textareaCarta" style="resize:none;" cols="75" rows="35" maxlength="3000" font-family="Arial,Helvetica,sans-serif;"></textarea></td></tr>
                 <tr> <td><span asp-validation-for="Application.MotivationCard" class="error-message"></span></td></tr>
             </table>
         </fieldset>
