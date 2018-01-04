@@ -113,8 +113,6 @@ namespace CIMOB_IPS.Controllers
             if (GetCurrentUserID() != model.Student.IdAccount)
                 return BadRequest();
 
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -139,7 +137,6 @@ namespace CIMOB_IPS.Controllers
                 {
                     throw;
                 }
-            }
 
             return RedirectToAction("Index");
         } 
@@ -153,8 +150,6 @@ namespace CIMOB_IPS.Controllers
                 return BadRequest();
             }
 
-            if (ModelState.IsValid)
-            {
                 try
                 {
                     using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -174,7 +169,7 @@ namespace CIMOB_IPS.Controllers
                 {
                     throw;
                 }
-            }
+            
 
             return RedirectToAction("Index");
         }
