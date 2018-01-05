@@ -40,12 +40,27 @@
     @if (Model.InstitutionProgram.Count > 0)
     {
         <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
-        <ul>
+
             @foreach (var item in Model.InstitutionProgram)
             {
-                <li>@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</li>
+                <p>@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</p>
+                
+                @if(item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
+                { 
+                    <p>Cursos disponíveis:</p>
+
+                    <ul>
+                        @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
+                        {
+                            <li>@course.Name</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p>Sem informações sobre os cursos associados à instituição!</p>
+                }
             }
-        </ul>
     }
     else
     {

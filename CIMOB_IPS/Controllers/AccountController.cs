@@ -284,7 +284,10 @@ namespace CIMOB_IPS.Controllers
             {
                 List<SelectListItem> lisCourses = new List<SelectListItem>();
 
-                var listCourses = context.Course.OrderBy(x => x.Name).ToList();
+                var listCourses = context.Course
+                    .Where(x => (from i in context.Institution where i.IdNationality == 
+                                 (from n in context.Nationality where n.Description == "PORTUGAL" select n.IdNationality).FirstOrDefault() select i.IdInstitution).Contains(x.IdInstitution))
+                    .OrderBy(x => x.Name).ToList();
 
                 foreach (Course n in listCourses)
                 {

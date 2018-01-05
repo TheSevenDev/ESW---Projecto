@@ -1,0 +1,54 @@
+﻿@model CIMOB_IPS.Models.Program
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<p class="page-title">Novo Programa</p>
+
+<div class="main-application-container">
+    <form asp-action="CreateProgram" method="post" class="application-form" id="form-application">
+        <table>
+            <tr><td><label asp-for="OpenDate"></label></td></tr>
+            <tr><td><input asp-for="OpenDate" type="date" /></td></tr>
+            <tr><td><span asp-validation-for="OpenDate" class="error-message"></span></td></tr>
+
+            <tr><td><label asp-for="ClosingDate"></label></td></tr>
+            <tr><td><input asp-for="ClosingDate" type="date" /></td></tr>
+            <tr><td><span asp-validation-for="ClosingDate" class="error-message"></span></td></tr>
+
+            <tr><td><label asp-for="MobilityDate"></label></td></tr>
+            <tr><td><input asp-for="MobilityDate" type="date" /></td></tr>
+            <tr><td><span asp-validation-for="MobilityDate" class="error-message"></span></td></tr>
+
+            <tr><td><label asp-for="Vacancies"></label></td></tr>
+            <tr><td><input asp-for="Vacancies" type="text" /></td></tr>
+            <tr><td><span asp-validation-for="Vacancies" class="error-message"></span></td></tr>
+
+            <div class="form-group">
+                <label asp-for="ClosingDate" class="control-label"></label>
+                <input asp-for="ClosingDate" class="form-control" />
+                <span asp-validation-for="ClosingDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MobilityDate" class="control-label"></label>
+                <input asp-for="MobilityDate" class="form-control" />
+                <span asp-validation-for="MobilityDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vacancies" class="control-label"></label>
+                <input asp-for="Vacancies" class="form-control" />
+                <span asp-validation-for="Vacancies" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdProgramType" class="control-label"></label>
+                <select asp-for="IdProgramType" class="form-control" asp-items="ViewBag.IdProgramType"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </table>
+    </form>
+</div>
