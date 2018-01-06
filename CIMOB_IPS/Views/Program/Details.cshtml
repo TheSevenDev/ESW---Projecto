@@ -23,8 +23,7 @@
     bool bolMaxApplications = intApplications >= 3;
 }
 
-<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
-<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 
 <div class="programDetails">
 
@@ -33,17 +32,19 @@
     <p style="width:80%;margin-left:10%;">@Html.DisplayFor(model => model.IdProgramTypeNavigation.Description)</p>
 
     <br />
-    <p>As candidaturas abrirão dia <b>@Html.DisplayFor(model => model.OpenDate)</b>. às 00:00h</p>
-    <p>As candidaturas encerrarão dia <b>@Html.DisplayFor(model => model.ClosingDate)</b>. às 23:59h.</p>
-    <p>@Html.DisplayNameFor(model => model.IdStateNavigation): <b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b>.</p>
+    <p>As candidaturas abrirão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
+    <p>As candidaturas encerrarão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+
+    <p>@Html.DisplayNameFor(model => model.IdStateNavigation): <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
     
+
     @if (Model.InstitutionProgram.Count > 0)
     {
         <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
 
             @foreach (var item in Model.InstitutionProgram)
             {
-                <p>@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</p>
+                <button class="button-institution">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
                 
                 @if(item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
                 { 
@@ -52,7 +53,7 @@
                     <ul>
                         @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
                         {
-                            <li>@course.Name</li>
+                            <li class="institution-course">@course.Name</li>
                         }
                     </ul>
                 }
@@ -75,7 +76,7 @@
     else if (bolIsLoggedOff && !bolClosedProgram)
     {
         <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
-        <p>Caso desejar candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
+        <p>Caso deseje candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
     }
     else if (bolClosedProgram)
     {

@@ -124,7 +124,6 @@ namespace CIMOB_IPS.Controllers
 
                         newStudent.Telephone = model.Student.Telephone;
                         newStudent.PostalCode = model.Student.PostalCode;
-                        newStudent.StudentNum = model.Student.StudentNum;
                         newStudent.Credits = model.Student.Credits;
                         newStudent.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;
 

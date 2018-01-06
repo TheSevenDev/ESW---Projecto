@@ -34,6 +34,21 @@ namespace CIMOB_IPS.Controllers
                     .Include(p => p.InstitutionProgram)
                     .FirstOrDefaultAsync(p => p.IdProgram == Int32.Parse(programID));
 
+                switch (program.IdStateNavigation.Description)
+                {
+                    case "Aberto":
+                        ViewData["programstate-color"] = "Green";
+                        break;
+                    case "Fechado":
+                        ViewData["programstate-color"] = "Red";
+                        break;
+                    case "A Decorrer":
+                        ViewData["programstate-color"] = "Orange";
+                        break;
+
+                }
+          
+
                 foreach(var ip in program.InstitutionProgram)
                 {
                     ip.IdOutgoingInstitutionNavigation = await context.Institution

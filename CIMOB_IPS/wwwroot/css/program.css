@@ -64,3 +64,25 @@
     cursor: pointer;
     border: 0.7px solid var(--blue-var4);
 }
+
+
+.button-institution {
+    list-style: decimal;
+    border: 1px solid #CCC;
+    background: #F6F6F6;
+    color: var(--blue-var2);
+    width: 70%;
+    height:4.5vh;
+    cursor: default;
+    font-size: 1.1vmax;
+    user-select:none;
+}
+
+.button-institution:hover {
+    cursor: pointer;
+    background: var(--blue-var5);
+}
+
+.institution-course {
+    background-color:transparent;
+}
