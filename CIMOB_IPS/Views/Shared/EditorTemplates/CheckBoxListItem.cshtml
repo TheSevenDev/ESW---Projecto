@@ -1,0 +1,9 @@
+﻿@model CIMOB_IPS.Models.CheckBoxListItem
+
+<tr>
+    <td>
+        @Html.HiddenFor(x => x.ID)
+        @Html.CheckBoxFor(x => x.IsChecked)
+        @Html.LabelFor(x => x.IsChecked, Model.Display)
+    </td>
+</tr>
