@@ -7,7 +7,7 @@
     var intEcts = 0;
     var intApplications = 30;
 
-    if(User.Identity.IsAuthenticated)
+    if (User.Identity.IsAuthenticated)
     {
         ProfileController pc = new ProfileController();
         intEcts = await pc.GetCurrentStudentECTS(User);
@@ -35,33 +35,33 @@
     <p>As candidaturas abrirão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
     <p>As candidaturas encerrarão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
 
-    <p>@Html.DisplayNameFor(model => model.IdStateNavigation): <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
-    
+    <p>Programa <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
+
 
     @if (Model.InstitutionProgram.Count > 0)
     {
         <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
 
-            @foreach (var item in Model.InstitutionProgram)
-            {
-                <button class="button-institution">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
-                
-                @if(item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
-                { 
-                    <p>Cursos disponíveis:</p>
+        @foreach (var item in Model.InstitutionProgram)
+        {
+            <button class="button-institution">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
 
-                    <ul>
-                        @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
-                        {
-                            <li class="institution-course">@course.Name</li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <p>Sem informações sobre os cursos associados à instituição!</p>
-                }
+            @if (item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
+            {
+                <p>Cursos disponíveis:</p>
+
+                <div>
+                    @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
+                    {
+                        <span class="institution-course">@course.Name</span>
+                    }
+                </div>
             }
+            else
+            {
+                <p>Sem informações sobre os cursos associados à instituição!</p>
+            }
+        }
     }
     else
     {
