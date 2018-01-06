@@ -66,7 +66,6 @@ namespace CIMOB_IPS.Controllers
                     .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
             }
 
-
             viewModel.Institutions = program.InstitutionProgram.ToList();
             viewModel.Nationalities = PopulateNationalities();
 
@@ -336,6 +335,29 @@ namespace CIMOB_IPS.Controllers
 
                 //return File(ms.ToArray(), "application/pdf", "teste.pdf");
                 return ms.ToArray();
+            }
+        }
+
+        public async Task<IActionResult> Index(int? pagePending)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                int intPageSize = 10;
+                int intPageApplications = (pagePending ?? 1);
+
+                var applications = (from a in context.Application orderby a.ApplicationDate select a)
+                    .Include(a => a.IdStateNavigation)
+                    .Include(a => a.IdStudentNavigation);
+
+                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                return View(paginatedApplications);
             }
         }
     }

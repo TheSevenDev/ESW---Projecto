@@ -27,6 +27,14 @@
                 <li>
                     <a>Programas</a>
                     <ul class="sub-menu">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+
+                            @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                            {
+                                <li><a asp-area="" asp-controller="Program" asp-action="Create">Criar Programa</a></li>
+                            }
+                        }
                         <li><a asp-area="" asp-controller="Program" asp-action="Index">Ver Programas</a></li>
                         <li></li>
                     </ul>
@@ -46,9 +54,8 @@
                         <li>
                             <a>Listagens</a>
                             <ul class="sub-menu">
-                                <li><a asp-area="" asp-controller="Home" asp-action="About">Candidaturas</a></li>
+                                <li><a asp-area="" asp-controller="Application" asp-action="Index">Candidaturas</a></li>
                                 <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="About">Emergências</a></li>
                                 <li></li>
                             </ul>
                         </li>

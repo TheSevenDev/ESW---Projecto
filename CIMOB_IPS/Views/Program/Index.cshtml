@@ -9,29 +9,6 @@
 
 <div class="programs-display">
 
-    
-    @*@foreach (var item in Model)
-    {
-        <h4>@Html.DisplayFor(model => item.IdProgramTypeNavigation.Name)</h4>
-        <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
-        @if (item.IdStateNavigation.Description == "Aberto")
-        {
-            <p><b>@Html.DisplayNameFor(modelItem => item.ClosingDate): </b>@Html.DisplayFor(modelItem => item.ClosingDate)</p>
-        }
-        else if (item.ClosingDate > DateTime.Today)
-        {
-            <p><b>@Html.DisplayNameFor(modelItem => item.OpenDate): </b>@Html.DisplayFor(modelItem => item.OpenDate)</p>
-        }
-        else
-        {
-            <p><b>Programa encerrado!</b></p>
-        }
-
-        <input type="button" value="Ver Informações" onclick="location.href='@Url.Action("Details", "Program" , new {programId = item.IdProgram})'" />
-
-    }
-        *@
-
     <table style="width:60%; background-color:transparent">
         <tr>
             <td>
