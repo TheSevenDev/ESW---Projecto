@@ -44,23 +44,24 @@
 
         @foreach (var item in Model.InstitutionProgram)
         {
-            <button class="button-institution">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
+            <button id="@item.IdOutgoingInstitutionNavigation.Name.Replace(" ",String.Empty)" class="button-institution" onclick="javascript: toggleCourses(this);">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
 
-            @if (item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
-            {
-                <p>Cursos disponíveis:</p>
-
-                <div>
-                    @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
-                    {
-                        <span class="institution-course">@course.Name</span>
-                    }
-                </div>
-            }
-            else
-            {
-                <p>Sem informações sobre os cursos associados à instituição!</p>
-            }
+            <div style="display:none;">
+                @if (item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
+                {
+                    <br><span id="available-courses">Cursos disponíveis</span><br /> 
+                    <div>
+                        @foreach (var course in item.IdOutgoingInstitutionNavigation.Course)
+                        {
+                            <span class="institution-course">@course.Name</span>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p>Sem informações sobre os cursos associados à instituição!</p>
+                }
+            </div>
         }
     }
     else

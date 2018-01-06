@@ -189,6 +189,14 @@ function applicationInstitutions() {
 
 
 }
+function toggleCourses(elem) {
+    //elem.nextSibling.nextSibling.style.display = "block";
+    var jqString = "#" + elem.id;
+    var jqElem = $(jqString);
+
+    jqElem.next().toggle(250);
+}
+
 
 function countUp() {
     var length = $('#textareaCarta').val().length;
