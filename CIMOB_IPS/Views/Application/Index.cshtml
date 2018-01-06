@@ -1,0 +1,94 @@
+﻿@model PaginatedList<CIMOB_IPS.Models.Application>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<p class="page-title">Candidaturas</p>
+
+<div class="main-application-container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdStudentNavigation.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().ApplicationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FinalEvaluation)
+                </th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdStudentNavigation.StudentNum)
+                    </td>
+                    <td>
+                        @{ 
+                            var strName = "";
+                            var arrNames = item.IdStudentNavigation.Name.Split(' ');
+                            string strFirstName = arrNames[0];
+                            string strLastName = arrNames[arrNames.Length - 1];
+                            if (arrNames.Length > 1)
+                            {
+                                strName = strFirstName + " " + strLastName;
+                            }
+                            else
+                            {
+                                strName = strFirstName;
+                            }
+                        }
+
+                        @strName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ApplicationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalEvaluation)
+                    </td>
+                    <td>
+                        <a asp-controller="Application" asp-action="Details" asp-route-appId=@item.IdApplication>Detalhes</a>
+                        &nbsp;
+                        <a asp-controller="Application" asp-action="Evaluate" asp-route-appId=@item.IdApplication>Avaliar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    Página @Model.PageIndex de @Model.TotalPages
+    <br />
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+    }
+    &nbsp;&nbsp;&nbsp;
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+    }
+</div>
