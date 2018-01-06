@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using CIMOB_IPS.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using CIMOB_IPS.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CIMOB_IPS.Controllers
 {
-    public class ProgramController : Controller
+    public class ProgramController : Microsoft.AspNetCore.Mvc.Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -59,7 +61,94 @@ namespace CIMOB_IPS.Controllers
             if(!new AccountController().IsTechnician(GetCurrentUserID()))
                 return RedirectToAction("Index", "Home");
 
-            return View();
+            return View(new ProgramViewModel { ProgramTypes = PopulateProgramTypes(), Institutions = PopulateInstitutions() } );
         }
+
+        private IEnumerable<SelectListItem> PopulateProgramTypes()
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<SelectListItem> lisProgramTypes = new List<SelectListItem>();
+
+                var listProgramTypes = context.ProgramType.OrderBy(x => x.Name).ToList();
+
+                foreach (ProgramType n in listProgramTypes)
+                {
+                    lisProgramTypes.Add(new SelectListItem { Value = n.IdProgramType.ToString(), Text = n.Name });
+                }
+
+                return lisProgramTypes;
+            }
+        }
+
+        private List<CheckBoxListItem> PopulateInstitutions()
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<CheckBoxListItem> lisInstitutions = new List<CheckBoxListItem>();
+
+                var listInstitutions = context.Institution.Where(i => i.IdNationality !=
+                    (from n in context.Nationality where n.Description == "PORTUGAL" select n.IdNationality).SingleOrDefault()).OrderBy(i => i.Name).ToList();
+
+                foreach(Institution i in listInstitutions)
+                {
+                    lisInstitutions.Add(new CheckBoxListItem { ID = i.IdInstitution, Display = i.Name, IsChecked = false });
+                }
+
+                return lisInstitutions;
+            }
+        }
+
+        
+    
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(ProgramViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                if(model.Institutions.Count(i => i.IsChecked == true) > 0)
+                {
+                    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+                    {
+                        var program = new Models.Program
+                        {
+                            IdState = await (context.State.Where(s => s.Description == "Aberto").Select(s => s.IdState).SingleOrDefaultAsync()),
+                            CreationDate = DateTime.Now,
+                            OpenDate = model.OpenDate,
+                            ClosingDate = model.ClosingDate,
+                            MobilityDate = (DateTime)model.MobilityDate,
+                            Vacancies = model.Vacancies,
+                            IdProgramType = model.IdProgramType
+                        };
+
+                        context.Add(program);
+                        await context.SaveChangesAsync();
+
+                        foreach(var i in model.Institutions.Where(i => i.IsChecked == true))
+                        {
+                            var instution = new InstitutionProgram
+                            {
+                                IdProgram = program.IdProgram,
+                                IdOutgoingInstitution = i.ID
+                            };
+
+                            context.Add(instution);
+                            await context.SaveChangesAsync();
+                        }
+
+                        return RedirectToAction("Index", "Program");
+                    }
+                }
+                else
+                {
+                    ViewData["Institutions-Error"] = "É necessário associar instituições ao programa.";
+                }
+            }
+
+            return View(new ProgramViewModel { ProgramTypes = PopulateProgramTypes(), Institutions = PopulateInstitutions() });
+        }
+        
+
     }
 }
