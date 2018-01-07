@@ -2,8 +2,6 @@
 @using Microsoft.EntityFrameworkCore;
 
 @{
-    ViewData["Title"] = "Details";
-
     var intEcts = 0;
     var intApplications = 30;
 
@@ -18,7 +16,7 @@
 
     bool bolIsLoggedOff = !User.Identity.IsAuthenticated;
     bool bolNoVacancies = Model.Vacancies <= 0;
-    bool bolClosedProgram = !(Model.IdStateNavigation.Description == "Aberto");
+    bool bolClosedProgram = !(Model.IdStateNavigation.Description == "Aberto") || DateTime.Now > Model.ClosingDate;
     bool bolNoCredits = intEcts < 45;
     bool bolMaxApplications = intApplications >= 3;
 }
@@ -37,14 +35,13 @@
 
     <p>Programa <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
 
-
     @if (Model.InstitutionProgram.Count > 0)
     {
         <p>@Html.DisplayNameFor(model => model.InstitutionProgram)</p>
 
         @foreach (var item in Model.InstitutionProgram)
         {
-            <button id="@item.IdOutgoingInstitutionNavigation.Name.Replace(" ",String.Empty)" class="button-institution" onclick="javascript: toggleCourses(this);">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
+            <button id="@item.IdOutgoingInstitutionNavigation.Name.Replace(" ",String.Empty)" class="button-institution" onclick="javascript:toggleCourses(this);">@item.IdOutgoingInstitutionNavigation.Name (@item.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</button>
 
             <div style="display:none;">
                 @if (item.IdOutgoingInstitutionNavigation.Course.Count() > 0)
@@ -79,7 +76,7 @@
         <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
         <p>Caso deseje candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
     }
-    else if (bolClosedProgram)
+    else if (bolClosedProgram || DateTime.Now >= Model.ClosingDate)
     {
         <p>Programa encerrado! Consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
     }

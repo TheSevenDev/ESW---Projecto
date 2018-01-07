@@ -36,6 +36,12 @@ namespace CIMOB_IPS.Controllers
                     .Include(p => p.InstitutionProgram)
                     .FirstOrDefaultAsync(p => p.IdProgram == Int32.Parse(programID));
 
+                if (DateTime.Now > program.ClosingDate)
+                {
+                    program.IdStateNavigation = context.State.Where(s => s.Description == "Fechado").FirstOrDefault();
+                    program.IdState = context.State.Where(s => s.Description == "Fechado").FirstOrDefault().IdState;
+                }
+
                 switch (program.IdStateNavigation.Description)
                 {
                     case "Aberto":
@@ -58,6 +64,8 @@ namespace CIMOB_IPS.Controllers
                         .Include(i => i.Course)
                         .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
                 }
+                
+
 
                 return View(program);
             }

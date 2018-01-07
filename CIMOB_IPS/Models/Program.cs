@@ -15,19 +15,19 @@ namespace CIMOB_IPS.Models
         public long IdProgram { get; set; }
         public long IdState { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreationDate { get; set; }
 
         [Display(Name = "Data de Abertura")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? OpenDate { get; set; }
 
         [Display(Name = "Data de Fecho")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? ClosingDate { get; set; }
 
         [Display(Name = "Data prevista de Mobilidade")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime MobilityDate { get; set; }
 
         [Display(Name = "Vagas para candidaturas")]
