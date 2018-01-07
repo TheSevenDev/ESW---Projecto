@@ -22,8 +22,6 @@ namespace CIMOB_IPS.Models.ViewModels
 
         public IEnumerable<InstitutionProgram> Institutions { get; set; }
 
-        public long[] ChosenInstitutions { get; set; }
-
         [UIHint("SignaturePad")]
         [Required(ErrorMessage = "É necessário a sua assinatura digital.")]
         public byte[] Signature { get; set; }
