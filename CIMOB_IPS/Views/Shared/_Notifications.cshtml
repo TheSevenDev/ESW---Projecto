@@ -5,25 +5,12 @@
 @if (User.Identity.IsAuthenticated)
 {
 <div class="notifications" id="submenu-notifications">
-    @if (nc.NotificationsCount(User) == 0)
-    {
         <ul>
             @foreach (var not in nc.GetNotifications(User))
             {
-               <li>Não tem notificações</li>
-            }
-        </ul>
-
-    }
-    else
-    {
-        <ul>
-            @foreach (var not in nc.GetNotifications(User))
-            {
+                @*<li class="notification-date">@not.NotificationDate</li>*@
                 <a asp-area="" asp-controller="@not.ControllerName" asp-action="@not.ActionName"><li> @not.Description</li></a>
             }
         </ul>
-    }
-
 </div>
 }
