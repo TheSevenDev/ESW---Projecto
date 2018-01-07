@@ -131,46 +131,57 @@ namespace CIMOB_IPS.Controllers
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
-            Console.WriteLine(ModelState);
+            //Console.WriteLine(ModelState);
 
-            string strEmail = model.EmailView;
-            string strPassword = model.PasswordView;
+            if (ModelState.IsValid)
+            {
+                string strEmail = model.EmailView;
+                string strPassword = model.PasswordView;
 
-            long lngIdAccount = 0;
+                long lngIdAccount = 0;
 
-            lngIdAccount = InsertAccountGetId(strEmail, strPassword);
+                lngIdAccount = InsertAccountGetId(strEmail, strPassword);
 
-            DeletePendingAccount(strEmail);
+                DeletePendingAccount(strEmail);
 
-            long lngStudentNum = model.Student.StudentNum;
-            string strName = model.Student.Name;
-            long lngIdCourse = model.Student.IdCourse;
-            long lngCcNum = model.Student.Cc;
-            long lngTelephone = model.Student.Telephone;
-            long lngIdNationality = model.Student.IdNationality;
-            int intCredits = model.Student.Credits;
-            DateTime dtBithDate = model.Student.BirthDate;
-            string strGender = model.Student.Gender;
-            string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
+                long lngStudentNum = model.Student.StudentNum;
+                string strName = model.Student.Name;
+                long lngIdCourse = model.Student.IdCourse;
+                long lngCcNum = model.Student.Cc;
+                long lngTelephone = model.Student.Telephone;
+                long lngIdNationality = model.Student.IdNationality;
+                int intCredits = model.Student.Credits;
+                DateTime dtBithDate = model.Student.BirthDate;
+                string strGender = model.Student.Gender;
+                string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
 
-            Student student = new Student {
-                IdAccount = lngIdAccount,
-                IdCourse = lngIdCourse,
-                Name = strName,
-                Cc = lngCcNum,
-                Telephone = lngTelephone,
-                IdNationality = lngIdNationality,
-                Credits = intCredits,
-                StudentNum = lngStudentNum,
-                BirthDate = dtBithDate,
-                Gender = strGender,
-                PostalCode = postalCode
-            };
+                Student student = new Student
+                {
+                    IdAccount = lngIdAccount,
+                    IdCourse = lngIdCourse,
+                    Name = strName,
+                    Cc = lngCcNum,
+                    Telephone = lngTelephone,
+                    IdNationality = lngIdNationality,
+                    Credits = intCredits,
+                    StudentNum = lngStudentNum,
+                    BirthDate = dtBithDate,
+                    Gender = strGender,
+                    PostalCode = postalCode
+                };
 
-            InsertStudent(student, strEmail);
+                InsertStudent(student, strEmail);
 
-            WelcomeEmail(strEmail);
-            return RedirectToAction("Login", "Account");
+                WelcomeEmail(strEmail);
+                return RedirectToAction("Login", "Account");
+            }
+            else
+            {
+                if (model.Student.BirthDate.Date >= DateTime.Now.Date)
+                    return RedirectToAction("RegisterStudent", "Account", new { account_id = model.RegisterGUID, birthDateError = true });
+
+                return RedirectToAction("RegisterStudent", "Account", new { account_id = model.RegisterGUID });
+            } 
         }
 
         [HttpPost]
@@ -234,12 +245,16 @@ namespace CIMOB_IPS.Controllers
             return View("Register");
         }
 
-        public IActionResult RegisterStudent([FromQuery] string account_id)
+        public IActionResult RegisterStudent([FromQuery] string account_id, bool? birthDateError)
         {
             if (User.Identity.IsAuthenticated)
                 return RedirectToAction("Index", "Home");
 
             ViewData["register-type"] = "student-register";
+
+            if(birthDateError != null)
+                if ((bool)birthDateError)
+                    ViewData["BirthDateError"] = "A data de nascimento tem de ser anterior a hoje.";
 
             List<SelectListItem> lisNationalities = new List<SelectListItem>();
 
@@ -258,7 +273,7 @@ namespace CIMOB_IPS.Controllers
                 }
             }
 
-            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Courses = PopulateCourses() });
+            return View("Register", new RegisterViewModel { Nationalities = PopulateNationalities(), Courses = PopulateCourses(), RegisterGUID = account_id });
         }
 
         private IEnumerable<SelectListItem> PopulateNationalities()
