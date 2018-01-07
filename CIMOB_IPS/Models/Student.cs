@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIMOB_IPS.Models.CustomValidations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -55,10 +56,10 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Género:")]
         public string Gender { get; set; }
 
+        [CheckDateRange]
         [Required(ErrorMessage = "Insira a sua data de nascimento.")]
         [Display(Name = "Data de Nascimento:")]
         [DataType(DataType.Date)]
-        [CheckDateRangeAttribute(ErrorMessage = "A data de nascimento tem de ser anterior a hoje.")]
         public DateTime BirthDate { get; set; }
 
         [Display(Name = "Código Postal:")]

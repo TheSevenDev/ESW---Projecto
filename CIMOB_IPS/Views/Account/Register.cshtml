@@ -33,6 +33,7 @@
         <div>
             <form asp-action="RegisterStudent" method="post" class="user-form">
                 <table>
+                    @Html.HiddenFor(model => model.RegisterGUID)
                     <tr> <td><label asp-for="EmailView"></label></td></tr>
                     <tr> <td><input asp-for="EmailView" value="@ViewData["student-email"]" type="text" readonly class="disabled-input" /></td></tr>
 
@@ -92,8 +93,7 @@
 
                             }
                         </td>
-                    </tr>
-                    <!--<tr><td><select asp-for="Student.Gender" asp-items="Html.get<EnumGender>()" class="form-control"></select></td></tr>-->
+                    </tr
                     <tr><td><span asp-validation-for="Student.Gender" class="error-message"></span></td></tr>
 
                     <tr><td><label asp-for="Student.BirthDate"></label></td></tr>
@@ -105,7 +105,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr><td><span asp-validation-for="Student.BirthDate" class="error-message"></span></td></tr>
+                    <tr><td><span asp-validation-for="Student.BirthDate" class="error-message">@ViewData["BirthDateError"]</span></td></tr>
 
                     <tr> <td><label asp-for="Student.Cc"></label></td></tr>
                     <tr>

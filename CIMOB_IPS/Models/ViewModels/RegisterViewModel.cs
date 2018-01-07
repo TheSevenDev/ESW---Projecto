@@ -40,6 +40,8 @@ namespace CIMOB_IPS.Models
         [RegularExpression("^[0-9]{3}$", ErrorMessage = ("O código postal deve ter 3 algarismos"))]
         public string PostalCode2 { get; set; }
 
+        [NotMapped]
+        public string RegisterGUID { get; set; }
 
         /// <summary>Property used to represent the new Student created with the values provided in the form.  </summary>
         /// <value>New generated Student with the given data.</value>

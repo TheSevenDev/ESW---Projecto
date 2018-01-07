@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CIMOB_IPS.Models
+namespace CIMOB_IPS.Models.CustomValidations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class CheckDateRangeAttribute : ValidationAttribute
