@@ -96,7 +96,7 @@ namespace CIMOB_IPS.Controllers
             {
                 return await context.Application
                     .CountAsync(a => a.IdStudent == GetStudentById(intCurrentId).IdStudent
-                    && a.IdState == (from s in context.State where s.Description == "Pendente" select s.IdState).SingleOrDefault());
+                    && a.IdState == (from s in context.State where s.Description == "Em avaliação" select s.IdState).SingleOrDefault());
             }
         }
       
@@ -117,6 +117,10 @@ namespace CIMOB_IPS.Controllers
             app.SignedAppFile = await CreateSignedApplication(model);
 
             _context.Application.Add(model.Application);
+
+            int programVacancies = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault().Vacancies;
+
+            _context.Program.Update(new Models.Program { IdProgram = 1, Vacancies = programVacancies-- });
             _context.SaveChanges();
 
             AddApplicationNotification();

@@ -13,11 +13,11 @@
             switch (s)
             {
                 case LoginState.EMAIL_NOTFOUND:
-                    return "Email não registado.";
+                    return "Email não registado";
                 case LoginState.WRONG_PASSWORD:
-                    return "Palavra-passe incorreta.";
+                    return "Palavra-passe incorreta";
                 case LoginState.CONNECTION_FAILED:
-                    return "Conexão falhada.";           
+                    return "Conexão falhada";           
                 default:
                     return "";
             }

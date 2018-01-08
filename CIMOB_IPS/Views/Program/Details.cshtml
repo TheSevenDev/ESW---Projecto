@@ -3,7 +3,7 @@
 
 @{
     var intEcts = 0;
-    var intApplications = 30;
+    var intApplications = 3;
 
     if (User.Identity.IsAuthenticated)
     {
@@ -65,7 +65,6 @@
     {
         <p>Sem informações sobre as instituições associadas ao programa!</p>
     }
-
     @if (!bolClosedProgram && !bolMaxApplications && !bolNoVacancies && !bolNoCredits && !bolIsLoggedOff)
     {
         <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>

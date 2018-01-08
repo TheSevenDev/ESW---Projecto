@@ -54,7 +54,7 @@ namespace CIMOB_IPS.Controllers
                 scmCommand.ExecuteNonQuery();
             }
 
-            return PartialView("~/Views/Shared/_Notifications.cshtml", NotificationsCount(User).ToString());
+            return PartialView("~/Views/Shared/_Notifications.cshtml");
         }
 
         public List<Notification> GetNotifications(ClaimsPrincipal user)

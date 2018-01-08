@@ -1,16 +1,25 @@
-﻿@{ 
+﻿@{
     NotificationController nc = new NotificationController();
 }
 
 @if (User.Identity.IsAuthenticated)
 {
-<div class="notifications" id="submenu-notifications">
-        <ul>
-            @foreach (var not in nc.GetNotifications(User))
-            {
-                @*<li class="notification-date">@not.NotificationDate</li>*@
-                <a asp-area="" asp-controller="@not.ControllerName" asp-action="@not.ActionName"><li> @not.Description</li></a>
-            }
-        </ul>
-</div>
+    <div class="notifications" id="submenu-notifications">
+        @if (nc.GetNotifications(User).Count == 0)
+        {
+            <ul style="overflow-y:hidden;">
+                <li style="cursor:default"><span>Não tem novas notificações</span></li>
+            </ul>
+        }
+        else
+        {
+            <ul>
+                @foreach (var not in nc.GetNotifications(User))
+                {
+                    @*<li class="notification-date">@not.NotificationDate</li>*@
+                    <a asp-area="" asp-controller="@not.ControllerName" asp-action="@not.ActionName"><li> @not.Description</li></a>
+                }
+            </ul>
+        }
+    </div>
 }
