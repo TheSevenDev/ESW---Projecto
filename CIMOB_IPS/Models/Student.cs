@@ -69,7 +69,7 @@ namespace CIMOB_IPS.Models
         public string Address { get; set; }
 
         [Display(Name = "N.º da Porta:")]
-        public int DoorNumber { get; set; }
+        public int? DoorNumber { get; set; }
 
         [Display(Name = "Andar:")]
         public string Floor { get; set; }

@@ -155,7 +155,7 @@ namespace CIMOB_IPS.Controllers
                 string strGender = model.Student.Gender;
                 string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
                 string strAddress = model.Student.Address;
-                int doorNumber = model.Student.DoorNumber;
+                int doorNumber = (int)model.Student.DoorNumber;
                 string floor = model.Student.Floor;
 
                 Student student = new Student
