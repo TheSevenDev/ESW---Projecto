@@ -65,6 +65,15 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Código Postal:")]
         public string PostalCode { get; set; }
 
+        [Display(Name = "Morada:")]
+        public string Address { get; set; }
+
+        [Display(Name = "N.º da Porta:")]
+        public int DoorNumber { get; set; }
+
+        [Display(Name = "Andar:")]
+        public string Floor { get; set; }
+
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]
         public Course IdCourseNavigation { get; set; }

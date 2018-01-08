@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CIMOB_IPS", "CIMOB_IPS\CIMOB_IPS.csproj", "{7614B682-00CA-4CDC-870D-827804B9F383}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitCIMOB_IPS", "XUnitCIMOB_IPS\XUnitCIMOB_IPS.csproj", "{2AA9645E-76A1-4449-BB87-C615ECBC5AA2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIMOB_IPS_BackOffice", "CIMOB_IPS_BackOffice\CIMOB_IPS_BackOffice.csproj", "{1DF1249C-FBC0-4F7E-9BC9-210C4D21ABD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2AA9645E-76A1-4449-BB87-C615ECBC5AA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AA9645E-76A1-4449-BB87-C615ECBC5AA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AA9645E-76A1-4449-BB87-C615ECBC5AA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DF1249C-FBC0-4F7E-9BC9-210C4D21ABD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DF1249C-FBC0-4F7E-9BC9-210C4D21ABD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DF1249C-FBC0-4F7E-9BC9-210C4D21ABD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DF1249C-FBC0-4F7E-9BC9-210C4D21ABD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

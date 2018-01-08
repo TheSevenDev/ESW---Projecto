@@ -154,6 +154,9 @@ namespace CIMOB_IPS.Controllers
                 DateTime dtBithDate = model.Student.BirthDate;
                 string strGender = model.Student.Gender;
                 string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
+                string strAddress = model.Student.Address;
+                int doorNumber = model.Student.DoorNumber;
+                string floor = model.Student.Floor;
 
                 Student student = new Student
                 {
@@ -167,7 +170,10 @@ namespace CIMOB_IPS.Controllers
                     StudentNum = lngStudentNum,
                     BirthDate = dtBithDate,
                     Gender = strGender,
-                    PostalCode = postalCode
+                    PostalCode = postalCode,
+                    Address = strAddress,
+                    DoorNumber = doorNumber,
+                    Floor = floor
                 };
 
                 InsertStudent(student, strEmail);

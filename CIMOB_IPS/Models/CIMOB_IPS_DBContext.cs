@@ -493,6 +493,10 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("postal_code")
                     .HasMaxLength(8);
 
+                entity.Property(e => e.Address).HasColumnName("address");
+                entity.Property(e => e.DoorNumber).HasColumnName("door_number");
+                entity.Property(e => e.Floor).HasColumnName("floor");
+
 
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Student)
@@ -536,6 +540,8 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdAccount)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_T_Account");
+
+                
             });
 
             modelBuilder.Entity<TestFile>(entity =>
