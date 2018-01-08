@@ -117,10 +117,6 @@ namespace CIMOB_IPS.Controllers
             app.SignedAppFile = await CreateSignedApplication(model);
 
             _context.Application.Add(model.Application);
-
-            int programVacancies = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault().Vacancies;
-
-            _context.Program.Update(new Models.Program { IdProgram = 1, Vacancies = programVacancies-- });
             _context.SaveChanges();
 
             AddApplicationNotification();

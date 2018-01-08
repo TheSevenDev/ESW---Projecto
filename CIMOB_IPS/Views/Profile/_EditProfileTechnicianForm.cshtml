@@ -1,12 +1,12 @@
-﻿@model CIMOB_IPS.Models.Technician
-
+﻿@model CIMOB_IPS.Models.ProfileViewModel
+<link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
 <form asp-action="UpdateProfileTechnician" method="post" class="user-form">
     <table>
-        @Html.HiddenFor(model => Model.IdAccount)
-        @Html.HiddenFor(model => Model.Name)
-        <tr> <td><label asp-for="Telephone"></label></td></tr>
-        <tr> <td><input asp-for="Telephone" type="text" /></td></tr>
-        <tr> <td><span asp-validation-for="Telephone" class="error-message"></span></td></tr>
+        @Html.HiddenFor(model => Model.Technician.IdAccount)
+        @Html.HiddenFor(model => Model.Technician.Name)
+        <tr> <td><label asp-for="Technician.Telephone"></label></td></tr>
+        <tr> <td><input asp-for="Technician.Telephone" type="text" /><div class="tool-tip slideIn right">Confirme o nº de telemóvel</div></td></tr>
+        <tr> <td><span asp-validation-for="Technician.Telephone" class="error-message"></span></td></tr>
 
         <tr> <td><input type="submit" value="Guardar" /></td> </tr>
     </table> 
