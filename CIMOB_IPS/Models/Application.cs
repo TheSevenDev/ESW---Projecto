@@ -48,7 +48,7 @@ namespace CIMOB_IPS.Models
         public State IdStateNavigation { get; set; }
 
         [Display(Name = "Submetida a")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ApplicationDate { get; set; }
 
         public Student IdStudentNavigation { get; set; }
