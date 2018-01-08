@@ -1,11 +1,18 @@
 ﻿@model CIMOB_IPS.Models.ProfileViewModel
-
+    <link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
 <form asp-action="UpdateProfileStudent" method="post" class="user-form">
     <table>
         @Html.HiddenFor(model => Model.Student.IdAccount)
         @Html.HiddenFor(model => Model.Student.Name)
         <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
-        <tr> <td><input asp-for="Student.Telephone" type="text" /></td></tr>
+        <tr>
+            <td>
+                <div class="on-focus clearfix">
+                    <input asp-for="Student.Telephone" type="text" />
+                    <div class="tool-tip slideIn right">Confirme o nº de telemóvel</div>
+                </div>
+            </td>
+        </tr>
         <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
 
         @*<tr><td><label asp-for="Student.StudentNum"></label></td></tr>
@@ -23,9 +30,11 @@
         </tr>
 
         <tr>
-            <td>
-                <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onfocusout="javascript:adressCode()"  onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
-                &nbsp;<input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
+            <td><div class="on-focus clearfix">
+    <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onfocusout="javascript:adressCode()" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
+    &nbsp;
+                <input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
+</div>
             </td>
         </tr>
         <tr><td><span asp-validation-for="PostalCode1" class="error-message"></span></td></tr>
@@ -59,7 +68,7 @@
                 </div>
             </td>
         </tr>
-        <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
+        <tr><td><div class="on-focus clearfix"><input asp-for="Student.Credits" placeholder="ECTS" /><div class="tool-tip slideIn right">Insira os créditos</div></div></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
         <tr> <td><input type="submit" value="Guardar" /></td> </tr>
