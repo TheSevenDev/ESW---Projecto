@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="BackOffice\" />
     <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
