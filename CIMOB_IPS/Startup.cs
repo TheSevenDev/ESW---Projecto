@@ -59,7 +59,12 @@ namespace CIMOB_IPS
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true, //allow unkown file types also to be served
+                DefaultContentType = "application/vnd.microsoft.portable-executable" //content type to returned if fileType is not known.
+            });
+
             /*
             app.UseStaticFiles(new StaticFileOptions()
             {

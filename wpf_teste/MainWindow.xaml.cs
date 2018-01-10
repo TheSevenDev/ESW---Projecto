@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CIMOB_IPS_BackOffice
+namespace wpf_teste
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

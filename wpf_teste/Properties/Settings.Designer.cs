@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CIMOB_IPS_BackOffice.Properties
+namespace wpf_teste.Properties
 {
 
 
