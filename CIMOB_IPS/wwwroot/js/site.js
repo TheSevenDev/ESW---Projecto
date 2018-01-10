@@ -205,6 +205,7 @@ function countUp() {
 }
 
 
+
 $(document).ready(function () {
     try {
         adressCode();
@@ -212,4 +213,34 @@ $(document).ready(function () {
     catch (e) {
 
     }
+
+    $("form.form-delete-app").submit(function (event) {
+        event.preventDefault();
+        var form = this;
+        $.confirm({
+            title: 'Atenção!',
+            useBootstrap: false,
+            modal: true,
+            autoOpen: false,
+            draggable: false,
+            content: 'Está a cancelar uma candidatura.\nTem a certeza que pretende continuar?',
+            buttons: {
+                sim: {
+                    text: 'Sim',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        form.submit();
+                    }
+                },
+                nao: {
+                    text: 'Não',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        event.preventDefault();
+                    }
+                },
+
+            }
+        })
+    });
 });

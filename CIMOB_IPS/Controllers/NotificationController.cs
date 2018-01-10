@@ -63,7 +63,7 @@ namespace CIMOB_IPS.Controllers
             using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
             {
                 scnConnection.Open();
-                string strQuery = "Select * FROM Notification where id_account = @AccountId";
+                string strQuery = "Select * FROM Notification where id_account = @AccountId order by notification_date desc";
 
                 SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
                 scmCommand.Parameters.AddWithValue("@AccountId", GetCurrentUserID(user));
