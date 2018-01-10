@@ -50,8 +50,8 @@ namespace CIMOB_IPS.Controllers
             Student student = GetStudentById(userID);
             var app = _context.Application.Where(ap => ap.IdStudent == student.IdStudent);
 
-            if(app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
-              return RedirectToAction("Index", "Home");
+            if (app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
+                return RedirectToAction("Index", "Home");
 
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplicationMob";
@@ -59,7 +59,7 @@ namespace CIMOB_IPS.Controllers
             ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = student } };
             viewModel.Account.Email = GetEmail(userID);
 
-            foreach(var ip in program.InstitutionProgram)
+            foreach (var ip in program.InstitutionProgram)
             {
                 ip.IdOutgoingInstitutionNavigation = await _context.Institution
                     .Include(i => i.IdNationalityNavigation)
@@ -99,7 +99,7 @@ namespace CIMOB_IPS.Controllers
                     && a.IdState == (from s in context.State where s.Description == "Em avaliação" select s.IdState).SingleOrDefault());
             }
         }
-      
+
         [HttpPost]
         public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)
         {
@@ -110,7 +110,7 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             Application app = model.Application;
-            app.IdProgramNavigation =  _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS MUDAR PROX FASE
+            app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS MUDAR PROX FASE
             app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
             app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
             app.ApplicationDate = DateTime.Now;
@@ -218,10 +218,10 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.ApplicationInstitutions)
                     .ToListAsync();
 
-                foreach(Application app in lisApplications)
+                foreach (Application app in lisApplications)
                 {
                     app.ApplicationInstitutions = await context.ApplicationInstitutions
-                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).Where(i=>i.IdApplication == app.IdApplication).ToListAsync();
+                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).Where(i => i.IdApplication == app.IdApplication).ToListAsync();
 
                     app.IdProgramNavigation.IdProgramTypeNavigation = await context.ProgramType.Where(p => p.IdProgramType == app.IdProgramNavigation.IdProgramType).SingleOrDefaultAsync();
                 }
@@ -241,8 +241,8 @@ namespace CIMOB_IPS.Controllers
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                var testFile = new TestFile {  };
-                
+                var testFile = new TestFile { };
+
                 using (var memoryStream = new MemoryStream())
                 {
                     await viewModel.File.CopyToAsync(memoryStream);
@@ -360,5 +360,39 @@ namespace CIMOB_IPS.Controllers
                 return View(paginatedApplications);
             }
         }
+
+        [HttpPost]
+        public IActionResult DeleteApplication()
+        {       
+            AccountController ac = new AccountController();
+            ProfileController pc = new ProfileController();
+
+            int lngCurrentUserId = GetCurrentUserID();
+            int applicationId = Int32.Parse(Request.Form["idApplication"]);
+
+            if (!ac.IsStudent(lngCurrentUserId))
+                return RedirectToAction("Index", "Home");
+
+            long studentId = ac.GetStudentId(lngCurrentUserId);
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                try
+                {
+                    var application = context.Application.Where(app => app.IdApplication == applicationId).FirstOrDefault();
+                    if (application != null)
+                        context.Application.Remove(application);
+
+                    context.SaveChanges();
+                }
+                catch
+                {
+
+                }
+
+                return RedirectToAction("MyApplications", "Application");
+            }
+        }
+
     }
 }

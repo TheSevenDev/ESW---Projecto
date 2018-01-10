@@ -7,17 +7,13 @@
         <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
         <tr>
             <td>
-                <div class="on-focus clearfix">
+                @*<div class="on-focus clearfix">*@
                     <input asp-for="Student.Telephone" type="text" />
-                    <div class="tool-tip slideIn right">Confirme o nº de telemóvel</div>
-                </div>
+                    @*<div class="tool-tip slideIn right">Confirme o nº de telemóvel</div>*@
+                @*</div>*@
             </td>
         </tr>
         <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
-
-        @*<tr><td><label asp-for="Student.StudentNum"></label></td></tr>
-        <tr><td><input asp-for="Student.StudentNum" placeholder="Número de Estudante" type="text" /></td></tr>
-        <tr><td><span asp-validation-for="Student.StudentNum" class="error-message"></span></td></tr>*@
 
         <tr>
             <td>
@@ -68,7 +64,7 @@
                 </div>
             </td>
         </tr>
-        <tr><td><div class="on-focus clearfix"><input asp-for="Student.Credits" placeholder="ECTS" /><div class="tool-tip slideIn right">Insira os créditos</div></div></td></tr>
+        <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
         <tr> <td><input type="submit" value="Guardar" /></td> </tr>
