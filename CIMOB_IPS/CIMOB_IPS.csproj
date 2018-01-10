@@ -21,6 +21,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\CIMOB_IPS_BackOffice.application" />
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\CIMOB_IPS_BackOffice.exe.config.deploy" />
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\CIMOB_IPS_BackOffice.exe.deploy" />
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\CIMOB_IPS_BackOffice.exe.manifest" />
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\EntityFramework.dll.deploy" />
+    <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\EntityFramework.SqlServer.dll.deploy" />
+    <Content Include="BackOffice\CIMOB_IPS_BackOffice.application" />
+    <Content Include="BackOffice\setup.exe" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.12" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />

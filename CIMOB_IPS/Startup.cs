@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using CIMOB_IPS.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace CIMOB_IPS
 {
@@ -57,6 +60,13 @@ namespace CIMOB_IPS
             }
 
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), @"BackOffice")),
+                RequestPath = new PathString("/BackOffice")
+            });
 
             app.UseMvc(routes =>
             {
