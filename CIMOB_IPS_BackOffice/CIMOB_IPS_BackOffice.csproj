@@ -15,10 +15,10 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>..\CIMOB_IPS\BackOffice\</PublishUrl>
-    <Install>false</Install>
+    <PublishUrl>..\CIMOB_IPS\wwwroot\BackOffice\</PublishUrl>
+    <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateEnabled>true</UpdateEnabled>
     <UpdateMode>Foreground</UpdateMode>
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>Days</UpdateIntervalUnits>
@@ -26,12 +26,13 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://cimob-ips.azurewebsites.net/BackOffice/</InstallUrl>
+    <UpdateUrl>http://cimob-ips.azurewebsites.net/BackOffice/</UpdateUrl>
     <ProductName>CIMOB_IPS - BackOffice</ProductName>
     <PublisherName>CIMOB_IPS</PublisherName>
     <SuiteName>CIMOB_IPS - Suite_BackOffice</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -63,7 +64,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>E03259716AC4DA5B26B97122D647DFA88498D843</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>731C789A1CDD3F79EE538341541CFB05CE1F688C</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>CIMOB_IPS_BackOffice_TemporaryKey.pfx</ManifestKeyFile>
@@ -133,7 +134,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="CIMOB_IPS_BackOffice_7_TemporaryKey.pfx" />
     <None Include="CIMOB_IPS_BackOffice_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

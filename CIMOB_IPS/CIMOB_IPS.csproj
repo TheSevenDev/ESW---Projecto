@@ -28,13 +28,16 @@
     <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\EntityFramework.dll.deploy" />
     <Content Include="BackOffice\Application Files\CIMOB_IPS_BackOffice_1_0_0_2\EntityFramework.SqlServer.dll.deploy" />
     <Content Include="BackOffice\CIMOB_IPS_BackOffice.application" />
-    <Content Include="BackOffice\setup.exe" />
+    <Content Include="BackOffice\setup.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="iTextSharp" Version="5.5.12" />
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
