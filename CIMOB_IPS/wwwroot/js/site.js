@@ -30,8 +30,8 @@ function toogleHelp() {
     hideMenus();
 
     $("#fade-background").toggle();
-    $("#help-content").toggle();
-    $("#help-close").toggle();
+    $("#help-content").toggle(250);
+    $("#help-close").toggle(250);
 }
 
 function openfyp() {

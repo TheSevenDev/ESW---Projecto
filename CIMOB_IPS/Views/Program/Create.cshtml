@@ -4,12 +4,12 @@
     ViewData["Title"] = "Create Program";
 }
 
-<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 
 <p class="page-title">Novo Programa</p>
 
-<div class="main-application-container">
-    <form asp-action="Create" method="post" class="application-form" id="form-application">
+<div class="main-create-program-container">
+    <form asp-action="Create" method="post" class="program-form" id="form-application">
         <table>
             <tr><td><label asp-for="IdProgramType"></label></td></tr>
             <tr><td> @Html.DropDownListFor(model => model.IdProgramType, Model.ProgramTypes, "-- Seleccione o tipo de programa --")</td></tr>
