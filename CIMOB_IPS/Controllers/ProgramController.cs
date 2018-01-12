@@ -26,7 +26,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Details(string programID)
+        public async Task<IActionResult> Details([FromQuery] string programID)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {

@@ -58,10 +58,6 @@
                                 <li></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="~/BackOffice/publish.htm">Back Office</a>
-                            <!--<a href="~/BackOffice/publish.htm">~/BackOffice/publish.htm</a>-->
-                        </li>
                     }
                 }
 
@@ -93,6 +89,12 @@
                 {
                     <li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>
                 }
+                @if (User.IsInRole("tecnico_admin"))
+                {
+                    <li>
+                        <a href="~/BackOffice/publish.htm">Back Office</a>
+                    </li>
+                }
                 <li> <a asp-area="" asp-controller="Account" asp-action="Logout">Sair</a></li>
             </ul>
         </div>
@@ -120,7 +122,6 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
-    <script src="~/lib/jquery-confirm/jquery-confirm.js"></script>
 
     <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
             asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"

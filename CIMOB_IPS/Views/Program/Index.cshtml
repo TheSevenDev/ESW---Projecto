@@ -1,8 +1,5 @@
 ﻿@model IEnumerable<CIMOB_IPS.Models.Program>
 
-@{
-    ViewData["Title"] = "ChooseProgram";
-}
 
 <link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 <div class="TitleDiv"> <img draggable="false" src="~/images/bannerPrincipal.jpg" /> </div>
@@ -21,7 +18,33 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="location.href='@Url.Action("Details", "Program",new { programID = "1" })'">Mais Informações</button>
+                            <button asp-area="" onclick="javascript:$('#erasmus-programs').toggle(250)">Programas Disponíveis</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="erasmus-programs" style="display:none">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.IdProgramTypeNavigation.Name.Equals("Erasmus+"))
+                                    {
+                                        <div class="program-info">
+                                            <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                            <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                            <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                            <div id="btn-program">
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                                                {
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                }
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                }
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -37,7 +60,31 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-controller="Application" asp-action="New">Mais Informações</button>
+                            <button asp-area="" onclick="javascript:$('#lusoBrasileiras-programs').toggle(250)">Programas Disponíveis</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="lusoBrasileiras-programs" style="display:none">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Luso-Brasileiras"))
+                                    {
+                                        @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                                        {
+                                            <div>
+                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                                <div id="btn-program">
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -55,7 +102,30 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-controller="Application" asp-action="New">Mais Informações</button>
+                            <button asp-area="" onclick="javascript:$('#ibero-Americanas-programs').toggle(250)">Programas Disponíveis</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="ibero-Americanas-programs" style="display:none">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Ibero-Americanas"))
+                                    { @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
+                                    {
+                                        <div>
+                                            <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                            <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                            <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                            <div id="btn-program">
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                            </div>
+                                        </div>
+                                    }
+                                    }
+                                }
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -71,7 +141,31 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-controller="Application" asp-action="New">Mais Informações</button>
+                            <button asp-area="" onclick="javascript:$('#vascoGama-programs').toggle(250)">Programas Disponíveis</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="vascoGama-programs" style="display:none">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.IdProgramTypeNavigation.Name.Equals("Programa Vasco da Gama"))
+                                    {
+                                        @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
+                                        {
+                                            <div>
+                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                                <div id="btn-program">
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -88,7 +182,31 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-controller="Application" asp-action="New">Mais Informações</button>
+                            <button asp-area="" onclick="javascript:$('#macau-programs').toggle(250)">Programas Disponíveis</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="macau-programs" style="display:none">
+                                @foreach (var item in Model)
+                                {
+                                    if (item.IdProgramTypeNavigation.Name.Equals("Programa Instituto Politécnico de Macau"))
+                                    {
+                                        @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
+                                        {
+                                            <div>
+                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                                <div id="btn-program">
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                }
+                            </div>
                         </td>
                     </tr>
                 </table>

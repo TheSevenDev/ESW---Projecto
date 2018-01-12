@@ -281,3 +281,24 @@ li.sortable-placeholder {
     background-color: #d61b15;
     cursor:pointer;
 }
+
+.main-application-container button {
+    padding:0.5%;
+    width: 25%;
+    margin-top: 2%;
+    margin-left:75%;
+    border: none;
+    background-color: #222222;
+    border-radius: 3%;
+    border: 0.7px solid #222222;
+    font-weight: bold;
+    font-size: 1vmax;
+    color: #f1f1f1;
+}
+
+
+.main-application-container button:hover {
+    background-color: var(--blue-var4);
+    cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
+}
