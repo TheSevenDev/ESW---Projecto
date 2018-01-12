@@ -1,0 +1,18 @@
+﻿<Window x:Class="CIMOB_IPS_BackOffice.ProgramTypes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIMOB_IPS_BackOffice"
+        mc:Ignorable="d"
+        Title="CIMOB IPS BackOffice - Tipos de Programa" Height="400" Width="340">
+    <StackPanel>
+        <Label Margin="10" FontSize="15" HorizontalAlignment="Center">Tipos de Programa</Label>
+        <Label FontSize="8" Margin="10 0 0 0">Duplo-clique para editar</Label>
+        <ListBox Height="250" Margin="10 0" Name="LbProgramTypes" Loaded="LbProgramTypes_Loaded"></ListBox>
+        <StackPanel Margin="10"  Orientation="Horizontal">
+            <Button>Adicionar</Button>
+            <Button Margin="10 0 0 0" >Remover</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

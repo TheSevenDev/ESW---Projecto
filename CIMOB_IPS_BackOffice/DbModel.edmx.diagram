@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="855c243b371346fa954e7dbe03527f2a" Name="Diagram1">
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Account" Width="1.5" PointX="5.25" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Application" Width="1.5" PointX="9.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Application_Institutions" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Coordenator" Width="1.5" PointX="11.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Course" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Help" Width="1.5" PointX="11.75" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Institution" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Mobility" Width="1.5" PointX="12" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Nationality" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Notification" Width="1.5" PointX="7.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Pending_Account" Width="1.5" PointX="9.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Program" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Program_Type" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.State" Width="1.5" PointX="3" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Student" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.Technician" Width="1.5" PointX="9.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CIMOB_IPS_DBModel.test_file" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_E_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_N_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_T_Account" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_A_Program" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_C_State" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_C_Student" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_M_Application" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_AI_Institution" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_C_Institution" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_E_Course" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_I_Nationality" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_M_Institution" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_M_Technician" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_E_Nationality" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_P_PT" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.fk_P_State" ManuallyRouted="false" />
+        <AssociationConnector Association="CIMOB_IPS_DBModel.Institution_Program" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

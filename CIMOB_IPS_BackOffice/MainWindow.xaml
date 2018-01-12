@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CIMOB_IPS_BackOffice"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Label Grid.Row="0" Content="BEM-VINDOS AOS HIMALAIAS"></Label>
-    </Grid>
+        Title="CIMOB IPS BackOffice - Menu Principal" Height="350" Width="350">
+    <StackPanel Margin="10">
+        <Label Margin="10" FontSize="20" HorizontalAlignment="Center" Content="Escolha a opção pretendida"></Label>
+        <Button Margin="10" Height="30" Name="BtnProgramType">Tipos de Programa</Button>
+        <Button Margin="10" Height="30" Name="BtnTechnicians">Gestão de Técnicos</Button>
+        <Button Margin="10" Height="30" Name="BtnHelp">Menus de Ajuda</Button>
+    </StackPanel>
 </Window>
