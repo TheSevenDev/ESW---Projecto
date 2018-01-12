@@ -16,7 +16,6 @@
             <ul>
                 @foreach (var not in nc.GetNotifications(User))
                 {
-                    @*<li class="notification-date">@not.NotificationDate</li>*@
                     <a asp-area="" asp-controller="@not.ControllerName" asp-action="@not.ActionName"><li> @not.Description</li></a>
                 }
             </ul>

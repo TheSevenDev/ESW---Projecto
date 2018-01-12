@@ -353,7 +353,10 @@ namespace CIMOB_IPS.Controllers
 
                 var applications = (from a in context.Application orderby a.ApplicationDate select a)
                     .Include(a => a.IdStateNavigation)
-                    .Include(a => a.IdStudentNavigation);
+                    .Include(a => a.IdStudentNavigation)
+                    .Include(a => a.IdProgramNavigation)
+                    
+                    ;
 
                 var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
 

@@ -1,80 +1,66 @@
 ﻿@model PaginatedList<CIMOB_IPS.Models.Application>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
-<p class="page-title">Candidaturas</p>
-
-<div class="main-application-container">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().IdStudentNavigation.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().ApplicationDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().FinalEvaluation)
-                </th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+<p class="page-title">Candidaturas Submetidas</p>
+@foreach (var item in Model)
+{
+    <div class="main-application-container" style="padding:1%;">
+        @{
+            var strName = "";
+            var arrNames = item.IdStudentNavigation.Name.Split(' ');
+            string strFirstName = arrNames[0];
+            string strLastName = arrNames[arrNames.Length - 1];
+            if (arrNames.Length > 1)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdStudentNavigation.StudentNum)
-                    </td>
-                    <td>
-                        @{ 
-                            var strName = "";
-                            var arrNames = item.IdStudentNavigation.Name.Split(' ');
-                            string strFirstName = arrNames[0];
-                            string strLastName = arrNames[arrNames.Length - 1];
-                            if (arrNames.Length > 1)
-                            {
-                                strName = strFirstName + " " + strLastName;
-                            }
-                            else
-                            {
-                                strName = strFirstName;
-                            }
-                        }
-
-                        @strName
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ApplicationDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FinalEvaluation)
-                    </td>
-                    <td>
-                        <a asp-controller="Application" asp-action="Details" asp-route-appId=@item.IdApplication>Detalhes</a>
-                        &nbsp;
-                        <a asp-controller="Application" asp-action="Evaluate" asp-route-appId=@item.IdApplication>Avaliar</a>
-                    </td>
-                </tr>
+                strName = strFirstName + " " + strLastName;
             }
-        </tbody>
-    </table>
-    <br />
+            else
+            {
+                strName = strFirstName;
+            }
+        }
+
+        <p>
+            <b>@Html.DisplayNameFor(modelItem => item.IdStudentNavigation.StudentNum)</b>
+            @Html.DisplayFor(modelItem => item.IdStudentNavigation.StudentNum)
+        </p>
+
+        <p>
+            <b>@Html.DisplayNameFor(modelItem => item.IdStudentNavigation.Name)</b>
+            @strName
+        </p>
+
+        <p>
+            <b>@Html.DisplayNameFor(modelItem => item.ApplicationDate)</b>
+            @Html.DisplayFor(modelItem => item.ApplicationDate)
+        </p>
+
+        <p>
+            <b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation.Description)</b>
+            @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
+        </p>
+
+        @if(item.IdStateNavigation.Description != "Em Avaliação")
+        { 
+            <p>
+                <b>@Html.DisplayNameFor(modelItem => item.FinalEvaluation)</b>
+                @Html.DisplayFor(modelItem => item.FinalEvaluation)
+            </p>
+        }
+            
+        @*<a asp-controller="Application" asp-action="Details"  asp-route-appId=@item.IdApplication>Detalhes</a>*@
+        <button asp-controller="Application" asp-action="Evaluate" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
+
+    </div>
+            }
+
+
+
+
+
+
+@*<br />
     Página @Model.PageIndex de @Model.TotalPages
     <br />
     @{
@@ -90,5 +76,4 @@
     @if (Model.HasNextPage)
     {
         <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
-    }
-</div>
+    }*@
