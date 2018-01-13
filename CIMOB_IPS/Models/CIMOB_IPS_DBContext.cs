@@ -434,7 +434,6 @@ namespace CIMOB_IPS.Models
                     .HasMaxLength(50);
 
                 entity.Property(e => e.ImageFile)
-                    .IsRequired()
                     .HasColumnName("image_file")
                     .HasMaxLength(255);
             });
@@ -534,7 +533,10 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
 
-                
+                entity.Property(e => e.Active)
+                .IsRequired()
+                .HasColumnName("active");
+
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Technician)
                     .HasForeignKey(d => d.IdAccount)

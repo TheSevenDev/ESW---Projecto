@@ -66,9 +66,12 @@ namespace CIMOB_IPS.Models
         public string PostalCode { get; set; }
 
         [Display(Name = "Morada:")]
+        [Required(ErrorMessage = "Insira a sua Rua.")]
         public string Address { get; set; }
 
         [Display(Name = "N.º da Porta:")]
+        [Required(ErrorMessage = "Insira o nº da porta.")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "O nº da porta tem de ser expresso em algarismos.")]
         public int? DoorNumber { get; set; }
 
         [Display(Name = "Andar:")]

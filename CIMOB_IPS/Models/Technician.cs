@@ -28,6 +28,9 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Administrador")]
         public bool IsAdmin { get; set; }
 
+        [Display(Name = "Activo")]
+        public bool Active { get; set; }
+
         public Account IdAccountNavigation { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
     }

@@ -1,0 +1,29 @@
+﻿<Window x:Class="CIMOB_IPS_BackOffice.ProgramTypesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIMOB_IPS_BackOffice"
+        mc:Ignorable="d"
+        Title="CIMOB IPS BackOffice - Tipos de Programa" Height="400" Width="450">
+    <StackPanel>
+        <Label Margin="10" FontSize="15" HorizontalAlignment="Center">Tipos de Programa</Label>
+        
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Width="200" Margin="10 0 0 0">
+                <Label>Nome</Label>
+                <TextBox IsEnabled="False" Name="TxtName"></TextBox>
+                <Label>Descrição</Label>
+                <TextBox IsEnabled="False" Height="100" TextWrapping="Wrap" Name="TxtDescription"></TextBox>
+            </StackPanel>
+            <StackPanel Width="230">
+                <Label FontSize="8" Margin="10 0 0 0">Duplo-clique para editar</Label>
+                <ListBox Height="250" Margin="10 0" Name="LbProgramTypes" MouseDoubleClick="LbProgramTypes_MouseDoubleClick" SelectionChanged="LbProgramTypes_SelectionChanged" Loaded="LbProgramTypes_Loaded" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding ProgramTypeList, Mode=OneWay}"></ListBox>
+                <StackPanel Margin="10"  Orientation="Horizontal">
+                    <Button Click="BtnAdd_Click" Name="BtnAdd">Adicionar</Button>
+                    <Button Margin="10 0 0 0" Name="BtnRemove" Click="BtnRemove_Click">Remover</Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:CIMOB_IPS_BackOffice"
         mc:Ignorable="d"
         Title="CIMOB IPS BackOffice - Menu Principal" Height="350" Width="350">
-    <StackPanel Margin="10">
+    <StackPanel Grid.Row="0" Margin="10">
         <Label Margin="10" FontSize="20" HorizontalAlignment="Center" Content="Escolha a opção pretendida"></Label>
-        <Button Margin="10" Height="30" Name="BtnProgramType">Tipos de Programa</Button>
-        <Button Margin="10" Height="30" Name="BtnTechnicians">Gestão de Técnicos</Button>
-        <Button Margin="10" Height="30" Name="BtnHelp">Menus de Ajuda</Button>
+        <Button Margin="10" Height="30" Name="BtnProgramType" Click="BtnProgramType_Click">Tipos de Programa</Button>
+        <Button Margin="10" Height="30" Name="BtnTechnicians" Click="BtnTechnicians_Click">Gestão de Técnicos</Button>
+        <Button Margin="10" Height="30" Name="BtnHelp" Click="BtnHelp_Click">Menus de Ajuda</Button>
     </StackPanel>
 </Window>
