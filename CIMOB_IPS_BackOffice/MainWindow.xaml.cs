@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CIMOB_IPS_BackOffice.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,24 @@ namespace CIMOB_IPS_BackOffice
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void BtnProgramType_Click(object sender, RoutedEventArgs e)
+        {
+            ProgramTypesWindow programTypesDialog = new ProgramTypesWindow();
+            programTypesDialog.Show();
+        }
+
+        private void BtnTechnicians_Click(object sender, RoutedEventArgs e)
+        {
+            TechniciansWindow techniciansDialog = new TechniciansWindow();
+            techniciansDialog.Show();
+        }
+
+        private void BtnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            HelpWindow helpDialog = new HelpWindow();
+            helpDialog.Show();
         }
     }
 }
