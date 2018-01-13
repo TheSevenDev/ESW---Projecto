@@ -35,9 +35,9 @@
                                             <div id="btn-program" >
                                                 @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                                                 {
-                                                    <button asp-area="" asp-controller = "Application" asp-action = "New" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                    <button asp-area="" asp-controller="Application" asp-action="New" class="btn-program-actions">Candidatura</button>
                                                 }
-                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                <button asp-area="" asp-controller="Application" class="btn-program-actions">+ INFO</button>
                                             </div>
                                         </div>
 
