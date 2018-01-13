@@ -37,7 +37,7 @@
                                                 {
                                                     <button asp-area="" asp-controller="Application" asp-action="New" class="btn-program-actions">Candidatura</button>
                                                 }
-                                                <button asp-area="" asp-controller="Application" class="btn-program-actions">+ INFO</button>
+                                                <button asp-area="" asp-controller="Application" class="btn-program-actions" onclick="location.href='@Url.Action("Details","Program",new {programID = item.IdProgram })'" >Mais informações</button>
                                             </div>
                                         </div>
 
