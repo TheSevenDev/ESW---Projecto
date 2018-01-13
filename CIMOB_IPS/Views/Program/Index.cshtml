@@ -32,8 +32,8 @@
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
-                                            <div id="btn-program">
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                            <div id="btn-program" >
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                                                 {
                                                     <button asp-area="" asp-controller="Application" asp-action="New" class="btn-program-actions">Candidatura</button>
                                                 }
