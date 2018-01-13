@@ -1,0 +1,20 @@
+﻿<Window x:Class="CIMOB_IPS_BackOffice.Windows.ManageProgramTypeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIMOB_IPS_BackOffice.Windows"
+        mc:Ignorable="d"
+        Title="CIMOB IPS BackOffice - Tipo de Programa" Height="360" Width="300">
+    <StackPanel Margin="10" HorizontalAlignment="Left">
+        <Label Name="LblTitle" HorizontalAlignment="Center" FontSize="14" Content="Placeholder"></Label>
+        <Label>Nome</Label>
+        <TextBox Width="270" Name="TxtName"></TextBox>
+        <Label>Descrição</Label>
+        <TextBox Height="150" Name="TxtDesc"></TextBox>
+        <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+            <Button Name="BtnAdd" Click="BtnAdd_Click">Adicionar</Button>
+            <Button Margin="10 0 0 0" Name="BtnCancel" IsCancel="True">Cancelar</Button>
+        </StackPanel>
+    </StackPanel>
+</Window>

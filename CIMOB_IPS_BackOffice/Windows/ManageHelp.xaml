@@ -1,0 +1,46 @@
+﻿<Window x:Class="CIMOB_IPS_BackOffice.Windows.ManageHelp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIMOB_IPS_BackOffice.Windows"
+        xmlns:ex="clr-namespace:Smith.WPF.HtmlEditor;assembly=Smith.WPF.HtmlEditor"
+        mc:Ignorable="d"
+        Title="CIMOB IPS BackOffice - Ajuda" Height="500" Width="600">
+    <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="Padding"
+                    Value="0" />
+            <Setter Property="VerticalAlignment"
+                    Value="Center" />
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center" />
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Padding"
+                    Value="4,2" />
+        </Style>
+    </Window.Resources>
+    <StackPanel>
+        <Border DockPanel.Dock="Bottom"
+                BorderBrush="#FFC5C5C5"
+                BorderThickness="0,1,0,0"
+                Padding="8">
+        </Border>
+        <Label Margin="10 0">Controlador</Label>
+        <TextBox Name="TxtController" HorizontalAlignment="Left"  Margin="10 0" Width="300"></TextBox>
+        <Label Margin="10 10 0 0">Acção</Label>
+        <TextBox Name="TxtAction" HorizontalAlignment="Left"  Margin="10 0" Width="300"></TextBox>
+        <Label  Margin="10 10 0 0">Texto</Label>
+        
+        <ex:HtmlEditor x:Name="Editor"  Height="300"/>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Name="GetHtmlButton"
+                            Content="Okay"
+                            Margin="10" />
+                <Button Name="BtnCancel" IsCancel="True" Margin="10" >Cancelar</Button>
+            </StackPanel>
+        </DockPanel>
+    </StackPanel>
+</Window>
