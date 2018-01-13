@@ -351,7 +351,7 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 10;
                 int intPageApplications = (pagePending ?? 1);
 
-                var applications = (from a in context.Application orderby a.ApplicationDate select a)
+                var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)

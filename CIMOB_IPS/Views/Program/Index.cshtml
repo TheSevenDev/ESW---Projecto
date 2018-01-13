@@ -33,11 +33,11 @@
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
                                                 {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
                                                 }
-                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
 
@@ -70,18 +70,19 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Luso-Brasileiras"))
                                     {
-                                        @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                                        {
-                                            <div>
-                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
-                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
-                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
-                                                <div id="btn-program">
+                                        <div>
+                                            <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                            <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                            <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                            <div id="btn-program">
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
-                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
-                                                </div>
+                                                }
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
-                                        }
+                                        </div>
+
                                     }
                                 }
                             </div>
@@ -111,18 +112,21 @@
                                 @foreach (var item in Model)
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Ibero-Americanas"))
-                                    { @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
                                     {
+
                                         <div>
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
-                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                {
+                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
+                                                }
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
-                                    }
+
                                     }
                                 }
                             </div>
@@ -151,18 +155,19 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa Vasco da Gama"))
                                     {
-                                        @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
-                                        {
-                                            <div>
-                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
-                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
-                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
-                                                <div id="btn-program">
+                                        <div>
+                                            <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                            <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                            <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                            <div id="btn-program">
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
-                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
-                                                </div>
+                                                }
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
-                                        }
+                                        </div>
+
                                     }
                                 }
                             </div>
@@ -192,18 +197,19 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa Instituto Politécnico de Macau"))
                                     {
-                                        @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin"))
-                                        {
-                                            <div>
-                                                <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
-                                                <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
-                                                <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
-                                                <div id="btn-program">
+                                        <div>
+                                            <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
+                                            <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
+                                            <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
+                                            <div id="btn-program">
+                                                @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin") && item.Vacancies > 0)
+                                                {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
-                                                    <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">+ INFO</button>
-                                                </div>
+                                                }
+                                                <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
-                                        }
+                                        </div>
+
                                     }
                                 }
                             </div>

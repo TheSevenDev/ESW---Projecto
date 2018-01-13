@@ -263,7 +263,7 @@ li.sortable-placeholder {
     position: relative;
 }
 
-.deleteApplication {
+#deleteApplication {
     background-color: #e74c3c;
     color:#FFF;
     border-radius:2%;
@@ -277,28 +277,28 @@ li.sortable-placeholder {
     margin-top: 3.5%
 }
 
-.deleteApplication:hover {
+#deleteApplication:hover {
     background-color: #d61b15;
     cursor:pointer;
 }
 
-.main-application-container button {
-    padding:0.5%;
+.evaluate-application {
+    padding: 0.8%;
     width: 25%;
     margin-top: 2%;
-    margin-left:75%;
+    margin-left: 75%;
     border: none;
-    background-color: #222222;
+    background-color: var(--blue-var4);
     border-radius: 3%;
-    border: 0.7px solid #222222;
+    border: 0.7px solid var(--blue-var4);
     font-weight: bold;
     font-size: 1vmax;
     color: #f1f1f1;
 }
 
 
-.main-application-container button:hover {
-    background-color: var(--blue-var4);
+.evaluate-application:hover {
+    background-color: var(--blue-var3);
     cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
+    border: 0.7px solid var(--blue-var3);
 }
