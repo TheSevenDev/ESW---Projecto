@@ -38,7 +38,7 @@ namespace CIMOB_IPS
             CIMOB_IPS_DBContext.ConnectionString = Configuration.GetConnectionString("CIMOB_IPS_DB");
 
             services.AddMvc().AddSessionStateTempDataProvider();
-            
+
             services.AddDbContext<CIMOB_IPS_DBContext>(options => options.UseSqlServer(CIMOB_IPS_DBContext.ConnectionString));
 
             services.AddSession();

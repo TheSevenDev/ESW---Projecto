@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CIMOB_IPS.Controllers
 {
-    public class ProgramController : Microsoft.AspNetCore.Mvc.Controller
+    public class ProgramController : Controller
     {
         public async Task<IActionResult> Index()
         {

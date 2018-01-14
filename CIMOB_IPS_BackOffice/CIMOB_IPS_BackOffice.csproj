@@ -220,7 +220,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="A:\Transferências\SmithHtmlEditor\SmithHtmlEditor\SmithHtmlEditor.csproj">
+    <ProjectReference Include="..\SmithHtmlEditor\SmithHtmlEditor.csproj">
       <Project>{84badda1-ab3a-4064-b87e-178d7446901d}</Project>
       <Name>SmithHtmlEditor</Name>
     </ProjectReference>
