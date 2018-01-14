@@ -27,33 +27,43 @@
         </p>
 
         <p>
-            <b>@Html.DisplayNameFor(modelItem => item.IdStudentNavigation.Name)</b>
+            <b>Nome:</b>
             @strName
         </p>
 
         <p>
-            <b>@Html.DisplayNameFor(modelItem => item.ApplicationDate)</b>
+            <b>@Html.DisplayNameFor(modelItem => item.ApplicationDate):</b>
             @Html.DisplayFor(modelItem => item.ApplicationDate)
         </p>
 
         <p>
-            <b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation.Description)</b>
+            <b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation.Description):</b>
             @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
         </p>
 
-        @if(item.IdStateNavigation.Description != "Em Avaliação")
-        { 
+        <p>
+            <b>@Html.DisplayNameFor(modelItem => item.MotivationCard)</b>
+            <div id="motivationCard">
+                @Html.DisplayFor(modelItem => item.MotivationCard)
+            </div>
+        </p>
+
+
+        @if (item.IdStateNavigation.Description != "Em Avaliação")
+        {
             <p>
                 <b>@Html.DisplayNameFor(modelItem => item.FinalEvaluation)</b>
                 @Html.DisplayFor(modelItem => item.FinalEvaluation)
             </p>
         }
-            
-        @*<a asp-controller="Application" asp-action="Details"  asp-route-appId=@item.IdApplication>Detalhes</a>*@
-        <button asp-controller="Application" asp-action="Evaluate" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
+
+        <div>
+            @*<a asp-controller="Application" asp-action="Details"  asp-route-appId=@item.IdApplication>Detalhes</a>*@
+            <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
+        </div>
 
     </div>
-            }
+}
 
 
 

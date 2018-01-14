@@ -157,10 +157,10 @@
                     <tr><td><input asp-for="Student.Address" id="street" type="text" style="width:100%;" /></td></tr>
 
                     <tr><td><label asp-for="Student.DoorNumber"></label></td></tr>
-                    <tr><td><input asp-for="Student.DoorNumber" type="number" style="width:100%;" /></td></tr>
+                    <tr><td><input asp-for="Student.DoorNumber" type="text" style="width:22%;" /></td></tr>
 
                     <tr><td><label asp-for="Student.Floor"></label></td></tr>
-                    <tr><td><input asp-for="Student.Floor" type="text" style="width:100%;" /></td></tr>
+                    <tr><td><input asp-for="Student.Floor" type="text" style="width:22%;" /></td></tr>
 
                     <tr> <td><label>Nacionalidade: </label></td></tr>
                     <tr> <td> @Html.DropDownListFor(model => model.Student.IdNationality, Model.Nationalities, "-- Seleccione a Nacionalidade --")</td></tr>
