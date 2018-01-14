@@ -18,18 +18,25 @@ namespace CIMOB_IPS.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime CreationDate { get; set; }
 
+        [Required(ErrorMessage = "É necessário definir a data de abertura!")]
         [Display(Name = "Data de Abertura")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? OpenDate { get; set; }
 
+        [Required(ErrorMessage = "É necessário definir a data de encerramento!")]
         [Display(Name = "Data de Fecho")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? ClosingDate { get; set; }
 
+
+        [Required(ErrorMessage = "É necessário definir a data de mobilidade!")]
         [Display(Name = "Data prevista de Mobilidade")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityDate { get; set; }
 
+
+        [Range(0, int.MaxValue, ErrorMessage = "O número de vagas tem de ser um número positivo maior que 0.")]
+        [Required(ErrorMessage = "É necessário definir o número de vagas!")]
         [Display(Name = "Vagas para candidaturas")]
         public int Vacancies { get; set; }
 

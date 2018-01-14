@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CIMOB_IPS.Controllers
 {
-    public class ProgramController : Microsoft.AspNetCore.Mvc.Controller
+    public class ProgramController : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -85,6 +85,47 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             return View(new ProgramViewModel { ProgramTypes = PopulateProgramTypes(), Institutions = PopulateInstitutions() } );
+        }
+
+        public IActionResult Edit(string programID)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if(!new AccountController().IsTechnician(GetCurrentUserID()))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var auxProgram = context.Program.Where(p => p.IdProgram == Int32.Parse(programID)).FirstOrDefault();
+
+                if(auxProgram == null)
+                    return RedirectToAction("Index", "Home");
+                else
+                {
+                    return View(auxProgram);
+                }
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryTokenAttribute]
+        public async Task<IActionResult> Edit(CIMOB_IPS.Models.Program model)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if(!new AccountController().IsTechnician(GetCurrentUserID()))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            { 
+                
+                context.Update(model);
+                await context.SaveChangesAsync();
+
+                return RedirectToAction("Details", "Program", new {programID = model.IdProgram });
+            }
         }
 
         private IEnumerable<SelectListItem> PopulateProgramTypes()

@@ -77,6 +77,8 @@
         <p>Sem informações sobre as instituições associadas ao programa!</p>
     }
 
+    <p>Vagas para candidaturas: <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
+
     @if (User.IsInRole("estudante"))
     {
         @if (!bolClosedProgram && !bolMaxApplications && !bolNoVacancies && !bolNoCredits && !bolIsLoggedOff)
@@ -109,6 +111,10 @@
             <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
             <p>Já possui o máximo de 3 candidaturas pendentes!</p>
         }
+    }
+    else
+    {
+        <input type="button" value="Editar Programa" onclick="location.href='@Url.Action("Edit", "Program", new { programID = Model.IdProgram })'" />
     }
 
 </div>

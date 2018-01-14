@@ -418,7 +418,10 @@ namespace CIMOB_IPS.Controllers
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                if (context.PendingAccount.Any(p => p.Email == strEmail))
+                if (context.PendingAccount.Where(p => p.Email == strEmail) != null)
+                    return false;
+
+                if (context.Account.Where(p => p.Email == strEmail) != null)
                     return false;
 
                 Guid guid = Guid.NewGuid();
