@@ -85,5 +85,16 @@ namespace CIMOB_IPS.Models
         public Nationality IdNationalityNavigation { get; set; }
 
         public ICollection<Application> Application { get; set; }
+
+        public bool hasEnoughCredits()
+        {
+            return Credits > 60;
+        }
+
+        public bool hasNotMaxApplicationNumber()
+        {
+            return Application.Count < 3;
+        }
+
     }
 }
