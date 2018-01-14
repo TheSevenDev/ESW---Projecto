@@ -73,14 +73,6 @@ namespace CIMOB_IPS.Models
 
         public ICollection<Application> Application { get; set; }
 
-        public bool hasEnoughCredits()
-        {
-            return Credits > 60;
-        }
-
-        public bool hasNotMaxApplicationNumber()
-        {
-            return Application.Count < 3;
-        }
+       
     }
 }

@@ -44,25 +44,5 @@ namespace CIMOB_IPS.Models
 
         [Display(Name = "Instituições disponíveis para mobilidade")]
         public ICollection<InstitutionProgram> InstitutionProgram { get; set; }
-
-        public bool isOpenProgram()
-        {
-            return IdStateNavigation.Description.Equals("Aberto");
-        }
-
-        public bool withVacanciesAvailable()
-        {
-            return Vacancies > 0;
-        }
-
-        public bool withDateAvailable()
-        {
-            return DateTime.Now.Date < OpenDate && DateTime.Now.Date > ClosingDate;
-        }
-
-        public bool withPossibleApplication()
-        {
-            return isOpenProgram() && withVacanciesAvailable() && withDateAvailable();
-        }
     }
 }
