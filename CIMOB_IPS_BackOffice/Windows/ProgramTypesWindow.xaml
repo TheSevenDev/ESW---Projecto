@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CIMOB_IPS_BackOffice"
         mc:Ignorable="d"
-        Title="CIMOB IPS BackOffice - Tipos de Programa" Height="400" Width="450">
+        Title="CIMOB IPS BackOffice - Tipos de Programa" Height="400" Width="480">
     <StackPanel>
         <Label Margin="10" FontSize="15" HorizontalAlignment="Center">Tipos de Programa</Label>
         
@@ -16,7 +16,7 @@
                 <Label>Descrição</Label>
                 <TextBox IsEnabled="False" Height="100" TextWrapping="Wrap" Name="TxtDescription"></TextBox>
             </StackPanel>
-            <StackPanel Width="230">
+            <StackPanel Width="260">
                 <Label FontSize="8" Margin="10 0 0 0">Duplo-clique para editar</Label>
                 <ListBox Height="250" Margin="10 0" Name="LbProgramTypes" MouseDoubleClick="LbProgramTypes_MouseDoubleClick" SelectionChanged="LbProgramTypes_SelectionChanged" Loaded="LbProgramTypes_Loaded" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding ProgramTypeList, Mode=OneWay}"></ListBox>
                 <StackPanel Margin="10"  Orientation="Horizontal">
