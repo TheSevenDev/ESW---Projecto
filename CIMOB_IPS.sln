@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CIMOB_IPS", "CIMOB_IPS\CIMOB_IPS.csproj", "{7614B682-00CA-4CDC-870D-827804B9F383}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CIMOB_IPS_BackOffice", "CIMOB_IPS_BackOffice\CIMOB_IPS_BackOffice.csproj", "{760C454A-BB74-41F0-B4A9-02EC824ADD71}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmithHtmlEditor", "A:\Transferências\SmithHtmlEditor\SmithHtmlEditor\SmithHtmlEditor.csproj", "{84BADDA1-AB3A-4064-B87E-178D7446901D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Selenium", "Selenium\Selenium.csproj", "{3C5E983B-740E-4851-9295-B31174642969}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{84BADDA1-AB3A-4064-B87E-178D7446901D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BADDA1-AB3A-4064-B87E-178D7446901D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84BADDA1-AB3A-4064-B87E-178D7446901D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C5E983B-740E-4851-9295-B31174642969}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C5E983B-740E-4851-9295-B31174642969}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C5E983B-740E-4851-9295-B31174642969}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C5E983B-740E-4851-9295-B31174642969}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
