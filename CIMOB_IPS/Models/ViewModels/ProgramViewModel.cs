@@ -19,7 +19,7 @@ namespace CIMOB_IPS.Models.ViewModels
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? OpenDate { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "O número de vagas tem de ser um número positivo maior que 0.")]
+        [Range(0, int.MaxValue, ErrorMessage = "O número de vagas tem de ser um número positivo maior que 0.")]
         [Required(ErrorMessage = "É necessário definir o número de vagas!")]
         [Display(Name = "Vagas para candidaturas")]
         public int Vacancies { get; set; }
@@ -40,6 +40,9 @@ namespace CIMOB_IPS.Models.ViewModels
         public long IdProgramType { get; set; }
 
         public IEnumerable<SelectListItem> ProgramTypes { get; set; }
+
+
+
 
         [Display(Name = "Instituições associadas")]
         public List<CheckBoxListItem> Institutions { get; set; }

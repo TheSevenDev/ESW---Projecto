@@ -1,14 +1,15 @@
-﻿@model CIMOB_IPS.Models.ViewModels.ProgramViewModel
+﻿@model CIMOB_IPS.Models.Program
 
 <link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 
-<p class="page-title">Novo Programa</p>
+<p class="page-title">Edição de Programa</p>
 
 <div class="main-create-program-container">
-    <form asp-action="Create" method="post" class="program-form" id="form-application">
+    <form asp-action="Edit" method="POST" class="program-form" id="form-application">
         <table>
-            <tr><td><label asp-for="IdProgramType"></label></td></tr>
-            <tr><td> @Html.DropDownListFor(model => model.IdProgramType, Model.ProgramTypes, "-- Seleccione o tipo de programa --")</td></tr>
+            @Html.HiddenFor(m => m.IdProgram)
+            @Html.HiddenFor(m => m.IdProgramType)
+            @Html.HiddenFor(m => m.IdState)
             <tr><td><span asp-validation-for="IdProgramType" class="error-message"></span></td></tr>
             <tr><td><label asp-for="OpenDate"></label></td></tr>
             <tr><td><input asp-for="OpenDate" type="date" /></td></tr>
@@ -22,15 +23,15 @@
             <tr><td><input asp-for="MobilityDate" type="date" /></td></tr>
             <tr><td><span asp-validation-for="MobilityDate" class="error-message"></span></td></tr>
 
-            <tr><td><label asp-for="Institutions"></label></td></tr>
-            @Html.EditorFor(model => model.Institutions)
-            <tr><td><span class="error-message">@ViewData["Institutions-Error"]</span></td></tr>
+            @*<tr><td><label asp-for="InstitutionProgram"></label></td></tr>
+            @Html.EditorFor(model => model.InstitutionProgram)
+            <tr><td><span class="error-message">@ViewData["Institutions-Error"]</span></td></tr>*@
 
             <tr><td><label asp-for="Vacancies"></label></td></tr>
             <tr><td><input asp-for="Vacancies" type="text" /></td></tr>
             <tr><td><span asp-validation-for="Vacancies" class="error-message"></span></td></tr>
 
-            <tr> <td><input type="submit" value="Criar" /></td> </tr>
+            <tr> <td><input type="submit" value="Editar" /></td> </tr>
         </table>
     </form>
 </div>
