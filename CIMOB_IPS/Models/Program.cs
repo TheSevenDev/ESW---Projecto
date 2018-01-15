@@ -64,7 +64,7 @@ namespace CIMOB_IPS.Models
 
         public bool withDateAvailable()
         {
-            return DateTime.Now.Date < OpenDate && DateTime.Now.Date > ClosingDate;
+            return DateTime.Now.Date > OpenDate && DateTime.Now.Date < ClosingDate;
         }
 
         public bool withPossibleApplication()
