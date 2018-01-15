@@ -82,6 +82,12 @@ namespace XUnitCIMOB_IPS
                 .Include(p => p.InstitutionProgram)
                 .FirstOrDefaultAsync(p => p.IdProgram == Int32.Parse(programID));
 
+            if(program == null)
+            {
+                return RedirectToAction("Index", "Program");
+            }
+           
+            
             if (DateTime.Now > program.ClosingDate)
             {
                 program.IdStateNavigation = _context.State.Where(s => s.Description == "Fechado").FirstOrDefault();
@@ -112,6 +118,20 @@ namespace XUnitCIMOB_IPS
 
             return View(program);
 
+        }
+
+        private IEnumerable<SelectListItem> PopulateProgramTypes()
+        {
+                List<SelectListItem> lisProgramTypes = new List<SelectListItem>();
+
+                var listProgramTypes = _context.ProgramType.OrderBy(x => x.Name).ToList();
+
+                foreach (ProgramType n in listProgramTypes)
+                {
+                    lisProgramTypes.Add(new SelectListItem { Value = n.IdProgramType.ToString(), Text = n.Name });
+                }
+
+                return lisProgramTypes;
         }
 
         #endregion
@@ -152,7 +172,18 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void isOpenProgram_true_whenIsOpenProgram()
+        public void ProgramDetailsTestNonExistent()
+        {
+            // Act
+            var actionResultTask = Details("77");
+            actionResultTask.Wait();
+            var viewResult = actionResultTask.Result as System.Web.Mvc.ViewResult;
+
+            Assert.Null(viewResult);
+        }
+
+        [Fact]
+        public void ProgramOpenProgramTest()
         {
             var program = GetProgram().Result;
 
@@ -160,7 +191,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void isOpenProgram_false_whenIsOpenProgram()
+        public void ProgramClosedProgramTest()
         {
             var program = GetProgram().Result;
 
@@ -170,7 +201,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withVacanciesAvailable_true_withVacanciesAvailable()
+        public void ProgramVacanciesAvailableTest()
         {
             var program = GetProgram().Result;
 
@@ -178,7 +209,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withVacanciesAvailable_false_withVacanciesAvailable()
+        public void ProgramNoVacanciesTest()
         {
             var program = GetProgram().Result;
 
@@ -188,7 +219,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withDateAvailable_true_withDateAvailable()
+        public void ProgramOpenDateTest()
         {
             var program = GetProgram().Result;
 
@@ -196,7 +227,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withDateAvailable_false_withDateAvailable()
+        public void ProgramClosedDateTest()
         {
             var program = GetProgram().Result;
 
@@ -206,7 +237,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withPossibleApplication_true_withPossibleApplication()
+        public void ProgramPossibleApplicationTest()
         {
             var program = GetProgram().Result;
 
@@ -214,13 +245,23 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void withPossibleApplication_false_withPossibleApplication()
+        public void ProgramNotPossibleApplication()
         {
             var program = GetProgram().Result;
 
             program.Vacancies = 0;
 
             Assert.False(program.withPossibleApplication());
+        }
+
+        [Fact]
+        public void PopulateProgramTypesTest()
+        {
+            var listProgramTypes = PopulateProgramTypes().ToList();
+
+            Assert.Single(listProgramTypes);
+            Assert.Equal("1", listProgramTypes.First().Value);
+            Assert.Equal("Program", listProgramTypes.First().Text);
         }
     }
 }

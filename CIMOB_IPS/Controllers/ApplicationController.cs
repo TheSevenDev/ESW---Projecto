@@ -85,7 +85,16 @@ namespace CIMOB_IPS.Controllers
 
         public string GetEmail(int intId)
         {
-            return _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
+            var account = _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault();
+
+            var email = "";
+
+            if(account != null)
+            {
+                email = _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
+            }
+
+            return email;
         }
 
         public async Task<int> GetNumberPendentApplications(ClaimsPrincipal user)

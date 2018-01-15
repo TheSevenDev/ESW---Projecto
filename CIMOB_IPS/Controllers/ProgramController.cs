@@ -36,6 +36,11 @@ namespace CIMOB_IPS.Controllers
                     .Include(p => p.InstitutionProgram)
                     .FirstOrDefaultAsync(p => p.IdProgram == Int32.Parse(programID));
 
+                if (program == null)
+                {
+                    return RedirectToAction("Index", "Program");
+                }
+
                 if (DateTime.Now > program.ClosingDate)
                 {
                     program.IdStateNavigation = context.State.Where(s => s.Description == "Fechado").FirstOrDefault();
