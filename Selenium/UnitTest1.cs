@@ -90,9 +90,20 @@ namespace Selenium
             driver = new FirefoxDriver();
             driver.Navigate().GoToUrl(baseURL+"/Account/UpdatePassword");
 
-            IWebElement loginEmail = driver.FindElement(By.Id("CurrentPassword"));
-            loginEmail.SendKeys("palavra-passe_errada");
-            loginEmail.SendKeys(Keys.Enter);
+            IWebElement current = driver.FindElement(By.Id("CurrentPassword"));
+            current.SendKeys("palavra-passe_errada");
+
+            IWebElement newPW = driver.FindElement(By.Id("NewPassword"));
+            newPW.SendKeys("asd");
+
+            
+            IWebElement newPW_conf = driver.FindElement(By.Id("Confirmation"));
+            newPW.SendKeys("asd2");
+
+            current.SendKeys(Keys.Enter);
+
+            Assert.AreNotEqual(driver.FindElement(By.ClassName("error-message")), "Palavra-passe atualizada.");
+
         }
     }
 }
