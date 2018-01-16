@@ -131,6 +131,40 @@ namespace XUnitCIMOB_IPS
             return RedirectToAction("MyApplications", "Application");
         }
 
+        [HttpPost]
+        public IActionResult SubmitApplication()
+        {
+            try
+            {
+                var application = new Application()
+                {
+                    IdApplication = 3,
+                    IdStudent = 1,
+                    IdState = 1,
+                    HasScholarship = false,
+                    FinalEvaluation = 10,
+                    MotivationCard = "",
+                    EmergencyContactName = "Pai Estudante",
+                    EmergencyContactRelation = "Pai",
+                    EmergencyContactTelephone = 922222223,
+
+                    ApplicationDate = DateTime.Now.Date
+                };
+                if(application != null)
+                {
+                    _context.Application.Add(application);
+                    _context.SaveChanges();
+                }
+
+            }
+            catch
+            {
+
+            }
+
+            return RedirectToAction("MyApplications", "Application");
+        }
+
         #region Aux Function
 
         private async Task<Student> GetStudent()
@@ -221,6 +255,19 @@ namespace XUnitCIMOB_IPS
             int countAfter = GetStudent().Result.Application.Count;
 
             Assert.NotEqual(countBefore, countAfter);
+        }
+        
+        [Fact]
+        public void ApplicationSubmitApplicationTest()
+        {
+            int countBefore = _context.Application.Count();
+
+            var actionResultTask = SubmitApplication();
+            var viewResult = actionResultTask as System.Web.Mvc.ViewResult;
+
+            int countAfter = _context.Application.Count();
+
+            Assert.NotEqual(countBefore,countAfter);
         }
     }
 }
