@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CIMOB_IPS.Models.Program>
+﻿@model IEnumerable<CIMOB_IPS.Models.Program> 
 
 
 <link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
@@ -18,7 +18,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="javascript:$('#erasmus-programs').toggle(250)">Programas Disponíveis</button>
+                             <button asp-area="" onclick="javascript: openErasmus();">Programas Disponíveis</button> 
                         </td>
                     </tr>
                     <tr>
@@ -28,19 +28,21 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Erasmus+"))
                                     {
+                                        if (item.ClosingDate > DateTime.Now)
+                                        {
                                         <div class="program-info">
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program" >
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0 && User.Identity.IsAuthenticated)
                                                 {
                                                     <button asp-area="" asp-controller="Application" asp-action="New" class="btn-program-actions">Candidatura</button>
                                                 }
-                                                <button asp-area="" asp-controller="Application" class="btn-program-actions" onclick="location.href='@Url.Action("Details","Program",new {programID = item.IdProgram })'" >Mais informações</button>
+                                                <button asp-area="" asp-controller="Application" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'" >Mais informações</button>
                                             </div>
                                         </div>
-
+                                        }
                                     }
 
                                 }
@@ -60,7 +62,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="javascript:$('#lusoBrasileiras-programs').toggle(250)">Programas Disponíveis</button>
+                            <button asp-area="" onclick="javascript: openLusoBras();">Programas Disponíveis</button>
                         </td>
                     </tr>
                     <tr>
@@ -70,19 +72,21 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Luso-Brasileiras"))
                                     {
+                                        if (item.ClosingDate > DateTime.Now)
+                                        {
                                         <div class="program-info">
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0 && User.Identity.IsAuthenticated)
                                                 {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
                                                 }
                                                 <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
-
+                                        }
                                     }
                                 }
                             </div>
@@ -103,7 +107,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="javascript:$('#ibero-Americanas-programs').toggle(250)">Programas Disponíveis</button>
+                           <button asp-area="" onclick="javascript: openIberoAmeric();">Programas Disponíveis</button>
                         </td>
                     </tr>
                     <tr>
@@ -113,19 +117,21 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa de Bolsas Ibero-Americanas"))
                                     {
+                                        if (item.ClosingDate > DateTime.Now)
+                                        {
                                         <div class="program-info">
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0 && User.Identity.IsAuthenticated)
                                                 {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
                                                 }
                                                 <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
-
+                                        }
                                     }
                                 }
                             </div>
@@ -144,7 +150,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="javascript:$('#vascoGama-programs').toggle(250)">Programas Disponíveis</button>
+                            <button asp-area="" onclick="javascript: openVascoGama();">Programas Disponíveis</button>
                         </td>
                     </tr>
                     <tr>
@@ -154,19 +160,21 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa Vasco da Gama"))
                                     {
+                                        if (item.ClosingDate > DateTime.Now)
+                                        {
                                         <div class="program-info">
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0)
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0 && User.Identity.IsAuthenticated)
                                                 {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
                                                 }
                                                 <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
-
+                                        }
                                     }
                                 }
                             </div>
@@ -180,13 +188,13 @@
                 <table style="width:25%;margin-top:15%">
                     <tr>
                         <td>
-                            <img draggable="false" src="~/images/logo-macaopoly.jpg" />
+                            <img draggable="false" src="~/images/logo-macaupoly.jpg" />
                         </td>
                         <td></td>
                     </tr>
                     <tr>
                         <td>
-                            <button asp-area="" onclick="javascript:$('#macau-programs').toggle(250)">Programas Disponíveis</button>
+                            <button asp-area="" onclick=" javascript:openMacau();">Programas Disponíveis</button>
                         </td>
                     </tr>
                     <tr>
@@ -196,19 +204,21 @@
                                 {
                                     if (item.IdProgramTypeNavigation.Name.Equals("Programa Instituto Politécnico de Macau"))
                                     {
+                                        if (item.ClosingDate > DateTime.Now)
+                                        {
                                         <div class="program-info">
                                             <p>Data de Abertura: @Html.DisplayFor(i => item.OpenDate)</p>
                                             <p>Data de Fecho: @Html.DisplayFor(i => item.ClosingDate)</p>
                                             <p>Vagas: @Html.DisplayFor(i => item.Vacancies) </p>
                                             <div id="btn-program">
-                                                @if (!User.IsInRole("tecnico") || !User.IsInRole("tecnico_admin") && item.Vacancies > 0)
+                                                @if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")) && item.Vacancies > 0 && User.Identity.IsAuthenticated)
                                                 {
                                                     <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Candidatura</button>
                                                 }
                                                 <button asp-area="" class="btn-program-actions" onclick="location.href='@Url.Action("Details", "Program", new { programID = item.IdProgram })'">Mais Informações</button>
                                             </div>
                                         </div>
-
+                                        }
                                     }
                                 }
                             </div>
