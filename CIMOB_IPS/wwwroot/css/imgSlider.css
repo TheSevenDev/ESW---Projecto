@@ -89,7 +89,14 @@
     border-radius: 50%;
     display: inline-block;
     background-color: var(--dark-grey);
+    z-index: 999;
 }
+
+    .dots:hover {
+        background: rgba(89,126,170,0.6);
+        /*background: rgba(111,186,228,.1);*/
+        cursor: pointer;
+    }
 
 .slider-img {
     z-index:-1;
@@ -105,6 +112,6 @@
 #i1:checked ~ .navi #dot1,
 #i2:checked ~ .navi #dot2,
 #i3:checked ~ .navi #dot3 {
-    background: var(--main-blue);
+    background: var(--blue-var4);
 }
 

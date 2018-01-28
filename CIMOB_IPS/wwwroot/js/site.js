@@ -25,7 +25,6 @@ function toogleNotifications()
     $("#submenu-notifications").slideToggle(250);
 }
 
-
 function toogleHelp() {
     hideMenus();
 
@@ -339,3 +338,21 @@ $(document).ready(function () {
         })
     });
 });
+
+onload = start;
+
+function start() {
+
+    function Move() {
+        var i;
+        for (i = 1; i < 4; i++){
+            if (document.getElementById('i' + i).checked) {
+                i = (i % 3) + 1;
+                document.getElementById('i' + i).checked = true;
+                break;
+            }
+        }
+        
+    }
+    setInterval(Move, 3000);
+}
