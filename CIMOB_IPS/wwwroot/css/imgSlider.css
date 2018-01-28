@@ -34,14 +34,35 @@
     height: 100%;
     position: absolute;
     top: 0;
-    z-index:999;
+    transition: .45s;
+    z-index: 99;
 }
 
     .pre:hover,
     .nxt:hover {
+        transition: .3s;
         background: rgba(241,241,241,.4);
-        cursor:pointer;
+        cursor: pointer;
     }
+
+.arrPre , .arrNxt  {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    border: solid 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.arrPre {
+    border-color: transparent var(--main-blue) transparent transparent;
+    right: 50%;
+}
+
+.arrNxt {
+    border-color: transparent transparent transparent var(--dark-grey);
+    left: 50%;
+}
 
 .pre{
     left:0;
@@ -61,7 +82,7 @@
 
 .dots {
     top: 150%;
-    width: 1%;
+    width: 1.5%;
     height: 50%;
     margin: 0 4px;
     position: relative;
@@ -76,8 +97,9 @@
 
 #i1:checked ~ #first,
 #i2:checked ~ #second,
-#i3:checked ~ #third{
-    z-index:999;
+#i3:checked ~ #third {
+    z-index: 9;
+    animation: scroll 1s ease-in-out;
 }
 
 #i1:checked ~ .navi #dot1,
