@@ -205,6 +205,101 @@ function countUp() {
 }
 
 
+function openErasmus() {
+    $('#erasmus-programs').toggle(250);
+
+    if ($('#lusoBrasileiras-programs').css('display') === 'block')
+        $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#ibero-Americanas-programs').css('display') === 'block')
+        $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#vascoGama-programs').css('display') === 'block')
+        $('#vascoGama-programs').toggle(250);
+
+    if ($('#macau-programs').css('display') === 'block')
+        $('#macau-programs').toggle(250);
+}
+
+function openLusoBras() {
+    $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#erasmus-programs').css('display') === 'block')
+        $('#erasmus-programs').toggle(250);
+
+    if ($('#ibero-Americanas-programs').css('display') === 'block')
+        $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#vascoGama-programs').css('display') === 'block')
+        $('#vascoGama-programs').toggle(250);
+
+    if ($('#macau-programs').css('display') === 'block')
+        $('#macau-programs').toggle(250);
+}
+
+function openIberoAmeric() {
+    $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#erasmus-programs').css('display') === 'block')
+        $('#erasmus-programs').toggle(250);
+
+    if ($('#lusoBrasileiras-programs').css('display') === 'block')
+        $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#vascoGama-programs').css('display') === 'block')
+        $('#vascoGama-programs').toggle(250);
+
+    if ($('#macau-programs').css('display') === 'block')
+        $('#macau-programs').toggle(250);
+}
+
+function openVascoGama() {
+    $('#vascoGama-programs').toggle(250);
+
+    if ($('#erasmus-programs').css('display') === 'block')
+        $('#erasmus-programs').toggle(250);
+
+    if ($('#lusoBrasileiras-programs').css('display') === 'block')
+        $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#ibero-Americanas-programs').css('display') === 'block')
+        $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#macau-programs').css('display') === 'block')
+        $('#macau-programs').toggle(250);
+}
+
+function openVascoGama() {
+    $('#vascoGama-programs').toggle(250);
+
+    if ($('#erasmus-programs').css('display') === 'block')
+        $('#erasmus-programs').toggle(250);
+
+    if ($('#lusoBrasileiras-programs').css('display') === 'block')
+        $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#ibero-Americanas-programs').css('display') === 'block')
+        $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#macau-programs').css('display') === 'block')
+        $('#macau-programs').toggle(250);
+}
+
+function openMacau() {
+    $('#macau-programs').toggle(250);
+
+    if ($('#erasmus-programs').css('display') === 'block')
+        $('#erasmus-programs').toggle(250);
+
+    if ($('#lusoBrasileiras-programs').css('display') === 'block')
+        $('#lusoBrasileiras-programs').toggle(250);
+
+    if ($('#ibero-Americanas-programs').css('display') === 'block')
+        $('#ibero-Americanas-programs').toggle(250);
+
+    if ($('#vascoGama-programs').css('display') === 'block')
+        $('#vascoGama-programs').toggle(250);
+}
 
 $(document).ready(function () {
     try {

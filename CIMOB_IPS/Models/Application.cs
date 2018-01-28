@@ -62,5 +62,11 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Instituições")]
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
+
+
+        public bool IsAvailable()
+        {
+            return IdStateNavigation.Description.Equals("Aberto");
+        }
     }
 }

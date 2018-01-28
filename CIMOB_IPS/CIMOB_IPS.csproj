@@ -59,7 +59,7 @@
     <Content Update="wwwroot\images\ErasmusLogo.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\images\logo-macaopoly.jpg">
+    <Content Update="wwwroot\images\logo-macaupoly.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\images\vasco-logo.jpg">
