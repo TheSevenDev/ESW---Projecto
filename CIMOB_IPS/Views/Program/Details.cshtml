@@ -36,9 +36,18 @@
 
     <p style="width:80%;margin-left:10%;">@Html.DisplayFor(model => model.IdProgramTypeNavigation.Description)</p>
 
-    <br />
-    <p>As candidaturas abrirão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
-    <p>As candidaturas encerrarão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+    @if (Model.ClosingDate < DateTime.Now)
+    {
+        <br />
+        <p>As candidaturas abriram dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
+        <p>As candidaturas encerram dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+    }
+    else
+    {
+        <br />
+        <p>As candidaturas abrirão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
+        <p>As candidaturas encerrarão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+    }
 
     <p>Programa <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
 
