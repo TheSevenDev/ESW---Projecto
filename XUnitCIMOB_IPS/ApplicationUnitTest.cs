@@ -112,6 +112,7 @@ namespace XUnitCIMOB_IPS
             _controller = new ApplicationController(_context);
         }
 
+        #region Aux Functions
         [HttpPost]
         public IActionResult DeleteApplication(int applicationId)
         {

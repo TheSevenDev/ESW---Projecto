@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Xunit;
@@ -146,8 +145,9 @@ namespace XUnitCIMOB_IPS
 
             List<Program> lstPrograms = (List<Program>)viewResult.Model;
 
-            // Assert
             Program model = lstPrograms[0];
+
+            // Assert
             Assert.Equal(1, model.IdProgram);
 
             var viewName = viewResult.ViewName;
