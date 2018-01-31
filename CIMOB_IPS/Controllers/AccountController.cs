@@ -154,9 +154,17 @@ namespace CIMOB_IPS.Controllers
                 DateTime dtBithDate = model.Student.BirthDate;
                 string strGender = model.Student.Gender;
                 string postalCode = "" + model.PostalCode1 + "-" + model.PostalCode2;
-                string strAddress = model.Student.Address;
-                int doorNumber = (int)model.Student.DoorNumber;
-                string floor = model.Student.Floor;
+                string strAddress = model.Student.IdAddressNavigation.AddressDesc;
+
+                Address addressAux = new Address
+                {
+                    PostalCode = postalCode,
+                    AddressDesc = strAddress,
+                    DoorNumber = model.Student.IdAddressNavigation.DoorNumber,
+                    Floor = model.Student.IdAddressNavigation.Floor
+                };
+
+                InsertAddress(addressAux);
 
                 Student student = new Student
                 {
@@ -170,10 +178,7 @@ namespace CIMOB_IPS.Controllers
                     StudentNum = lngStudentNum,
                     BirthDate = dtBithDate,
                     Gender = strGender,
-                    PostalCode = postalCode,
-                    Address = strAddress,
-                    DoorNumber = doorNumber,
-                    Floor = floor
+                    IdAddress = addressAux.IdAddress
                 };
 
                 InsertStudent(student, strEmail);
@@ -385,14 +390,14 @@ namespace CIMOB_IPS.Controllers
             return View("Technicians", PopulateTechnicians(1, 1, 3));
         }
 
-        public async void DeletePendingAccount(string strEmail)
+        public void DeletePendingAccount(string strEmail)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                PendingAccount pendingAccount = await context.PendingAccount.SingleOrDefaultAsync(p => p.Email == strEmail);
+                PendingAccount pendingAccount = context.PendingAccount.SingleOrDefault(p => p.Email == strEmail);
 
                 context.PendingAccount.Remove(pendingAccount);
-                await context.SaveChangesAsync();
+                context.SaveChanges();
             }
         }
 
@@ -403,6 +408,15 @@ namespace CIMOB_IPS.Controllers
             InsertAccount(account);
 
             return account.IdAccount;
+        }
+
+        public void InsertAddress(Address address)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                context.Add(address);
+                context.SaveChanges();
+            }
         }
 
         public async void InsertAccount(Account account)
@@ -418,10 +432,10 @@ namespace CIMOB_IPS.Controllers
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                if (context.PendingAccount.Where(p => p.Email == strEmail) != null)
+                if (context.PendingAccount.Where(p => p.Email == strEmail).Any())
                     return false;
 
-                if (context.Account.Where(p => p.Email == strEmail) != null)
+                if (context.Account.Where(p => p.Email == strEmail).Any())
                     return false;
 
                 Guid guid = Guid.NewGuid();

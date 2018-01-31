@@ -39,6 +39,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdAccountNavigation)
                     .Include(a => a.IdNationalityNavigation)
                     .Include(a => a.IdCourseNavigation)
+                    .Include(a => a.IdAddressNavigation)
                     .FirstOrDefault(s => s.IdAccount == intId);
 
                 profileViewModel.Technician = context.Technician
@@ -97,7 +98,7 @@ namespace CIMOB_IPS.Controllers
             
             if(accountViewModel.AccountType == EnumAccountType.STUDENT)
             {
-                var postalCode = accountViewModel.Student.PostalCode;
+                var postalCode = accountViewModel.Student.IdAddressNavigation.PostalCode;
 
                 accountViewModel.PostalCode1 = postalCode.Substring(0, 4);
                 accountViewModel.PostalCode2 = postalCode.Substring(5, 3);
@@ -117,15 +118,24 @@ namespace CIMOB_IPS.Controllers
                 {
                     using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                     {
-                        Student newStudent = await context.Student.SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
+                        Student newStudent = await context.Student
+                        .Include(s => s.IdAddressNavigation)
+                        .SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
 
                         if (newStudent == null)
                             return NotFound();
 
                         newStudent.Telephone = model.Student.Telephone;
-                        newStudent.PostalCode = model.Student.PostalCode;
+                        newStudent.IdAddressNavigation.PostalCode = model.Student.IdAddressNavigation.PostalCode;
                         newStudent.Credits = model.Student.Credits;
-                        newStudent.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;
+
+                        Address studentAddress = await context.Address.SingleOrDefaultAsync(s => s.IdAddress == newStudent.IdAddress);
+                        studentAddress.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;
+                        studentAddress.AddressDesc = model.Student.IdAddressNavigation.AddressDesc;
+                        studentAddress.DoorNumber = model.Student.IdAddressNavigation.DoorNumber;
+                        studentAddress.Floor = model.Student.IdAddressNavigation.Floor;
+
+                        context.Update(studentAddress);
 
                         context.Update(newStudent);
 

@@ -166,8 +166,6 @@ namespace XUnitCIMOB_IPS
             return RedirectToAction("MyApplications", "Application");
         }
 
-        #region Aux Function
-
         private async Task<Student> GetStudent()
         {
             return await _context.Student

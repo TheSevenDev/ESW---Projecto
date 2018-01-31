@@ -10,6 +10,7 @@
             <tr><td><label asp-for="IdProgramType"></label></td></tr>
             <tr><td> @Html.DropDownListFor(model => model.IdProgramType, Model.ProgramTypes, "-- Seleccione o tipo de programa --")</td></tr>
             <tr><td><span asp-validation-for="IdProgramType" class="error-message"></span></td></tr>
+            <tr><td><span class="error-message">@ViewData["Program-type-error"]</span></td></tr>
             <tr><td><label asp-for="OpenDate"></label></td></tr>
             <tr><td><input asp-for="OpenDate" type="date" /></td></tr>
             <tr><td><span asp-validation-for="OpenDate" class="error-message"></span></td></tr>

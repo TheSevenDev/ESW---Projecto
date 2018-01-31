@@ -50,9 +50,15 @@
         <tr> <td><label>Freguesia</label></tr>
         <tr><td><input id="parish" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
 
-        <tr> <td><label>Rua</label></tr>
-        <tr><td><input id="street" type="text" style="width:100%;" readonly class="disabled-input" /></td></tr>
+        <tr> <td><label asp-for="Student.IdAddressNavigation.AddressDesc"></label></td></tr>
+        <tr><td><input id="street" asp-for="Student.IdAddressNavigation.AddressDesc" type="text" /></td></tr>
+        <tr><td><span asp-validation-for="Student.IdAddressNavigation.AddressDesc" class="error-message"></span></td></tr>
 
+        <tr> <td><label asp-for="Student.IdAddressNavigation.DoorNumber"></label></td></tr>
+        <tr><td><input asp-for="Student.IdAddressNavigation.DoorNumber" type="text" /></td></tr>
+
+        <tr> <td><label asp-for="Student.IdAddressNavigation.Floor"></label></td></tr>
+        <tr><td><input asp-for="Student.IdAddressNavigation.Floor" type="text" /></td></tr>
 
         <tr>
             <td>

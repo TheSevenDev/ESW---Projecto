@@ -69,7 +69,7 @@ namespace CIMOB_IPS.Controllers
             viewModel.Institutions = program.InstitutionProgram.ToList();
             viewModel.Nationalities = PopulateNationalities();
 
-            var postalCode = student.PostalCode;
+            var postalCode = student.IdAddressNavigation.PostalCode;
 
             viewModel.PostalCode1 = postalCode.Substring(0, 4);
             viewModel.PostalCode2 = postalCode.Substring(5, 3);
@@ -80,7 +80,9 @@ namespace CIMOB_IPS.Controllers
 
         public Student GetStudentById(int intId)
         {
-            return _context.Student.Where(s => s.IdAccount == intId).FirstOrDefault();
+            return _context.Student.Where(s => s.IdAccount == intId)
+                .Include( s => s.IdAddressNavigation)
+                .FirstOrDefault();
         }
 
         public string GetEmail(int intId)
@@ -404,5 +406,34 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        public IActionResult Details(int appId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var application = context.Application.Where(a => a.IdApplication == appId)
+                    .Include(a => a.IdStateNavigation)
+                    .Include(a => a.IdProgramNavigation)
+                    .Include(a => a.ApplicationInstitutions)
+                    .FirstOrDefault();
+
+                if (application == null)
+                    return RedirectToAction("Index", "Application");
+                else
+                {
+                    application.ApplicationInstitutions = context.ApplicationInstitutions
+                        .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).Where(i => i.IdApplication == application.IdApplication).ToList();
+
+                    application.IdProgramNavigation.IdProgramTypeNavigation = context.ProgramType.Where(p => p.IdProgramType == application.IdProgramNavigation.IdProgramType).SingleOrDefault();
+
+                    return View(application);
+                }
+            }
+        }
     }
 }

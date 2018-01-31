@@ -1,89 +1,100 @@
 ﻿@model PaginatedList<CIMOB_IPS.Models.Application>
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 
 <p class="page-title">Candidaturas Submetidas</p>
-@foreach (var item in Model)
-{
-    <div class="main-application-container" style="padding:1%;padding-left:2%;">
+
+    <div class="main-container-pendingtech" style="padding:1%;padding-left:2%;">
+        <table style="margin: 0 auto;">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
+                    </th>
+                    <th>
+                        Nome
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().ApplicationDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().FinalEvaluation)
+                    </th>
+
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    var strName = "";
+                    var arrNames = item.IdStudentNavigation.Name.Split(' ');
+                    string strFirstName = arrNames[0];
+                    string strLastName = arrNames[arrNames.Length - 1];
+                    if (arrNames.Length > 1)
+                    {
+                        strName = strFirstName + " " + strLastName;
+                    }
+                    else
+                    {
+                        strName = strFirstName;
+                    }
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
+                        </td>
+                        <td>
+                            @strName
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.ApplicationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => item.IdStateNavigation.Description)
+                        </td>
+                        @if (item.IdStateNavigation.Description != "Em Avaliação")
+                        {
+                            <td>
+                                @Html.DisplayFor(model => item.FinalEvaluation)
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Por Avaliar
+                            </td>
+                        }
+
+                        <td>
+                            <a asp-controller="Application" asp-action="Details" asp-route-appId=@item.IdApplication>Detalhes</a>
+                            <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <br />
+        Página @Model.PageIndex de @Model.TotalPages
+        <br />
         @{
-            var strName = "";
-            var arrNames = item.IdStudentNavigation.Name.Split(' ');
-            string strFirstName = arrNames[0];
-            string strLastName = arrNames[arrNames.Length - 1];
-            if (arrNames.Length > 1)
-            {
-                strName = strFirstName + " " + strLastName;
-            }
-            else
-            {
-                strName = strFirstName;
-            }
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
         }
 
-        <p>
-            <b>@Html.DisplayNameFor(modelItem => item.IdStudentNavigation.StudentNum)</b>
-            @Html.DisplayFor(modelItem => item.IdStudentNavigation.StudentNum)
-        </p>
-
-        <p>
-            <b>Nome:</b>
-            @strName
-        </p>
-
-        <p>
-            <b>@Html.DisplayNameFor(modelItem => item.ApplicationDate):</b>
-            @Html.DisplayFor(modelItem => item.ApplicationDate)
-        </p>
-
-        <p>
-            <b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation.Description):</b>
-            @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
-        </p>
-
-        <p>
-            <b>@Html.DisplayNameFor(modelItem => item.MotivationCard)</b>
-            <div id="motivationCard">
-                @Html.DisplayFor(modelItem => item.MotivationCard)
-            </div>
-        </p>
-
-
-        @if (item.IdStateNavigation.Description != "Em Avaliação")
+        @if (Model.HasPreviousPage)
         {
-            <p>
-                <b>@Html.DisplayNameFor(modelItem => item.FinalEvaluation)</b>
-                @Html.DisplayFor(modelItem => item.FinalEvaluation)
-            </p>
+            <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
         }
-
-        <div>
-            @*<a asp-controller="Application" asp-action="Details"  asp-route-appId=@item.IdApplication>Detalhes</a>*@
-            <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
-        </div>
-
-    </div>
-}
-
-
-
-
-
-
-@*<br />
-    Página @Model.PageIndex de @Model.TotalPages
-    <br />
-    @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-    }
-
-    @if (Model.HasPreviousPage)
-    {
-        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
-    }
-    &nbsp;&nbsp;&nbsp;
-    @if (Model.HasNextPage)
-    {
-        <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
-    }*@
+        &nbsp;&nbsp;&nbsp;
+        @if (Model.HasNextPage)
+        {
+            <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+        }
+</div>

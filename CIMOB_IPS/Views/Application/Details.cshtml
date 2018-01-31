@@ -1,0 +1,66 @@
+﻿@model CIMOB_IPS.Models.Application
+
+@{
+    ViewData["Title"] = "Candidatura " + @Model.IdProgramNavigation.IdProgramTypeNavigation.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<h2 class="page-title" style="margin-top:1%;">Candidatura @Model.IdProgramNavigation.IdProgramTypeNavigation.Name</h2>
+
+<div class="main-application-container">
+    <div style="margin-left:2.5%;">
+        <p><b>@Html.DisplayNameFor(modelItem => Model.ApplicationDate): </b>@Html.DisplayFor(modelItem => Model.ApplicationDate)</p>
+        <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
+        <ul class="myApp-institutions">
+            @foreach (var institution in Model.ApplicationInstitutions)
+            {
+                <li>
+                    @Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)
+                </li>
+            }
+        </ul>
+
+        <p><b>@Html.DisplayNameFor(modelItem => Model.IdStateNavigation): </b>@Html.DisplayFor(modelItem => Model.IdStateNavigation.Description)</p>
+
+        @if (Model.HasScholarship)
+        {
+            <p><b>@Html.DisplayNameFor(modelItem => Model.HasScholarship): </b>Sim</p>
+        }
+        else
+        {
+            <p><b>@Html.DisplayNameFor(modelItem => Model.HasScholarship): </b>Não</p>
+        }
+
+        @if (Model.IdStateNavigation.Description != "Em Avaliação")
+        {
+            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> @Html.DisplayFor(modelItem => Model.FinalEvaluation)</p>
+        }
+        else
+        {
+            <p><b>Por avaliar</b></p>
+        }
+
+        <p>
+            <span id="motivationCard-title">
+                <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
+            </span>
+        </p>
+        <div id="motivationCard">
+            @Html.DisplayFor(modelItem => Model.MotivationCard)
+        </div>
+        @if (Model.SignedAppFile != null)
+        {
+            <div style="padding-top:5%;">
+                <a class="hyperlink" asp-action="OpenSignedAppFile" asp-route-fileId=@Model.IdApplication>Ver Comprovativo de Candidatura</a>
+            </div>
+        }
+
+        <br />
+
+        <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@Model.IdApplication>Avaliar Candidatura</button>
+    </div>
+</div>

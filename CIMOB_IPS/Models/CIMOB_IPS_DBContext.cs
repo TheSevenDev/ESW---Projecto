@@ -8,6 +8,7 @@ namespace CIMOB_IPS.Models
     public partial class CIMOB_IPS_DBContext : DbContext
     {
         public virtual DbSet<Account> Account { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Application> Application { get; set; }
         public virtual DbSet<Coordenator> Coordenator { get; set; }
         public virtual DbSet<Course> Course { get; set; }
@@ -57,6 +58,22 @@ namespace CIMOB_IPS.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(16);
+            });
+
+            modelBuilder.Entity<Address>(entity =>
+            {
+                entity.HasKey(e => e.IdAddress);
+
+                entity.Property(e => e.IdAddress).HasColumnName("id_address");
+
+                entity.Property(e => e.PostalCode)
+                    .IsRequired()
+                    .HasColumnName("postal_code")
+                    .HasMaxLength(8);
+
+                entity.Property(e => e.AddressDesc).HasColumnName("address");
+                entity.Property(e => e.DoorNumber).HasColumnName("door_number");
+                entity.Property(e => e.Floor).HasColumnName("floor");
             });
 
             modelBuilder.Entity<Application>(entity =>
@@ -487,15 +504,13 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.Telephone).HasColumnName("telephone");
 
-                entity.Property(e => e.PostalCode)
-                    .IsRequired()
-                    .HasColumnName("postal_code")
-                    .HasMaxLength(8);
+                entity.Property(e => e.IdAddress).HasColumnName("id_address");
 
-                entity.Property(e => e.Address).HasColumnName("address");
-                entity.Property(e => e.DoorNumber).HasColumnName("door_number");
-                entity.Property(e => e.Floor).HasColumnName("floor");
-
+                entity.HasOne(d => d.IdAddressNavigation)
+                    .WithMany(p => p.Student)
+                    .HasForeignKey(d => d.IdAddress)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_S_Address");
 
                 entity.HasOne(d => d.IdAccountNavigation)
                     .WithMany(p => p.Student)
@@ -515,6 +530,8 @@ namespace CIMOB_IPS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_E_Nationality");
             });
+
+            
 
             modelBuilder.Entity<Technician>(entity =>
             {

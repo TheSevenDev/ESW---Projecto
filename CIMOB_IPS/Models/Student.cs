@@ -62,20 +62,11 @@ namespace CIMOB_IPS.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        [Display(Name = "Código Postal:")]
-        public string PostalCode { get; set; }
+        public Address IdAddressNavigation { get; set; }
 
+        [Required(ErrorMessage = "A morada não está preenchida.")]
         [Display(Name = "Morada:")]
-        [Required(ErrorMessage = "Insira a sua Rua.")]
-        public string Address { get; set; }
-
-        [Display(Name = "N.º da Porta:")]
-        [Required(ErrorMessage = "Insira o nº da porta.")]
-        [RegularExpression("^[0-9]*$", ErrorMessage = "O nº da porta tem de ser expresso em algarismos.")]
-        public int? DoorNumber { get; set; }
-
-        [Display(Name = "Andar:")]
-        public string Floor { get; set; }
+        public long IdAddress { get; set; }
 
         public Account IdAccountNavigation { get; set; }
         [Display(Name = "Curso:")]

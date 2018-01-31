@@ -43,8 +43,20 @@
                     <td>@Html.DisplayFor(model => model.Student.Telephone)</td>
                 </tr>
                 <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.PostalCode)</td>
-                    <td>@Html.DisplayFor(model => model.Student.PostalCode)</td>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
+                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
+                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
+                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.Floor)</td>
+                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.Floor)</td>
                 </tr>
                 <tr>
                     <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Credits)</td>
