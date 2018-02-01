@@ -80,12 +80,12 @@ html, body {
     width: 100%;
 }
 
-    #session-logo img {
-        width: 15vmin;
-        height: 4vmin;
-        position: fixed;
-        top: 1%;
-    }
+#session-logo img {
+    width: 15vmin;
+    height: 4vmin;
+    position: fixed;
+    top: 1%;
+}
 
 .session-name {
     position: fixed;
