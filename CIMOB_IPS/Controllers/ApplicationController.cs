@@ -411,7 +411,7 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
-            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -435,5 +435,29 @@ namespace CIMOB_IPS.Controllers
                 }
             }
         }
+
+        [HttpGet]
+        public IActionResult Evaluate(int appId)
+        {
+             if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            ViewData["applicationID"] = appId;
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var app = context.Application.Where(a => a.IdApplication == appId)
+                    .Include(a => a.IdStudentNavigation)
+                    .FirstOrDefault();
+                ViewData["application-student-name"] = app.IdStudentNavigation.Name;
+                ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
+            }
+            return View();
+        }
+
+
     }
 }

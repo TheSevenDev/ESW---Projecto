@@ -25,12 +25,28 @@ function toogleNotifications()
     $("#submenu-notifications").slideToggle(250);
 }
 
-function toogleHelp() {
+function openHelp() {
     hideMenus();
 
-    $("#fade-background").toggle();
-    $("#help-content").toggle(250);
-    $("#help-close").toggle(250);
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("help-content").style.display = "block";
+    document.getElementById("help-close").style.display = "block";
+
+    //$("#help-content").slideToggle("slow");
+    //$("#help-close").toggle();
+}
+
+function closeHelp() {
+    hideMenus();
+
+    document.getElementById("fade-background").style.display = "none";
+    document.getElementById("fade-background").style.display = "none";
+    document.getElementById("help-content").style.display = "none";
+
+    document.getElementById("help-close").style.display = "none";
+
+    //$("#help-content").slideToggle("slow");
+    //$("#help-close").toggle();
 }
 
 function openfyp() {
@@ -169,7 +185,7 @@ function applicationInstitutions() {
 
         for (var i = 0; i < list.length; i++) {
             var institution = list[i].innerText;
-            if(i==0)
+            if(i===0)
                 actionUrl += "?inst" + (i + 1) + "=" + institution;
             else
                 actionUrl += "&inst" + (i + 1) + "=" + institution;
@@ -346,7 +362,7 @@ function start() {
     function Move() {
         var i;
         for (i = 1; i < 4; i++){
-            if (document.getElementById('i' + i).checked) {
+            if (document.getElementById('i' + i) !== null && document.getElementById('i' + i).checked) {
                 i = (i % 3) + 1;
                 document.getElementById('i' + i).checked = true;
                 break;

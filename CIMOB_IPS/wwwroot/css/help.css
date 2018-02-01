@@ -4,28 +4,94 @@
     z-index: 998;
     background-color: white;
     width: 50%;
-    height: 85%;
+    height: 50%;
     top: 10%;
     left: 25%;
+    font-size: 1vmax;
+    border-radius:1%;
+
     font-family: Arial, Helvetica, sans-serif;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
+    font-size: 1vmax;
 }
 
-    #help-content h1 {
-        width: 100%;
-        text-align: center;
-    }
+#help-content h1 {
+    width: 100%;
+    text-align: left;
+    font-size:1.2vmax;
+}
 
 #help-close {
     display: none;
     position: fixed;
-    width: 1.8vw;
-    height: 1.8vw;
+    width: 1.6vw;
+    height: 1.6vw;
     top: 8.9%;
     left: 74%;
     z-index: 999;
     cursor: pointer;
+    -webkit-animation-name: closeSlideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: closeSlideIn;
+    animation-duration: 0.4s;
+    -webkit-transition-timing-function: ease;
+    transition-timing-function: ease;
 }
 
 #help-content .li-title{
     font-weight: bold;
+}
+
+
+@-webkit-keyframes slideIn {
+    from {
+        top: -15%;
+        opacity: 0
+    }
+
+    to {
+        top: 10%;
+        opacity: 1
+    }
+}
+
+@keyframes slideIn {
+    from {
+        top: -15%;
+        opacity: 0
+    }
+
+    to {
+        top: 10%;
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes closeSlideIn {
+    from {
+        top: -15%;
+        opacity: 0
+    }
+
+    to {
+        top: 8.9%;
+        opacity: 1
+    }
+}
+
+@keyframes closeSlideIn {
+    from {
+        top: -15%;
+        opacity: 0
+    }
+
+    to {
+        top: 8.9%;
+        opacity: 1
+    }
 }

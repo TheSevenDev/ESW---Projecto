@@ -1,0 +1,46 @@
+﻿
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="~/js/sortableList.js"></script>
+
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
+<p class="page-title">Avaliação de Candidatura </p>
+
+<div class="main-application-container">
+
+    <form class="evaluate-application-form">
+        <div style="padding-left:3%;padding-top:2%;font-size:1.45vmax;text-align:center;">
+            Candidato <br /><span>@ViewData["application-student-name"]  @ViewData["application-student-number"]</span>
+        </div>
+
+        <div style="padding:3%;padding-top:5%">
+
+
+            <label>Número de ECTS realizados</label>
+            <input type="number" max="600" min="0" value="0" /><br /><br />
+
+            <label>Número de ECTS do curso</label>
+            <input type="number" max="600" min="0" value="0" /><br /><br />
+
+            <label>Classificação de motivações(0-100)</label>
+            <input type="number" max="100" min="0" value="0" /><br /><br />
+
+            <label>Classificação da entrevista(0-100)</label>
+            <input type="number" max="100" min="0" value="0" /><br /><br />
+
+            <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
+            <input type="number" max="20" min="0" value="0" />&nbsp;valores<br /><br />
+
+            <div style="margin-left:60%;margin-top:5%;">
+                <label>Classificação Final</label>
+                <input type="text" max="20" min="0" value="0" disabled />&nbsp;valores<br /><br />
+            </div>
+
+
+            <input type="submit" />
+        </div>
+
+
+    </form>
+
+</div>

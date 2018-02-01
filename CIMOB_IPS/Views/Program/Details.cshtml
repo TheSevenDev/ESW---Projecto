@@ -85,8 +85,7 @@
     {
         <p>Sem informações sobre as instituições associadas ao programa!</p>
     }
-
-    <p>Vagas para candidaturas: <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
+   
     @if (User.Identity.IsAuthenticated)
     {
         @if (User.IsInRole("estudante"))

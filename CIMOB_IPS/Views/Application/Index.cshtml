@@ -5,96 +5,99 @@
 
 <p class="page-title">Candidaturas Submetidas</p>
 
-    <div class="main-container-pendingtech" style="padding:1%;padding-left:2%;">
-        <table style="margin: 0 auto;">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
-                    </th>
-                    <th>
-                        Nome
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().ApplicationDate)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
-                    </th>
+<div class="main-container-submitted-applications" style="padding:1%;padding-left:2%;">
+    <table style="margin: 0 auto;">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().ApplicationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
+                </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().FinalEvaluation)
-                    </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FinalEvaluation)
+                </th>
 
-                    <th> </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
+                <th> </th>
+                <th> </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var strName = "";
+                var arrNames = item.IdStudentNavigation.Name.Split(' ');
+                string strFirstName = arrNames[0];
+                string strLastName = arrNames[arrNames.Length - 1];
+                if (arrNames.Length > 1)
                 {
-                    var strName = "";
-                    var arrNames = item.IdStudentNavigation.Name.Split(' ');
-                    string strFirstName = arrNames[0];
-                    string strLastName = arrNames[arrNames.Length - 1];
-                    if (arrNames.Length > 1)
+                    strName = strFirstName + " " + strLastName;
+                }
+                else
+                {
+                    strName = strFirstName;
+                }
+
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
+                    </td>
+                    <td>
+                        @strName
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.ApplicationDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.IdStateNavigation.Description)
+                    </td>
+                    @if (item.IdStateNavigation.Description != "Em Avaliação")
                     {
-                        strName = strFirstName + " " + strLastName;
+                        <td>
+                            @Html.DisplayFor(model => item.FinalEvaluation)
+                        </td>
                     }
                     else
                     {
-                        strName = strFirstName;
+                        <td>
+                            Por Avaliar
+                        </td>
                     }
 
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
-                        </td>
-                        <td>
-                            @strName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.ApplicationDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.IdStateNavigation.Description)
-                        </td>
-                        @if (item.IdStateNavigation.Description != "Em Avaliação")
-                        {
-                            <td>
-                                @Html.DisplayFor(model => item.FinalEvaluation)
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                Por Avaliar
-                            </td>
-                        }
+                    <td>
+                        <button  onclick="location.href='@Url.Action("Details", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Mais Detalhes</button>
+                    </td>
+                    <td>
+                        <button onclick="location.href='@Url.Action("Evaluate", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Avaliar Candidatura</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 
-                        <td>
-                            <a asp-controller="Application" asp-action="Details" asp-route-appId=@item.IdApplication>Detalhes</a>
-                            <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@item.IdApplication>Avaliar Candidatura</button>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <br />
+    Página @Model.PageIndex de @Model.TotalPages
+    <br />
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
 
-        <br />
-        Página @Model.PageIndex de @Model.TotalPages
-        <br />
-        @{
-            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-        }
-
-        @if (Model.HasPreviousPage)
-        {
-            <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
-        }
-        &nbsp;&nbsp;&nbsp;
-        @if (Model.HasNextPage)
-        {
-            <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
-        }
+    @if (Model.HasPreviousPage)
+    {
+        <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+    }
+    &nbsp;&nbsp;&nbsp;
+    @if (Model.HasNextPage)
+    {
+        <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+    }
 </div>

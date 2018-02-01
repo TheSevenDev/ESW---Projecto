@@ -283,22 +283,89 @@ li.sortable-placeholder {
 }
 
 .evaluate-application {
-    padding: 0.8%;
-    width: 25%;
-    margin-top: 2%;
-    margin-left: 75%;
+    padding: 1%;
+    width: 100%;
     border: none;
     background-color: var(--blue-var4);
     border-radius: 3%;
-    border: 0.7px solid var(--blue-var4);
     font-weight: bold;
-    font-size: 1vmax;
+    font-size: 1.1vmax;
     color: #f1f1f1;
+    text-decoration:none;
+    
 }
 
 
 .evaluate-application:hover {
     background-color: var(--blue-var3);
     cursor: pointer;
-    border: 0.7px solid var(--blue-var3);
+}
+
+
+.main-container-submitted-applications {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 5%;
+    width: 50%;
+    margin-left: 25%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.main-container-submitted-applications table {
+    border-collapse: separate;
+    border-spacing: 0 0.5em;
+    background-color: white;
+}
+
+.main-container-submitted-applications table th {
+    background-color: white;
+    font-size: 1.1vmax;
+}
+
+.main-container-submitted-applications table tbody tr {
+    background-color: #f2f2f2;
+    height: 10%;
+    font-size: 1.1vmax;
+    cursor:default;
+}
+
+.main-container-submitted-applications table tbody tr:hover {
+    background-color: #d2d2d2;
+}
+
+
+.evaluate-application-form label {
+    font-size: 1.1vmax;
+}
+
+
+.evaluate-application-form input[type=number]{
+    font-size:1.1vmax;
+    width:3vw;
+    text-align:center;
+
+}
+
+.evaluate-application-form input[type=text] {
+    font-size: 1.1vmax;
+    width: 3vw;
+    text-align: center;
+    cursor:default;
+}
+
+.evaluate-application-form input[type=submit] {
+    width: 15%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1vmax;
+    margin-left: 81%;
+}
+
+.evaluate-application-form input[type=submit]:hover {
+    background-color: var(--blue-var3);
 }

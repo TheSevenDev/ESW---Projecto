@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CIMOB-IPS</title>
+    <title>CIMOB</title>
 
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/jquery-confirm.css" />
@@ -67,7 +67,7 @@
 
             @if (User.Identity.IsAuthenticated)
             {
-                <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: toogleHelp();" draggable="false" />
+                <img class="option-button" id="help" src="~/images/icons/002-question-mark.png" onclick="javascript: openHelp();" draggable="false" />
                 <img class="option-button" id="notifications" src="~/images/icons/001-notifications-button.png" onclick="javascript: toogleNotifications();" draggable="false" />
                 <img class="option-button" id="options" src="~/images/icons/003-settings-work-tool.png" onclick="javascript: toogleSettings();"  draggable="false"/>
             }
@@ -101,14 +101,14 @@
 
         @await Html.PartialAsync("_Notifications.cshtml")
     </nav>
-    <div id="fade-background" onclick="javascript: toogleHelp();"></div>
-    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: toogleHelp();" draggable="false" />
+    <div id="fade-background" onclick="javascript: closeHelp();"></div>
+    <img id="help-close" src="~/images/icons/error.png" onclick="javascript: closeHelp();" draggable="false" />
     <div id="help-content">
         @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
 
     <div class="body-panel" onclick="javascript: hideMenus();">
-        <img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.8vmax; opacity:0.7;" draggable="false" src="~/images/cimobips.png" />
+        @*<img style="position:fixed; margin-left:83.5vw;margin-top:74vh;width:15vmax; height:4.8vmax; opacity:0.7;" draggable="false" src="~/images/cimobips.png" />*@
         @RenderBody()
     </div>
     <footer>
