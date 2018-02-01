@@ -44,8 +44,8 @@ namespace CIMOB_IPS.Controllers
 
                 if (DateTime.Now > program.ClosingDate)
                 {
-                    program.IdStateNavigation = context.State.Where(s => s.Description == "Fechado").FirstOrDefault();
-                    program.IdState = context.State.Where(s => s.Description == "Fechado").FirstOrDefault().IdState;
+                    program.IdStateNavigation = context.State.Where(s => s.Description == "Em Seriação").FirstOrDefault();
+                    program.IdState = context.State.Where(s => s.Description == "Em Seriação").FirstOrDefault().IdState;
                 }
 
                 switch (program.IdStateNavigation.Description)
@@ -53,7 +53,7 @@ namespace CIMOB_IPS.Controllers
                     case "Aberto":
                         ViewData["programstate-color"] = "Green";
                         break;
-                    case "Fechado":
+                    case "Em seriação":
                         ViewData["programstate-color"] = "Red";
                         break;
                     case "A Decorrer":
@@ -181,7 +181,7 @@ namespace CIMOB_IPS.Controllers
                 {
                     using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                     {
-                        if(!context.Program.Where(a => a.IdProgramType == model.IdProgramType).Any())
+                        if(!context.Program.Where(a => a.IdProgramType == model.IdProgramType && a.IdStateNavigation.Description != "Aberto").Any())
                         { 
                             var program = new Models.Program
                             {

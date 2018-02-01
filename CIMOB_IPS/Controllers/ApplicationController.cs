@@ -349,7 +349,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(int? pagePending)
+        public async Task<IActionResult> Index(int? pageApplication)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -360,7 +360,7 @@ namespace CIMOB_IPS.Controllers
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 int intPageSize = 10;
-                int intPageApplications = (pagePending ?? 1);
+                int intPageApplications = (pageApplication ?? 1);
 
                 var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
                     .Include(a => a.IdStateNavigation)
@@ -458,6 +458,22 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Approved(int? pageApplication)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                int intPageSize = 50;
+                int intPageApplications = (pageApplication ?? 1);
 
+                var applications = (from a in context.Application where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação" select a).OrderBy(a => a.IdStudentNavigation.StudentNum)
+                    .Include(a => a.IdStateNavigation)
+                    .Include(a => a.IdStudentNavigation)
+                    .Include(a => a.IdProgramNavigation);
+
+                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                return View(paginatedApplications);
+            }
+        }
     }
 }

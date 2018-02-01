@@ -89,8 +89,8 @@ namespace XUnitCIMOB_IPS
             
             if (DateTime.Now > program.ClosingDate)
             {
-                program.IdStateNavigation = _context.State.Where(s => s.Description == "Fechado").FirstOrDefault();
-                program.IdState = _context.State.Where(s => s.Description == "Fechado").FirstOrDefault().IdState;
+                program.IdStateNavigation = _context.State.Where(s => s.Description == "Em Seriação").FirstOrDefault();
+                program.IdState = _context.State.Where(s => s.Description == "Em Seriação").FirstOrDefault().IdState;
             }
 
             switch (program.IdStateNavigation.Description)
@@ -98,7 +98,7 @@ namespace XUnitCIMOB_IPS
                 case "Aberto":
                     ViewData["programstate-color"] = "Green";
                     break;
-                case "Fechado":
+                case "Em Seriação":
                     ViewData["programstate-color"] = "Red";
                     break;
                 case "A Decorrer":
@@ -195,7 +195,7 @@ namespace XUnitCIMOB_IPS
         {
             var program = GetProgram().Result;
 
-            program.IdStateNavigation.Description = "Fechado";
+            program.IdStateNavigation.Description = "Em Seriação";
 
             Assert.False(program.isOpenProgram());
         }

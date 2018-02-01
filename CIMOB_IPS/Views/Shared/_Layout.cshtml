@@ -48,18 +48,21 @@
                             <a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a>
                         </li>
                     }
-                    @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                    {
-                        <li>
-                            <a>Listagens</a>
-                            <ul class="sub-menu">
-                                <li><a asp-area="" asp-controller="Application" asp-action="Index">Candidaturas</a></li>
-                                <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
-                                <li></li>
-                            </ul>
-                        </li>
-                    }
+                    
                 }
+
+                <li>
+                    <a>Listagens</a>
+                    <ul class="sub-menu">
+                        <li><a asp-area="" asp-controller="Application" asp-action="Approved">Candidaturas Aprovadas</a></li>
+                        @if (User.Identity.IsAuthenticated && (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                        {
+                            <li><a asp-area="" asp-controller="Application" asp-action="Index">Candidaturas Submetidas</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
+                        }
+                        <li></li>
+                    </ul>
+                </li>
 
                 <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contactos</a></li>
             </ul>
