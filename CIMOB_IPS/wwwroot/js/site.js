@@ -359,16 +359,54 @@ onload = start;
 
 function start() {
 
+    autoPlayGallery();
+    setColor();
+    
+}
+
+function autoPlayGallery() {
     function Move() {
         var i;
-        for (i = 1; i < 4; i++){
+        for (i = 1; i < 4; i++) {
             if (document.getElementById('i' + i) !== null && document.getElementById('i' + i).checked) {
                 i = (i % 3) + 1;
                 document.getElementById('i' + i).checked = true;
                 break;
             }
         }
-        
+
     }
     setInterval(Move, 3000);
+}
+
+function setColor(){
+    var value = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1) + 1)) + 1;
+
+    switch (value){
+        case 1:
+            document.documentElement.style.setProperty('--blue-var4', '#F18735');
+            break;
+        case 2:
+            document.documentElement.style.setProperty('--blue-var4', '#F5B738');
+            break;
+        case 3:
+            document.documentElement.style.setProperty('--blue-var4', '#EA3527');
+            break;
+        case 4:
+            document.documentElement.style.setProperty('--blue-var4', '#F3E01A');
+            break;
+        case 5:
+            document.documentElement.style.setProperty('--blue-var4', '#C1D53C');
+            break;
+            
+        case 6:
+            document.documentElement.style.setProperty('--blue-var4', '#508EC7');
+            break;
+        case 7:
+            document.documentElement.style.setProperty('--blue-var4', '#DD1D66');
+            break;
+        default:
+            document.documentElement.style.setProperty('--blue-var4', '#707FBA');
+        
+    }
 }
