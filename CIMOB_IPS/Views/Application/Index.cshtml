@@ -6,10 +6,14 @@
 <p class="page-title">Candidaturas Submetidas</p>
 
 <div class="main-container-submitted-applications" style="padding:1%;padding-left:2%;">
-    <table style="margin: 0 auto;">
+    <form id="search-application">
+        <input type="search" placeholder="Procurar.." />
+        <input type="submit" />
+    </form>
+    <table style="margin: 8% auto;">
         <thead>
             <tr>
-                <th>
+                <th style="width:8em;">
                     @Html.DisplayNameFor(model => model.First().IdStudentNavigation.StudentNum)
                 </th>
                 <th>
@@ -19,15 +23,17 @@
                     @Html.DisplayNameFor(model => model.First().ApplicationDate)
                 </th>
                 <th>
+
+                </th>
+
+
+                @*<th>
                     @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
-                </th>
+                </th>*@
 
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.First().FinalEvaluation)
-                </th>
-
-                <th> </th>
-                <th> </th>
+                </th>*@
             </tr>
         </thead>
         <tbody>
@@ -56,10 +62,10 @@
                     <td>
                         @Html.DisplayFor(model => item.ApplicationDate)
                     </td>
-                    <td>
+                    @*<td>
                         @Html.DisplayFor(model => item.IdStateNavigation.Description)
-                    </td>
-                    @if (item.IdStateNavigation.Description != "Em Avaliação")
+                    </td>*@
+                    @*@if (item.IdStateNavigation.Description != "Em Avaliação")
                     {
                         <td>
                             @Html.DisplayFor(model => item.FinalEvaluation)
@@ -70,12 +76,10 @@
                         <td>
                             Por Avaliar
                         </td>
-                    }
+                    }*@
 
                     <td>
-                        <button  onclick="location.href='@Url.Action("Details", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Mais Detalhes</button>
-                    </td>
-                    <td>
+                        <button  onclick="location.href='@Url.Action("Details", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Detalhes</button>
                         <button onclick="location.href='@Url.Action("Evaluate", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Avaliar Candidatura</button>
                     </td>
                 </tr>
@@ -83,9 +87,7 @@
         </tbody>
     </table>
 
-    <br />
-    Página @Model.PageIndex de @Model.TotalPages
-    <br />
+    @*Página @Model.PageIndex de @Model.TotalPages*@
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";

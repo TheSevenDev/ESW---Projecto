@@ -284,17 +284,35 @@ li.sortable-placeholder {
 
 .evaluate-application {
     padding: 1%;
-    width: 100%;
+    margin-bottom: 2%;
+    border-radius: 3%;
+    width: 65%;
+    height: 100%;
     border: none;
     background-color: var(--blue-var4);
-    border-radius: 3%;
+    border-radius: 2%;
     font-weight: bold;
     font-size: 1.1vmax;
     color: #f1f1f1;
-    text-decoration:none;
-    
+    text-decoration: none;
+    margin-left: 30%;
 }
 
+.evaluate-application:first-child {
+    padding: 1%;
+    margin-top: 2%;
+    border-radius: 3%;
+    width:65%;
+    height: 100%;
+    border: none;
+    background-color: var(--blue-var4);
+    border-radius: 2%;
+    font-weight: bold;
+    font-size: 1.1vmax;
+    color: #f1f1f1;
+    text-decoration: none;
+    margin-left: 30%;
+}
 
 .evaluate-application:hover {
     background-color: var(--blue-var3);
@@ -316,16 +334,19 @@ li.sortable-placeholder {
     border-collapse: separate;
     border-spacing: 0 0.5em;
     background-color: white;
+    width:90%;
 }
 
 .main-container-submitted-applications table th {
     background-color: white;
     font-size: 1.1vmax;
+    
 }
 
 .main-container-submitted-applications table tbody tr {
-    background-color: #f2f2f2;
+    background-color: #e6e6e6;
     height: 10%;
+    
     font-size: 1.1vmax;
     cursor:default;
 }
@@ -368,4 +389,21 @@ li.sortable-placeholder {
 
 .evaluate-application-form input[type=submit]:hover {
     background-color: var(--blue-var3);
+}
+
+#search-application input[type="search"] {
+    width: 90%;
+
+}
+
+#search-application input[type="submit"] {
+    width: 15%;
+    background-color: var(--blue-var4);
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1vmax;
+    margin-left: 81%;
 }
