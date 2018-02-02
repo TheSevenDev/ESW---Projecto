@@ -130,7 +130,7 @@ legend {
     border: 0.7px solid #222222;
     color: #f1f1f1;
     padding: 2%;
-    font-size: 1vmax;
+    font-size: 1vmax; 
     width: 6.5vw;
     display: inline-block;
     text-align:center;
@@ -323,7 +323,7 @@ li.sortable-placeholder {
 .main-container-submitted-applications {
     text-align: center;
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 0.2%;
     width: 50%;
     margin-left: 25%;
     background-color: white;
@@ -391,19 +391,41 @@ li.sortable-placeholder {
     background-color: var(--blue-var3);
 }
 
-#search-application input[type="search"] {
-    width: 90%;
-
+#search-application {
+    margin-top:5%;
+    margin-left:50%;
+    position:relative;
 }
 
-#search-application input[type="submit"] {
-    width: 15%;
+
+#search-application input[type="search"] {
+    width: 15vw;
+    padding: 0.7% 0.7%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1.1vmax;
+    margin-left:18.5%;
+}
+
+    #search-application input[type="search"]:focus {
+        outline: none;
+    }
+
+#search-application button[type="submit"] {
+    width: 7%;
     background-color: var(--blue-var4);
     color: white;
-    padding: 5px;
+    padding: 0.7%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.1vmax;
-    margin-left: 81%;
+    margin-left: -0.5%;
+    position: relative;
+}
+
+#search-application button[type="submit"]:hover {
+    background-color: var(--blue-var3);
 }

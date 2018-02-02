@@ -81,7 +81,7 @@ namespace CIMOB_IPS.Controllers
         public Student GetStudentById(int intId)
         {
             return _context.Student.Where(s => s.IdAccount == intId)
-                .Include( s => s.IdAddressNavigation)
+                .Include(s => s.IdAddressNavigation)
                 .FirstOrDefault();
         }
 
@@ -91,7 +91,7 @@ namespace CIMOB_IPS.Controllers
 
             var email = "";
 
-            if(account != null)
+            if (account != null)
             {
                 email = _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
             }
@@ -349,7 +349,7 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Index(int? pageApplication)
+        public async Task<IActionResult> Index(int? pageApplication, string search_by)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -362,20 +362,38 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
-                    .Include(a => a.IdStateNavigation)
-                    .Include(a => a.IdStudentNavigation)
-                    .Include(a => a.IdProgramNavigation);
+                
+                if (String.IsNullOrEmpty(search_by))
+                {
+                    var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
+                        .Include(a => a.IdStateNavigation)
+                        .Include(a => a.IdStudentNavigation)
+                        .Include(a => a.IdProgramNavigation);
 
-                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    ViewData["search-by"] = "";
+                    return View(paginatedApplications);
+                }
+                else
+                {
+                   var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
+                        .Include(a => a.IdStateNavigation)
+                        .Include(a => a.IdStudentNavigation)
+                        .Include(a => a.IdProgramNavigation)
+                        .Where(a=> a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by))
+                        ;
 
-                return View(paginatedApplications);
+                    ViewData["search-by"] = search_by.ToString();
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                    return View(paginatedApplications);
+                }    
             }
         }
 
         [HttpPost]
         public IActionResult DeleteApplication()
-        {       
+        {
             AccountController ac = new AccountController();
             ProfileController pc = new ProfileController();
 
@@ -439,7 +457,7 @@ namespace CIMOB_IPS.Controllers
         [HttpGet]
         public IActionResult Evaluate(int appId)
         {
-             if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
@@ -454,6 +472,7 @@ namespace CIMOB_IPS.Controllers
                     .FirstOrDefault();
                 ViewData["application-student-name"] = app.IdStudentNavigation.Name;
                 ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
+                ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
             }
             return View();
         }
@@ -465,7 +484,11 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 50;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação" select a).OrderBy(a => a.IdStudentNavigation.StudentNum)
+                var applications = (from a in context.Application
+                                    where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação"
+                                    && a.FinalEvaluation >= 50
+                                    select a)
+                    .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation);

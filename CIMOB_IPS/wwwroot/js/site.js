@@ -419,3 +419,37 @@ function setColor(){
         
     }
 }
+
+
+
+function evaluateApplication() {
+
+    var ects_done = document.getElementById("ects_done").value;
+    var ects_all = document.getElementById("ects_all").value;
+    var motivations = document.getElementById("motivations").value;
+    var interview = document.getElementById("interview").value;
+    var average_grades = document.getElementById("average_grades").value;
+
+    var final_classification = document.getElementById("final_classification");
+
+    var classification = ((ects_done / ects_all) * 100) * 0.35 + ((motivations * 0.5 + interview * 0.5)) * 0.35 + (average_grades * 5) * 0.30;
+
+    if (!isFinite(classification))
+        classification = 0;
+
+    final_classification.value = classification.toFixed(2);
+
+
+
+
+
+}
+
+function minmax(value, min, max) {
+    if (value < min || isNaN(parseFloat(value)))
+        return min;
+    else if (value > max)
+        return max;
+
+    return value;
+}
