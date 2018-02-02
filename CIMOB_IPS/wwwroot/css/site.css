@@ -371,9 +371,6 @@ html, body {
 }
 
 
-
-
-
 /*
     IN
 */
@@ -1024,11 +1021,11 @@ footer {
     margin-left: 64%;
 }
 
-    .btn-clear-canvas:hover {
-        background-color: var(--blue-var4);
-        cursor: pointer;
-        border: 0.7px solid var(--blue-var4);
-    }
+.btn-clear-canvas:hover {
+    background-color: var(--blue-var4);
+    cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
+}
 
 .application-form-pager input[type=submit] {
     background-color: #222222;

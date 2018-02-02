@@ -429,12 +429,10 @@ function evaluateApplication() {
         classification = 0;
 
     final_classification.value = classification.toFixed(2);
-
-
-
-
-
 }
+
+
+
 
 function minmax(value, min, max) {
     if (value < min || isNaN(parseFloat(value)))

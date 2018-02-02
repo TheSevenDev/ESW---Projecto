@@ -477,6 +477,28 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult EvaluateApplication(int appId, int evaluation)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+           
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var app = context.Application.Where(a => a.IdApplication == appId)
+                    .Include(a => a.IdStudentNavigation)
+                    .FirstOrDefault();
+
+            }
+            return View();
+        }
+
+
+
         public async Task<IActionResult> Approved(int? pageApplication)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
