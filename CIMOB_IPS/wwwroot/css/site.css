@@ -3,15 +3,16 @@
     --blue-var1: #9FC5F8;
     --blue-var2: #6FA8DC;
     --blue-var3: #085394;
-    --blue-var4: "";
+    --main-color: "";
     --blue-var5: #e5e5ff;
     --main-grey: #383838;
-    --grey-var1: #54565B;
-    --light-grey: #F1F1F1;
+    --secundary-color: #54565B;
+    --hover-color: #F1F1F1;
     --dark-grey: #222222;
     --main-red: #cc0000;
     --red-var1: #ff0033;
     --background: #F1F1F1;
+    --hover-slider:"";
 }
 
 html, body {
@@ -68,7 +69,7 @@ html, body {
 
         .nav-session a, .nav-session a:visited, .nav-session a:link, .nav-session a:active {
             text-decoration: none;
-            color: var(--blue-var4);
+            color: var(--main-color);
         }
 
             .nav-session a, .nav-session a:visited:hover, .nav-session a:link:hover, .nav-session a:active:hover {
@@ -97,7 +98,7 @@ html, body {
 
     .session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
         text-decoration: none;
-        color: var(--light-grey);
+        color: #F1F1F1;
         font-size: 1vw;
     }
 
@@ -106,7 +107,7 @@ html, body {
         }
 
 #logout {
-    color: var(--blue-var4);
+    color: var(--main-color);
     font-size: 1.0vw;
 }
 
@@ -172,7 +173,7 @@ html, body {
     position: fixed;
     width: 100%;
     height: 4.5vmin;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
 }
 
     .navbar-menu > ul {
@@ -200,7 +201,7 @@ html, body {
 
     .navbar-menu a, .navbar-menu a:visited, .navbar-menu a:link, .navbar-menu a:active {
         text-decoration: none;
-        color: var(--grey-var1);
+        color: var(--secundary-color);
         font-weight: bold;
         font-size: 1.2vmax;
         cursor: pointer;
@@ -208,7 +209,7 @@ html, body {
 
 
     .navbar-menu li:hover, .navbar-menu li:hover a {
-        color: var(--light-grey);
+        color: var(--hover-color);
         cursor: pointer;
     }
 
@@ -224,11 +225,11 @@ html, body {
 .sub-menu {
     display: none;
     position: fixed;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     min-width: 12vw;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 700;
-    color: var(--grey-var1);
+    color: var(--secundary-color);
     top: 10.5%;
     padding: 0;
 }
@@ -245,14 +246,14 @@ html, body {
 
         .sub-menu li a, .sub-menu li a:visited, .sub-menu li a:link, .sub-menu li a:active {
             text-decoration: none;
-            color: var(--grey-var1);
+            color: var(--secundary-color);
             font-weight: bold;
             font-size: 1.1vmax;
             display: inline-block;
         }
 
         .sub-menu li:hover, .sub-menu li:hover a {
-            color: var(--light-grey)
+            color: var(--hover-color)
         }
 
 .navbar-menu li:hover .sub-menu {
@@ -294,7 +295,7 @@ html, body {
 
     .menu-settings a, .menu-settings a:visited, .menu-settings a:link, .menu-settings a:active {
         text-decoration: none;
-        color: var(--grey-var1);
+        color: var(--secundary-color);
         font-weight: 500;
         font-size: 1.1vmax;
     }
@@ -351,7 +352,7 @@ html, body {
 
 .notifications a, .notifications a:visited, .notifications a:link, .notifications a:active {
     text-decoration: none;
-    color: var(--grey-var1);
+    color: var(--secundary-color);
     font-weight: 500;
     font-size: 1.1vmax;
 }
@@ -452,7 +453,7 @@ html, body {
 
     .information a, .information a :visited, .information a :link, .information a :active {
         background-color: inherit;
-        color: var(--blue-var4);
+        color: var(--main-color);
     }
 
 .editProfileForm {
@@ -485,7 +486,7 @@ html, body {
     float: right;
     border: none;
     background-color: inherit;
-    color: var(--blue-var4);
+    color: var(--main-color);
     font-weight: bold;
     font-size: 1vmax;
 }
@@ -599,7 +600,7 @@ html, body {
 
     .invite-form input[type=submit] {
         width: 40%;
-        background-color: var(--blue-var4);
+        background-color: var(--main-color);
         color: white;
         padding: 12px;
         border: none;
@@ -696,7 +697,7 @@ html, body {
 
 .login-form a, .login-form a:visited, .login-form a:link, .login-form a:active {
     text-decoration: none;
-    color: var(--blue-var4);
+    color: var(--main-color);
     font-weight: 500;
     font-size: 1vmax;
     margin-left: 28%;
@@ -732,7 +733,7 @@ html, body {
 
 .login-form input[type=submit] {
     width: 100%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 0.7vw;
     border: none;
@@ -809,7 +810,7 @@ html, body {
 
 .fyp-form input[type=submit] {
     width: 35%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 2.8%;
     border: none;
@@ -916,7 +917,7 @@ footer {
 
     .programDetails input[type=button] {
         width: 75%;
-        background-color: var(--blue-var4);
+        background-color: var(--main-color);
         color: white;
         padding: 12px;
         border: none;
@@ -1026,9 +1027,9 @@ footer {
 }
 
     .btn-clear-canvas:hover {
-        background-color: var(--blue-var4);
+        background-color: var(--main-color);
         cursor: pointer;
-        border: 0.7px solid var(--blue-var4);
+        border: 0.7px solid var(--main-color);
     }
 
 .application-form-pager input[type=submit] {
@@ -1043,7 +1044,7 @@ footer {
 }
 
     .application-form-pager input[type=submit]:hover:enabled {
-        background-color: var(--blue-var4);
+        background-color: var(--main-color);
         cursor: pointer;
-        border: 0.7px solid var(--blue-var4);
+        border: 0.7px solid var(--main-color);
     }

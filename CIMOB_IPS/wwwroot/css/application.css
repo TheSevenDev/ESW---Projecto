@@ -58,7 +58,7 @@ textarea {
 
 .application-form input[type=submit], application-form-pager a, application-form-pager button {
     width: 100%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 12px;
     border: none;
@@ -91,9 +91,9 @@ textarea {
 }
 
 .application-form-pager input[type=submit]:hover:enabled {
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
+    border: 0.7px solid var(--main-color);
 }
 
 input[type=submit]:disabled {
@@ -112,7 +112,7 @@ fieldset {
 
 legend {
     padding: 0.2em 0.5em;
-    border: 0px solid var(--blue-var4);
+    border: 0px solid var(--main-color);
     color: #222222;
     font-size: 1.1vmax;
     text-align: center;
@@ -139,9 +139,9 @@ legend {
 
 
 .application-form-pager a:hover {
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
+    border: 0.7px solid var(--main-color);
 }
 
 
@@ -289,7 +289,7 @@ li.sortable-placeholder {
     width: 65%;
     height: 100%;
     border: none;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     border-radius: 2%;
     font-weight: bold;
     font-size: 1.1vmax;
@@ -305,7 +305,7 @@ li.sortable-placeholder {
     width:65%;
     height: 100%;
     border: none;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     border-radius: 2%;
     font-weight: bold;
     font-size: 1.1vmax;
@@ -377,7 +377,7 @@ li.sortable-placeholder {
 
 .evaluate-application-form input[type=submit] {
     width: 15%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 12px;
     border: none;
@@ -415,7 +415,7 @@ li.sortable-placeholder {
 
 #search-application button[type="submit"] {
     width: 7%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 0.7%;
     border: none;
