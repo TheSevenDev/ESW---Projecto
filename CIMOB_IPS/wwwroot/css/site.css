@@ -11,6 +11,7 @@
     --dark-grey: #222222;
     --main-red: #cc0000;
     --red-var1: #ff0033;
+    --background: #F1F1F1;
 }
 
 html, body {
@@ -837,7 +838,7 @@ html, body {
     min-height: 87%;
     width: 100%;
     top: 10.5vmin;
-    background-color: var(--light-grey);
+    background-color: var(--background);
     z-index: 100;
     padding-bottom: 3%;
 }
