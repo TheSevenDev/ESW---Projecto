@@ -423,7 +423,7 @@ function evaluateApplication() {
 
     var final_classification = document.getElementById("final_classification");
 
-    var classification = ((ects_done/ects_all)*100)*0.35 + ((motivations*0.5 + interview*0.5))*0.35 + (average_grades*5)*0.30
+    var classification = ((ects_done / ects_all) * 100) * 0.35 + ((motivations * 0.5 + interview * 0.5)) * 0.35 + (average_grades * 5) * 0.30;
 
     if (!isFinite(classification))
         classification = 0;
@@ -434,4 +434,13 @@ function evaluateApplication() {
 
 
 
+}
+
+function minmax(value, min, max) {
+    if (value < min || isNaN(parseFloat(value)))
+        return min;
+    else if (value > max)
+        return max;
+
+    return value;
 }

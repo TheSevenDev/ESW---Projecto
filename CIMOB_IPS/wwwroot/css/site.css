@@ -181,6 +181,7 @@ html, body {
         height: 100%;
         width: 100%;
         list-style: none;
+        margin-left:0;
     }
 
 
@@ -426,7 +427,7 @@ html, body {
 }
 
 /*
-   PROFILE
+    PROFILE
 */
 
 .information {
@@ -839,7 +840,6 @@ html, body {
     top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
-
 }
 
 footer {
@@ -975,9 +975,9 @@ footer {
 
 
 
-.main-container-contacts a {
-    color: var(--blue-var3)
-}
+    .main-container-contacts a {
+        color: var(--blue-var3)
+    }
 
 .icon-img {
     height: 14px;
@@ -1007,10 +1007,10 @@ footer {
     text-decoration: none;
 }
 
-.hyperlink:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}
+    .hyperlink:hover {
+        cursor: pointer;
+        text-decoration: underline;
+    }
 
 .btn-clear-canvas {
     background-color: #222222;
@@ -1024,11 +1024,11 @@ footer {
     margin-left: 64%;
 }
 
-.btn-clear-canvas:hover {
-    background-color: var(--blue-var4);
-    cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
-}
+    .btn-clear-canvas:hover {
+        background-color: var(--blue-var4);
+        cursor: pointer;
+        border: 0.7px solid var(--blue-var4);
+    }
 
 .application-form-pager input[type=submit] {
     background-color: #222222;
@@ -1041,8 +1041,8 @@ footer {
     display: inline-block;
 }
 
-.application-form-pager input[type=submit]:hover:enabled {
-    background-color: var(--blue-var4);
-    cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
-}
+    .application-form-pager input[type=submit]:hover:enabled {
+        background-color: var(--blue-var4);
+        cursor: pointer;
+        border: 0.7px solid var(--blue-var4);
+    }
