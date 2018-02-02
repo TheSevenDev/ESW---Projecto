@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/CIMOB_IPS/wwwroot/BackOffice/Application Files/CIMOB_IPS_BackOffice_1_0_0_4
+/SmithHtmlEditor
