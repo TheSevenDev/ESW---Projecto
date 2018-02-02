@@ -472,6 +472,7 @@ namespace CIMOB_IPS.Controllers
                     .FirstOrDefault();
                 ViewData["application-student-name"] = app.IdStudentNavigation.Name;
                 ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
+                ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
             }
             return View();
         }
@@ -483,7 +484,11 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 50;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação" select a).OrderBy(a => a.IdStudentNavigation.StudentNum)
+                var applications = (from a in context.Application
+                                    where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação"
+                                    && a.FinalEvaluation >= 50
+                                    select a)
+                    .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation);
