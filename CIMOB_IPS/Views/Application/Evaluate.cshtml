@@ -17,23 +17,23 @@
 
 
             <label>Número de ECTS realizados</label>
-            <input type="number" max="600" min="0" value="0" /><br /><br />
+            <input type="number" max="600" min="0" value="0" id="ects_done" name="ects_done" onfocusout="evaluateApplication()"/><br /><br />
 
             <label>Número de ECTS do curso</label>
-            <input type="number" max="600" min="0" value="0" /><br /><br />
+            <input type="number" max="600" min="0" value="0" id="ects_all" name="ects_all" onfocusout="evaluateApplication()"/><br /><br />
 
             <label>Classificação de motivações(0-100)</label>
-            <input type="number" max="100" min="0" value="0" /><br /><br />
+            <input type="number" max="100" min="0" value="0" id="motivations" name="motivations" onfocusout="evaluateApplication()"/><br /><br />
 
             <label>Classificação da entrevista(0-100)</label>
-            <input type="number" max="100" min="0" value="0" /><br /><br />
+            <input type="number" max="100" min="0" value="0" id="interview" name="interview" onfocusout="evaluateApplication()"/><br /><br />
 
             <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
-            <input type="number" max="20" min="0" value="0" />&nbsp;valores<br /><br />
+            <input type="number" max="20" min="0" value="0" id="average_grades" name="average_grades" onfocusout="evaluateApplication()"/>&nbsp;valores<br /><br />
 
             <div style="margin-left:60%;margin-top:5%;">
                 <label>Classificação Final</label>
-                <input type="text" max="20" min="0" value="0" disabled />&nbsp;valores<br /><br />
+                <input type="text" max="20" min="0" value="0" disabled id="final_classification" name="final_classification"/>&nbsp;valores<br /><br />
             </div>
 
 

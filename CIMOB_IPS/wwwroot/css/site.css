@@ -80,12 +80,12 @@ html, body {
     width: 100%;
 }
 
-#session-logo img {
-    width: 15vmin;
-    height: 4vmin;
-    position: fixed;
-    top: 1%;
-}
+    #session-logo img {
+        width: 15vmin;
+        height: 4vmin;
+        position: fixed;
+        top: 1%;
+    }
 
 .session-name {
     position: fixed;
@@ -839,7 +839,7 @@ html, body {
     top: 10.5vmin;
     background-color: var(--light-grey);
     z-index: 100;
-    padding-bottom: 3%;
+
 }
 
 footer {
@@ -975,9 +975,9 @@ footer {
 
 
 
-    .main-container-contacts a {
-        color: var(--blue-var3)
-    }
+.main-container-contacts a {
+    color: var(--blue-var3)
+}
 
 .icon-img {
     height: 14px;
@@ -1007,10 +1007,10 @@ footer {
     text-decoration: none;
 }
 
-    .hyperlink:hover {
-        cursor: pointer;
-        text-decoration: underline;
-    }
+.hyperlink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 .btn-clear-canvas {
     background-color: #222222;
@@ -1024,11 +1024,11 @@ footer {
     margin-left: 64%;
 }
 
-    .btn-clear-canvas:hover {
-        background-color: var(--blue-var4);
-        cursor: pointer;
-        border: 0.7px solid var(--blue-var4);
-    }
+.btn-clear-canvas:hover {
+    background-color: var(--blue-var4);
+    cursor: pointer;
+    border: 0.7px solid var(--blue-var4);
+}
 
 .application-form-pager input[type=submit] {
     background-color: #222222;
@@ -1046,4 +1046,3 @@ footer {
     cursor: pointer;
     border: 0.7px solid var(--blue-var4);
 }
-
