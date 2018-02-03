@@ -211,7 +211,12 @@ function toggleCourses(elem) {
     jqElem.next().toggle(250);
 }
 
+function toggleMotivationCard(elem) {
+    var jqString = "#" + elem.id;
+    var jqElem = $(jqString);
 
+    jqElem.next().toggle(250);
+}
 
 function countUp() {
     var length = $('#textareaCarta').val().length;
@@ -353,6 +358,36 @@ $(document).ready(function () {
             }
         })
     });
+
+    $("form.evaluate-application-form").submit(function (event) {
+        event.preventDefault();
+        var form = this;
+        $.confirm({
+            title: 'Atenção!',
+            useBootstrap: false,
+            modal: true,
+            autoOpen: false,
+            draggable: false,
+            content: 'Deseja avaliar, desta forma, a presente candidatura?\nEsta acção é irreversível.',
+            buttons: {
+                sim: {
+                    text: 'Sim',
+                    btnClass: 'btn-green',
+                    action: function () {
+                        form.submit();
+                    }
+                },
+                nao: {
+                    text: 'Não',
+                    btnClass: 'btn-red',
+                    action: function () {
+                        event.preventDefault();
+                    }
+                },
+
+            }
+        })
+    });
 });
 
 onload = start;
@@ -437,6 +472,7 @@ function evaluateApplication() {
     var motivations = document.getElementById("motivations").value;
     var interview = document.getElementById("interview").value;
     var average_grades = document.getElementById("average_grades").value;
+    var evaluate_result = document.getElementById("evaluate_result").innerHTML;
 
     var final_classification = document.getElementById("final_classification");
 
@@ -446,6 +482,20 @@ function evaluateApplication() {
         classification = 0;
 
     final_classification.value = classification.toFixed(2);
+
+    if (classification >= 50)
+    {
+        document.getElementById("evaluate_result").innerHTML = "Aprovado!";
+        document.getElementById("evaluate_result").style.color = "green";
+        document.getElementById("technicianDd").disabled = false;
+    }
+    else
+    {
+        document.getElementById("evaluate_result").innerHTML = "Não aprovado";
+        document.getElementById("evaluate_result").style.color = "red";
+        document.getElementById("technicianDd").disabled = true;
+    }
+        
 }
 
 

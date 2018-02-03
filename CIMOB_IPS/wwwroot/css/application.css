@@ -429,3 +429,20 @@ li.sortable-placeholder {
 #search-application button[type="submit"]:hover {
     background-color: var(--blue-var3);
 }
+
+#viewMotivationCard {
+    height: 7%;
+    width: 20%;
+    margin-top: 2%;
+    border: none;
+
+    background-color: inherit;
+    color: var(--main-color);
+    font-weight: bold;
+    font-size: 1vmax;
+}
+
+#viewMotivationCard:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

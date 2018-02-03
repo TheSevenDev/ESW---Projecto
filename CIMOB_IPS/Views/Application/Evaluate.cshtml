@@ -1,4 +1,5 @@
-﻿
+﻿@model CIMOB_IPS.Models.ViewModels.ApplicationEvaluationViewModel
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script src="~/js/sortableList.js"></script>
 
@@ -8,36 +9,50 @@
 
 <div class="main-application-container">
 
-    <form class="evaluate-application-form">
+    <form class="evaluate-application-form" asp-action="EvaluateApplication">
         <div style="padding-left:3%;padding-top:2%;font-size:1.45vmax;text-align:center;">
             Candidato <br /><span>@ViewData["application-student-name"]  @ViewData["application-student-number"]</span>
         </div>
 
         <div style="padding:3%;padding-top:5%">
-
+            @Html.HiddenFor(model => model.IdApplication)
 
             <label>Número de ECTS realizados</label>
-            <input type="number" max="600" min="0" value=@ViewData["application-student-credits"] id="ects_done" name="ects_done" onfocusout="evaluateApplication()" onkeyup="this.value = minmax(this.value, 0, 600)"/><br /><br />
+            <input type="text" max="600" min="0" value=@ViewData["application-student-credits"] id="ects_done" name="ects_done" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
             <label>Número de ECTS do curso</label>
-            <input type="number" max="600" min="0" value="0" id="ects_all" name="ects_all" onfocusout="evaluateApplication()" onkeyup="this.value = minmax(this.value, 0, 600)"/><br /><br />
+            <input type="text" max="600" min="0" value="0" id="ects_all" name="ects_all" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
             <label>Classificação de motivações(0-100)</label>
-            <input type="number" max="100" min="0" value="0" id="motivations" name="motivations" onfocusout="evaluateApplication()" onkeyup="this.value = minmax(this.value, 0, 100)"/><br /><br />
+            <input type="text" max="100" min="0" value="0" id="motivations" name="motivations" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br />
+
+            <button type="button" id="viewMotivationCard" onclick="javascript:toggleMotivationCard(this);">Pré-visualizar</button>
+
+            <textarea id="motivationCard" name="motivationCard" disabled style="display: none;">@ViewData["application-student-motivation-card"]</textarea>
+            <br /><br />
 
             <label>Classificação da entrevista(0-100)</label>
-            <input type="number" max="100" min="0" value="0" id="interview" name="interview" onfocusout="evaluateApplication()" onkeyup="this.value = minmax(this.value, 0, 100)"/><br /><br />
+            <input type="text" max="100" min="0" value="0" id="interview" name="interview" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br /><br />
 
             <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
-            <input type="number" max="20" min="0" value="0" id="average_grades" name="average_grades" onfocusout="evaluateApplication()" onkeyup="this.value = minmax(this.value, 0, 20)"/>&nbsp;valores<br /><br />
+            <input type="text" max="20" min="0" value="0" id="average_grades" name="average_grades" onfocusout="this.value = minmax(this.value, 0, 20); evaluateApplication();"/>
+            <label>&nbsp;valores</label><br />
 
             <div style="margin-left:60%;margin-top:5%;">
                 <label>Classificação Final</label>
-                <input type="text" max="20" min="0" value="0.00" disabled id="final_classification" name="final_classification"/>&nbsp;valores<br /><br />
+                <input type="text" value=@Model.FinalEvalution asp-for="FinalEvalution" readonly id="final_classification" name="final_classification"/>
+                <label>&nbsp;valores</label><br /><br />
+                <label id="evaluate_result" style="float:right; margin-right: 8%;"></label><br /><br />
             </div>
 
+            <div id="technicians-Div">
+                <label>Técnico responsável: </label>
+                @Html.DropDownListFor(model => model.IdTechnician, Model.Technicians, "-- Seleccione o Técnico --", new { @id = "technicianDd", @disabled = "disabled" })
+                <span class="error-message">@ViewData["technicians-error"]</span>
+            </div>
+            <br /><br />
 
-            <input type="submit" />
+            <input type="submit" style="width: 20%" value="Submeter" />
         </div>
 
 

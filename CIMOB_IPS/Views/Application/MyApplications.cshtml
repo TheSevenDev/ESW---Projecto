@@ -56,7 +56,16 @@ else
 
                         @if (item.IdStateNavigation.Description != "Em Avaliação")
                         {
-                            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b> @Html.DisplayFor(modelItem => item.FinalEvaluation)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
+                            @if (item.FinalEvaluation >= 50)
+                            {
+                                <span>Aprovada!</span>
+                            }
+                            else
+                            {
+                                <span>Não aprovada</span>
+                            }
+                            </p>
                         }
 
                         <p>

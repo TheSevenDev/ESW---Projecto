@@ -455,7 +455,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Evaluate(int appId)
+        public IActionResult Evaluate(int appId, bool? bolTechError)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -465,6 +465,12 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["applicationID"] = appId;
 
+            if(bolTechError != null)
+            {
+                if ((bool)bolTechError)
+                    ViewData["technicians-error"] = "É necessário escolher um técnico responsável pela mobilidade do(a) aluno(a).";
+            }
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var app = context.Application.Where(a => a.IdApplication == appId)
@@ -473,12 +479,13 @@ namespace CIMOB_IPS.Controllers
                 ViewData["application-student-name"] = app.IdStudentNavigation.Name;
                 ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
                 ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
+                ViewData["application-student-motivation-card"] = app.MotivationCard.ToString();
             }
-            return View();
+            return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), FinalEvalution = 0.00 });
         }
 
         [HttpPost]
-        public IActionResult EvaluateApplication(int appId, int evaluation)
+        public IActionResult EvaluateApplication(ApplicationEvaluationViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -486,18 +493,128 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
 
-           
+            var appId = viewModel.IdApplication;
+            var evaluationResult = Request.Form["final_classification"].ToString();
+
+            double dblResult = Double.Parse(evaluationResult.Replace(".", ","));
+
+            if(dblResult >= 50 && viewModel.IdTechnician == 0)
+                return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolTechError = true });
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                var app = context.Application.Where(a => a.IdApplication == appId)
-                    .Include(a => a.IdStudentNavigation)
+                var application = context.Application.Where(a => a.IdApplication == viewModel.IdApplication).FirstOrDefault();
+                var student = context.Student.Where(s => s.IdStudent == application.IdStudent)
+                    .Include(s => s.IdAccountNavigation)
                     .FirstOrDefault();
+                var program = context.Program.Where(p => p.IdProgram == application.IdProgram)
+                    .Include(p => p.IdProgramTypeNavigation)
+                    .SingleOrDefault();
 
+                application.FinalEvaluation = (short)dblResult;
+
+                bool bolApproved = dblResult >= 50;
+                
+                if(dblResult >= 50)
+                {
+                    application.IdState = context.State.Where(s => s.Description == "Aceite").Select(a => a.IdState).SingleOrDefault();
+
+                    Mobility mobility = new Mobility
+                    {
+                        IdApplication = appId,
+                        BeginDate = program.MobilityDate,
+                        IdOutgoingInstitution = 2, //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                        IdResponsibleTechnician = viewModel.IdTechnician,
+                        IdState = 12 //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                    };
+
+                    context.Add(mobility);
+
+                    //caso tecnico n seja actual, enviar notificação tambem
+
+                    long intResponsibleTechnicianId = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault();
+
+                    if(intResponsibleTechnicianId != GetCurrentUserID())
+                    {
+                        Notification notificationTechnician = new Notification
+                        {
+                            ReadNotification = false,
+                            Description = "Foi posta uma nova mobilidade a seu cargo.",
+                            ControllerName = "Index", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                            ActionName = "Home",
+                            NotificationDate = DateTime.Now,
+                            IdAccount = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault()
+                        };
+
+                        context.Notification.Add(notificationTechnician);
+                    }
+                }
+                else
+                {
+                    application.IdState = context.State.Where(s => s.Description == "Negada").Select(a => a.IdState).SingleOrDefault();
+                }
+
+                context.Update(application);
+
+                //email ao aluno
+                string strLink = "http://cimob-ips.azurewebsites.net/MyApplications";
+
+                var strbBody = new StringBuilder();
+                strbBody.AppendLine("Caro estudante,<br><br>");
+                strbBody.AppendFormat(@"Informamos que a sua candidatura para mobilidade, feita a " + application.ApplicationDate.Date);
+                strbBody.AppendFormat(" para o programa " + program.IdProgramTypeNavigation.Name);
+
+                if (bolApproved)
+                {
+                    strbBody.AppendFormat(" foi aprovada.<br/> <br/>");
+                    strbBody.AppendLine("Clique <a href=\"" + strLink + "\">aqui</a> ou aceda a 'Minhas Candidaturas' para confirmar a mobilidade.<br/>");
+                    strbBody.AppendLine("Note que este passo é <b>vital</b> para o início de mobilidade, sem ele, não poderá ser contactado pelos técnicos do CIMOB-IPS.<br/><br/>");
+                }
+                else
+                {
+                    strbBody.AppendFormat("não foi aprovada.<br/> <br/>");
+                    strbBody.AppendLine("Clique <a href=\"" + strLink + "\">aqui</a> ou aceda a 'Minhas Candidaturas' para consultar o estado das suas candidaturas.<br/><br/>");
+                }
+
+                strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+
+                Email.SendEmail(student.IdAccountNavigation.Email, "Alteração de estado de candidatura", strbBody.ToString());
+
+                //notificação ao aluno
+                Notification notificationStudent = new Notification
+                {
+                    ReadNotification = false,
+                    Description = "Foi alterada o estado de uma das suas candidaturas.",
+                    ControllerName = "Application",
+                    ActionName = "MyApplications",
+                    NotificationDate = DateTime.Now,
+                    IdAccount = student.IdAccount
+                };
+
+                context.Notification.Add(notificationStudent);
+
+                context.SaveChanges();
             }
+
             return View();
         }
 
+        private IEnumerable<SelectListItem> PopulateTechnicians()
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<SelectListItem> lisTechnicians = new List<SelectListItem>();
 
+                var listTechnicians = context.Technician.Where(x => x.Active == true).OrderBy(x => x.Name).ToList();
+
+                foreach (Technician n in listTechnicians)
+                {
+                    lisTechnicians.Add(new SelectListItem { Value = n.IdTechnician.ToString(), Text = n.Name });
+                }
+
+                return lisTechnicians;
+            }
+        }
 
         public async Task<IActionResult> Approved(int? pageApplication)
         {
