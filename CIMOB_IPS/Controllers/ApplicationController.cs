@@ -620,17 +620,16 @@ namespace CIMOB_IPS.Controllers
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                int intPageSize = 50;
+                int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
                 var applications = (from a in context.Application
-                                    where a.IdProgramNavigation.IdStateNavigation.Description == "Em seriação"
-                                    && a.FinalEvaluation >= 50
                                     select a)
                     .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
-                    .Include(a => a.IdProgramNavigation);
+                    .Include(a => a.IdProgramNavigation)
+                    .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
 
                 var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
 

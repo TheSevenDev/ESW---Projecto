@@ -2,14 +2,19 @@
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 @{
     ViewData["Title"] = "Candidaturas Aprovadas";
 }
 
-<h2 class="page-title">Candidaturas Aprovadas</h2>
+<p class="page-title">Candidaturas Aprovadas</p>
 
+<form id="search-application">
+    <input type="search" name="search_by" placeholder="Procurar.." value="@ViewData["search-by"]" />
+    <button type="submit"><i class="fa fa-search"></i></button>
+</form>
 
 <div class="main-container-submitted-applications" style="padding:1%;padding-left:2%;">
     @if (Model.Count > 0)
@@ -24,22 +29,8 @@
                         Nome
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.IdProgramTypeNavigation.Name)
+                        @Html.DisplayNameFor(model => model.First().FinalEvaluation)
                     </th>
-                    <th>
-                        Instituição Destino
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityDate)
-                    </th>
-
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.First().IdStateNavigation.Description)
-                        </th>*@
-
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.First().FinalEvaluation)
-                        </th>*@
                 </tr>
             </thead>
             <tbody>
@@ -58,47 +49,24 @@
                         strName = strFirstName;
                     }
 
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
-                        </td>
-                        <td>
-                            @strName
-                        </td>
-                        <td>
-                            @Html.DisplayFor(model => item.IdProgramNavigation.IdProgramTypeNavigation.Name)
-                        </td>
-                        <td>
-                            cenas futuras
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(model => item.IdProgramNavigation.MobilityDate)
-                        </td>
+                    <tr>                        
+                            <td>
+                                @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
+                            </td>
+                            <td>
+                                @strName
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => model.First().FinalEvaluation)
+                            </td>
                     </tr>
                 }
             </tbody>
         </table>
-
-        @*Página @Model.PageIndex de @Model.TotalPages
-            @{
-                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-            }
-
-            @if (Model.HasPreviousPage)
-            {
-                <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
-            }
-            &nbsp;&nbsp;&nbsp;
-            @if (Model.HasNextPage)
-            {
-                <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
-            }*@
-
     }
     else
     {
-        <span>Sem resultados</span>
+        <span>Nenhuma candidatura encontrada</span>
     }
 
 </div>
