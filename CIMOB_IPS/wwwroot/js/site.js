@@ -384,38 +384,46 @@ function setColor(){
 
     switch (value){
         case 1:
-            document.documentElement.style.setProperty('--blue-var4', '#F18735'); //principal (menu) laranja
-            document.documentElement.style.setProperty('--grey-var1', '#F1F1F1'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--light-grey', '#383838'); //hover
+            document.documentElement.style.setProperty('--main-color', '#F18735'); //principal (menu) laranja
+            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+            document.documentElement.style.setProperty('--hover-slider', '#F1873599'); //hoverDotsSlider
             break;
         case 2:
-            document.documentElement.style.setProperty('--blue-var4', '#F5B738'); //amarelo torrado
+            document.documentElement.style.setProperty('--main-color', '#F5B738'); //amarelo torrado
+            document.documentElement.style.setProperty('--hover-slider', '#F5B73899'); //hoverDotsSlider
             break;
         case 3:
-            document.documentElement.style.setProperty('--blue-var4', '#EA3527'); //vermelho
-            document.documentElement.style.setProperty('--grey-var1', '#F1F1F1'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--light-grey', '#383838'); //hover
+            document.documentElement.style.setProperty('--main-color', '#EA3527'); //vermelho
+            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+            document.documentElement.style.setProperty('--hover-slider', '#EA352799'); //hoverDotsSlider
             break;
         case 4:
-            document.documentElement.style.setProperty('--blue-var4', '#F3E01A'); //amarelo
+            document.documentElement.style.setProperty('--main-color', '#F3E01A'); //amarelo
+            document.documentElement.style.setProperty('--hover-slider', '#F3E01A99'); //hoverDotsSlider
             break;
         case 5:
-            document.documentElement.style.setProperty('--blue-var4', '#C1D53C'); //verde
+            document.documentElement.style.setProperty('--main-color', '#C1D53C'); //verde
+            document.documentElement.style.setProperty('--hover-slider', '#C1D53C99'); //hoverDotsSlider
             break;
         case 6:
-            document.documentElement.style.setProperty('--blue-var4', '#508EC7'); //azul
-            document.documentElement.style.setProperty('--grey-var1', '#F1F1F1'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--light-grey', '#383838'); //hover
+            document.documentElement.style.setProperty('--main-color', '#508EC7'); //azul
+            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+            document.documentElement.style.setProperty('--hover-slider', '#508EC799'); //hoverDotsSlider
             break;
         case 7:
-            document.documentElement.style.setProperty('--blue-var4', '#D53874'); //rosa DD1D66
-            document.documentElement.style.setProperty('--grey-var1', '#F1F1F1'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--light-grey', '#383838'); //hover
+            document.documentElement.style.setProperty('--main-color', '#D53874'); //rosa DD1D66
+            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+            document.documentElement.style.setProperty('--hover-slider', '#D5387499'); //hoverDotsSlider
             break;
         default:
-            document.documentElement.style.setProperty('--blue-var4', '#707FBA'); //roxo
-            document.documentElement.style.setProperty('--grey-var1', '#F1F1F1'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--light-grey', '#383838'); //hover
+            document.documentElement.style.setProperty('--main-color', '#707FBA'); //roxo
+            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+            document.documentElement.style.setProperty('--hover-slider', '#707FBA99'); //hoverDotsSlider
         
     }
 }
