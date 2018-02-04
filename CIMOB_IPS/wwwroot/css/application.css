@@ -6,6 +6,7 @@
     margin-right: auto;
     margin-left: auto;
     height: 100%;
+    margin-bottom:5.5%;
 }
 
 .application-form {
@@ -472,8 +473,8 @@ li.sortable-placeholder {
 
 #loading-application {
     position: relative;
-    margin-left: 50%;
+    margin-left: 48%;
     margin-top: 35%;
-    width: 1.4vw;
-    height: 1.4vw;
+    width: 4.5%;
+    height: 4.5%;
 }
