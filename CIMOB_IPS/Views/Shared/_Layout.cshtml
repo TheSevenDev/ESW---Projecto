@@ -104,6 +104,7 @@
 
         @await Html.PartialAsync("_Notifications.cshtml")
     </nav>
+
     <div id="fade-background" onclick="javascript: closeHelp();"></div>
     <img id="help-close" src="~/images/icons/error.png" onclick="javascript: closeHelp();" draggable="false" />
     <div id="help-content">
@@ -111,17 +112,27 @@
         @await Html.PartialAsync("/Views/Help/_Help.cshtml")
     </div>
 
-    
-    
-    
+        <div class="loading-div">
+        <img id="loading-application" style="display:block" src="~/images/ajax-loader.gif" />
+    </div>
+
+
+    <div id="application-details">
+    </div>
+
+
+
+
+
+
     <div class="body-panel" onclick="javascript: hideMenus();">
-         @RenderBody()
+        @RenderBody()
     </div>
 
     <footer>
         <img src="~/images/ips.png" style="width:2.9vw; height:2.9vw; opacity:0.8; position:fixed;margin-left:11.8%;margin-top:0.05%;" />
-        <p>CIMOB - <a target="_blank"  href="https://www.ips.pt/ips_si/web_page.inicial">Instituto Politécnico de Setúbal</a></p>
-        
+        <p>CIMOB - <a target="_blank" href="https://www.ips.pt/ips_si/web_page.inicial">Instituto Politécnico de Setúbal</a></p>
+
     </footer>
 
     @RenderSection("Scripts", required: false)

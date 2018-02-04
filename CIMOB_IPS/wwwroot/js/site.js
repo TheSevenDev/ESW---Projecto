@@ -1,12 +1,10 @@
 ﻿
-function toogleSettings()
-{
+function toogleSettings() {
     document.getElementById("submenu-notifications").style.display = "none";
     $("#submenu-settings").slideToggle(250);
 }
 
-function toogleNotifications()
-{
+function toogleNotifications() {
     if (document.getElementById("submenu-notifications").style.display !== "block") {
         var actionUrl = '/Notification/ReadNotifications';
 
@@ -40,13 +38,11 @@ function closeHelp() {
     hideMenus();
 
     document.getElementById("fade-background").style.display = "none";
-    document.getElementById("fade-background").style.display = "none";
     document.getElementById("help-content").style.display = "none";
 
     document.getElementById("help-close").style.display = "none";
-
-    //$("#help-content").slideToggle("slow");
-    //$("#help-close").toggle();
+    document.getElementById("application-details").style.display = "none";
+    $('.loading-div').hide();
 }
 
 function openfyp() {
@@ -96,13 +92,12 @@ function clearfyp() {
     document.getElementById('fyp-error').innerText = "";
 }
 
-function hideMenus()
-{
+function hideMenus() {
     if (document.getElementById("submenu-settings") !== null)
         document.getElementById("submenu-settings").style.display = "none";
 
     if (document.getElementById("submenu-notifications") !== null)
-    document.getElementById("submenu-notifications").style.display = "none";
+        document.getElementById("submenu-notifications").style.display = "none";
 }
 
 function toggleHelpInst() {
@@ -155,7 +150,7 @@ function adressCode() {
                 var distrito = $(this).find('Distrito').text();
                 var concelho = $(this).find('Concelho').text();
                 var freguesia = $(this).find('Freguesia').text();
-                
+
 
                 document.getElementById('county').value = concelho;
                 document.getElementById('district').value = distrito;
@@ -163,8 +158,8 @@ function adressCode() {
 
 
                 $('Rua', response).each(function () {
-                    var street = $(this).find('Designacao').first().text();                   
-                        document.getElementById('street').value = street;
+                    var street = $(this).find('Designacao').first().text();
+                    document.getElementById('street').value = street;
 
                 });
             });
@@ -172,7 +167,7 @@ function adressCode() {
         error: function (error) {
             console.log(error);
         }
-    })  
+    })
 }
 
 function applicationInstitutions() {
@@ -185,19 +180,19 @@ function applicationInstitutions() {
 
         for (var i = 0; i < list.length; i++) {
             var institution = list[i].innerText;
-            if(i===0)
+            if (i === 0)
                 actionUrl += "?inst" + (i + 1) + "=" + institution;
             else
                 actionUrl += "&inst" + (i + 1) + "=" + institution;
         }
-   
+
         $.ajax({
             type: "POST",
             url: actionUrl,
             contentType: "application/json; charset=utf-8",
             dataType: "json",
         }).done(function (res) {
-           
+
         });;
 
     }
@@ -396,7 +391,7 @@ function start() {
 
     autoPlayGallery();
     setColor();
-    
+
 }
 
 function autoPlayGallery() {
@@ -414,51 +409,51 @@ function autoPlayGallery() {
     setInterval(Move, 3000);
 }
 
-function setColor(){
+function setColor() {
     var value = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1) + 1)) + 1;
 
-    switch (value){
+    switch (value) {
         case 1:
             document.documentElement.style.setProperty('--main-color', '#F18735'); //principal (menu) laranja
-            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-slider', '#F1873599'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#F1873599'); //hoverDotsSlider
             break;
         case 2:
             document.documentElement.style.setProperty('--main-color', '#F5B738'); //amarelo torrado
-            document.documentElement.style.setProperty('--hover-slider', '#F5B73899'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#F5B73899'); //hoverDotsSlider
             break;
         case 3:
             document.documentElement.style.setProperty('--main-color', '#EA3527'); //vermelho
-            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-slider', '#EA352799'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#EA352799'); //hoverDotsSlider
             break;
         case 4:
             document.documentElement.style.setProperty('--main-color', '#F3E01A'); //amarelo
-            document.documentElement.style.setProperty('--hover-slider', '#F3E01A99'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#F3E01A99'); //hoverDotsSlider
             break;
         case 5:
             document.documentElement.style.setProperty('--main-color', '#C1D53C'); //verde
-            document.documentElement.style.setProperty('--hover-slider', '#C1D53C99'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#C1D53C99'); //hoverDotsSlider
             break;
         case 6:
             document.documentElement.style.setProperty('--main-color', '#508EC7'); //azul
-            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-slider', '#508EC799'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#508EC799'); //hoverDotsSlider
             break;
         case 7:
             document.documentElement.style.setProperty('--main-color', '#D53874'); //rosa DD1D66
-            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-slider', '#D5387499'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#D5387499'); //hoverDotsSlider
             break;
         default:
             document.documentElement.style.setProperty('--main-color', '#707FBA'); //roxo
-            document.documentElement.style.setProperty('--secundary-color', '#F1F1F1'); //secundária (letras menu)
+            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-slider', '#707FBA99'); //hoverDotsSlider
+            document.documentElement.style.setProperty('--hover-button', '#707FBA99'); //hoverDotsSlider
         
     }
 }
@@ -483,25 +478,50 @@ function evaluateApplication() {
 
     final_classification.value = classification.toFixed(2);
 
-    if (classification >= 50)
-    {
+    if (classification >= 50) {
         document.getElementById("evaluate_result").innerHTML = "Aprovado!";
         document.getElementById("evaluate_result").style.color = "green";
         document.getElementById("technicianDd").disabled = false;
         document.getElementById("institutionDd").disabled = false;
     }
-    else
-    {
+    else {
         document.getElementById("evaluate_result").innerHTML = "Não aprovado";
         document.getElementById("evaluate_result").style.color = "red";
         document.getElementById("technicianDd").disabled = true;
         document.getElementById("institutionDd").disabled = true;
     }
-        
+
 }
 
 
+function showApplicationDetails(applicationID) {
+    $("#application-details").html("");
 
+    $('.loading-div').show();
+
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("application-details").style.display = "block";
+
+    var detailsURL = "Application/Details/" + applicationID;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('#loading-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $("#application-details").html(result);
+                    $('.loading-div').hide();
+                }, 900)
+            },
+            error: function (error) {
+            }
+        });
+}
 
 function minmax(value, min, max) {
     if (value < min || isNaN(parseFloat(value)))

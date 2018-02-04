@@ -69,7 +69,7 @@ textarea {
 }
 
 .application-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 .application-form-pager{
@@ -315,7 +315,7 @@ li.sortable-placeholder {
 }
 
 .evaluate-application:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
     cursor: pointer;
 }
 
@@ -388,7 +388,7 @@ li.sortable-placeholder {
 }
 
 .evaluate-application-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 #search-application {
@@ -427,7 +427,7 @@ li.sortable-placeholder {
 }
 
 #search-application button[type="submit"]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 #viewMotivationCard {
@@ -445,4 +445,35 @@ li.sortable-placeholder {
 #viewMotivationCard:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+#application-details {
+    display: block;
+    position: fixed;
+    margin-top: 4%;
+    margin-left: 30%;
+    z-index: 999;
+    width: 40%;
+    opacity:1;
+}
+
+.loading-div {
+    position: fixed;
+    z-index: 999;
+    margin-left: 35%;
+    margin-top: 10%;
+    width: 30%;
+    height: 50%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: none;
+    opacity: 1;
+}
+
+#loading-application {
+    position: relative;
+    margin-left: 50%;
+    margin-top: 35%;
+    width: 1.4vw;
+    height: 1.4vw;
 }

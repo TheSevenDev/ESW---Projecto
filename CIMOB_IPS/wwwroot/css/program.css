@@ -60,9 +60,10 @@
 }
 
 .programs-display button:hover {
-    background-color: var(--blue-var4);
+    background-color: var(--hover-button);
+    color: var(--secundary-color);
     cursor: pointer;
-    border: 0.7px solid var(--blue-var4);
+    border: 0.7px solid var(--hover-button);
 }
 
 
@@ -160,7 +161,7 @@ textarea {
 
 .program-form input[type=submit], application-form-pager a, application-form-pager button {
     width: 100%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 12px;
     border: none;
@@ -192,9 +193,9 @@ input[type=submit]:disabled:hover {
     width: 101%;
     margin-top: 2%;
     border: none;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     border-radius: 3%;
-    border: 0.7px solid var(--blue-var4);
+    border: 0.7px solid var(--main-color);
     font-weight: bold;
     font-size: 1vmax;
     color: #f1f1f1;

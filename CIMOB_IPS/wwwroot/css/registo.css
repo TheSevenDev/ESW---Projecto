@@ -63,7 +63,7 @@ input[type=date] {
 
 .pre-register-form input[type=submit] {
     width: 35%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 12px;
     border: none;
@@ -75,7 +75,7 @@ input[type=date] {
 
 
 .pre-register-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 .error-message {
@@ -131,7 +131,7 @@ input[type=date] {
 
 .user-form input[type=submit] {
     width: 100%;
-    background-color: var(--blue-var4);
+    background-color: var(--main-color);
     color: white;
     padding: 12px;
     border: none;
@@ -141,7 +141,7 @@ input[type=date] {
 }
 
 .user-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 .main-container-pendingtech {
@@ -180,11 +180,11 @@ input[type=date] {
 }
 
 .main-container-pendingtech table td a, .main-container-pendingtech table td a:hover, .main-container-pendingtech table td a:visited:hover, .main-container-pendingtech table td a:link:hover, .main-container-pendingtech table td a:active:hover {
-    color: var(--blue-var3);
+    color: var(--hover-button);
 }
 
 .main-container-techs table td a, .main-container-techs table td a:hover, .main-container-techs table td a:visited:hover, .main-container-techs table td a:link:hover, .main-container-techs table td a:active:hover {
-    color: var(--blue-var3);
+    color: var(--hover-button);
 }
 
 .main-container-pendingtech table tbody tr:nth-child(even), .main-container-techs table tbody tr:nth-child(even) {
@@ -192,7 +192,7 @@ input[type=date] {
 }
 
 .main-container-pendingtech table tbody tr:hover, .main-container-techs table tbody tr:hover {
-    background-color: var(--blue-var4);
+    background-color: var(--hover-button);
     cursor: default;
 }
 
@@ -233,5 +233,5 @@ input[type=date] {
 .help-ects :visited:hover,
 .help-ects :link:hover,
 .help-ects :active:hover {
-    color: var(--blue-var3);
+    color: var(--hover-button);
 }
