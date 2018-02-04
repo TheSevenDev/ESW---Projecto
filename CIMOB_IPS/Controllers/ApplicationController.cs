@@ -627,6 +627,28 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        //public async Task<IActionResult> Approved(int? pageApplication)
+        //{
+        //    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+        //    {
+        //        int intPageSize = 10;
+        //        int intPageApplications = (pageApplication ?? 1);
+
+        //        var applications = (from a in context.Application
+        //                            select a)
+        //            .OrderBy(a => a.IdStudentNavigation.StudentNum)
+        //            .Include(a => a.IdStateNavigation)
+        //            .Include(a => a.IdStudentNavigation)
+        //            .Include(a => a.IdProgramNavigation)
+        //            .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
+
+        //        var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+        //        return View(paginatedApplications);
+        //    }
+        //}
+
+        
         private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -645,24 +667,48 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Approved(int? pageApplication)
+        public async Task<IActionResult> Approved(int? pageApplication, string search_by)
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
+                return RedirectToAction("Index", "Home");
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application
-                                    select a)
+
+                if (String.IsNullOrEmpty(search_by))
+                {
+                    var applications = (from a in context.Application
+                                        select a)
                     .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)
-                    .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
+                    .Where(a => a.IdProgramNavigation.IdState == 2 && a.FinalEvaluation >= 50);
 
-                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    ViewData["search-by"] = "";
+                    return View(paginatedApplications);
+                }
+                else
+                {
+                    var applications = (from a in context.Application orderby a.ApplicationDate select a)
+                         .OrderBy(a => a.ApplicationDate)
+                         .Include(a => a.IdStateNavigation)
+                         .Include(a => a.IdStudentNavigation)
+                         .Include(a => a.IdProgramNavigation)
+                         .Where(a => a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
 
-                return View(paginatedApplications);
+                    ViewData["search-by"] = search_by.ToString();
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                    return View(paginatedApplications);
+                }
             }
         }
     }
