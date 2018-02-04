@@ -668,7 +668,7 @@ namespace CIMOB_IPS.Controllers
                 List<SelectListItem> lisInstitutions = new List<SelectListItem>();
 
                 var listInstitutions = context.Institution.Where(i =>
-                    (context.InstitutionProgram.Where(ip => ip.IdProgram == intProgramId).Select(ip => ip.IdOutgoingInstitution).ToList()).Contains(i.IdInstitution)).ToList();
+                    (context.InstitutionProgram.Where(ip => ip.IdProgram == intProgramId).Select(ip => ip.IdOutgoingInstitution)).Contains(i.IdInstitution)).ToList();
 
                 foreach (Institution n in listInstitutions)
                 {
