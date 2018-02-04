@@ -50,6 +50,13 @@
                 @Html.DropDownListFor(model => model.IdTechnician, Model.Technicians, "-- Seleccione o Técnico --", new { @id = "technicianDd", @disabled = "disabled" })
                 <span class="error-message">@ViewData["technicians-error"]</span>
             </div>
+            <br />
+
+            <div id="institutions-Div">
+                <label>Instituição da mobilidade: </label>
+                @Html.DropDownListFor(model => model.IdInstitution, Model.OutgoingInstitutions, "-- Seleccione a Instituição --", new { @id = "institutionDd", @disabled = "disabled" })
+                <span class="error-message">@ViewData["institution-error"]</span>
+            </div>
             <br /><br />
 
             <input type="submit" style="width: 20%" value="Submeter" />

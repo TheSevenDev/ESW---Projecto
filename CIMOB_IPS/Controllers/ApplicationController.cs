@@ -467,7 +467,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Evaluate(int appId, bool? bolTechError)
+        public IActionResult Evaluate(int appId, bool? bolTechError, bool? bolInstitutionError)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -483,17 +483,25 @@ namespace CIMOB_IPS.Controllers
                     ViewData["technicians-error"] = "É necessário escolher um técnico responsável pela mobilidade do(a) aluno(a).";
             }
 
+            if (bolInstitutionError != null)
+            {
+                if ((bool)bolInstitutionError)
+                    ViewData["institution-error"] = "É necessário escolher a instituição da mobilidade do(a) aluno(a).";
+            }
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var app = context.Application.Where(a => a.IdApplication == appId)
                     .Include(a => a.IdStudentNavigation)
+                    .Include(a => a.IdProgramNavigation)
                     .FirstOrDefault();
                 ViewData["application-student-name"] = app.IdStudentNavigation.Name;
                 ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
                 ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
                 ViewData["application-student-motivation-card"] = app.MotivationCard.ToString();
-            }
-            return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), FinalEvalution = 0.00 });
+
+                return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), OutgoingInstitutions = PopulateOutgoingInstitutions(app.IdProgram), FinalEvalution = 0.00 });
+            } 
         }
 
         [HttpPost]
@@ -512,6 +520,9 @@ namespace CIMOB_IPS.Controllers
 
             if(dblResult >= 50 && viewModel.IdTechnician == 0)
                 return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolTechError = true });
+
+            if (dblResult >= 50 && viewModel.IdInstitution == 0)
+                return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolInstitutionError = true });
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -537,7 +548,7 @@ namespace CIMOB_IPS.Controllers
                         BeginDate = program.MobilityDate,
                         IdOutgoingInstitution = 2, //MUDAR ISTO MUDAR ISTO MUDAR ISTO
                         IdResponsibleTechnician = viewModel.IdTechnician,
-                        IdState = 12 //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                        IdState = context.State.Where(s => s.Description == "Em preparação").Select(a => a.IdState).SingleOrDefault()
                     };
 
                     context.Add(mobility);
@@ -628,24 +639,88 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public async Task<IActionResult> Approved(int? pageApplication)
+        //public async Task<IActionResult> Approved(int? pageApplication)
+        //{
+        //    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+        //    {
+        //        int intPageSize = 10;
+        //        int intPageApplications = (pageApplication ?? 1);
+
+        //        var applications = (from a in context.Application
+        //                            select a)
+        //            .OrderBy(a => a.IdStudentNavigation.StudentNum)
+        //            .Include(a => a.IdStateNavigation)
+        //            .Include(a => a.IdStudentNavigation)
+        //            .Include(a => a.IdProgramNavigation)
+        //            .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
+
+        //        var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+        //        return View(paginatedApplications);
+        //    }
+        //}
+
+        
+        private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
         {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<SelectListItem> lisInstitutions = new List<SelectListItem>();
+
+                var listInstitutions = context.Institution.Where(i =>
+                    (context.InstitutionProgram.Where(ip => ip.IdProgram == intProgramId).Select(ip => ip.IdOutgoingInstitution).ToList()).Contains(i.IdInstitution)).ToList();
+
+                foreach (Institution n in listInstitutions)
+                {
+                    lisInstitutions.Add(new SelectListItem { Value = n.IdInstitution.ToString(), Text = n.Name });
+                }
+
+                return lisInstitutions;
+            }
+        }
+
+        public async Task<IActionResult> Approved(int? pageApplication, string search_by)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
+                return RedirectToAction("Index", "Home");
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application
-                                    select a)
+
+                if (String.IsNullOrEmpty(search_by))
+                {
+                    var applications = (from a in context.Application
+                                        select a)
                     .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)
-                    .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
+                    .Where(a => a.IdProgramNavigation.IdState == 2 && a.FinalEvaluation >= 50);
 
-                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                    ViewData["search-by"] = "";
+                    return View(paginatedApplications);
+                }
+                else
+                {
+                    var applications = (from a in context.Application orderby a.ApplicationDate select a)
+                         .OrderBy(a => a.ApplicationDate)
+                         .Include(a => a.IdStateNavigation)
+                         .Include(a => a.IdStudentNavigation)
+                         .Include(a => a.IdProgramNavigation)
+                         .Where(a => a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
 
-                return View(paginatedApplications);
+                    ViewData["search-by"] = search_by.ToString();
+                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                    return View(paginatedApplications);
+                }
             }
         }
     }
