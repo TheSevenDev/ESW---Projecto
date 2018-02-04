@@ -446,3 +446,34 @@ li.sortable-placeholder {
     cursor: pointer;
     text-decoration: underline;
 }
+
+#application-details {
+    display: block;
+    position: fixed;
+    margin-top: 4%;
+    margin-left: 30%;
+    z-index: 999;
+    width: 40%;
+    opacity:1;
+}
+
+.loading-div {
+    position: fixed;
+    z-index: 999;
+    margin-left: 35%;
+    margin-top: 10%;
+    width: 30%;
+    height: 50%;
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    display: none;
+    opacity: 1;
+}
+
+#loading-application {
+    position: relative;
+    margin-left: 50%;
+    margin-top: 35%;
+    width: 1.4vw;
+    height: 1.4vw;
+}
