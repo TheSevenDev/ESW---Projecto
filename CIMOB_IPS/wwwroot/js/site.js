@@ -410,7 +410,7 @@ function autoPlayGallery() {
 }
 
 function setColor() {
-    var value = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(1) + 1)) + 1;
+    var value = Math.floor(Math.random() * (Math.floor(6) - Math.ceil(1) + 1)) + 1;
 
     switch (value) {
         case 1:
@@ -423,27 +423,27 @@ function setColor() {
             document.documentElement.style.setProperty('--main-color', '#F5B738'); //amarelo torrado
             document.documentElement.style.setProperty('--hover-button', '#F5B73899'); //hoverDotsSlider
             break;
+        //case 3:
+        //    document.documentElement.style.setProperty('--main-color', '#EA3527'); //vermelho
+        //    document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
+        //    document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
+        //    document.documentElement.style.setProperty('--hover-button', '#EA352799'); //hoverDotsSlider
+        //    break;
+        //case 4:
+        //    document.documentElement.style.setProperty('--main-color', '#F3E01A'); //amarelo
+        //    document.documentElement.style.setProperty('--hover-button', '#F3E01A99'); //hoverDotsSlider
+        //    break;
         case 3:
-            document.documentElement.style.setProperty('--main-color', '#EA3527'); //vermelho
-            document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
-            document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-            document.documentElement.style.setProperty('--hover-button', '#EA352799'); //hoverDotsSlider
-            break;
-        case 4:
-            document.documentElement.style.setProperty('--main-color', '#F3E01A'); //amarelo
-            document.documentElement.style.setProperty('--hover-button', '#F3E01A99'); //hoverDotsSlider
-            break;
-        case 5:
             document.documentElement.style.setProperty('--main-color', '#C1D53C'); //verde
             document.documentElement.style.setProperty('--hover-button', '#C1D53C99'); //hoverDotsSlider
             break;
-        case 6:
+        case 4:
             document.documentElement.style.setProperty('--main-color', '#508EC7'); //azul
             document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
             document.documentElement.style.setProperty('--hover-button', '#508EC799'); //hoverDotsSlider
             break;
-        case 7:
+        case 5:
             document.documentElement.style.setProperty('--main-color', '#D53874'); //rosa DD1D66
             document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
             document.documentElement.style.setProperty('--hover-color', '#383838'); //hover

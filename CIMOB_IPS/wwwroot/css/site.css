@@ -602,6 +602,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
         border-radius: 4px;
         box-sizing: border-box;
         font-size: 1.1vmax;
+        outline-color: var(--main-color);
     }
 
     .invite-form input[type=submit] {
@@ -699,6 +700,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 1.1vmax;
+    outline-color: var(--main-color);
 }
 
 .login-form a, .login-form a:visited, .login-form a:link, .login-form a:active {
@@ -985,7 +987,7 @@ footer {
 
 
     .main-container-contacts a {
-        color: var(--hover-button)
+        color: var(--blue-var2)
     }
 
 .icon-img {
