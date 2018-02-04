@@ -43,6 +43,7 @@
     box-sizing: border-box;
     font-size: 1vmax;
     font-family: Arial,Helvetica, sans-serif;
+    outline-color:var(--main-color);
 }
 
 
@@ -54,7 +55,8 @@ textarea {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 1vmax;
-    margin-left:2%;
+    margin-left: 2%;
+    outline-color: var(--main-color);
 }
 
 .application-form input[type=submit], application-form-pager a, application-form-pager button {
@@ -294,7 +296,7 @@ li.sortable-placeholder {
     border-radius: 2%;
     font-weight: bold;
     font-size: 1.1vmax;
-    color: #f1f1f1;
+    color: var(--secundary-color);
     text-decoration: none;
     margin-left: 30%;
 }
@@ -310,7 +312,7 @@ li.sortable-placeholder {
     border-radius: 2%;
     font-weight: bold;
     font-size: 1.1vmax;
-    color: #f1f1f1;
+    color: var(--secundary-color);
     text-decoration: none;
     margin-left: 30%;
 }
@@ -417,7 +419,7 @@ li.sortable-placeholder {
 #search-application button[type="submit"] {
     width: 7%;
     background-color: var(--main-color);
-    color: white;
+    color: var(--secundary-color);
     padding: 0.7%;
     border: none;
     border-radius: 4px;

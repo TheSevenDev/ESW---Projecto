@@ -52,6 +52,7 @@ input[type=date] {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 1.1vmax;
+    outline-color: var(--main-color);
 }
 
 .input[type=number]::-webkit-outer-spin-button, input[type=number]::-webkit-inner-spin-button {
@@ -119,15 +120,16 @@ input[type=date] {
     font-size: 1.1vmax;
 }
 
-.user-form input[type=text], .user-form input[type=password], .user-form input[type=number], .user-form select {
-    width: 22.2vw;
-    padding: 2% 3%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 0.95vmax;
-}
+    .user-form input[type=text], .user-form input[type=password], .user-form input[type=number], .user-form select {
+        width: 22.2vw;
+        padding: 2% 3%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 0.95vmax;
+        outline-color: var(--main-color);
+    }
 
 .user-form input[type=submit] {
     width: 100%;
@@ -183,9 +185,9 @@ input[type=date] {
     color: var(--hover-button);
 }
 
-.main-container-techs table td a, .main-container-techs table td a:hover, .main-container-techs table td a:visited:hover, .main-container-techs table td a:link:hover, .main-container-techs table td a:active:hover {
-    color: var(--hover-button);
-}
+    .main-container-techs table td a, .main-container-techs table td a:hover, .main-container-techs table td a:visited:hover, .main-container-techs table td a:link:hover, .main-container-techs table td a:active:hover {
+        color: var(--blue-var2);
+    }
 
 .main-container-pendingtech table tbody tr:nth-child(even), .main-container-techs table tbody tr:nth-child(even) {
     background-color: #eeeeee;

@@ -135,16 +135,17 @@
     font-size: 1.1vmax;
 }
 
-.program-form input[type=text], input[type=password], input[type=date], select {
-    width: 30vw;
-    padding: 2% 3%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 1vmax;
-    font-family: Arial,Helvetica, sans-serif;
-}
+    .program-form input[type=text], input[type=password], input[type=date], select {
+        width: 30vw;
+        padding: 2% 3%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 1vmax;
+        font-family: Arial,Helvetica, sans-serif;
+        outline-color: var(--main-color);
+    }
 
 
 textarea {
@@ -161,17 +162,18 @@ textarea {
 .program-form input[type=submit], application-form-pager a, application-form-pager button {
     width: 100%;
     background-color: var(--main-color);
-    color: white;
+    color: var(--secundary-color);
     padding: 12px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 1.1vmax;
+    font-weight:bold;
     margin-top: 5%;
 }
 
 .program-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 
