@@ -669,46 +669,40 @@ namespace CIMOB_IPS.Controllers
 
         public async Task<IActionResult> Approved(int? pageApplication, string search_by)
         {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
-
-            if (!(new AccountController().IsTechnician(GetCurrentUserID())))
-                return RedirectToAction("Index", "Home");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-
-                if (String.IsNullOrEmpty(search_by))
-                {
-                    var applications = (from a in context.Application
-                                        select a)
+                var applications = (from a in context.Application orderby a.IdStudentNavigation.StudentNum
+                                    select a)
                     .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)
-                    .Where(a => a.IdProgramNavigation.IdState == 2 && a.FinalEvaluation >= 50);
+                    .Include(a => a.Mobility)
+                    .Where(a => a.IdStateNavigation.Description == "Aceite" && a.FinalEvaluation >= 50);
 
-                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                if (String.IsNullOrEmpty(search_by))
+                {
                     ViewData["search-by"] = "";
-                    return View(paginatedApplications);
                 }
                 else
                 {
-                    var applications = (from a in context.Application orderby a.ApplicationDate select a)
-                         .OrderBy(a => a.ApplicationDate)
-                         .Include(a => a.IdStateNavigation)
-                         .Include(a => a.IdStudentNavigation)
-                         .Include(a => a.IdProgramNavigation)
-                         .Where(a => a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
+                    applications = applications.Where(a => a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
 
                     ViewData["search-by"] = search_by.ToString();
-                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
-
-                    return View(paginatedApplications);
                 }
+
+                foreach(Application app in applications)
+                {
+                    app.Mobility.First().IdOutgoingInstitutionNavigation = await context.Institution.Where(i => i.IdInstitution == app.Mobility.First().IdOutgoingInstitution).SingleOrDefaultAsync();
+                }
+
+                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                return View(paginatedApplications);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CIMOB_IPS.Models
 {
@@ -14,6 +15,8 @@ namespace CIMOB_IPS.Models
         }
 
         public long IdInstitution { get; set; }
+
+        [DisplayName("Instituição")]
         public string Name { get; set; }
         public long IdNationality { get; set; }
         public string Hyperlink { get; set; }

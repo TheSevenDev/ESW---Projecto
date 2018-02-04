@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CIMOB_IPS.Models
 {
@@ -14,6 +15,8 @@ namespace CIMOB_IPS.Models
         public DateTime? EndDate { get; set; }
 
         public Application IdApplicationNavigation { get; set; }
+
+        [DisplayName("Instituição de destino")]
         public Institution IdOutgoingInstitutionNavigation { get; set; }
         public Technician IdResponsibleTechnicianNavigation { get; set; }
     }
