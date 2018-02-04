@@ -488,12 +488,14 @@ function evaluateApplication() {
         document.getElementById("evaluate_result").innerHTML = "Aprovado!";
         document.getElementById("evaluate_result").style.color = "green";
         document.getElementById("technicianDd").disabled = false;
+        document.getElementById("institutionDd").disabled = false;
     }
     else
     {
         document.getElementById("evaluate_result").innerHTML = "Não aprovado";
         document.getElementById("evaluate_result").style.color = "red";
         document.getElementById("technicianDd").disabled = true;
+        document.getElementById("institutionDd").disabled = true;
     }
         
 }

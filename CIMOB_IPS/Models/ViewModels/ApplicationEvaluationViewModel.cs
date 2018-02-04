@@ -14,6 +14,10 @@ namespace CIMOB_IPS.Models.ViewModels
 
         public long IdTechnician { get; set; }
 
+        public long IdInstitution { get; set; }
+
         public IEnumerable<SelectListItem> Technicians { get; set; }
+
+        public IEnumerable<SelectListItem> OutgoingInstitutions { get; set; }
     }
 }

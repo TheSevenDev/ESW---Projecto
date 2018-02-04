@@ -455,7 +455,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpGet]
-        public IActionResult Evaluate(int appId, bool? bolTechError)
+        public IActionResult Evaluate(int appId, bool? bolTechError, bool? bolInstitutionError)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -471,17 +471,25 @@ namespace CIMOB_IPS.Controllers
                     ViewData["technicians-error"] = "É necessário escolher um técnico responsável pela mobilidade do(a) aluno(a).";
             }
 
+            if (bolInstitutionError != null)
+            {
+                if ((bool)bolInstitutionError)
+                    ViewData["institution-error"] = "É necessário escolher a instituição da mobilidade do(a) aluno(a).";
+            }
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var app = context.Application.Where(a => a.IdApplication == appId)
                     .Include(a => a.IdStudentNavigation)
+                    .Include(a => a.IdProgramNavigation)
                     .FirstOrDefault();
                 ViewData["application-student-name"] = app.IdStudentNavigation.Name;
                 ViewData["application-student-number"] = app.IdStudentNavigation.StudentNum.ToString();
                 ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
                 ViewData["application-student-motivation-card"] = app.MotivationCard.ToString();
-            }
-            return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), FinalEvalution = 0.00 });
+
+                return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), OutgoingInstitutions = PopulateOutgoingInstitutions(app.IdProgram), FinalEvalution = 0.00 });
+            } 
         }
 
         [HttpPost]
@@ -500,6 +508,9 @@ namespace CIMOB_IPS.Controllers
 
             if(dblResult >= 50 && viewModel.IdTechnician == 0)
                 return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolTechError = true });
+
+            if (dblResult >= 50 && viewModel.IdInstitution == 0)
+                return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolInstitutionError = true });
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -525,7 +536,7 @@ namespace CIMOB_IPS.Controllers
                         BeginDate = program.MobilityDate,
                         IdOutgoingInstitution = 2, //MUDAR ISTO MUDAR ISTO MUDAR ISTO
                         IdResponsibleTechnician = viewModel.IdTechnician,
-                        IdState = 12 //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                        IdState = context.State.Where(s => s.Description == "Em preparação").Select(a => a.IdState).SingleOrDefault()
                     };
 
                     context.Add(mobility);
@@ -613,6 +624,24 @@ namespace CIMOB_IPS.Controllers
                 }
 
                 return lisTechnicians;
+            }
+        }
+
+        private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<SelectListItem> lisInstitutions = new List<SelectListItem>();
+
+                var listInstitutions = context.Institution.Where(i =>
+                    (context.InstitutionProgram.Where(ip => ip.IdProgram == intProgramId).Select(ip => ip.IdOutgoingInstitution).ToList()).Contains(i.IdInstitution)).ToList();
+
+                foreach (Institution n in listInstitutions)
+                {
+                    lisInstitutions.Add(new SelectListItem { Value = n.IdInstitution.ToString(), Text = n.Name });
+                }
+
+                return lisInstitutions;
             }
         }
 
