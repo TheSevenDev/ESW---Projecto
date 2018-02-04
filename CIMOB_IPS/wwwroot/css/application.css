@@ -70,7 +70,7 @@ textarea {
 }
 
 .application-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 .application-form-pager{
@@ -316,7 +316,7 @@ li.sortable-placeholder {
 }
 
 .evaluate-application:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
     cursor: pointer;
 }
 
@@ -389,7 +389,7 @@ li.sortable-placeholder {
 }
 
 .evaluate-application-form input[type=submit]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 #search-application {
@@ -428,7 +428,7 @@ li.sortable-placeholder {
 }
 
 #search-application button[type="submit"]:hover {
-    background-color: var(--blue-var3);
+    background-color: var(--hover-button);
 }
 
 #viewMotivationCard {

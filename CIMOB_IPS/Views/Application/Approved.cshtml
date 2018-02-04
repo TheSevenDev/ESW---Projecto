@@ -1,4 +1,5 @@
 ﻿@model PaginatedList<CIMOB_IPS.Models.Application>
+@using Microsoft.EntityFrameworkCore;
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
@@ -15,7 +16,7 @@
     <input type="search" name="search_by" placeholder="Procurar.." value="@ViewData["search-by"]" />
     <button type="submit"><i class="fa fa-search"></i></button>
 </form>
-
+<br />
 <div class="main-container-submitted-applications" style="padding:1%;padding-left:2%;">
     @if (Model.Count > 0)
     {
@@ -29,7 +30,10 @@
                         Nome
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().FinalEvaluation)
+                        @Html.DisplayNameFor(model => model.First().Mobility.First().IdOutgoingInstitutionNavigation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityDate)
                     </th>
                 </tr>
             </thead>
@@ -40,33 +44,40 @@
                     var arrNames = item.IdStudentNavigation.Name.Split(' ');
                     string strFirstName = arrNames[0];
                     string strLastName = arrNames[arrNames.Length - 1];
-                    if (arrNames.Length > 1)
+                    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                     {
-                        strName = strFirstName + " " + strLastName;
+                        var institutionName = context.Institution.Where(i => i.IdInstitution == item.Mobility.First().IdOutgoingInstitution).Select(i => i.Name).SingleOrDefault();
+                    
+                        if (arrNames.Length > 1)
+                        {
+                            strName = strFirstName + " " + strLastName;
+                        }
+                        else
+                        {
+                            strName = strFirstName;
+                        }
+                        <tr>                        
+                                <td>
+                                    @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
+                                </td>
+                                <td>
+                                    @strName
+                                </td>
+                                <td>
+                                    @institutionName
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.IdProgramNavigation.MobilityDate)
+                                </td>
+                        </tr>
                     }
-                    else
-                    {
-                        strName = strFirstName;
-                    }
-
-                    <tr>                        
-                            <td>
-                                @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
-                            </td>
-                            <td>
-                                @strName
-                            </td>
-                            <td>
-                                @Html.DisplayFor(model => model.First().FinalEvaluation)
-                            </td>
-                    </tr>
                 }
             </tbody>
         </table>
     }
     else
     {
-        <span>Nenhuma candidatura encontrada</span>
+        <span>Neste momento, não está disponível nenhuma candidatura aprovada.</span>
     }
 
 </div>

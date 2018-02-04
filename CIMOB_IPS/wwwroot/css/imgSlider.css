@@ -93,8 +93,7 @@
 }
 
     .dots:hover {
-        background: var(--hover-slider);
-        /*background: rgba(111,186,228,.1);*/
+        background: var(--hover-button);
         cursor: pointer;
     }
 

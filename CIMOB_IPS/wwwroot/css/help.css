@@ -20,7 +20,7 @@
 }
 
     #help-content a, #help-content a:visited, #help-content a:link, #help-content a:active {
-        color: var(--blue-var4);
+        color: var(--main-color);
     }
 
     #help-content h1 {
