@@ -1,18 +1,13 @@
 ﻿@model CIMOB_IPS.Models.Application
 
-@{
-    ViewData["Title"] = "Candidatura " + @Model.IdProgramNavigation.IdProgramTypeNavigation.Name;
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
-<h2 class="page-title" style="margin-top:1%;">Candidatura @Model.IdProgramNavigation.IdProgramTypeNavigation.Name</h2>
+<div class="main-application-container" style="width:100%;">
+    <div style="margin-left:2.5%;padding:1%;">
 
-<div class="main-application-container">
-    <div style="margin-left:2.5%;">
+
         <p><b>@Html.DisplayNameFor(modelItem => Model.ApplicationDate): </b>@Html.DisplayFor(modelItem => Model.ApplicationDate)</p>
         <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
         <ul class="myApp-institutions">
@@ -49,7 +44,7 @@
                 <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
             </span>
         </p>
-        <div id="motivationCard">
+        <div id="motivationCard" style="width:90%;">
             @Html.DisplayFor(modelItem => Model.MotivationCard)
         </div>
         @if (Model.SignedAppFile != null)
@@ -58,9 +53,7 @@
                 <a class="hyperlink" asp-action="OpenSignedAppFile" asp-route-fileId=@Model.IdApplication>Ver Comprovativo de Candidatura</a>
             </div>
         }
-
         <br />
-
-        <button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@Model.IdApplication>Avaliar Candidatura</button>
+        @*<button asp-controller="Application" asp-action="Evaluate" class="evaluate-application" asp-route-appId=@Model.IdApplication>Avaliar Candidatura</button>*@
     </div>
 </div>

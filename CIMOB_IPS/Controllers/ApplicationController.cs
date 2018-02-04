@@ -368,7 +368,11 @@ namespace CIMOB_IPS.Controllers
                     var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
                         .Include(a => a.IdStateNavigation)
                         .Include(a => a.IdStudentNavigation)
-                        .Include(a => a.IdProgramNavigation);
+                        .Include(a => a.IdStudentNavigation.IdCourseNavigation)
+                        .Include(a => a.IdStudentNavigation.IdCourseNavigation.IdInstitutionNavigation)
+                        .Include(a => a.IdProgramNavigation)
+                        .Where(a => a.IdStateNavigation.IdState == 1)
+                        ;
 
                     var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
                     ViewData["search-by"] = "";
@@ -380,6 +384,9 @@ namespace CIMOB_IPS.Controllers
                         .Include(a => a.IdStateNavigation)
                         .Include(a => a.IdStudentNavigation)
                         .Include(a => a.IdProgramNavigation)
+                        .Include(a => a.IdStudentNavigation.IdCourseNavigation)
+                        .Include(a => a.IdStudentNavigation.IdCourseNavigation.IdInstitutionNavigation)
+                        .Where(a => a.IdStateNavigation.IdState == 1)
                         .Where(a=> a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by))
                         ;
 
@@ -424,7 +431,8 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        public IActionResult Details(int appId)
+        [HttpGet]
+        public IActionResult Details(string id)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -432,14 +440,18 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
 
+            Console.WriteLine("===================== ================" + id);
+
+
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                var application = context.Application.Where(a => a.IdApplication == appId)
+                var application = context.Application.Where(a => a.IdApplication == Int32.Parse(id))
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
                     .FirstOrDefault();
 
+               
                 if (application == null)
                     return RedirectToAction("Index", "Application");
                 else
@@ -449,7 +461,7 @@ namespace CIMOB_IPS.Controllers
 
                     application.IdProgramNavigation.IdProgramTypeNavigation = context.ProgramType.Where(p => p.IdProgramType == application.IdProgramNavigation.IdProgramType).SingleOrDefault();
 
-                    return View(application);
+                    return PartialView("_ApplicationDetails", application);
                 }
             }
         }
