@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
-<script src="~/lib/jquery-confirm/jquery-confirm.js"></script>
+
 
 <h2 class="page-title" style="margin-top:1%;">Minhas Candidaturas</h2>
 <h3 class="page-title" style="margin-top:3%; font-size:1.1vmax">Tem @Model.Count() candidaturas submetidas</h3>
@@ -56,15 +56,16 @@ else
 
                         @if (item.IdStateNavigation.Description != "Em Avaliação")
                         {
-                            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
-                            @if (item.FinalEvaluation >= 50)
-                            {
-                                <span>Aprovada!</span>
-                            }
-                            else
-                            {
-                                <span>Não aprovada</span>
-                            }
+                            <p>
+                                <b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
+                                @if (item.FinalEvaluation >= 50)
+                                {
+                                    <span>Aprovada!</span>
+                                }
+                                else
+                                {
+                                    <span>Não aprovada</span>
+                                }
                             </p>
                         }
 
@@ -84,9 +85,12 @@ else
                         }
                     </div>
                 </fieldset><br />
-                <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirmApplication" value="Confirmar Candidatura"/>
-                <button type="submit" id="deleteApplication" >Cancelar Candidatura</button>
-            </div>                  
+
+                <button type="button" id="confirmApplication" value="Confirmar Candidatura" onclick="javascript: confirmApplication(@item.IdApplication);">Confirmar Candidatura</button>
+                <button type="submit" id="deleteApplication">Cancelar Candidatura</button>
+            </div>
+
         </form>
+        
     }
 }
