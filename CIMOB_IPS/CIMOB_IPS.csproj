@@ -42,6 +42,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="wwwroot\images\avatars\" />
   </ItemGroup>
 
   <ItemGroup>
