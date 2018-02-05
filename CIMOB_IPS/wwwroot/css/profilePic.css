@@ -1,14 +1,4 @@
-﻿/*DEMO*/
-.preview {
-    margin: 10px;
-    display: none;
-}
-
-.preview--rounded {
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-}
+﻿
 /* IMMUTABLE */
 .hide {
     display: none !important;
