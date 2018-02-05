@@ -82,6 +82,7 @@ namespace CIMOB_IPS.Controllers
         {
             return _context.Student.Where(s => s.IdAccount == intId)
                 .Include(s => s.IdAddressNavigation)
+                .Include(s => s.IdAccountNavigation)
                 .FirstOrDefault();
         }
 
@@ -546,7 +547,7 @@ namespace CIMOB_IPS.Controllers
                     {
                         IdApplication = appId,
                         BeginDate = program.MobilityDate,
-                        IdOutgoingInstitution = 2, //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                        IdOutgoingInstitution = viewModel.IdInstitution,
                         IdResponsibleTechnician = viewModel.IdTechnician,
                         IdState = context.State.Where(s => s.Description == "Em preparação").Select(a => a.IdState).SingleOrDefault()
                     };
@@ -716,6 +717,66 @@ namespace CIMOB_IPS.Controllers
 
                 return View(paginatedApplications);
             }
+        }
+
+
+        public IActionResult Confirm(int appId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var application = context.Application.Where(a => a.IdApplication == appId)
+                    .Include(a => a.IdStudentNavigation)
+                    .SingleOrDefault();
+
+                var student = GetStudentById(GetCurrentUserID());
+
+                if (student.IdStudent != application.IdStudent || application.FinalEvaluation < 50)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                var mobility = context.Mobility.Where(m => m.IdApplication == appId)
+                    .Include(m => m.IdOutgoingInstitutionNavigation)
+                    .Include(m => m.IdResponsibleTechnicianNavigation)
+                    .SingleOrDefault();
+
+                mobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation = context.Nationality.Where(n => n.IdNationality == mobility.IdOutgoingInstitutionNavigation.IdNationality).SingleOrDefault();
+
+                application.IdState = context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
+
+                context.Update(application);
+
+                //email ao aluno
+                var strbBody = new StringBuilder();
+                strbBody.AppendLine("Caro estudante,<br><br>");
+                strbBody.AppendFormat(@"Informamos que confirmou com sucesso a sua mobilidade para a instituição " + mobility.IdOutgoingInstitutionNavigation.Name);
+                strbBody.AppendFormat(" no país " + mobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description);
+                strbBody.AppendFormat(" através do programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name + ".");
+
+                strbBody.AppendFormat("<br>A mobilidade tem o começo previsto para " + application.IdProgramNavigation.MobilityDate + ", sendo que a sua mobilidade ficou encarregue do(a) técnico(a) ");
+                strbBody.AppendFormat(mobility.IdResponsibleTechnicianNavigation.Name + ", que entrará em contacto consigo brevemente.<br>");
+
+                strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+
+                Email.SendEmail(student.IdAccountNavigation.Email, "Confirmação de candidatura", strbBody.ToString());
+
+
+                //notificaçao ao tecnico responsavel
+                Notification notificationTechnician = new Notification
+                {
+                    ReadNotification = false,
+                    Description = "Uma mobilidade a seu cargo foi confirmada.",
+                    ControllerName = "Index", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                    ActionName = "Home",
+                    NotificationDate = DateTime.Now,
+                    IdAccount = mobility.IdResponsibleTechnicianNavigation.IdAccount
+                };
+            }
+
+            return RedirectToAction("Application", "MyApplications");
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿.main-application-container {
+﻿.main-application-container  {
     background-color: white;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     width: 50%;
@@ -266,6 +266,25 @@ li.sortable-placeholder {
     position: relative;
 }
 
+#confirm-application {
+    background-color: green;
+    color: #FFF;
+    border-radius: 2%;
+    border: 0px;
+    padding: 1%;
+    margin-right: 0;
+    font-size: 1.1vmax;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 2%;
+    margin-top: 3.5%
+}
+
+#confirm-application:hover {
+    background-color: darkgreen;
+    cursor: pointer;
+}
+
 #deleteApplication {
     background-color: #e74c3c;
     color:#FFF;
@@ -277,7 +296,6 @@ li.sortable-placeholder {
     width: 30%;
     margin-left: 35%;
     margin-bottom: 5%;
-    margin-top: 3.5%
 }
 
 #deleteApplication:hover {

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
-<script src="~/lib/jquery-confirm/jquery-confirm.js"></script>
+
 
 <h2 class="page-title" style="margin-top:1%;">Minhas Candidaturas</h2>
 <h3 class="page-title" style="margin-top:3%; font-size:1.1vmax">Tem @Model.Count() candidaturas submetidas</h3>
@@ -28,7 +28,7 @@ else
 
                 <input type="hidden" value="@item.IdApplication" name="idApplication" />
                 <fieldset style="border:0px">
-                    <legend style="text-align:center;font-size:1.3vmax;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
+                    <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
                     <div style="margin-left:2.5%;">
                         <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
                         <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
@@ -56,15 +56,16 @@ else
 
                         @if (item.IdStateNavigation.Description != "Em Avaliação")
                         {
-                            <p><b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
-                            @if (item.FinalEvaluation >= 50)
-                            {
-                                <span>Aprovada!</span>
-                            }
-                            else
-                            {
-                                <span>Não aprovada</span>
-                            }
+                            <p>
+                                <b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
+                                @if (item.FinalEvaluation >= 50)
+                                {
+                                    <span>Aprovada!</span>
+                                }
+                                else
+                                {
+                                    <span>Não aprovada</span>
+                                }
                             </p>
                         }
 
@@ -83,9 +84,14 @@ else
                             </div>
                         }
                     </div>
-                </fieldset>
+                </fieldset><br />
+                @if (item.FinalEvaluation >= 50 && item.IdStateNavigation.Description == "Aceite")
+                {
+                    <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirm-application" value="Confirmar Candidatura"/>
+                }
                 <button type="submit" id="deleteApplication" >Cancelar Candidatura</button>
             </div>                  
         </form>
+        
     }
 }
