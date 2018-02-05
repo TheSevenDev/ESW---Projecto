@@ -19,10 +19,12 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: Arial,Helvetica, sans-serif;
+    font-size: 1em;
     width: 100%;
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
+
 }
 
 /*
@@ -882,7 +884,7 @@ footer {
         text-align: center;
         border-radius: 6px;
         padding: 5px 0;
-        /* Position the tooltip */
+
         position: absolute;
         z-index: 1;
         top: -5px;
@@ -893,15 +895,6 @@ footer {
     .tooltip:hover .tooltiptext {
         visibility: visible;
     }
-
-/*
-    MÁXIMO USÁVEL.
-*/
-@media screen and (max-width: 720px) {
-    .navbar-menu, .nav-session, footer {
-    }
-}
-
 
 .programDetails {
     position: relative;
@@ -916,6 +909,7 @@ footer {
     text-align: center;
     padding-top: 2%;
     padding-bottom: 2%;
+    margin-bottom:10%;
 }
 
     .programDetails img {

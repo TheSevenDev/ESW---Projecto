@@ -392,6 +392,9 @@ function start() {
     autoPlayGallery();
     setColor();
 
+    if (document.getElementById("loading-program") != null)
+        showProgramDetails(1);
+
 }
 
 function autoPlayGallery() {
@@ -557,6 +560,122 @@ function showApplicationDetails(applicationID) {
             error: function (error) {
             }
         });
+}
+
+function showProgramDetails(programId) {
+    switchDetailsTo(programId);
+    $(".program-details").html("");
+
+    $('.loading-program-div').show();
+
+    var detailsURL = "Program/Details?programID=" + programId;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('.loading-program-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $(".program-details").html(result);
+                   $('.loading-program-div').hide();
+                }, 350)
+            },
+            error: function (error) {
+            }
+        });
+}
+
+function switchDetailsTo(programId) {
+    switch (programId) {
+        case 1:
+            $("#programErasmus").addClass("selected-program-banner");
+            $("#programErasmus").removeClass("program-banner");
+
+            $("#programLuso").addClass("program-banner");
+            $("#programLuso").removeClass("selected-program-banner");
+
+            $("#programIbero").addClass("program-banner");
+            $("#programIbero").removeClass("selected-program-banner");
+
+            $("#programVasco").addClass("program-banner");
+            $("#programVasco").removeClass("selected-program-banner");
+
+            $("#programMacau").addClass("program-banner");
+            $("#programMacau").removeClass("selected-program-banner");
+            break;
+
+        case 4:
+            $("#programErasmus").addClass("program-banner");
+            $("#programErasmus").removeClass("selected-program-banner");
+
+            $("#programLuso").addClass("selected-program-banner");
+            $("#programLuso").removeClass("program-banner");
+
+            $("#programIbero").addClass("program-banner");
+            $("#programIbero").removeClass("selected-program-banner");
+
+            $("#programVasco").addClass("program-banner");
+            $("#programVasco").removeClass("selected-program-banner");
+
+            $("#programMacau").addClass("program-banner");
+            $("#programMacau").removeClass("selected-program-banner");
+            break;
+
+        case 5:
+            $("#programErasmus").addClass("program-banner");
+            $("#programErasmus").removeClass("selected-program-banner");
+
+            $("#programLuso").addClass("program-banner");
+            $("#programLuso").removeClass("selected-program-banner");
+
+            $("#programIbero").addClass("selected-program-banner");
+            $("#programIbero").removeClass("program-banner");
+
+            $("#programVasco").addClass("program-banner");
+            $("#programVasco").removeClass("selected-program-banner");
+
+            $("#programMacau").addClass("program-banner");
+            $("#programMacau").removeClass("selected-program-banner");
+            break;
+
+        case 6:
+            $("#programErasmus").addClass("program-banner");
+            $("#programErasmus").removeClass("selected-program-banner");
+
+            $("#programLuso").addClass("program-banner");
+            $("#programLuso").removeClass("selected-program-banner");
+
+            $("#programIbero").addClass("program-banner");
+            $("#programIbero").removeClass("selected-program-banner");
+
+            $("#programVasco").addClass("selected-program-banner");
+            $("#programVasco").removeClass("program-banner");
+
+            $("#programMacau").addClass("program-banner");
+            $("#programMacau").removeClass("selected-program-banner");
+            break;
+
+        case 7:
+            $("#programErasmus").addClass("program-banner");
+            $("#programErasmus").removeClass("selected-program-banner");
+
+            $("#programLuso").addClass("program-banner");
+            $("#programLuso").removeClass("selected-program-banner");
+
+            $("#programIbero").addClass("program-banner");
+            $("#programIbero").removeClass("selected-program-banner");
+
+            $("#programVasco").addClass("program-banner");
+            $("#programVasco").removeClass("selected-program-banner");
+
+            $("#programMacau").addClass("selected-program-banner");
+            $("#programMacau").removeClass("program-banner");
+            break;
+    }
 }
 
 
