@@ -555,7 +555,7 @@ function showApplicationDetails(applicationID) {
                 setTimeout(function () {
                     $("#application-details").html(result);
                     $('.loading-div').hide();
-                }, 900)
+                }, 1000)
             },
             error: function (error) {
             }
@@ -582,7 +582,7 @@ function showProgramDetails(programId) {
                 setTimeout(function () {
                     $(".program-details").html(result);
                    $('.loading-program-div').hide();
-                }, 350)
+                }, 1000)
             },
             error: function (error) {
             }
