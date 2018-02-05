@@ -84,7 +84,10 @@ else
                         }
                     </div>
                 </fieldset><br />
-                <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirmApplication" value="Confirmar Candidatura"/>
+                @if (item.FinalEvaluation >= 50)
+                {
+                    <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirmApplication" value="Confirmar Candidatura"/>
+                }
                 <button type="submit" id="deleteApplication" >Cancelar Candidatura</button>
             </div>                  
         </form>

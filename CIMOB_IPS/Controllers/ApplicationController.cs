@@ -721,7 +721,28 @@ namespace CIMOB_IPS.Controllers
 
         public async Task<IActionResult> Confirm(int appId)
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                var application = context.Application.Where(a => a.IdApplication == appId)
+                    .Include(a => a.IdStudentNavigation)
+                    .SingleOrDefault();
+
+                if(GetStudentById(GetCurrentUserID()).IdStudent != application.IdStudent || application.FinalEvaluation < 50)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                application.IdState = context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
+
+                //email ao aluno
+
+                //notificaçao ao tecnico responsavel
+            }
+
+            return RedirectToAction("Application", "MyApplications");
         }
     }
 }
