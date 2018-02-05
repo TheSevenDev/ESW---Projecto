@@ -717,5 +717,11 @@ namespace CIMOB_IPS.Controllers
                 return View(paginatedApplications);
             }
         }
+
+
+        public async Task<IActionResult> Confirm(int appId)
+        {
+            return View();
+        }
     }
 }
