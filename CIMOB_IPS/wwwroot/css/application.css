@@ -266,7 +266,7 @@ li.sortable-placeholder {
     position: relative;
 }
 
-#confirmApplication {
+#confirm-application {
     background-color: green;
     color: #FFF;
     border-radius: 2%;
@@ -280,7 +280,7 @@ li.sortable-placeholder {
     margin-top: 3.5%
 }
 
-#confirmApplication:hover {
+#confirm-application:hover {
     background-color: darkgreen;
     cursor: pointer;
 }

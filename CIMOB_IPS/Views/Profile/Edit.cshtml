@@ -4,19 +4,44 @@
     ViewData["Title"] = "Edit";
 }
 
-<script>
 
-</script>
+
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/profilePic.css")' />
 
 <p class="page-title">Editar Perfil</p>
 
 <div class="profile">
-    <div class="profileImage">
-        <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw" draggable="false" />
+    <div class="photo">
+        <input type="file" accept="image/*">
+        <div class="photo__helper">
+            <div class="photo__frame photo__frame--circle">
+                <canvas class="photo__canvas"></canvas>
+                <div class="message is-empty">
+                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                </div>
+                <div class="message is-loading">
+                    <i class="fa fa-2x fa-spin fa-spinner"></i>
+                </div>
+                <div class="message is-dragover">
+                    <i class="fa fa-2x fa-cloud-upload"></i>
+                    <p>Arreie a sua foto</p>
+                </div>
+                <div class="message is-wrong-file-type">
+                    <p>Só são permitidas imagens</p>
+                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo__options hide">
+            <div class="photo__zoom">
+                <input type="range" class="zoom-handler">
+            </div><a href="javascript:;" class="remove"><img src="~/images/icons/error.png" /></a>
+        </div>
     </div>
-    <div id="edit-partial" style="margin-top: 30%;">
+    <div id="edit-partial" style="margin-top: 2%;">
             @if (Model.AccountType == EnumAccountType.STUDENT)
             {
                 @Html.Partial("_EditProfileStudentForm", Model)

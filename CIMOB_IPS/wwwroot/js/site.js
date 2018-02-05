@@ -497,8 +497,9 @@ function evaluateApplication() {
 }
 
 function confirmApplication(appId) {
-    var confirmUrl = "Application/Confirm/" + appId;
-    //alert("HEY YOU");
+
+    var confirmUrl = "/Application/Confirm/?appId=" + appId;
+
     $.confirm({
         title: 'Atenção!',
         useBootstrap: false,
