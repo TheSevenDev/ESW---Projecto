@@ -264,8 +264,8 @@ input[type=submit]:disabled:hover {
 
 #loading-program {
     position: relative;
-    margin-left: 48%;
+    margin-left: 47%;
     margin-top: 45%;
-    width: 1.4vw;
-    height: 1.4vw;
+    width: 3.2vw;
+    height: 3.2vw;
 }
