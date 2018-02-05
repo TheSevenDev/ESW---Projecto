@@ -85,7 +85,7 @@ else
                         }
                     </div>
                 </fieldset><br />
-                @if (item.FinalEvaluation >= 50)
+                @if (item.FinalEvaluation >= 50 && item.IdStateNavigation.Description == "Aceite")
                 {
                     <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirm-application" value="Confirmar Candidatura"/>
                 }

@@ -494,38 +494,39 @@ function evaluateApplication() {
 }
 
 function confirmApplication(appId) {
-    //var confirmUrl = "Application/Confirm/" + appId;
-    alert("HEY YOU");
-    //$.confirm({
-    //    title: 'Atenção!',
-    //    useBootstrap: false,
-    //    modal: true,
-    //    autoOpen: false,
-    //    draggable: false,
-    //    content: 'Deseja confirmar a candidatura e prosseguir com a mobilidade?\nEsta acção é irreversível.',
-    //    buttons: {
-    //        sim: {
-    //            text: 'Sim',
-    //            btnClass: 'btn-green',
-    //            action: function () {
-    //                $.ajax({
-    //                    type: 'POST',
-    //                    dataType: 'html',
-    //                    url: confirmUrl,
-    //                    error: function (error) {
-    //                    }
-    //                });
-    //            }
-    //        },
-    //        nao: {
-    //            text: 'Não',
-    //            btnClass: 'btn-red',
-    //            action: function () {
-    //            }
-    //        },
 
-    //    }
-    //});
+    var confirmUrl = "/Application/Confirm/?appId=" + appId;
+
+    $.confirm({
+        title: 'Atenção!',
+        useBootstrap: false,
+        modal: true,
+        autoOpen: false,
+        draggable: false,
+        content: 'Deseja confirmar a candidatura e prosseguir com a mobilidade?\nEsta acção é irreversível.',
+        buttons: {
+            sim: {
+                text: 'Sim',
+                btnClass: 'btn-green',
+                action: function () {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'html',
+                        url: confirmUrl,
+                        error: function (error) {
+                        }
+                    });
+                }
+            },
+            nao: {
+                text: 'Não',
+                btnClass: 'btn-red',
+                action: function () {
+                }
+            },
+
+        }
+    });
 }
 
 
