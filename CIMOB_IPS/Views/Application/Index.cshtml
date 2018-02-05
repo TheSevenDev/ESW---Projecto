@@ -1,10 +1,22 @@
 ﻿@model PaginatedList<CIMOB_IPS.Models.Application>
+@using Microsoft.EntityFrameworkCore;
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+@{ 
+    long lngNoInterview = -1;
+    long lngScheduledInterview = -1;
+    long lngDoneInterview = -1;
 
+    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+    {
+        lngNoInterview = context.State.Where(s => s.Description == "Sem Marcação").Select(s => s.IdState).SingleOrDefault();
+        lngScheduledInterview = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
+        lngDoneInterview = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault();
+    }
+}
 
 
 <p class="page-title">Candidaturas Submetidas</p>
@@ -68,9 +80,19 @@
                             @Html.DisplayFor(model => item.ApplicationDate)
                         </td>
                         <td>
-                            @*<button  onclick="location.href='@Url.Action("Details", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Detalhes</button>*@
                             <button id="@item.IdApplication" onclick="showApplicationDetails(@item.IdApplication);" class="evaluate-application">Detalhes</button>
-                            <button onclick="location.href='@Url.Action("Evaluate", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Avaliar</button>
+                            @if (item.IdInterviewNavigation.IdState == lngNoInterview)
+                            {
+                                <button onclick="scheduleInterview(@item.IdApplication);" class="evaluate-application">Agendar Entrevista</button>
+                            }
+                            else if (item.IdInterviewNavigation.IdState == lngScheduledInterview)
+                            {
+                                <button onclick="reScheduleInterview(@item.IdApplication);" class="evaluate-application">Remarcar Entrevista</button>
+                            }
+                            else
+                            {
+                                <button onclick="location.href='@Url.Action("Evaluate", "Application", new { appId = item.IdApplication })'" class="evaluate-application">Avaliar</button>
+                            }
                         </td>
                     </tr>
                 }

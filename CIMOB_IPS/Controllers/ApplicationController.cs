@@ -121,14 +121,24 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
+            Interview interview = new Interview
+            {
+                Date = new DateTime(2000, 1, 1),
+                IdState = _context.State.Where(s => s.Description == "Sem Marcação").Select(s => s.IdState).SingleOrDefault()
+            };
+
+            _context.Interview.Add(interview);
+
             Application app = model.Application;
             app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS MUDAR PROX FASE
             app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
             app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
             app.ApplicationDate = DateTime.Now;
             app.SignedAppFile = await CreateSignedApplication(model);
+            app.IdInterview = interview.IdInterview;
 
             _context.Application.Add(model.Application);
+
             _context.SaveChanges();
 
             AddApplicationNotification();
@@ -363,39 +373,32 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-                
-                if (String.IsNullOrEmpty(search_by))
-                {
-                    var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
+                long lngIdState = context.State.Where(s => s.Description == "Em Avaliação").Select(s => s.IdState).SingleOrDefault();
+
+                var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
                         .Include(a => a.IdStateNavigation)
                         .Include(a => a.IdStudentNavigation)
                         .Include(a => a.IdStudentNavigation.IdCourseNavigation)
                         .Include(a => a.IdStudentNavigation.IdCourseNavigation.IdInstitutionNavigation)
                         .Include(a => a.IdProgramNavigation)
-                        .Where(a => a.IdStateNavigation.IdState == 1)
-                        ;
+                        .Include(a => a.IdInterviewNavigation)
+                        .Where(a => a.IdStateNavigation.IdState == lngIdState);
 
-                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                if (String.IsNullOrEmpty(search_by))
+                {
                     ViewData["search-by"] = "";
-                    return View(paginatedApplications);
                 }
                 else
                 {
-                   var applications = (from a in context.Application orderby a.ApplicationDate select a).OrderBy(a => a.ApplicationDate)
-                        .Include(a => a.IdStateNavigation)
-                        .Include(a => a.IdStudentNavigation)
-                        .Include(a => a.IdProgramNavigation)
-                        .Include(a => a.IdStudentNavigation.IdCourseNavigation)
-                        .Include(a => a.IdStudentNavigation.IdCourseNavigation.IdInstitutionNavigation)
-                        .Where(a => a.IdStateNavigation.IdState == 1)
-                        .Where(a=> a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by))
-                        ;
+                    applications = applications
+                        .Where(a=> a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
 
                     ViewData["search-by"] = search_by.ToString();
-                    var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+                }
 
-                    return View(paginatedApplications);
-                }    
+                var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
+
+                return View(paginatedApplications);
             }
         }
 
@@ -441,9 +444,6 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
 
-            Console.WriteLine("===================== ================" + id);
-
-
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var application = context.Application.Where(a => a.IdApplication == Int32.Parse(id))
@@ -464,6 +464,50 @@ namespace CIMOB_IPS.Controllers
 
                     return PartialView("_ApplicationDetails", application);
                 }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ScheduleInterview(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
+
+                if (app == null)
+                    return RedirectToAction("Index", "Application");
+
+                Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
+
+                return PartialView("_ScheduleInterview", interview);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult RescheduleInterview(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
+
+                if (app == null)
+                    return RedirectToAction("Index", "Application");
+
+                Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
+
+                return PartialView("_RescheduleInterview", interview);
             }
         }
 

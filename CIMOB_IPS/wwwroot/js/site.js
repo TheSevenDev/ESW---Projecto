@@ -562,6 +562,64 @@ function showApplicationDetails(applicationID) {
         });
 }
 
+function scheduleInterview(applicationID) {
+    $("#application-details").html("");
+
+    $('.loading-div').show();
+
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("application-details").style.display = "block";
+
+    var detailsURL = "Application/ScheduleInterview/" + applicationID;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('#loading-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $("#application-details").html(result);
+                    $('.loading-div').hide();
+                }, 1000)
+            },
+            error: function (error) {
+            }
+        });
+}
+
+function reScheduleInterview(applicationID) {
+    $("#application-details").html("");
+
+    $('.loading-div').show();
+
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("application-details").style.display = "block";
+
+    var detailsURL = "Application/RescheduleInterview/" + applicationID;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('#loading-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $("#application-details").html(result);
+                    $('.loading-div').hide();
+                }, 1000)
+            },
+            error: function (error) {
+            }
+        });
+}
+
 function showProgramDetails(programId) {
     switchDetailsTo(programId);
     $(".program-details").html("");
