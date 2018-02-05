@@ -17,6 +17,7 @@ namespace CIMOB_IPS.Models
         public long IdStudent { get; set; }
         public long IdState { get; set; }
         public long IdProgram { get; set; }
+        public long IdInterview { get; set; }
 
         [Display(Name = "Candidato a bolsa")]
         public bool HasScholarship { get; set; }
@@ -55,6 +56,8 @@ namespace CIMOB_IPS.Models
 
         [Display(Name = "Programa")]
         public Program IdProgramNavigation { get; set; }
+
+        public Interview IdInterviewNavigation { get; set; }
 
         [Display(Name = "Comprovativo de candidatura")]
         public byte[] SignedAppFile { get; set; }

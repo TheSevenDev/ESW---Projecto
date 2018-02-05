@@ -14,6 +14,7 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<Help> Help { get; set; }
         public virtual DbSet<Institution> Institution { get; set; }
+        public virtual DbSet<Interview> Interview { get; set; }
         public virtual DbSet<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public virtual DbSet<ProgramType> ProgramType { get; set; }
         public virtual DbSet<InstitutionProgram> InstitutionProgram { get; set; }
@@ -108,12 +109,19 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdStudent).HasColumnName("id_student");
 
+                entity.Property(e => e.IdInterview).HasColumnName("id_interview");
+
                 entity.Property(e => e.IdProgram).HasColumnName("id_program");
 
                 entity.HasOne(d => d.IdProgramNavigation)
                     .WithMany(p => p.Application)
                     .HasForeignKey(d => d.IdProgram)
                     .HasConstraintName("fk_A_Program");
+
+                entity.HasOne(d => d.IdInterviewNavigation)
+                    .WithMany(p => p.Application)
+                    .HasForeignKey(d => d.IdInterview)
+                    .HasConstraintName("fk_A_Interview");
 
                 entity.Property(e => e.MotivationCard)
                     .IsRequired()
@@ -277,6 +285,21 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdProgram)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_IP_Program");
+            });
+
+            modelBuilder.Entity<Interview>(entity =>
+            {
+                entity.HasKey(e => e.IdInterview);
+
+                entity.Property(e => e.IdInterview).HasColumnName("id_interview");
+
+                entity.Property(e => e.Date).HasColumnName("date");
+                entity.Property(e => e.IdState).HasColumnName("id_state");
+
+                entity.HasOne(d => d.IdStateNavigagion)
+                    .WithMany(p => p.Interview)
+                    .HasForeignKey(d => d.IdState)
+                    .HasConstraintName("fk_I_State");
             });
 
             modelBuilder.Entity<Mobility>(entity =>

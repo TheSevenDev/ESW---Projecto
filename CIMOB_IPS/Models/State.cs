@@ -19,5 +19,6 @@ namespace CIMOB_IPS.Models
 
         public ICollection<Application> Application { get; set; }
         public ICollection<Program> Program { get; set; }
+        public ICollection<Interview> Interview { get; set; }
     }
 }

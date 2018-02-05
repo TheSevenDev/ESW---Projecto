@@ -16,14 +16,13 @@
     @foreach (var item in orderedCoordenators)
     {
         <div class="tableContact">
-            <img src="~/images/course.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdCourseNavigation.Name)<br />
-            <img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name) <br />
-            <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Email)  <br />
+            <b>@Html.DisplayFor(model => item.IdCourseNavigation.Name) | @Html.DisplayFor(model => item.Name)</b><br />
+            <em>@Html.DisplayFor(model => item.Email) | </em>
             @if (item.Telephone != null)
             {
-                <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)<br />
-            }
-        </div>
+                <em>@Html.DisplayFor(model => item.Telephone) </em><br />
+    }
+</div>
     }
 
 </div>
@@ -34,9 +33,8 @@
     @foreach (var item in orderedTechnicians)
     {
         <div class="tableContact">
-            <img src="~/images/name.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Name)<br />
-            <img src="~/images/email.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.IdAccountNavigation.Email)<br />
-            <img src="~/images/telephone.png" class="icon-img" draggable="false" /> @Html.DisplayFor(model => item.Telephone)<br />
+            <b>@Html.DisplayFor(model => item.Name)</b><br />
+            <em>@Html.DisplayFor(model => item.IdAccountNavigation.Email) | @Html.DisplayFor(model => item.Telephone)</em><br />
         </div>
     }
 </div>
