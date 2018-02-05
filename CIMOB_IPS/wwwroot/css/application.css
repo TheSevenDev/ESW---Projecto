@@ -266,6 +266,25 @@ li.sortable-placeholder {
     position: relative;
 }
 
+#confirmApplication {
+    background-color: green;
+    color: #FFF;
+    border-radius: 2%;
+    border: 0px;
+    padding: 1%;
+    margin-right: 0;
+    font-size: 1.1vmax;
+    width: 30%;
+    margin-left: 35%;
+    margin-bottom: 2%;
+    margin-top: 3.5%
+}
+
+#confirmApplication:hover {
+    background-color: darkgreen;
+    cursor: pointer;
+}
+
 #deleteApplication {
     background-color: #e74c3c;
     color:#FFF;
@@ -277,7 +296,6 @@ li.sortable-placeholder {
     width: 30%;
     margin-left: 35%;
     margin-bottom: 5%;
-    margin-top: 3.5%
 }
 
 #deleteApplication:hover {

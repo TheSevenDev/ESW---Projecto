@@ -28,7 +28,7 @@ else
 
                 <input type="hidden" value="@item.IdApplication" name="idApplication" />
                 <fieldset style="border:0px">
-                    <legend style="text-align:center;font-size:1.3vmax;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
+                    <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
                     <div style="margin-left:2.5%;">
                         <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
                         <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
@@ -83,7 +83,8 @@ else
                             </div>
                         }
                     </div>
-                </fieldset>
+                </fieldset><br />
+                <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirmApplication" value="Confirmar Candidatura"/>
                 <button type="submit" id="deleteApplication" >Cancelar Candidatura</button>
             </div>                  
         </form>
