@@ -306,12 +306,12 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     .menu-settings a, .menu-settings a:visited, .menu-settings a:link, .menu-settings a:active {
         text-decoration: none;
         color: var(--secundary-color);
-        font-weight: 500;
+        font-weight: bold;
         font-size: 1.1vmax;
     }
 
         .menu-settings a:hover {
-            font-weight: 700;
+            color: var(--hover-color);
         }
 
 /*
@@ -348,7 +348,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     }
 
         .notifications li:hover {
-            background-color: lightgray;
+            background-color: var(--hover-color);
             cursor: pointer;
         }
 

@@ -192,5 +192,6 @@ namespace CIMOB_IPS.Controllers
                 return await context.Student.Where(s => s.IdAccount == intCurrentId).Select(s => s.Credits).SingleOrDefaultAsync();
             }
         }
+
     }
 }
