@@ -22,6 +22,7 @@
 
 @if (Model.Count() == 0)
 {
+    <br />
     <div class="main-application-container" style="padding:1vw;">
         <p>Não existem candidaturas submetidas!</p>
     </div>
@@ -77,17 +78,22 @@ else
                             </p>
                         }
 
-                        @if(item.IdInterviewNavigation.IdState == lngNoInterviewState)
-                        {
-                            <span>A decidir futuramente</span>
-                        }
-                        else
-                        {
-                            <span>@item.IdInterviewNavigation.Date.Day/@item.IdInterviewNavigation.Date.Month/@item.IdInterviewNavigation.Date.Year
-                        &nbsp; às @item.IdInterviewNavigation.Date.Hour:@item.IdInterviewNavigation.Date.Minute</span>
-                        }
 
                         <p>
+                            <b>@Html.DisplayNameFor(modelItem => item.IdInterviewNavigation):</b>
+                            @if (item.IdInterviewNavigation.IdState == lngNoInterviewState)
+                            {
+                                <span>A decidir futuramente</span>
+                            }
+                            else
+                            {
+                                <span>
+                                    @item.IdInterviewNavigation.Date.Day/@item.IdInterviewNavigation.Date.Month/@item.IdInterviewNavigation.Date.Year
+                                    &nbsp;às @item.IdInterviewNavigation.Date.Hour.ToString("D2"):@item.IdInterviewNavigation.Date.Minute.ToString("D2")
+                                </span>
+                            }
+                       </p>
+<p>
                             <span id="motivationCard-title">
                                 <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
                             </span>

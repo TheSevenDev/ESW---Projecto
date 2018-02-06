@@ -77,12 +77,17 @@ namespace CIMOB_IPS.Controllers
                 Application confirmedApplication = context.Application.Where(a => a.IdStudent == lngStudentId && a.IdState == lngConfirmedState)
                     .SingleOrDefault();
 
-                var mobility = context.Mobility.Where(m => m.IdApplication == confirmedApplication.IdApplication)
-                    .Include(m => m.IdOutgoingInstitutionNavigation)
-                    .Include(m => m.IdResponsibleTechnicianNavigation)
-                    .Include(m => m.IdStateNavigation)
-                    .SingleOrDefault();
+                Mobility mobility = null;
 
+                if(confirmedApplication != null)
+                {
+                    mobility = context.Mobility.Where(m => m.IdApplication == confirmedApplication.IdApplication)
+                        .Include(m => m.IdOutgoingInstitutionNavigation)
+                        .Include(m => m.IdResponsibleTechnicianNavigation)
+                        .Include(m => m.IdStateNavigation)
+                        .SingleOrDefault();
+                }
+                
                 if(mobility != null)
                 {
                     confirmedApplication.IdProgramNavigation = context.Program.Where(p => p.IdProgram == mobility.IdApplicationNavigation.IdProgram)
@@ -93,7 +98,9 @@ namespace CIMOB_IPS.Controllers
 
                     mobility.IdApplicationNavigation = confirmedApplication;
 
-                    mobility.IdResponsibleTechnicianNavigation.IdAccountNavigation = context.Account.Where(a => a.IdAccount == mobility.IdResponsibleTechnician).SingleOrDefault();
+                    long lngTechnicianAccountId = context.Technician.Where(t => t.IdTechnician == mobility.IdResponsibleTechnician).Select(t => t.IdAccount).SingleOrDefault();
+
+                    mobility.IdResponsibleTechnicianNavigation.IdAccountNavigation = context.Account.Where(a => a.IdAccount == lngTechnicianAccountId).SingleOrDefault();
                 }
 
                 return View(mobility);
