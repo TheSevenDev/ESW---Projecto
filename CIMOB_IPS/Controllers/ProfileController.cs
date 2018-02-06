@@ -215,6 +215,31 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult ViewStudentProfile(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                Student student = context.Student.Where(s => s.IdStudent == int.Parse(id))
+                    .Include(s => s.IdAccountNavigation)
+                    .Include(s => s.IdAddressNavigation)
+                    .Include(s => s.IdCourseNavigation)
+                    .Include(s => s.IdNationalityNavigation)
+                    .SingleOrDefault();
+
+                if (student == null)
+                    return RedirectToAction("Index", "Home");
+
+                return PartialView("_ViewStudentProfile", student);
+            }
+        }
+
         public async Task<int> GetCurrentStudentECTS(ClaimsPrincipal user)
         {
             var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);

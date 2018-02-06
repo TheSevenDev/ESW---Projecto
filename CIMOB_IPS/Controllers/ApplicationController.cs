@@ -486,7 +486,7 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("~/Views/_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview });
+                return PartialView("_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview, Date = DateTime.Today});
             }
         }
 
@@ -508,7 +508,7 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("~/Views/Application/_RescheduleInterview", interview);
+                return PartialView("_RescheduleInterview", interview);
             }
         }
 

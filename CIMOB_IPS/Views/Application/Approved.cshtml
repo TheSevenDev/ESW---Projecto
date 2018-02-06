@@ -8,6 +8,17 @@
 
 @{
     ViewData["Title"] = "Candidaturas Aprovadas";
+
+    var isTech = false;
+
+    if(User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+        {
+            isTech = true;
+        }
+    }
+
 }
 
 <p class="page-title">Candidaturas Aprovadas</p>
@@ -61,7 +72,14 @@
                                     @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
                                 </td>
                                 <td>
-                                    @strName
+                                    @if (isTech)
+                                    {
+                                        <a class="profileLink" onclick="viewProfile(@item.IdStudentNavigation.IdStudent)">@strName</a>
+                                    }
+                                    else
+                                    {
+                                        @strName
+                                    }
                                 </td>
                                 <td>
                                     @institutionName

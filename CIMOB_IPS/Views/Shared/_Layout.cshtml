@@ -58,7 +58,7 @@
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                         {
                             <li><a asp-area="" asp-controller="Application" asp-action="Index">Candidaturas Submetidas</a></li>
-                            <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="About">Mobilidades Encarregue</a></li>
                         }
                         <li></li>
                     </ul>
