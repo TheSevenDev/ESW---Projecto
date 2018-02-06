@@ -1,6 +1,5 @@
 ﻿/**
  * Profile picture
- * @author Daniel Salvagni <danielsalvagni@gmail.com>
  */
 
 
@@ -705,20 +704,19 @@ function updateImageToServer() {
         });
 
 
-    var image = $('#imagePreview').attr('src');
     //var submitval = JSON.stringify({ file: ImageSave });
 
     var formData = new FormData();
     formData.append("Avatar", p.getAsDataURL());
 
     $.ajax({
-        type: "POST",
-        contentType: "application/json;charset=utf-8",
-        datatype: "JSON",
+        type: 'POST',
+        contentType: 'application/json;charset=utf-8',
+        datatype: 'JSON',
         data: formData,
-        contentType: false,
+        contentType: "application/json",
         processData: false,
-        url: "/Profile/UploadAvatar?account_id=" + account_id,
+        url: "/Profile/UploadAvatar/" + account_id,
         success: function (data) {
             alert("SUCCESS");
         },

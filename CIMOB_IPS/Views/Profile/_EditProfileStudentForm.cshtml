@@ -3,9 +3,8 @@
 
 
 <form asp-action="UpdateProfileStudent" method="post" class="user-form" enctype="multipart/form-data">
-    <div class="photo">
-        <input type="file" name="avatar" accept="image/x-png">
-       <div class="photo__helper">
+    @*<div class="photo">*@
+       @*<div class="photo__helper">
             <div class="photo__frame photo__frame--circle">
                 <canvas class="photo__canvas"></canvas>
                 <div class="message is-empty">
@@ -30,11 +29,18 @@
                 <input type="range" class="zoom-handler">
             </div><a href="javascript:;" class="remove"><img style="width:2vw;height:2vw;" src="~/images/icons/error.png" /></a>
         </div>
-    </div>
+    </div>*@
+
 
     <table>
         @Html.HiddenFor(model => Model.Student.IdAccount)
         @Html.HiddenFor(model => Model.Student.Name)
+        <tr>
+            <td>
+                <input type="file" name="avatar" style="font-size:1.1vw;margin-bottom:20%;">
+            </td>
+        </tr>
+        
         <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
         <tr>
             <td>
@@ -102,6 +108,6 @@
         <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar" onclick="javascript: updateImageToServer();"/></td> </tr>
+        <tr> <td><input type="submit" value="Guardar"/></td> </tr>
     </table>
 </form>
