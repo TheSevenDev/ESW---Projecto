@@ -190,7 +190,8 @@ namespace CIMOB_IPS.Controllers
                                 CreationDate = DateTime.Now,
                                 OpenDate = model.OpenDate,
                                 ClosingDate = model.ClosingDate,
-                                MobilityDate = (DateTime)model.MobilityDate,
+                                MobilityBeginDate = (DateTime)model.MobilityBeginDate,
+                                MobilityEndDate = (DateTime)model.MobilityEndDate,
                                 Vacancies = model.Vacancies,
                                 IdProgramType = model.IdProgramType
                             };

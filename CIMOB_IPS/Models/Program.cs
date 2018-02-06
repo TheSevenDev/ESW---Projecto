@@ -29,11 +29,15 @@ namespace CIMOB_IPS.Models
         public DateTime? ClosingDate { get; set; }
 
 
-        [Required(ErrorMessage = "É necessário definir a data de mobilidade!")]
-        [Display(Name = "Data prevista de Mobilidade")]
+        [Required(ErrorMessage = "É necessário definir a data de início de mobilidade!")]
+        [Display(Name = "Data prevista de início Mobilidade")]
         [DisplayFormat(DataFormatString = "{0:d}")]
-        public DateTime MobilityDate { get; set; }
+        public DateTime MobilityBeginDate { get; set; }
 
+        [Required(ErrorMessage = "É necessário definir a data de fim de mobilidade!")]
+        [Display(Name = "Data prevista de fim de Mobilidade")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
+        public DateTime MobilityEndDate { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "O número de vagas tem de ser um número positivo maior que 0.")]
         [Required(ErrorMessage = "É necessário definir o número de vagas!")]
