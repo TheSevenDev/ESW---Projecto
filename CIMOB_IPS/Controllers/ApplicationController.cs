@@ -238,6 +238,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdStateNavigation)
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
+                    .Include(a => a.IdInterviewNavigation)
                     .ToListAsync();
 
                 foreach (Application app in lisApplications)
@@ -485,7 +486,7 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("_ScheduleInterview", interview);
+                return PartialView("~/Views/_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview });
             }
         }
 
@@ -507,8 +508,114 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("_RescheduleInterview", interview);
+                return PartialView("~/Views/Application/_RescheduleInterview", interview);
             }
+        }
+
+        [HttpPost]
+        public IActionResult ScheduleInterview(InterviewViewModel viewModel)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            if(ModelState.IsValid)
+            {
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+                {
+                    Application application = context.Application.Where(a => a.IdInterview == viewModel.IdInterview)
+                        .Include(a => a.IdProgramNavigation)
+                        .SingleOrDefault();
+
+                    application.IdProgramNavigation.IdProgramTypeNavigation = context.ProgramType.Where(pt => pt.IdProgramType == application.IdProgramNavigation.IdProgramType).SingleOrDefault();
+
+                    Student student = context.Student.Where(s => s.IdStudent == application.IdStudent)
+                        .Include(s => s.IdAccountNavigation)
+                        .SingleOrDefault();
+
+                    Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
+
+                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours, viewModel.Minutes, 0);
+                    interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
+
+                    context.Update(interview);
+                    context.SaveChanges();
+
+                    //email ao aluno
+                    string strLink = "http://cimob-ips.azurewebsites.net/Contact";
+
+                    var strbBody = new StringBuilder();
+                    strbBody.AppendLine("Caro estudante,<br><br>");
+                    strbBody.AppendFormat(@"Informamos que a sua candidatura ao programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name);
+                    strbBody.AppendFormat(" tem entrevista marcada para o dia + " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
+                    strbBody.AppendFormat(" às " + interview.Date.Hour + ":" + interview.Date.Minute + ".<br>");
+
+                    strbBody.AppendFormat("Caso não consiga comparecer, informe qualquer técnico disponível <a href=\"" + strLink + "\">nesta página</a> para uma remarcação.<br>");
+
+                    strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+
+                    Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
+
+                    return RedirectToAction("Application", "Index");
+                }
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult RescheduleInterview(InterviewViewModel viewModel)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            if (ModelState.IsValid)
+            {
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+                {
+                    Application application = context.Application.Where(a => a.IdInterview == viewModel.IdInterview)
+                        .Include(a => a.IdProgramNavigation)
+                        .SingleOrDefault();
+
+                    application.IdProgramNavigation.IdProgramTypeNavigation = context.ProgramType.Where(pt => pt.IdProgramType == application.IdProgramNavigation.IdProgramType).SingleOrDefault();
+
+                    Student student = context.Student.Where(s => s.IdStudent == application.IdStudent)
+                        .Include(s => s.IdAccountNavigation)
+                        .SingleOrDefault();
+
+                    Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
+
+                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours, viewModel.Minutes, 0);
+                    interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
+
+                    context.Update(interview);
+                    context.SaveChanges();
+
+                    //email ao aluno
+                    string strLink = "http://cimob-ips.azurewebsites.net/Contact";
+
+                    var strbBody = new StringBuilder();
+                    strbBody.AppendLine("Caro estudante,<br><br>");
+                    strbBody.AppendFormat(@"Informamos que a sua entrevista ao programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name);
+                    strbBody.AppendFormat(" foi <b>remarcada</b> para + " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
+                    strbBody.AppendFormat(" às " + interview.Date.Hour + ":" + interview.Date.Minute + ".<br>");
+
+                    strbBody.AppendFormat("Caso não consiga comparecer, informe qualquer técnico disponível <a href=\"" + strLink + "\">nesta página</a> para uma remarcação.<br>");
+
+                    strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
+
+                    Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
+
+                    return RedirectToAction("Application", "Index");
+                }
+            }
+
+            return View(viewModel);
         }
 
         [HttpGet]

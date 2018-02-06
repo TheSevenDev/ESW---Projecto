@@ -57,6 +57,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Programa")]
         public Program IdProgramNavigation { get; set; }
 
+        [Display(Name = "Entrevista")]
         public Interview IdInterviewNavigation { get; set; }
 
         [Display(Name = "Comprovativo de candidatura")]

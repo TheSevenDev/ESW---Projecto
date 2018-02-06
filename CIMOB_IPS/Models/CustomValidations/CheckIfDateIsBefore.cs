@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CIMOB_IPS.Models.CustomValidations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public sealed class CheckDateRangeAttribute : ValidationAttribute
+    public sealed class CheckIfDateIsBefore : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

@@ -1,7 +1,15 @@
 ﻿@model IEnumerable<CIMOB_IPS.Models.Application>
+@using Microsoft.EntityFrameworkCore;
 
 @{
     ViewData["Title"] = "Minhas Candidaturas";
+
+    long lngNoInterviewState = 0;
+
+    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+    {
+        lngNoInterviewState = context.State.Where(s => s.Description == "Sem Marcação").Select(s => s.IdState).SingleOrDefault();
+    }
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
@@ -67,6 +75,16 @@ else
                                     <span>Não aprovada</span>
                                 }
                             </p>
+                        }
+
+                        @if(item.IdInterviewNavigation.IdState == lngNoInterviewState)
+                        {
+                            <span>A decidir futuramente</span>
+                        }
+                        else
+                        {
+                            <span>@item.IdInterviewNavigation.Date.Day/@item.IdInterviewNavigation.Date.Month/@item.IdInterviewNavigation.Date.Year
+                        &nbsp; às @item.IdInterviewNavigation.Date.Hour:@item.IdInterviewNavigation.Date.Minute</span>
                         }
 
                         <p>

@@ -56,7 +56,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Género:")]
         public string Gender { get; set; }
 
-        [CheckDateRange]
+        [CheckIfDateIsBefore]
         [Required(ErrorMessage = "Insira a sua data de nascimento.")]
         [Display(Name = "Data de Nascimento:")]
         [DataType(DataType.Date)]
