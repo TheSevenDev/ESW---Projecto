@@ -392,7 +392,7 @@ function start() {
     autoPlayGallery();
     setColor();
 
-    if (document.getElementById("loading-program") != null)
+    if (document.getElementById("loading-program") !== null)
         showProgramDetails(1);
 
 }
@@ -532,7 +532,6 @@ function confirmApplication(appId) {
     });
 }
 
-
 function showApplicationDetails(applicationID) {
     $("#application-details").html("");
 
@@ -600,6 +599,35 @@ function reScheduleInterview(applicationID) {
     document.getElementById("application-details").style.display = "block";
 
     var detailsURL = "Application/RescheduleInterview/" + applicationID;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('#loading-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $("#application-details").html(result);
+                    $('.loading-div').hide();
+                }, 1000)
+            },
+            error: function (error) {
+            }
+        });
+}
+
+function viewProfile(studentId) {
+    $("#application-details").html("");
+
+    $('.loading-div').show();
+
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("application-details").style.display = "block";
+
+    var detailsURL = "../Profile/ViewStudentProfile/" + studentId;
 
     $.ajax(
         {

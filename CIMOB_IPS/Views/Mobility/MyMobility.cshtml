@@ -1,0 +1,57 @@
+﻿@model CIMOB_IPS.Models.Mobility
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<h2 class="page-title" style="margin-top:1%;">Minha Mobilidade</h2>
+@if (Model == null)
+{
+    <div class="main-application-container" style="padding:1vw;">
+        <p>Não está associado a nenhuma mobilidade. Inscreva-se em programas de mobildade <a asp-controller="Program" asp-action="Index">aqui</a> caso ainda não tenha feito nenhuma candidatura.
+        &nbsp;Caso contrário, aguarde pelos resultados da(s) mesma(s).</p>
+    </div>
+}
+else
+{
+    <div class="main-application-container">
+        <fieldset style="border:0px">
+            <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">
+                <a class="profileLink" asp-controller="Program" asp-action="Index">@Html.DisplayFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.IdProgramTypeNavigation.Name)</a>
+            </legend>
+
+            <div style="margin-left:2.5%;">
+                <p>
+                    <b>@Html.DisplayNameFor(modelItem => Model.IdOutgoingInstitutionNavigation): </b>
+                    @Html.DisplayFor(modelItem => Model.IdOutgoingInstitutionNavigation.Name)
+                </p>
+
+                <p>
+                    <b>@Html.DisplayNameFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.MobilityBeginDate): </b>
+                    @Html.DisplayFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.MobilityBeginDate)
+                </p>
+
+                <p>
+                    <b>@Html.DisplayNameFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.MobilityEndDate): </b>
+                    @Html.DisplayFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.MobilityEndDate)
+                </p>
+
+                <p>
+                    <b>@Html.DisplayNameFor(modelItem => Model.IdStateNavigation.Description): </b>
+                    @Html.DisplayFor(modelItem => Model.IdStateNavigation.Description)
+                </p>
+
+                <p>
+                    <b>@Html.DisplayNameFor(modelItem => Model.IdResponsibleTechnicianNavigation): </b>
+                    @Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Name) | 
+                    @Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.IdAccountNavigation.Email) |
+                    @Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Telephone)
+                </p>
+            </div>
+        </fieldset><br />
+    </div>
+}

@@ -1,16 +1,50 @@
 ﻿@model CIMOB_IPS.Models.ProfileViewModel
-    <link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
-<form asp-action="UpdateProfileStudent" method="post" class="user-form">
+<link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
+
+
+<form asp-action="UpdateProfileStudent" method="post" class="user-form" enctype="multipart/form-data">
+    @*<div class="photo">*@
+       @*<div class="photo__helper">
+            <div class="photo__frame photo__frame--circle">
+                <canvas class="photo__canvas"></canvas>
+                <div class="message is-empty">
+                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                </div>
+                <div class="message is-loading">
+                    <i class="fa fa-2x fa-spin fa-spinner"></i>
+                </div>
+                <div class="message is-dragover">
+                    <i class="fa fa-2x fa-cloud-upload"></i>
+                    <p>Largue a foto</p>
+                </div>
+                <div class="message is-wrong-file-type">
+                    <p>Só são permitidas imagens</p>
+                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="photo__options hide">
+            <div class="photo__zoom">
+                <input type="range" class="zoom-handler">
+            </div><a href="javascript:;" class="remove"><img style="width:2vw;height:2vw;" src="~/images/icons/error.png" /></a>
+        </div>
+    </div>*@
+
+
     <table>
         @Html.HiddenFor(model => Model.Student.IdAccount)
         @Html.HiddenFor(model => Model.Student.Name)
+        <tr>
+            <td>
+                <input type="file" name="avatar" style="font-size:1.1vw;margin-bottom:20%;">
+            </td>
+        </tr>
+        
         <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
         <tr>
             <td>
-                @*<div class="on-focus clearfix">*@
-                    <input asp-for="Student.Telephone" type="text" />
-                    @*<div class="tool-tip slideIn right">Confirme o nº de telemóvel</div>*@
-                @*</div>*@
+                <input asp-for="Student.Telephone" type="text" />
             </td>
         </tr>
         <tr> <td><span asp-validation-for="Student.Telephone" class="error-message"></span></td></tr>
@@ -26,11 +60,12 @@
         </tr>
 
         <tr>
-            <td><div class="on-focus clearfix">
-    <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onfocusout="javascript:adressCode()" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
-    &nbsp;
-                <input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
-</div>
+            <td>
+                <div class="on-focus clearfix">
+                    <input asp-for="PostalCode1" id="input-code1" type="text" style="width:4vw;" onfocusout="javascript:adressCode()" onkeydown="javascript: closeHelpPostal();" />&nbsp;<label>-</label>
+                    &nbsp;
+                    <input asp-for="PostalCode2" id="input-code2" onfocusout="javascript:adressCode()" type="text" style="width:4vw;" onkeydown="javascript: closeHelpPostal();" />
+                </div>
             </td>
         </tr>
         <tr><td><span asp-validation-for="PostalCode1" class="error-message"></span></td></tr>
@@ -73,6 +108,6 @@
         <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
+        <tr> <td><input type="submit" value="Guardar"/></td> </tr>
     </table>
 </form>

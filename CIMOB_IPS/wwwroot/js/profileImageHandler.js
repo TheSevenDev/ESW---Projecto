@@ -1,6 +1,5 @@
 ﻿/**
  * Profile picture
- * @author Daniel Salvagni <danielsalvagni@gmail.com>
  */
 
 
@@ -119,40 +118,42 @@
             /**
              * Start canvas
              */
-            self.canvas.width = self.photoFrame.outerWidth();
-            self.canvas.height = self.photoFrame.outerHeight();
-            self.canvasContext = self.canvas.getContext('2d');
-            /**
-             * Show the right text
-             */
-            if (isMobile()) {
-                self.photoArea.addClass('is-mobile');
-            } else {
-                self.photoArea.addClass('is-desktop');
-            }
-            /**
-             * Merge the defaults with the user options
-             */
-            self.options = $.extend({}, self.defaults, options);
+            if (self.canvas != null) {
+                self.canvas.width = self.photoFrame.outerWidth();
+                self.canvas.height = self.photoFrame.outerHeight();
+                self.canvasContext = self.canvas.getContext('2d');
+                /**
+                 * Show the right text
+                 */
+                if (isMobile()) {
+                    self.photoArea.addClass('is-mobile');
+                } else {
+                    self.photoArea.addClass('is-desktop');
+                }
+                /**
+                 * Merge the defaults with the user options
+                 */
+                self.options = $.extend({}, self.defaults, options);
 
-            /**
-             * Enable/disable the image helper
-             */
-            if (self.options.imageHelper) {
-                registerImageHelper();
-            }
+                /**
+                 * Enable/disable the image helper
+                 */
+                if (self.options.imageHelper) {
+                    registerImageHelper();
+                }
 
-            registerDropZoneEvents();
-            registerImageDragEvents();
-            registerZoomEvents();
+                registerDropZoneEvents();
+                registerImageDragEvents();
+                registerZoomEvents();
 
-            /**
-             * Start
-             */
-            if (imageFilePath) {
-                processFile(imageFilePath);
-            } else {
-                self.photoArea.addClass('photo--empty');
+                /**
+                 * Start
+                 */
+                if (imageFilePath) {
+                    processFile(imageFilePath);
+                } else {
+                    self.photoArea.addClass('photo--empty');
+                }
             }
         }
 
@@ -688,7 +689,42 @@
 
 
 
+function updateImageToServer() {
+    var account_id = document.getElementById("account-id").innerText;
 
+    var p = new profilePicture('.profile', null,
+        {
+            imageHelper: true,
+            onRemove: function (type) {
+                $('.preview').hide().attr('src', '');
+            },
+            onError: function (type) {
+                console.log('Error type: ' + type);
+            }
+        });
+
+
+    //var submitval = JSON.stringify({ file: ImageSave });
+
+    var formData = new FormData();
+    formData.append("Avatar", p.getAsDataURL());
+
+    $.ajax({
+        type: 'POST',
+        contentType: 'application/json;charset=utf-8',
+        datatype: 'JSON',
+        data: formData,
+        contentType: "application/json",
+        processData: false,
+        url: "/Profile/UploadAvatar/" + account_id,
+        success: function (data) {
+            alert("SUCCESS");
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 

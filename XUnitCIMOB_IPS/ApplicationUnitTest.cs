@@ -30,7 +30,7 @@ namespace XUnitCIMOB_IPS
                 CreationDate = new DateTime(2017, 12, 28),
                 OpenDate = new DateTime(2018, 01, 03),
                 ClosingDate = new DateTime(2019, 02, 13),
-                MobilityDate = new DateTime(2020, 01, 10),
+                MobilityBeginDate = new DateTime(2020, 01, 10),
                 Vacancies = 2,
                 IdProgramType = 1,
                 IdProgramTypeNavigation = new ProgramType

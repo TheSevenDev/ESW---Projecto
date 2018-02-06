@@ -440,12 +440,23 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     PROFILE
 */
 
+.profileLink {
+    color: var(--main-color);
+    font-size: 1.0vw;
+    font-weight: bold;
+}
+
+.profileLink:hover, .profileLink:visited:hover, .profileLink:link:hover, .profileLink:active:hover {
+    text-decoration: underline;
+    cursor:pointer;
+}
+
 .information {
     font-size: 95%;
     width: 80%;
     height: auto;
     position: absolute;
-    top: 23%;
+    top: 25%;
     margin-left: 15%;
     font-size: 1vmax;
 }
@@ -484,7 +495,8 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     text-align: center;
     height: 30%;
     position: absolute;
-    margin-left: 36%;
+    margin-left: 35.5%;
+    margin-top: 3%;
 }
 
 .profile button {
@@ -518,6 +530,8 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     margin-left: auto;
     min-height: 100vh;
     overflow-y: auto;
+    margin-bottom:5.5%;
+    height:55vh;
 }
 
 .profileLabel {
@@ -1050,3 +1064,9 @@ footer {
         cursor: pointer;
         border: 0.7px solid var(--main-color);
     }
+
+
+.profile-image{
+    border-radius:50%;
+    border:0.3vw solid #f1f1f1;
+}

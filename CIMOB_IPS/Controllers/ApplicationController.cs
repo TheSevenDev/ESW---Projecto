@@ -15,16 +15,20 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
 using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CIMOB_IPS.Controllers
 {
     public class ApplicationController : Controller
     {
         private readonly CIMOB_IPS_DBContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ApplicationController(CIMOB_IPS_DBContext context)
+
+        public ApplicationController(CIMOB_IPS_DBContext context, IHostingEnvironment HostingEnvironment)
         {
             _context = context;
+             _hostingEnvironment = HostingEnvironment;
         }
 
         public int GetCurrentUserID()
@@ -40,7 +44,7 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
-            ProfileController pc = new ProfileController();
+            ProfileController pc = new ProfileController(_hostingEnvironment);
             int intEcts = await pc.GetCurrentStudentECTS(User);
 
             var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1);
@@ -223,7 +227,6 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             AccountController ac = new AccountController();
-            ProfileController pc = new ProfileController();
 
             int lngCurrentUserId = GetCurrentUserID();
 
@@ -407,7 +410,6 @@ namespace CIMOB_IPS.Controllers
         public IActionResult DeleteApplication()
         {
             AccountController ac = new AccountController();
-            ProfileController pc = new ProfileController();
 
             int lngCurrentUserId = GetCurrentUserID();
             int applicationId = Int32.Parse(Request.Form["idApplication"]);
@@ -486,7 +488,7 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("~/Views/_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview });
+                return PartialView("_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview, Date = DateTime.Today});
             }
         }
 
@@ -508,7 +510,8 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("~/Views/Application/_RescheduleInterview", interview);
+                return PartialView("_RescheduleInterview", 
+                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date.Hour, Minutes = interview.Date.Minute });
             }
         }
 
@@ -549,8 +552,8 @@ namespace CIMOB_IPS.Controllers
                     var strbBody = new StringBuilder();
                     strbBody.AppendLine("Caro estudante,<br><br>");
                     strbBody.AppendFormat(@"Informamos que a sua candidatura ao programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name);
-                    strbBody.AppendFormat(" tem entrevista marcada para o dia + " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
-                    strbBody.AppendFormat(" às " + interview.Date.Hour + ":" + interview.Date.Minute + ".<br>");
+                    strbBody.AppendFormat(" tem entrevista marcada para o dia " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
+                    strbBody.AppendFormat(" às " + interview.Date.Hour.ToString("D2") + ":" + interview.Date.Minute.ToString("D2") + ".<br>");
 
                     strbBody.AppendFormat("Caso não consiga comparecer, informe qualquer técnico disponível <a href=\"" + strLink + "\">nesta página</a> para uma remarcação.<br>");
 
@@ -558,7 +561,7 @@ namespace CIMOB_IPS.Controllers
 
                     Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
 
-                    return RedirectToAction("Application", "Index");
+                    return RedirectToAction("Index", "Application");
                 }
             }
 
@@ -602,8 +605,8 @@ namespace CIMOB_IPS.Controllers
                     var strbBody = new StringBuilder();
                     strbBody.AppendLine("Caro estudante,<br><br>");
                     strbBody.AppendFormat(@"Informamos que a sua entrevista ao programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name);
-                    strbBody.AppendFormat(" foi <b>remarcada</b> para + " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
-                    strbBody.AppendFormat(" às " + interview.Date.Hour + ":" + interview.Date.Minute + ".<br>");
+                    strbBody.AppendFormat(" foi <b>remarcada</b> para " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
+                    strbBody.AppendFormat(" às " + interview.Date.Hour.ToString("D2") + ":" + interview.Date.Minute.ToString("D2") + ".<br>");
 
                     strbBody.AppendFormat("Caso não consiga comparecer, informe qualquer técnico disponível <a href=\"" + strLink + "\">nesta página</a> para uma remarcação.<br>");
 
@@ -611,7 +614,7 @@ namespace CIMOB_IPS.Controllers
 
                     Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
 
-                    return RedirectToAction("Application", "Index");
+                    return RedirectToAction("Index", "Application");
                 }
             }
 
@@ -678,6 +681,8 @@ namespace CIMOB_IPS.Controllers
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
+                var acceptedApplicationState = context.State.Where(s => s.Description == "Aceite").Select(s => s.IdState).SingleOrDefault();
+
                 var application = context.Application.Where(a => a.IdApplication == viewModel.IdApplication).FirstOrDefault();
                 var student = context.Student.Where(s => s.IdStudent == application.IdStudent)
                     .Include(s => s.IdAccountNavigation)
@@ -685,6 +690,9 @@ namespace CIMOB_IPS.Controllers
                 var program = context.Program.Where(p => p.IdProgram == application.IdProgram)
                     .Include(p => p.IdProgramTypeNavigation)
                     .SingleOrDefault();
+
+                if(application.IdState == acceptedApplicationState)
+                    return RedirectToAction("Index", "Application");
 
                 application.FinalEvaluation = (short)dblResult;
 
@@ -697,7 +705,6 @@ namespace CIMOB_IPS.Controllers
                     Mobility mobility = new Mobility
                     {
                         IdApplication = appId,
-                        BeginDate = program.MobilityDate,
                         IdOutgoingInstitution = viewModel.IdInstitution,
                         IdResponsibleTechnician = viewModel.IdTechnician,
                         IdState = context.State.Where(s => s.Description == "Em preparação").Select(a => a.IdState).SingleOrDefault()
@@ -715,8 +722,8 @@ namespace CIMOB_IPS.Controllers
                         {
                             ReadNotification = false,
                             Description = "Foi posta uma nova mobilidade a seu cargo.",
-                            ControllerName = "Index", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
-                            ActionName = "Home",
+                            ControllerName = "Mobility", 
+                            ActionName = "MobilitiesInCharge",
                             NotificationDate = DateTime.Now,
                             IdAccount = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault()
                         };
@@ -736,7 +743,7 @@ namespace CIMOB_IPS.Controllers
 
                 var strbBody = new StringBuilder();
                 strbBody.AppendLine("Caro estudante,<br><br>");
-                strbBody.AppendFormat(@"Informamos que a sua candidatura para mobilidade, feita a " + application.ApplicationDate.Date);
+                strbBody.AppendFormat(@"Informamos que a sua candidatura para mobilidade, feita a " + application.ApplicationDate.Date.Day + "/" + application.ApplicationDate.Date.Month + "/" + application.ApplicationDate.Date.Year);
                 strbBody.AppendFormat(" para o programa " + program.IdProgramTypeNavigation.Name);
 
                 if (bolApproved)
@@ -771,7 +778,7 @@ namespace CIMOB_IPS.Controllers
                 context.SaveChanges();
             }
 
-            return View();
+            return RedirectToAction("Index", "Application");
         }
 
         private IEnumerable<SelectListItem> PopulateTechnicians()
@@ -896,9 +903,13 @@ namespace CIMOB_IPS.Controllers
 
                 mobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation = context.Nationality.Where(n => n.IdNationality == mobility.IdOutgoingInstitutionNavigation.IdNationality).SingleOrDefault();
 
-                application.IdState = context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
+                var confirmedState = context.State.Where(s => s.Description == "Confirmada").SingleOrDefault();
+
+                application.IdState = confirmedState.IdState;
+                application.IdStateNavigation = confirmedState;
 
                 context.Update(application);
+                context.SaveChanges();
 
                 //email ao aluno
                 var strbBody = new StringBuilder();
@@ -907,7 +918,7 @@ namespace CIMOB_IPS.Controllers
                 strbBody.AppendFormat(" no país " + mobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description);
                 strbBody.AppendFormat(" através do programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name + ".");
 
-                strbBody.AppendFormat("<br>A mobilidade tem o começo previsto para " + application.IdProgramNavigation.MobilityDate + ", sendo que a sua mobilidade ficou encarregue do(a) técnico(a) ");
+                strbBody.AppendFormat("<br>A mobilidade tem o começo previsto para " + application.IdProgramNavigation.MobilityBeginDate + ", sendo que a sua mobilidade ficou encarregue do(a) técnico(a) ");
                 strbBody.AppendFormat(mobility.IdResponsibleTechnicianNavigation.Name + ", que entrará em contacto consigo brevemente.<br>");
 
                 strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
@@ -920,8 +931,8 @@ namespace CIMOB_IPS.Controllers
                 {
                     ReadNotification = false,
                     Description = "Uma mobilidade a seu cargo foi confirmada.",
-                    ControllerName = "Index", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
-                    ActionName = "Home",
+                    ControllerName = "Mobility", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                    ActionName = "MobilitiesInCharge",
                     NotificationDate = DateTime.Now,
                     IdAccount = mobility.IdResponsibleTechnicianNavigation.IdAccount
                 };
