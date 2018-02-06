@@ -4,32 +4,32 @@
 
 <form asp-action="UpdateProfileStudent" method="post" class="user-form" enctype="multipart/form-data">
     @*<div class="photo">*@
-       @*<div class="photo__helper">
-            <div class="photo__frame photo__frame--circle">
-                <canvas class="photo__canvas"></canvas>
-                <div class="message is-empty">
-                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
-                </div>
-                <div class="message is-loading">
-                    <i class="fa fa-2x fa-spin fa-spinner"></i>
-                </div>
-                <div class="message is-dragover">
-                    <i class="fa fa-2x fa-cloud-upload"></i>
-                    <p>Largue a foto</p>
-                </div>
-                <div class="message is-wrong-file-type">
-                    <p>Só são permitidas imagens</p>
-                    <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+    @*<div class="photo__helper">
+                <div class="photo__frame photo__frame--circle">
+                    <canvas class="photo__canvas"></canvas>
+                    <div class="message is-empty">
+                        <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                    </div>
+                    <div class="message is-loading">
+                        <i class="fa fa-2x fa-spin fa-spinner"></i>
+                    </div>
+                    <div class="message is-dragover">
+                        <i class="fa fa-2x fa-cloud-upload"></i>
+                        <p>Largue a foto</p>
+                    </div>
+                    <div class="message is-wrong-file-type">
+                        <p>Só são permitidas imagens</p>
+                        <p class="message--desktop">Arraste a sua foto ou procure no seu computador</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="photo__options hide">
-            <div class="photo__zoom">
-                <input type="range" class="zoom-handler">
-            </div><a href="javascript:;" class="remove"><img style="width:2vw;height:2vw;" src="~/images/icons/error.png" /></a>
-        </div>
-    </div>*@
+            <div class="photo__options hide">
+                <div class="photo__zoom">
+                    <input type="range" class="zoom-handler">
+                </div><a href="javascript:;" class="remove"><img style="width:2vw;height:2vw;" src="~/images/icons/error.png" /></a>
+            </div>
+        </div>*@
 
 
     <table>
@@ -37,10 +37,16 @@
         @Html.HiddenFor(model => Model.Student.Name)
         <tr>
             <td>
-                <input type="file" name="avatar" style="font-size:1.1vw;margin-bottom:20%;">
+                <img id="edit-image-preview" src="@Model.Student.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;margin-left:28%;" draggable="false" />
             </td>
         </tr>
-        
+
+        <tr>
+            <td>
+                <input type="file" name="avatar" title="Alterar foto de perfil" value="Alterar foto de perfil" style="font-size:1.1vw;margin-bottom:5%;" onchange="preview_image(event)">
+            </td>
+        </tr>
+
         <tr> <td><label asp-for="Student.Telephone"></label></td></tr>
         <tr>
             <td>
@@ -108,6 +114,6 @@
         <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar"/></td> </tr>
+        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
     </table>
 </form>

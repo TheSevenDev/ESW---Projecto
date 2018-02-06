@@ -189,7 +189,7 @@ namespace CIMOB_IPS.Controllers
                 string strQuery = "UPDATE Account Set avatarURL = @AvatarURL WHERE id_account = @AccountID";
 
                 SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
-                scmCommand.Parameters.AddWithValue("@AvatarURL", "images/avatars/" + account_id + ".png");
+                scmCommand.Parameters.AddWithValue("@AvatarURL", "/images/avatars/" + account_id + ".png");
                 scmCommand.Parameters.AddWithValue("@AccountID", account_id);
 
                 scmCommand.ExecuteNonQuery();

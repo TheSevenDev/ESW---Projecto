@@ -584,12 +584,22 @@ namespace CIMOB_IPS.Controllers
                     var principal = new ClaimsPrincipal(identity);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = model.RememberMe });
+                    identity.AddClaim(new Claim(ClaimTypes.GivenName, GetAvatarUrl(strAccountId)));
+
                     return RedirectToAction("Index", "Home");
                 }
             }
 
             ViewData["initial-email"] = strEmail;
             return View(model);
+        }
+
+        public string GetAvatarUrl(string account_id)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return context.Account.Where(a => a.IdAccount.ToString() == account_id).FirstOrDefault().AvatarUrl;
+            }
         }
 
         public async Task<IActionResult> Logout()

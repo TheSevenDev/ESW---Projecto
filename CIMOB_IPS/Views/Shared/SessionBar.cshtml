@@ -14,6 +14,12 @@
             strName = strFirstName;
         }
     }
+
+    var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
+    var account_id = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+
+    AccountController ac = new AccountController();
+
 }
 
 <div class="nav-session">
@@ -32,7 +38,9 @@
     else
     {
         <div class="session-name">
-            Bem-vindo, <a asp-area="" asp-controller="Profile" asp-action="Index">@strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
+            @*Bem-vindo,*@ 
+            
+            <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" class="session-profile-image" draggable="false"/> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
 
     }

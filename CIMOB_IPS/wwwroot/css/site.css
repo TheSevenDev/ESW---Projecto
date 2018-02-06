@@ -531,7 +531,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     min-height: 100vh;
     overflow-y: auto;
     margin-bottom:5.5%;
-    height:55vh;
+    height:65vh;
 }
 
 .profileLabel {
@@ -875,7 +875,7 @@ footer {
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 0.9em;
+    font-size: 1.1vw;
     width: 100%;
     height: 5.5%;
     bottom: 0;
@@ -1070,3 +1070,13 @@ footer {
     border-radius:50%;
     border:0.3vw solid #f1f1f1;
 }
+
+.session-profile-image {
+    border-radius: 50%;
+    border: 0.1vw solid #f1f1f1;
+    vertical-align: middle;
+    width: 2.1vw;
+    height: 2.1vw;
+    display: inline-block
+}
+
