@@ -45,7 +45,12 @@
                     @if (User.IsInRole("estudante"))
                     {
                         <li>
-                            <a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a>
+                            <a>Mobilidade</a>
+                            <ul class="sub-menu">
+                                <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
+                                <li><a asp-area="" asp-controller="Mobility" asp-action="MyMobility">Minha Mobilidade</a></li>
+                                <li></li>
+                            </ul>
                         </li>
                     }
 
