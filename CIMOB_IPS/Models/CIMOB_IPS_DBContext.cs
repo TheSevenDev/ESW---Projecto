@@ -59,6 +59,8 @@ namespace CIMOB_IPS.Models
                     .IsRequired()
                     .HasColumnName("password")
                     .HasMaxLength(16);
+
+                entity.Property(e => e.AvatarUrl).HasColumnName("avatarURL");
             });
 
             modelBuilder.Entity<Address>(entity =>

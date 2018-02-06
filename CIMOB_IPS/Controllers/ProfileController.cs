@@ -16,13 +16,6 @@ namespace CIMOB_IPS.Controllers
     {
         private readonly IHostingEnvironment _hostingEnvironment;
 
-        /*private readonly CIMOB_IPS_DBContext _context;
-
-        public ProfileController(CIMOB_IPS_DBContext context)
-        {
-            _context = context;
-        }
-        */
         public ProfileController(IHostingEnvironment HostingEnvironment)
         {
             _hostingEnvironment = HostingEnvironment;
@@ -75,7 +68,8 @@ namespace CIMOB_IPS.Controllers
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
 
             ViewData["edit-profile-display"] = "block";
-            //add verificação
+
+
             return View(accountViewModel);
         }
 
@@ -123,33 +117,7 @@ namespace CIMOB_IPS.Controllers
 
                 using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
-
-                    if (HttpContext.Request.Form.Files.Count > 0)
-                    {
-                        Console.WriteLine("====================================== HÀ FILES");
-                        var ImageFile = HttpContext.Request.Form.Files[0];
-                        if (ImageFile != null && ImageFile.Length > 0)
-                        {
-                            var fileName = Guid.NewGuid().ToString();
-                            var extention = Path.GetExtension(ImageFile.FileName);
-
-                            var newFile = fileName + extention;
-
-
-                            var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", newFile);
-
-                            using (var fileStream = new FileStream(uploadName, FileMode.Create))
-                            {
-                                await ImageFile.CopyToAsync(fileStream);
-                                //Carro.FicheiroFoto = "/fotografias/" + newFile;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("====================================== NÂO HÀ FILES");
-                    }
-
+                   
                     Student newStudent = await context.Student
                     .Include(s => s.IdAddressNavigation)
                     .SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
@@ -167,8 +135,8 @@ namespace CIMOB_IPS.Controllers
                     studentAddress.DoorNumber = model.Student.IdAddressNavigation.DoorNumber;
                     studentAddress.Floor = model.Student.IdAddressNavigation.Floor;
 
+                    
                     context.Update(studentAddress);
-
                     context.Update(newStudent);
 
                     await context.SaveChangesAsync();
@@ -180,6 +148,53 @@ namespace CIMOB_IPS.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task UploadAvatar([FromQuery] string account_id)
+        {
+            if (Request.Form.Files.Count > 0)
+            {
+                Console.WriteLine("====================================== HÁ FILES");
+                var ImageFile = Request.Form.Files["Avatar"];
+                if (ImageFile != null)
+                {
+                    Console.WriteLine("====================================== HÁ FILES E FUNCIONAM");
+                    var extention = Path.GetExtension(ImageFile.FileName);
+
+                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", account_id + ".png");
+
+                    using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                    {
+                        await ImageFile.CopyToAsync(fileStream);
+                        UpdateAvatarURL(account_id);
+                        //viewModel.Student.IdAccountNavigation.AvatarUrl = "~/images/avatars/" + newFile;
+                        //UpdateAvatarURL(viewModel, "/images/avatars/" + newFile);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("====================================== NÂO HÁ FILES");
+            }
+        }
+
+
+        private void UpdateAvatarURL(string account_id)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                scnConnection.Open();
+                string strQuery = "UPDATE Account Set avatarURL = @AvatarURL WHERE id_account = @AccountID";
+
+                SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                scmCommand.Parameters.AddWithValue("@AvatarURL", account_id + ".png");
+                scmCommand.Parameters.AddWithValue("@AccountID", account_id);
+
+                scmCommand.ExecuteNonQuery();
+
+            }
         }
 
         [HttpPost]

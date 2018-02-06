@@ -1,9 +1,11 @@
 ﻿@model CIMOB_IPS.Models.ProfileViewModel
 <link rel="stylesheet" href='@Url.Content("~/css/toolTips.css")' />
+
+
 <form asp-action="UpdateProfileStudent" method="post" class="user-form" enctype="multipart/form-data">
     <div class="photo">
-        <input type="file" accept="image/*">
-        <div class="photo__helper">
+        <input type="file" name="avatar" accept="image/x-png">
+       <div class="photo__helper">
             <div class="photo__frame photo__frame--circle">
                 <canvas class="photo__canvas"></canvas>
                 <div class="message is-empty">
@@ -100,6 +102,6 @@
         <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
+        <tr> <td><input type="submit" value="Guardar" onclick="javascript: updateImageToServer();"/></td> </tr>
     </table>
 </form>

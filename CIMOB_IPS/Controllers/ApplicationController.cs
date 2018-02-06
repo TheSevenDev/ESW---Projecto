@@ -15,16 +15,20 @@ using iTextSharp.text.pdf;
 using iTextSharp.text.html.simpleparser;
 using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CIMOB_IPS.Controllers
 {
     public class ApplicationController : Controller
     {
         private readonly CIMOB_IPS_DBContext _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ApplicationController(CIMOB_IPS_DBContext context)
+
+        public ApplicationController(CIMOB_IPS_DBContext context, IHostingEnvironment HostingEnvironment)
         {
             _context = context;
+             _hostingEnvironment = HostingEnvironment;
         }
 
         public int GetCurrentUserID()
@@ -40,7 +44,7 @@ namespace CIMOB_IPS.Controllers
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
 
-            ProfileController pc = new ProfileController();
+            ProfileController pc = new ProfileController(_hostingEnvironment);
             int intEcts = await pc.GetCurrentStudentECTS(User);
 
             var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1);
@@ -223,7 +227,6 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Index", "Home");
 
             AccountController ac = new AccountController();
-            ProfileController pc = new ProfileController();
 
             int lngCurrentUserId = GetCurrentUserID();
 
@@ -407,7 +410,6 @@ namespace CIMOB_IPS.Controllers
         public IActionResult DeleteApplication()
         {
             AccountController ac = new AccountController();
-            ProfileController pc = new ProfileController();
 
             int lngCurrentUserId = GetCurrentUserID();
             int applicationId = Int32.Parse(Request.Form["idApplication"]);

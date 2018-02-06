@@ -690,7 +690,43 @@
 
 
 
+function updateImageToServer() {
+    var account_id = document.getElementById("account-id").innerText;
 
+    var p = new profilePicture('.profile', null,
+        {
+            imageHelper: true,
+            onRemove: function (type) {
+                $('.preview').hide().attr('src', '');
+            },
+            onError: function (type) {
+                console.log('Error type: ' + type);
+            }
+        });
+
+
+    var image = $('#imagePreview').attr('src');
+    //var submitval = JSON.stringify({ file: ImageSave });
+
+    var formData = new FormData();
+    formData.append("Avatar", p.getAsDataURL());
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        datatype: "JSON",
+        data: formData,
+        contentType: false,
+        processData: false,
+        url: "/Profile/UploadAvatar?account_id=" + account_id,
+        success: function (data) {
+            alert("SUCCESS");
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    });
+}
 
 
 
