@@ -138,7 +138,7 @@ namespace CIMOB_IPS.Controllers
                     
                     context.Update(studentAddress);
                     context.Update(newStudent);
-
+                    await UploadAvatar(newStudent.IdAccount.ToString());
                     await context.SaveChangesAsync();
                 }
             }
@@ -150,26 +150,26 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index");
         }
 
-         [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task UploadAvatar([FromQuery] string account_id)
+        public async Task UploadAvatar(string accountid)
         {
             if (Request.Form.Files.Count > 0)
             {
                 Console.WriteLine("====================================== HÁ FILES");
-                var ImageFile = Request.Form.Files["Avatar"];
+                var ImageFile = Request.Form.Files[0];
                 if (ImageFile != null)
                 {
                     Console.WriteLine("====================================== HÁ FILES E FUNCIONAM");
                     var extention = Path.GetExtension(ImageFile.FileName);
 
-                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", account_id + ".png");
+                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + ".png");
 
                     using (var fileStream = new FileStream(uploadName, FileMode.Create))
                     {
                         await ImageFile.CopyToAsync(fileStream);
-                        UpdateAvatarURL(account_id);
-                        //viewModel.Student.IdAccountNavigation.AvatarUrl = "~/images/avatars/" + newFile;
+                        UpdateAvatarURL(accountid);
+
                         //UpdateAvatarURL(viewModel, "/images/avatars/" + newFile);
                     }
                 }
@@ -189,7 +189,7 @@ namespace CIMOB_IPS.Controllers
                 string strQuery = "UPDATE Account Set avatarURL = @AvatarURL WHERE id_account = @AccountID";
 
                 SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
-                scmCommand.Parameters.AddWithValue("@AvatarURL", account_id + ".png");
+                scmCommand.Parameters.AddWithValue("@AvatarURL", "images/avatars/" + account_id + ".png");
                 scmCommand.Parameters.AddWithValue("@AccountID", account_id);
 
                 scmCommand.ExecuteNonQuery();

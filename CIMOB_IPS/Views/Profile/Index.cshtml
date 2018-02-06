@@ -9,7 +9,7 @@
 <div class="profile">
     <button type="button" onclick="location.href='@Url.Action("Edit", "Profile")'" style="display:@ViewData["edit-profile-display"]">Editar Perfil</button>
     <div class="profileImage">
-        <img id="img" src="@Model.Student.IdAccountNavigation.AvatarUrl" style="width:9.5vw; height:9.5vw" draggable="false"/>
+        <img id="img" src="@Model.Student.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false"/>
     </div>
     <table class="information">
         @if(Model != null && Model.AccountType == EnumAccountType.STUDENT)
