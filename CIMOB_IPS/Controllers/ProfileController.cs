@@ -7,11 +7,15 @@ using CIMOB_IPS.Models;
 using System.Data.SqlClient;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace CIMOB_IPS.Controllers
 {
     public class ProfileController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
+
         /*private readonly CIMOB_IPS_DBContext _context;
 
         public ProfileController(CIMOB_IPS_DBContext context)
@@ -19,9 +23,9 @@ namespace CIMOB_IPS.Controllers
             _context = context;
         }
         */
-        public ProfileController()
+        public ProfileController(IHostingEnvironment HostingEnvironment)
         {
-
+            _hostingEnvironment = HostingEnvironment;
         }
 
         public int GetCurrentUserID()
@@ -82,8 +86,8 @@ namespace CIMOB_IPS.Controllers
 
             var accountViewModel = GetAccountModelByID(id);
             ViewData["edit-profile-display"] = "none";
-            
-            if(accountViewModel == null)
+
+            if (accountViewModel == null)
                 return RedirectToAction("Index", "Home");
 
             return View("Index", accountViewModel);
@@ -95,8 +99,8 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("Login", "Account");
 
             var accountViewModel = GetAccountModelByID(GetCurrentUserID());
-            
-            if(accountViewModel.AccountType == EnumAccountType.STUDENT)
+
+            if (accountViewModel.AccountType == EnumAccountType.STUDENT)
             {
                 var postalCode = accountViewModel.Student.IdAddressNavigation.PostalCode;
 
@@ -114,41 +118,69 @@ namespace CIMOB_IPS.Controllers
             if (GetCurrentUserID() != model.Student.IdAccount)
                 return BadRequest();
 
-                try
+            try
+            {
+
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
-                    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+
+                    if (HttpContext.Request.Form.Files.Count > 0)
                     {
-                        Student newStudent = await context.Student
-                        .Include(s => s.IdAddressNavigation)
-                        .SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
+                        Console.WriteLine("====================================== HÀ FILES");
+                        var ImageFile = HttpContext.Request.Form.Files[0];
+                        if (ImageFile != null && ImageFile.Length > 0)
+                        {
+                            var fileName = Guid.NewGuid().ToString();
+                            var extention = Path.GetExtension(ImageFile.FileName);
 
-                        if (newStudent == null)
-                            return NotFound();
+                            var newFile = fileName + extention;
 
-                        newStudent.Telephone = model.Student.Telephone;
-                        newStudent.IdAddressNavigation.PostalCode = model.Student.IdAddressNavigation.PostalCode;
-                        newStudent.Credits = model.Student.Credits;
 
-                        Address studentAddress = await context.Address.SingleOrDefaultAsync(s => s.IdAddress == newStudent.IdAddress);
-                        studentAddress.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;
-                        studentAddress.AddressDesc = model.Student.IdAddressNavigation.AddressDesc;
-                        studentAddress.DoorNumber = model.Student.IdAddressNavigation.DoorNumber;
-                        studentAddress.Floor = model.Student.IdAddressNavigation.Floor;
+                            var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", newFile);
 
-                        context.Update(studentAddress);
-
-                        context.Update(newStudent);
-
-                        await context.SaveChangesAsync();
+                            using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                            {
+                                await ImageFile.CopyToAsync(fileStream);
+                                //Carro.FicheiroFoto = "/fotografias/" + newFile;
+                            }
+                        }
                     }
+                    else
+                    {
+                        Console.WriteLine("====================================== NÂO HÀ FILES");
+                    }
+
+                    Student newStudent = await context.Student
+                    .Include(s => s.IdAddressNavigation)
+                    .SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
+
+                    if (newStudent == null)
+                        return NotFound();
+
+                    newStudent.Telephone = model.Student.Telephone;
+                    newStudent.IdAddressNavigation.PostalCode = model.Student.IdAddressNavigation.PostalCode;
+                    newStudent.Credits = model.Student.Credits;
+
+                    Address studentAddress = await context.Address.SingleOrDefaultAsync(s => s.IdAddress == newStudent.IdAddress);
+                    studentAddress.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;
+                    studentAddress.AddressDesc = model.Student.IdAddressNavigation.AddressDesc;
+                    studentAddress.DoorNumber = model.Student.IdAddressNavigation.DoorNumber;
+                    studentAddress.Floor = model.Student.IdAddressNavigation.Floor;
+
+                    context.Update(studentAddress);
+
+                    context.Update(newStudent);
+
+                    await context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
 
             return RedirectToAction("Index");
-        } 
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -159,26 +191,26 @@ namespace CIMOB_IPS.Controllers
                 return BadRequest();
             }
 
-                try
+            try
+            {
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
-                    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-                    {
-                        Technician newTechnician = await context.Technician.SingleOrDefaultAsync(t => t.IdAccount == technician.IdAccount);
+                    Technician newTechnician = await context.Technician.SingleOrDefaultAsync(t => t.IdAccount == technician.IdAccount);
 
-                        if (newTechnician == null)
-                            return NotFound();
+                    if (newTechnician == null)
+                        return NotFound();
 
-                        newTechnician.Telephone = technician.Telephone;
+                    newTechnician.Telephone = technician.Telephone;
 
-                        context.Update(newTechnician);
-                        await context.SaveChangesAsync();
-                    }
+                    context.Update(newTechnician);
+                    await context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-            
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+
 
             return RedirectToAction("Index");
         }

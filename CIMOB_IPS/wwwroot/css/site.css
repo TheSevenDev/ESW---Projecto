@@ -529,6 +529,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     margin-left: auto;
     min-height: 100vh;
     overflow-y: auto;
+    margin-bottom:5.5%;
 }
 
 .profileLabel {
