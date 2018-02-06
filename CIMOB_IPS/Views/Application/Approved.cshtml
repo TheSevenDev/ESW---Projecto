@@ -44,7 +44,7 @@
                         @Html.DisplayNameFor(model => model.First().Mobility.First().IdOutgoingInstitutionNavigation)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityDate)
+                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityBeginDate)
                     </th>
                 </tr>
             </thead>
@@ -85,7 +85,7 @@
                                     @institutionName
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(model => item.IdProgramNavigation.MobilityDate)
+                                    @Html.DisplayFor(model => item.IdProgramNavigation.MobilityBeginDate)
                                 </td>
                         </tr>
                     }

@@ -111,6 +111,10 @@ namespace CIMOB_IPS
                     defaults: new { controller = "Application", action = "MyApplications" });
 
                 routes.MapRoute(
+                    "ContactsRoute", "Contact",
+                    defaults: new { controller = "Home", action = "Contact" });
+
+                routes.MapRoute(
                     "Profile",
                     "Profile/{id}",
                     new { controller = "Profile", action = "Get" }

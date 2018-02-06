@@ -19,9 +19,13 @@
             <tr><td><input asp-for="ClosingDate" type="date" /></td></tr>
             <tr><td><span asp-validation-for="ClosingDate" class="error-message"></span></td></tr>
 
-            <tr><td><label asp-for="MobilityDate"></label></td></tr>
-            <tr><td><input asp-for="MobilityDate" type="date" /></td></tr>
-            <tr><td><span asp-validation-for="MobilityDate" class="error-message"></span></td></tr>
+            <tr><td><label asp-for="MobilityBeginDate"></label></td></tr>
+            <tr><td><input asp-for="MobilityBeginDate" type="date" /></td></tr>
+            <tr><td><span asp-validation-for="MobilityBeginDate" class="error-message"></span></td></tr>
+
+            <tr><td><label asp-for="MobilityEndDate"></label></td></tr>
+            <tr><td><input asp-for="MobilityEndDate" type="date" /></td></tr>
+            <tr><td><span asp-validation-for="MobilityEndDate" class="error-message"></span></td></tr>
 
             @*<tr><td><label asp-for="InstitutionProgram"></label></td></tr>
             @Html.EditorFor(model => model.InstitutionProgram)
