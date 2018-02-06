@@ -308,14 +308,6 @@ namespace CIMOB_IPS.Models
 
                 entity.Property(e => e.IdMobility).HasColumnName("id_mobility");
 
-                entity.Property(e => e.BeginDate)
-                    .HasColumnName("begin_date")
-                    .HasColumnType("date");
-
-                entity.Property(e => e.EndDate)
-                    .HasColumnName("end_date")
-                    .HasColumnType("date");
-
                 entity.Property(e => e.IdApplication).HasColumnName("id_application");
 
                 entity.Property(e => e.IdOutgoingInstitution).HasColumnName("id_outgoing_institution");
@@ -341,6 +333,11 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdResponsibleTechnician)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_M_Technician");
+
+                entity.HasOne(d => d.IdStateNavigation)
+                    .WithMany(p => p.Mobility)
+                    .HasForeignKey(d => d.IdState)
+                    .HasConstraintName("fk_M_State");
             });
 
             modelBuilder.Entity<Nationality>(entity =>
@@ -434,8 +431,12 @@ namespace CIMOB_IPS.Models
                     .HasColumnName("open_date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.MobilityDate)
-                    .HasColumnName("mobility_date")
+                entity.Property(e => e.MobilityBeginDate)
+                    .HasColumnName("mobility_begin_date")
+                    .HasColumnType("date");
+
+                entity.Property(e => e.MobilityEndDate)
+                    .HasColumnName("mobility_end_date")
                     .HasColumnType("date");
 
                 entity.HasOne(d => d.IdStateNavigation)

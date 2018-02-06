@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using CIMOB_IPS.Models.CustomValidations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,19 +31,23 @@ namespace CIMOB_IPS.Models.ViewModels
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? ClosingDate { get; set; }
 
-        [Required(ErrorMessage = "É necessário definir a data de mobilidade!")]
-        [Display(Name = "Data prevista de Mobilidade")]
+        [IsMobilityAfterClosingDate]
+        [Required(ErrorMessage = "É necessário definir a data de início de mobilidade!")]
+        [Display(Name = "Data prevista de início Mobilidade")]
         [DisplayFormat(DataFormatString = "{0:d}")]
-        public DateTime? MobilityDate { get; set; }
+        public DateTime? MobilityBeginDate { get; set; }
+
+        [IsEndMobilityAfterBeginDate]
+        [Required(ErrorMessage = "É necessário definir a data de fim de mobilidade!")]
+        [Display(Name = "Data prevista de fim de Mobilidade")]
+        [DisplayFormat(DataFormatString = "{0:d}")]
+        public DateTime? MobilityEndDate { get; set; }
 
         [Required(ErrorMessage = "É necessário definir o tipo de programa!")]
         [Display(Name = "Tipo de Programa")]
         public long IdProgramType { get; set; }
 
         public IEnumerable<SelectListItem> ProgramTypes { get; set; }
-
-
-
 
         [Display(Name = "Instituições associadas")]
         public List<CheckBoxListItem> Institutions { get; set; }

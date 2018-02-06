@@ -697,7 +697,6 @@ namespace CIMOB_IPS.Controllers
                     Mobility mobility = new Mobility
                     {
                         IdApplication = appId,
-                        BeginDate = program.MobilityDate,
                         IdOutgoingInstitution = viewModel.IdInstitution,
                         IdResponsibleTechnician = viewModel.IdTechnician,
                         IdState = context.State.Where(s => s.Description == "Em preparação").Select(a => a.IdState).SingleOrDefault()
@@ -907,7 +906,7 @@ namespace CIMOB_IPS.Controllers
                 strbBody.AppendFormat(" no país " + mobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description);
                 strbBody.AppendFormat(" através do programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name + ".");
 
-                strbBody.AppendFormat("<br>A mobilidade tem o começo previsto para " + application.IdProgramNavigation.MobilityDate + ", sendo que a sua mobilidade ficou encarregue do(a) técnico(a) ");
+                strbBody.AppendFormat("<br>A mobilidade tem o começo previsto para " + application.IdProgramNavigation.MobilityBeginDate + ", sendo que a sua mobilidade ficou encarregue do(a) técnico(a) ");
                 strbBody.AppendFormat(mobility.IdResponsibleTechnicianNavigation.Name + ", que entrará em contacto consigo brevemente.<br>");
 
                 strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
