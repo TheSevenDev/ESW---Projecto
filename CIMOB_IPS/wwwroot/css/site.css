@@ -440,6 +440,17 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     PROFILE
 */
 
+.profileLink {
+    color: var(--main-color);
+    font-size: 1.0vw;
+    font-weight: bold;
+}
+
+.profileLink:hover, .profileLink:visited:hover, .profileLink:link:hover, .profileLink:active:hover {
+    text-decoration: underline;
+    cursor:pointer;
+}
+
 .information {
     font-size: 95%;
     width: 80%;
@@ -1050,3 +1061,4 @@ footer {
         cursor: pointer;
         border: 0.7px solid var(--main-color);
     }
+

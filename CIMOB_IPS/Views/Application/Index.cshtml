@@ -16,6 +16,16 @@
         lngScheduledInterview = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
         lngDoneInterview = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault();
     }
+
+    var isTech = false;
+
+    if (User.Identity.IsAuthenticated)
+    {
+        if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+        {
+            isTech = true;
+        }
+    }
 }
 
 
@@ -71,7 +81,14 @@
                             @Html.DisplayFor(model => item.IdStudentNavigation.StudentNum)
                         </td>
                         <td>
-                            @strName
+                            @if (isTech)
+                            {
+                                <a class="profileLink" onclick="viewProfile(@item.IdStudentNavigation.IdStudent)">@strName</a>
+                            }
+                            else
+                            {
+                                @strName
+                            }
                         </td>
                         <td>
                             @Html.DisplayFor(model => model.First().IdStudentNavigation.IdCourseNavigation.Name)

@@ -1,0 +1,81 @@
+﻿@model CIMOB_IPS.Models.Student
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<div class="main-application-container" style="width:100%;">
+    <div style="margin-left:2.5%;padding:1%;">
+        <!--
+        <div class="profileImage">
+            <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw" draggable="false" />
+        </div>-->
+
+        <table class="information">
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Name)</td>
+                <td>@Html.DisplayFor(model => model.Name)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdNationality)</td>
+                <td>@Html.DisplayFor(model => model.IdNationalityNavigation.Description)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdCourseNavigation)</td>
+                <td>@Html.DisplayFor(model => model.IdCourseNavigation.Name)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Gender)</td>
+                <td>@Html.DisplayFor(model => model.Gender)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.BirthDate)</td>
+                <td>@Html.DisplayFor(model => model.BirthDate)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAccountNavigation.Email)</td>
+                <td>@Html.DisplayFor(model => model.IdAccountNavigation.Email)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Telephone)</td>
+                <td>@Html.DisplayFor(model => model.Telephone)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.PostalCode)</td>
+                <td>@Html.DisplayFor(model => model.IdAddressNavigation.PostalCode)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.AddressDesc)</td>
+                <td>@Html.DisplayFor(model => model.IdAddressNavigation.AddressDesc)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.DoorNumber)</td>
+                <td>@Html.DisplayFor(model => model.IdAddressNavigation.DoorNumber)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.Floor)</td>
+                <td>@Html.DisplayFor(model => model.IdAddressNavigation.Floor)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Credits)</td>
+                <td>@Html.DisplayFor(model => model.Credits)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Cc)</td>
+                <td>@Html.DisplayFor(model => model.Cc)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.StudentNum)</td>
+                <td>@Html.DisplayFor(model => model.StudentNum)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel"><p> Mobilidade Atual: </p></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="profileLabel"><p>Bolsa: </p></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
