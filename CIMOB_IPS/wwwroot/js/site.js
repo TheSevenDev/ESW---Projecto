@@ -392,7 +392,7 @@ function start() {
     autoPlayGallery();
     setColor();
 
-    if (document.getElementById("loading-program") != null)
+    if (document.getElementById("loading-program") !== null)
         showProgramDetails(1);
 
 }

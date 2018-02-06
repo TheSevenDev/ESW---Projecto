@@ -10,19 +10,22 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/profilePic.css")' />
 
+
 <p class="page-title">Editar Perfil</p>
 
 <div class="profile">
 
     <div id="edit-partial" style="margin-top: 2%;margin-bottom:2%;">
-            @if (Model.AccountType == EnumAccountType.STUDENT)
-            {
-                @Html.Partial("_EditProfileStudentForm", Model)
-            }
-            else
-            {
-                @Html.Partial("_EditProfileTechnicianForm", Model)
-            }
+        @if (Model.AccountType == EnumAccountType.STUDENT)
+        {
+            @Html.Partial("_EditProfileStudentForm", Model)
+            <span hidden id="account-id">@Model.Student.IdAccount</span>
+        }
+        else
+        {
+            <span hidden id="account-id">@Model.Technician.IdAccount</span>
+            @Html.Partial("_EditProfileTechnicianForm", Model)
+        }
     </div>
 </div>
 

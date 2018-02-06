@@ -37,6 +37,9 @@ namespace CIMOB_IPS.Models
         [DataType(DataType.Password)]
         public byte[] ConfirmPassword { get; set; }
 
+        public string AvatarUrl {get; set;}
+
+
         public ICollection<Notification> Notification { get; set; }
         public ICollection<Student> Student { get; set; }
         public ICollection<Technician> Technician { get; set; }
