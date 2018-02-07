@@ -11,6 +11,7 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Application> Application { get; set; }
         public virtual DbSet<ApplicationCancelation> ApplicationCancelation { get; set; }
+        public virtual DbSet<ApplicationEvaluation> ApplicationEvaluation { get; set; }
         public virtual DbSet<Coordenator> Coordenator { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<Help> Help { get; set; }
@@ -160,6 +161,25 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdApplication)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_AC_Application");
+            });
+
+            modelBuilder.Entity<ApplicationEvaluation>(entity =>
+            {
+                entity.HasKey(e => new { e.IdApplicationEvaluation });
+
+
+                entity.Property(e => e.IdApplicationEvaluation).HasColumnName("id_application_evaluation");
+                entity.Property(e => e.IdApplication).HasColumnName("id_application");
+                entity.Property(e => e.CreditsRatio).HasColumnName("credits_ratio");
+                entity.Property(e => e.MotivationCardPoints).HasColumnName("motivation_card_points");
+                entity.Property(e => e.InterviewPoints).HasColumnName("interview_points");
+                entity.Property(e => e.AverageGrade).HasColumnName("average_grade");
+
+                entity.HasOne(d => d.IdApplicationNavigation)
+                    .WithMany(p => p.ApplicationEvaluation)
+                    .HasForeignKey(d => d.IdApplication)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_AE_Application");
             });
 
             modelBuilder.Entity<ApplicationInstitutions>(entity =>

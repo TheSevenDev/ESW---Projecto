@@ -516,6 +516,30 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpGet]
+        public IActionResult EvaluationDetails(string id)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                if (!context.Application.Where(a => a.IdApplication == int.Parse(id)).Any())
+                    return RedirectToAction("Index", "Application");
+                else
+                {
+                    var applicationEvaluation = context.ApplicationEvaluation.Where(ae => ae.IdApplication == int.Parse(id))
+                        .Include(ae => ae.IdApplication)
+                        .SingleOrDefault();
+
+                    return PartialView("_ApplicationEvaluationDetails", applicationEvaluation);
+                }
+            }
+        }
+
+        [HttpGet]
         public IActionResult ScheduleInterview(string id)
         {
             if (!User.Identity.IsAuthenticated)
@@ -599,6 +623,9 @@ namespace CIMOB_IPS.Controllers
                     strbBody.AppendFormat(@"Informamos que a sua candidatura ao programa " + application.IdProgramNavigation.IdProgramTypeNavigation.Name);
                     strbBody.AppendFormat(" tem entrevista marcada para o dia " + interview.Date.Day + "/" + interview.Date.Month + "/" + interview.Date.Year);
                     strbBody.AppendFormat(" às " + interview.Date.Hour.ToString("D2") + ":" + interview.Date.Minute.ToString("D2") + ".<br>");
+
+                    strbBody.AppendFormat("Esta entrevista terá como principal objectivo a avaliação das condições para a realização da acção de mobilidade, ");
+                    strbBody.AppendFormat("designadamente o domínio da língua requerido pela instituição / entidade de acolhimento e o seu grau de autonomia demonstrado. <br>");
 
                     strbBody.AppendFormat("Caso não consiga comparecer, informe qualquer técnico disponível <a href=\"" + strLink + "\">nesta página</a> para uma remarcação.<br>");
 
@@ -827,6 +854,18 @@ namespace CIMOB_IPS.Controllers
             }
 
             return RedirectToAction("Index", "Application");
+        }
+
+        public void InsertEvaluation(ApplicationEvaluationViewModel viewModel)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                ApplicationEvaluation appCancel = new ApplicationEvaluation
+                {
+                    /*IdApplication = viewModel.IdApplication,
+                    CreditsRatio = viewModel.*/
+                };
+            }
         }
 
         private IEnumerable<SelectListItem> PopulateTechnicians()

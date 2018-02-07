@@ -1,0 +1,30 @@
+﻿@model CIMOB_IPS.Models.ApplicationEvaluation
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<div class="main-application-container" style="width:100%;">
+    <div style="margin-left:2.5%;padding:1%;">
+
+        <label>Rádio de ECTS realizados</label>
+        <input type="text" value=@Model.CreditsRatio id="ects_done" disabled name="ects_done"/><br /><br />
+
+        <label>Classificação de motivações(0-100)</label>
+        <input type="text" value=@Model.MotivationCardPoints id="motivations" name="motivations"><br /><br />
+
+        <label>Classificação da entrevista(0-100)</label>
+        <input type="text" value=@Model.MotivationCardPoints id="interview" name="interview" /><br /><br />
+
+        <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
+        <input type="text" value=@Model.AverageGrade id="average_grades" name="average_grades"/>
+        <label>&nbsp;valores</label><br />
+
+        <div style="margin-left:60%;margin-top:5%;">
+            <label>Classificação Final</label>
+            <input type="text" value=@Model.IdApplicationNavigation.FinalEvaluation disabled id="final_classification" name="final_classification" />
+            <label>&nbsp;valores</label><br /><br />
+            <label id="evaluate_result" style="float:right; margin-right: 8%;"></label><br /><br />
+        </div>
+    </div>
+</div>

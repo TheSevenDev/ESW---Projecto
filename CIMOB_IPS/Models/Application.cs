@@ -67,6 +67,7 @@ namespace CIMOB_IPS.Models
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
         public ICollection<ApplicationCancelation> ApplicationCancelation { get; set; }
+        public ICollection<ApplicationEvaluation> ApplicationEvaluation { get; set; }
 
 
         public bool IsAvailable()

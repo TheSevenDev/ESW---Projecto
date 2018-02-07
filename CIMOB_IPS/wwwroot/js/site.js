@@ -596,6 +596,35 @@ function showApplicationDetails(applicationID) {
         });
 }
 
+function showApplicationEvaluation(applicationID) {
+    $("#application-details").html("");
+
+    $('.loading-div').show();
+
+    document.getElementById("fade-background").style.display = "block";
+    document.getElementById("application-details").style.display = "block";
+
+    var detailsURL = "Application/EvaluationDetails/" + applicationID;
+
+    $.ajax(
+        {
+            type: 'GET',
+            dataType: 'html',
+            url: detailsURL,
+            beforeSend: function () {
+                $('#loading-div').show();
+            },
+            success: function (result) {
+                setTimeout(function () {
+                    $("#application-details").html(result);
+                    $('.loading-div').hide();
+                }, 1000)
+            },
+            error: function (error) {
+            }
+        });
+}
+
 function scheduleInterview(applicationID) {
     $("#application-details").html("");
 
@@ -633,7 +662,7 @@ function reScheduleInterview(applicationID) {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("application-details").style.display = "block";
 
-    var detailsURL = "Application/RescheduleInterview/" + applicationID;
+    var detailsURL = "/Application/RescheduleInterview/" + applicationID;
 
     $.ajax(
         {
