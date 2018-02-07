@@ -561,7 +561,7 @@ function showApplicationDetails(applicationID) {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("application-details").style.display = "block";
 
-    var detailsURL = "Application/Details/" + applicationID;
+    var detailsURL = "/Application/Details/" + applicationID;
 
     $.ajax(
         {
@@ -590,7 +590,7 @@ function showApplicationEvaluation(applicationID) {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("application-details").style.display = "block";
 
-    var detailsURL = "Application/EvaluationDetails/" + applicationID;
+    var detailsURL = "/Application/EvaluationDetails/" + applicationID;
 
     $.ajax(
         {

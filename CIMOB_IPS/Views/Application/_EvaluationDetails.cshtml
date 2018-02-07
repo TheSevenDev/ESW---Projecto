@@ -5,19 +5,24 @@
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
 <div class="main-application-container" style="width:100%;">
+
+    <div style="padding-left:3%;padding-top:2%;font-size:1.45vmax;text-align:center;">
+        Candidato <br /><span>@ViewData["application-student-name"]  @ViewData["application-student-number"]</span>
+    </div>
+    <br />
     <div style="margin-left:2.5%;padding:1%;">
 
         <label>Rádio de ECTS realizados</label>
         <input type="text" value=@Model.CreditsRatio id="ects_done" disabled name="ects_done"/><br /><br />
 
         <label>Classificação de motivações(0-100)</label>
-        <input type="text" value=@Model.MotivationCardPoints id="motivations" name="motivations"><br /><br />
+        <input type="text" value=@Model.MotivationCardPoints id="motivations" disabled name="motivations"><br /><br />
 
         <label>Classificação da entrevista(0-100)</label>
-        <input type="text" value=@Model.MotivationCardPoints id="interview" name="interview" /><br /><br />
+        <input type="text" value=@Model.MotivationCardPoints id="interview" disabled name="interview" /><br /><br />
 
         <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
-        <input type="text" value=@Model.AverageGrade id="average_grades" name="average_grades"/>
+        <input type="text" value=@Model.AverageGrade id="average_grades" disabled name="average_grades"/>
         <label>&nbsp;valores</label><br />
 
         <div style="margin-left:60%;margin-top:5%;">

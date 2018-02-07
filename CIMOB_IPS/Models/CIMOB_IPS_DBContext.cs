@@ -167,8 +167,9 @@ namespace CIMOB_IPS.Models
             {
                 entity.HasKey(e => new { e.IdApplicationEvaluation });
 
+                entity.ToTable("Application_Evaluation");
 
-                entity.Property(e => e.IdApplicationEvaluation).HasColumnName("id_application_evaluation");
+                entity.Property(e => e.IdApplicationEvaluation).HasColumnName("id_evaluation");
                 entity.Property(e => e.IdApplication).HasColumnName("id_application");
                 entity.Property(e => e.CreditsRatio).HasColumnName("credits_ratio");
                 entity.Property(e => e.MotivationCardPoints).HasColumnName("motivation_card_points");

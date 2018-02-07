@@ -23,7 +23,7 @@ namespace CIMOB_IPS.Controllers
     {
         private readonly CIMOB_IPS_DBContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-
+        private CIMOB_IPS_DBContext _context1;
 
         public ApplicationController(CIMOB_IPS_DBContext context, IHostingEnvironment HostingEnvironment)
         {
@@ -529,10 +529,15 @@ namespace CIMOB_IPS.Controllers
                 else
                 {
                     var applicationEvaluation = context.ApplicationEvaluation.Where(ae => ae.IdApplication == int.Parse(id))
-                        .Include(ae => ae.IdApplication)
+                        .Include(ae => ae.IdApplicationNavigation)
                         .SingleOrDefault();
 
-                    return PartialView("_ApplicationEvaluationDetails", applicationEvaluation);
+                    applicationEvaluation.IdApplicationNavigation.IdStudentNavigation = context.Student.Where(s => s.IdStudent == applicationEvaluation.IdApplicationNavigation.IdStudent).SingleOrDefault();
+
+                    ViewData["application-student-name"] = applicationEvaluation.IdApplicationNavigation.IdStudentNavigation.Name;
+                    ViewData["application-student-number"] = applicationEvaluation.IdApplicationNavigation.IdStudentNavigation.StudentNum;
+
+                    return PartialView("_EvaluationDetails", applicationEvaluation);
                 }
             }
         }
@@ -739,6 +744,10 @@ namespace CIMOB_IPS.Controllers
 
             var appId = viewModel.IdApplication;
             var evaluationResult = Request.Form["final_classification"].ToString();
+            viewModel.InterviewPoints = int.Parse(Request.Form["interview"]);
+            viewModel.MotivationCardPoints = int.Parse(Request.Form["motivations"]);
+            viewModel.AverageGrade = int.Parse(Request.Form["average_grades"]);
+            viewModel.TotalCourseCredits = int.Parse(Request.Form["ects_all"]);
 
             double dblResult = Double.Parse(evaluationResult.Replace(".", ","));
 
@@ -810,6 +819,21 @@ namespace CIMOB_IPS.Controllers
                 }
 
                 context.Update(application);
+
+                context.SaveChanges();
+
+                ApplicationEvaluation appEvaluation = new ApplicationEvaluation
+                {
+                    IdApplication = application.IdApplication,
+                    AverageGrade = viewModel.AverageGrade,
+                    CreditsRatio = (float)student.Credits/viewModel.TotalCourseCredits,
+                    InterviewPoints = viewModel.InterviewPoints,
+                    MotivationCardPoints = viewModel.MotivationCardPoints,
+                    IdApplicationNavigation = application
+                };
+
+                context.ApplicationEvaluation.Add(appEvaluation);
+                context.SaveChanges();
 
                 //email ao aluno
                 string strLink = "http://cimob-ips.azurewebsites.net/MyApplications";

@@ -10,11 +10,16 @@ namespace CIMOB_IPS.Models.ViewModels
     {
         public long IdApplication { get; set; }
 
-        public double FinalEvalution { get; set; }
-
         public long IdTechnician { get; set; }
 
         public long IdInstitution { get; set; }
+
+
+        public int TotalCourseCredits { get; set; }
+        public int MotivationCardPoints { get; set; }
+        public int InterviewPoints { get; set; }
+        public int AverageGrade { get; set; }
+        public double FinalEvalution { get; set; }
 
         public IEnumerable<SelectListItem> Technicians { get; set; }
 
