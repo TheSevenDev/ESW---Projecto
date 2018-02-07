@@ -11,14 +11,15 @@ namespace CIMOB_IPS.Models.ViewModels
     {
         public long IdInterview { get; set; }
 
-        [CheckIfDateIsAfter]
-        [Required(ErrorMessage = "É necessário seleccionar a data.")]
+        [Display(Name ="Dia")]
+        [CheckIfDateIsAfter]       
+        [Required(ErrorMessage = "É necessário seleccionar o dia.")]
         public DateTime Date { get; set; }
 
+        [Display(Name ="Hora")]
+        [DataType(DataType.Time)]
         [Required(ErrorMessage = "É necessário seleccionar a hora.")]
-        public int Hours { get; set; }
+        public DateTime Hours { get; set; }
 
-        [Required(ErrorMessage = "É necessário seleccionar os minutos.")]
-        public int Minutes { get; set; }
     }
 }

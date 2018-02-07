@@ -27,8 +27,10 @@
 }
 
 <div class="nav-session">
-    <div id="session-logo">
-        <a asp-area="" asp-controller="Home" asp-action="Index"><img src="~/images/cimobips.png" draggable="false" /></a>
+    <div>
+        <a asp-controller="Home" asp-action="Index" style="position:fixed; margin-left:0.2%;z-index:600" draggable="false">
+           <img id="session-logo" src="~/images/cimobips.png" draggable="false"/>
+        </a>
     </div>
 
     @if (!User.Identity.IsAuthenticated)
@@ -46,7 +48,6 @@
             
             <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" class="session-profile-image" draggable="false"/> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
-
     }
 
 </div>

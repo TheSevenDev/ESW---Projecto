@@ -115,7 +115,7 @@ namespace CIMOB_IPS.Controllers
             {
                 using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
-                   
+
                     Student newStudent = await context.Student
                     .Include(s => s.IdAddressNavigation)
                     .SingleOrDefaultAsync(s => s.IdAccount == model.Student.IdAccount);
@@ -133,7 +133,7 @@ namespace CIMOB_IPS.Controllers
                     studentAddress.DoorNumber = model.Student.IdAddressNavigation.DoorNumber;
                     studentAddress.Floor = model.Student.IdAddressNavigation.Floor;
 
-                    
+
                     context.Update(studentAddress);
                     context.Update(newStudent);
                     await UploadAvatar(newStudent.IdAccount.ToString());
@@ -190,19 +190,25 @@ namespace CIMOB_IPS.Controllers
                 var ImageFile = Request.Form.Files[0];
                 if (ImageFile != null)
                 {
-                    var extention = Path.GetExtension(ImageFile.FileName);
-
-                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + extention);
-
-                    using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                    if (ImageFile.FileName != "")
                     {
-                        await ImageFile.CopyToAsync(fileStream);
-                        UpdateAvatarURL(accountid, extention);
 
-                 }
+
+                        var extention = Path.GetExtension(ImageFile.FileName);
+
+                        var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + extention);
+
+                        using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                        {
+                            await ImageFile.CopyToAsync(fileStream);
+                            UpdateAvatarURL(accountid, extention);
+                        }
+                    }
+
                 }
             }
         }
+
 
 
         private void UpdateAvatarURL(string account_id, string extention)
