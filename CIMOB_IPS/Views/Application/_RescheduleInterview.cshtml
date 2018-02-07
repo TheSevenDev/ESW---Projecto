@@ -1,26 +1,22 @@
 ﻿@model CIMOB_IPS.Models.ViewModels.InterviewViewModel
 
-<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
-<div class="main-application-container" style="width:100%;">
-    <form asp-action="RescheduleInterview" method="post" class="program-form" id="form-application">
+<div class="main-application-container" style="width:55%;">
+    <form asp-action="RescheduleInterview" method="post" id="form-application">
         <div style="margin-left:2.5%;padding:1%;">
-            <table style="margin-left:11%">
+            <table style="margin-left:9%;padding-bottom:2%;" class="program-form">
                 @Html.HiddenFor(model => model.IdInterview)
                 <tr> <td><label asp-for="Date"></label></td></tr>
-                <tr> <td><input asp-for="Date" type="date" /></td></tr>
+                <tr> <td><input asp-for="Date" type="date" style="width:100%;" /></td></tr>
                 <tr> <td><span asp-validation-for="Date" class="error-message"></span></td></tr>
 
-                <tr>
-                    <td>
-                        <label asp-for="Hours"></label>
-                        @Html.DropDownListFor(m => m.Hours, Enumerable.Range(0, 23).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
-                        <label asp-for="Minutes"></label>
-                        @Html.DropDownListFor(m => m.Minutes, Enumerable.Range(0, 59).Select(i => new SelectListItem { Text = i.ToString(), Value = i.ToString() }))
-                    </td>
-                </tr>
+                <tr> <td><label asp-for="Hours"></label></td></tr>
+                <tr> <td><input asp-for="Hours" type="time" /></td></tr>
+                <tr> <td><span asp-validation-for="Hours" class="error-message"></span></td></tr>
+
                 <tr> <td><input type="submit" value="Submeter" /></td></tr>
             </table>
         </div>

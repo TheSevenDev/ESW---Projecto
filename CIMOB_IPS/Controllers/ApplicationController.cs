@@ -261,7 +261,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
                     .Include(a => a.IdInterviewNavigation)
-                    .Where(a => a.IdStateNavigation.Description != "Descartada")
+                    .Where(a => a.IdState != 20)
                     .ToListAsync();
 
                 foreach (Application app in lisApplications)
@@ -455,8 +455,9 @@ namespace CIMOB_IPS.Controllers
                         var program = context.Program.Where(p => p.IdProgram == application.IdProgram).FirstOrDefault();
                         program.Vacancies += 1;
                         context.Update(program);
-                        context.SaveChanges();
                     }
+                    context.Update(application);
+                    context.SaveChanges();
                 }
 
                 catch
@@ -541,7 +542,7 @@ namespace CIMOB_IPS.Controllers
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
                 return PartialView("_RescheduleInterview", 
-                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date.Hour, Minutes = interview.Date.Minute });
+                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date});
             }
         }
 
@@ -570,7 +571,7 @@ namespace CIMOB_IPS.Controllers
 
                     Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
 
-                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours, viewModel.Minutes, 0);
+                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours.Hour, viewModel.Hours.Minute, 0);
                     interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
 
                     context.Update(interview);
@@ -594,8 +595,7 @@ namespace CIMOB_IPS.Controllers
                     return RedirectToAction("Index", "Application");
                 }
             }
-
-            return View(viewModel);
+            return RedirectToAction("Index", "Application");
         }
 
         [HttpPost]
@@ -623,7 +623,7 @@ namespace CIMOB_IPS.Controllers
 
                     Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
 
-                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours, viewModel.Minutes, 0);
+                    interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours.Hour, viewModel.Hours.Minute, 0);
                     interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
 
                     context.Update(interview);
@@ -648,7 +648,7 @@ namespace CIMOB_IPS.Controllers
                 }
             }
 
-            return View(viewModel);
+           return RedirectToAction("Index", "Application");
         }
 
         [HttpGet]
