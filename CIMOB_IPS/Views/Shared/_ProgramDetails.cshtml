@@ -4,12 +4,14 @@
 @{
     var intEcts = 0;
     var intApplications = 3;
+    var intConfirmedApplications = -1;
 
     bool bolIsLoggedOff = false;
     bool bolNoVacancies = false;
     bool bolClosedProgram = false;
     bool bolNoCredits = false;
     bool bolMaxApplications = false;
+
 
     if (User.Identity.IsAuthenticated && User.IsInRole("estudante"))
     {
@@ -18,7 +20,7 @@
 
         ApplicationController ac = new ApplicationController(new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()), null);
         intApplications = await ac.GetNumberPendentApplications(User);
-
+        intConfirmedApplications = await ac.GetConfirmedApplications(User);
 
         bolIsLoggedOff = !User.Identity.IsAuthenticated;
         bolNoVacancies = Model.Vacancies <= 0;
@@ -39,14 +41,14 @@
     @if (Model.ClosingDate < DateTime.Now)
     {
         <br />
-        <p>As candidaturas abriram dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
-        <p>As candidaturas encerram dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+        <p>As candidaturas abriram dia <span style="color:var(--main-color)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
+        <p>As candidaturas encerram dia <span style="color:var(--main-color)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
     }
     else
     {
         <br />
-        <p>As candidaturas abrirão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
-        <p>As candidaturas encerrarão dia <span style="color:var(--blue-var4)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
+        <p>As candidaturas abrirão dia <span style="color:var(--main-color)"><b>@Html.DisplayFor(model => model.OpenDate)</b></span> às 00:00h</p>
+        <p>As candidaturas encerrarão dia <span style="color:var(--main-color)"><b>@Html.DisplayFor(model => model.ClosingDate)</b></span>  às 23:59h.</p>
     }
 
     <p>Programa <span style="color:@ViewData["programstate-color"]"><b>@Html.DisplayFor(model => model.IdStateNavigation.Description)</b></span></p>
@@ -93,7 +95,11 @@
             @if (!bolClosedProgram && !bolMaxApplications && !bolNoVacancies && !bolNoCredits && !bolIsLoggedOff)
             {
                 <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
-                <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application", new { programID = Model.IdProgram })'" />
+                @if (intConfirmedApplications == 0)
+                {
+                    <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application", new { programID = Model.IdProgram })'" />
+                }
+
             }
             else if (bolIsLoggedOff && !bolClosedProgram)
             {

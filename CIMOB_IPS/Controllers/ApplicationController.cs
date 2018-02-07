@@ -36,12 +36,20 @@ namespace CIMOB_IPS.Controllers
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
+        public bool HasConfirmedApp()
+        {
+            return _context.Application.Where(s => s.IdStudent == GetStudentById(GetCurrentUserID()).IdStudent).Count(m => m.IdStateNavigation.Description == "Confirmada") > 0;
+        }
+
         public async Task<IActionResult> New()
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+                return RedirectToAction("Index", "Home");
+
+            if (HasConfirmedApp())
                 return RedirectToAction("Index", "Home");
 
             ProfileController pc = new ProfileController(_hostingEnvironment);
@@ -116,6 +124,16 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        public async Task<int> GetConfirmedApplications(ClaimsPrincipal user)
+        {
+            var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                return await _context.Application.Where(s => s.IdStudent == GetStudentById(intCurrentId).IdStudent).CountAsync(m => m.IdStateNavigation.Description == "Confirmada");
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)
         {
@@ -124,6 +142,7 @@ namespace CIMOB_IPS.Controllers
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                 return RedirectToAction("Index", "Home");
+
 
             Interview interview = new Interview
             {
