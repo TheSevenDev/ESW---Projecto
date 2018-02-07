@@ -468,6 +468,34 @@ namespace CIMOB_IPS.Controllers
                 return RedirectToAction("MyApplications", "Application");
         }
         
+        [HttpPost]
+        public IActionResult CancelationReason(string applicationID, string reason)
+        {
+            AccountController ac = new AccountController();
+
+            int lngCurrentUserId = GetCurrentUserID();
+            int applicationId = Int32.Parse(Request.Form["idApplication"]);
+
+            if (!ac.IsStudent(lngCurrentUserId))
+                return RedirectToAction("Index", "Home");
+
+            long studentId = ac.GetStudentId(lngCurrentUserId);
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                try
+                {
+                    
+                }
+
+                catch
+                {
+
+                }
+            }
+                return RedirectToAction("MyApplications", "Application");
+        }
+
 
         [HttpGet]
         public IActionResult Details(string id)

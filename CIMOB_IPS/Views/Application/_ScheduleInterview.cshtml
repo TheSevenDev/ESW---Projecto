@@ -4,7 +4,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
-<div class="main-application-container" style="width:55%;">
+<div class="main-application-container" style="width:40%;margin-top:20%;border-radius:1.5%;">
     <form asp-action="ScheduleInterview" method="post"  id="form-application">
         <div style="margin-left:2.5%;padding:1%;">
             <table style="margin-left:9%;padding-bottom:2%;"  class="program-form">
@@ -14,10 +14,10 @@
                 <tr> <td><span asp-validation-for="Date" class="error-message"></span></td></tr>
 
                 <tr> <td><label asp-for="Hours"></label></td></tr>
-                <tr> <td><input asp-for="Hours" type="time" /></td></tr>
+                <tr> <td><input asp-for="Hours" type="time" style="width:100%;"/></td></tr>
                 <tr> <td><span asp-validation-for="Hours" class="error-message"></span></td></tr>
 
-                <tr> <td><input type="submit" value="Submeter" /></td></tr>
+                <tr> <td><input type="submit" value="Submeter" style="width:100%;"/></td></tr>
             </table>
         </div>
     </form>

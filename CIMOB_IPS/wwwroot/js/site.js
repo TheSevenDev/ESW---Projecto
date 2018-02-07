@@ -334,6 +334,7 @@ $(document).ready(function () {
     }
 
     $("form.form-delete-app").submit(function (event) {
+        var applicationID = this["idApplication"].value;
         event.preventDefault();
         var form = this;
         $.confirm({
@@ -342,17 +343,25 @@ $(document).ready(function () {
             modal: true,
             autoOpen: false,
             draggable: false,
-            content: 'Está a cancelar uma candidatura.\nTem a certeza que pretende continuar?',
+            content: 'Está a cancelar uma candidatura.\nTem a certeza que pretende continuar?'+
+                    '<br><br> Caso pretenda indique o motivo do cancelamento.<textarea  type="text" maxlength="512" rows="10" id="reason" style="margin-left:0;margin-top:1%;width:100%;resize:none">',
             buttons: {
                 sim: {
-                    text: 'Sim',
+                    text: 'Confirmar',
                     btnClass: 'btn-green',
                     action: function () {
                         form.submit();
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'html',
+                            url: confirmUrl,
+                            error: function (error) {
+                            }
+                        });
                     }
                 },
                 nao: {
-                    text: 'Não',
+                    text: 'Cancelar',
                     btnClass: 'btn-red',
                     action: function () {
                         event.preventDefault();
