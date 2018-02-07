@@ -59,6 +59,18 @@ function closefyp() {
     closefyp.style.display = "none";
 }
 
+function openProfilePreview() {
+    var profilePreview = document.getElementById("techProfilePreview");
+
+    profilePreview.style.display = "block";
+}
+
+function closeProfilePreview() {
+    var profilePreview = document.getElementById("techProfilePreview");
+
+    profilePreview.style.display = "none";
+}
+
 function openInviteTech() {
     clearInviteTech();
     var inviteTech = document.getElementById("invite-tech");
