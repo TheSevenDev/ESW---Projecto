@@ -425,10 +425,20 @@ namespace CIMOB_IPS.Controllers
                 try
                 {
                     var application = context.Application.Where(app => app.IdApplication == applicationId).FirstOrDefault();
+
                     if (application != null)
                         application.IdState = 20;
 
-                    context.SaveChanges();
+                        long lngAcceptedState = context.State.Where(s => s.Description == "Aceite").Select(s => s.IdState).SingleOrDefault();
+
+                        if(application.IdState == lngAcceptedState)
+                        {
+                            var program = context.Program.Where(p => p.IdProgram == application.IdProgram).FirstOrDefault();
+                            program.Vacancies += 1;
+                            context.Update(program);
+                            context.SaveChanges();
+                        }
+                    }
                 }
                 catch
                 {
@@ -731,6 +741,10 @@ namespace CIMOB_IPS.Controllers
 
                         context.Notification.Add(notificationTechnician);
                     }
+
+                    program.Vacancies -= 1;
+                    context.Program.Update(program);
+                    context.SaveChanges();
                 }
                 else
                 {
@@ -910,6 +924,21 @@ namespace CIMOB_IPS.Controllers
                 application.IdStateNavigation = confirmedState;
 
                 context.Update(application);
+                context.SaveChanges();
+
+                long lngToEvaluateState = context.State.Where(s => s.Description == "Em Avaliação").Select(s => s.IdState).SingleOrDefault();
+
+                var applications = context.Application.Where(a => a.IdStudent == student.IdStudent && a.IdApplication != application.IdApplication
+                    && a.IdState == lngToEvaluateState).ToList();
+
+                long lngDiscatedState = context.State.Where(s => s.Description == "Descartada").Select(s => s.IdState).SingleOrDefault();
+
+                foreach (Application app in applications)
+                {
+                    app.IdState = lngDiscatedState;
+                    context.Update(app);
+                }
+
                 context.SaveChanges();
 
                 //email ao aluno
