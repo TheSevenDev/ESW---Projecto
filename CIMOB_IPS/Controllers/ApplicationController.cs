@@ -242,6 +242,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
                     .Include(a => a.IdInterviewNavigation)
+                    .Where(a => a.IdStateNavigation.Description != "Descartada")
                     .ToListAsync();
 
                 foreach (Application app in lisApplications)
@@ -425,7 +426,7 @@ namespace CIMOB_IPS.Controllers
                 {
                     var application = context.Application.Where(app => app.IdApplication == applicationId).FirstOrDefault();
                     if (application != null)
-                        context.Application.Remove(application);
+                        application.IdState = 20;
 
                     context.SaveChanges();
                 }

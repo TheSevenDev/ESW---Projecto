@@ -161,7 +161,7 @@ namespace CIMOB_IPS.Controllers
                     PostalCode = postalCode,
                     AddressDesc = strAddress,
                     DoorNumber = model.Student.IdAddressNavigation.DoorNumber,
-                    Floor = model.Student.IdAddressNavigation.Floor
+                    Floor = model.Student.IdAddressNavigation.Floor      
                 };
 
                 InsertAddress(addressAux);
@@ -403,7 +403,7 @@ namespace CIMOB_IPS.Controllers
 
         public long InsertAccountGetId(string strEmail, string strPassword)
         {
-            Account account = new Account { Email = strEmail, Password = StrToArrByte(strPassword) };
+            Account account = new Account { Email = strEmail, Password = StrToArrByte(strPassword), AvatarUrl="/images/avatars/user1.png" };
 
             InsertAccount(account);
 

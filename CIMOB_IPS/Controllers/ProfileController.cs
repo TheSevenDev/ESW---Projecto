@@ -111,10 +111,8 @@ namespace CIMOB_IPS.Controllers
         {
             if (GetCurrentUserID() != model.Student.IdAccount)
                 return BadRequest();
-
             try
             {
-
                 using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
                    
@@ -156,11 +154,9 @@ namespace CIMOB_IPS.Controllers
         {
             if (Request.Form.Files.Count > 0)
             {
-                Console.WriteLine("====================================== HÁ FILES");
                 var ImageFile = Request.Form.Files[0];
                 if (ImageFile != null)
                 {
-                    Console.WriteLine("====================================== HÁ FILES E FUNCIONAM");
                     var extention = Path.GetExtension(ImageFile.FileName);
 
                     var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + ".png");
@@ -170,13 +166,8 @@ namespace CIMOB_IPS.Controllers
                         await ImageFile.CopyToAsync(fileStream);
                         UpdateAvatarURL(accountid);
 
-                        //UpdateAvatarURL(viewModel, "/images/avatars/" + newFile);
-                    }
+                 }
                 }
-            }
-            else
-            {
-                Console.WriteLine("====================================== NÂO HÁ FILES");
             }
         }
 
@@ -202,9 +193,7 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> UpdateProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
         {
             if (GetCurrentUserID() != technician.IdAccount)
-            {
                 return BadRequest();
-            }
 
             try
             {
@@ -218,6 +207,10 @@ namespace CIMOB_IPS.Controllers
                     newTechnician.Telephone = technician.Telephone;
 
                     context.Update(newTechnician);
+
+                    Console.WriteLine("============================================" + technician.IdAccount);
+
+                    await UploadAvatar(technician.IdAccount.ToString());
                     await context.SaveChangesAsync();
                 }
             }

@@ -24,7 +24,6 @@ html, body {
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
-
 }
 
 /*
@@ -90,7 +89,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
 
 #session-logo {
     position: fixed;
-    margin-left: 0.6vw;
+    margin-left: 0.4vw;
     width: 100%;
 }
 
@@ -1005,6 +1004,7 @@ footer {
 
 .tableContact {
     margin-top: 3%;
+    font-size:1.20vmax;
 }
 
 .signature-pad > canvas {
@@ -1073,7 +1073,7 @@ footer {
 
 .session-profile-image {
     border-radius: 50%;
-    border: 0.1vw solid #f1f1f1;
+   
     vertical-align: middle;
     width: 2.1vw;
     height: 2.1vw;

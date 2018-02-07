@@ -15,9 +15,13 @@
         }
     }
 
-    var claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
-    var account_id = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
-
+    System.Security.Claims.ClaimsIdentity claimsIdentity = null;
+    var account_id = "";
+    if (User.Identity.IsAuthenticated)
+    {
+        claimsIdentity = User.Identity as System.Security.Claims.ClaimsIdentity;
+        account_id = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier).Value;
+    }
     AccountController ac = new AccountController();
 
 }

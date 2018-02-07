@@ -7,90 +7,102 @@
 <p class="page-title">Perfil</p>
 <div class="profile">
     <button type="button" onclick="location.href='@Url.Action("Edit", "Profile")'" style="display:@ViewData["edit-profile-display"]">Editar Perfil</button>
-    <div class="profileImage">
-        <img id="img" src="@Model.Student.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false"/>
-    </div>
+
+    @if (Model != null && Model.AccountType == EnumAccountType.STUDENT)
+    {
+        <div class="profileImage">
+            <img id="img" src="@Model.Student.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false" />
+        </div>
+    }
+    else
+    {
+
+        <div class="profileImage">
+            <img id="img" src="@Model.Technician.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false" />
+        </div>
+    }
+
     <table class="information">
-        @if(Model != null && Model.AccountType == EnumAccountType.STUDENT)
+        @if (Model != null && Model.AccountType == EnumAccountType.STUDENT)
         {
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Name)</td>
-                    <td>@Html.DisplayFor(model => model.Student.Name)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdNationality)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdNationalityNavigation.Description)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdCourseNavigation)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdCourseNavigation.Name)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Gender)</td>
-                    <td>@Html.DisplayFor(model => model.Student.Gender)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.BirthDate)</td>
-                    <td>@Html.DisplayFor(model => model.Student.BirthDate)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAccountNavigation.Email)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdAccountNavigation.Email)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Telephone)</td>
-                    <td>@Html.DisplayFor(model => model.Student.Telephone)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.Floor)</td>
-                    <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.Floor)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Credits)</td>
-                    <td>@Html.DisplayFor(model => model.Student.Credits)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Cc)</td>
-                    <td>@Html.DisplayFor(model => model.Student.Cc)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.StudentNum)</td>
-                    <td>@Html.DisplayFor(model => model.Student.StudentNum)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel"><p> Mobilidade Atual: </p></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="profileLabel"><p>Bolsa: </p></td>
-                    <td></td>
-                </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Name)</td>
+                <td>@Html.DisplayFor(model => model.Student.Name)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdNationality)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdNationalityNavigation.Description)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdCourseNavigation)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdCourseNavigation.Name)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Gender)</td>
+                <td>@Html.DisplayFor(model => model.Student.Gender)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.BirthDate)</td>
+                <td>@Html.DisplayFor(model => model.Student.BirthDate)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAccountNavigation.Email)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdAccountNavigation.Email)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Telephone)</td>
+                <td>@Html.DisplayFor(model => model.Student.Telephone)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.PostalCode)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.AddressDesc)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.DoorNumber)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.IdAddressNavigation.Floor)</td>
+                <td>@Html.DisplayFor(model => model.Student.IdAddressNavigation.Floor)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Credits)</td>
+                <td>@Html.DisplayFor(model => model.Student.Credits)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Cc)</td>
+                <td>@Html.DisplayFor(model => model.Student.Cc)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.StudentNum)</td>
+                <td>@Html.DisplayFor(model => model.Student.StudentNum)</td>
+            </tr>
+            <tr>
+                <td class="profileLabel"><p> Mobilidade Atual: </p></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td class="profileLabel"><p>Bolsa: </p></td>
+                <td></td>
+            </tr>
         }
         else
         {
             <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model =>model.Technician.Name)</td>
-                <td>@Html.DisplayFor(model =>model.Technician.Name)</td>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Technician.Name)</td>
+                <td>@Html.DisplayFor(model => model.Technician.Name)</td>
             </tr>
             <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model =>model.Technician.IdAccountNavigation.Email)</td>
-                <td>@Html.DisplayFor(model =>model.Technician.IdAccountNavigation.Email)</td>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Technician.IdAccountNavigation.Email)</td>
+                <td>@Html.DisplayFor(model => model.Technician.IdAccountNavigation.Email)</td>
             </tr>
             <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model =>model.Technician.Telephone)</td>
-                <td>@Html.DisplayFor(model =>model.Technician.Telephone)</td>
+                <td class="profileLabel">@Html.DisplayNameFor(model => model.Technician.Telephone)</td>
+                <td>@Html.DisplayFor(model => model.Technician.Telephone)</td>
             </tr>
 
         }

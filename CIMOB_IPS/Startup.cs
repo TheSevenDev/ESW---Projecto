@@ -44,6 +44,7 @@ namespace CIMOB_IPS
             services.AddSingleton<IFileProvider>(
             new PhysicalFileProvider(
                 Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")));
+
             services.AddSession();
         }
 

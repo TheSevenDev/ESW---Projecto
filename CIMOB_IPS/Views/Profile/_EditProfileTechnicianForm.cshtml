@@ -4,6 +4,18 @@
     <table>
         @Html.HiddenFor(model => Model.Technician.IdAccount)
         @Html.HiddenFor(model => Model.Technician.Name)
+        <tr>
+            <td>
+                <img id="edit-image-preview" src="@Model.Technician.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;margin-left:28%;" draggable="false" />
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <input type="file" name="avatar" title="Alterar foto de perfil" accept="image/png"  value="Alterar foto de perfil" style="font-size:1.1vw;margin-bottom:5%;" onchange="preview_image(event)">
+            </td>
+        </tr>
+
         <tr> <td><label asp-for="Technician.Telephone"></label></td></tr>
         <tr> <td><input asp-for="Technician.Telephone" type="text" />   </td></tr>
         <tr> <td><span asp-validation-for="Technician.Telephone" class="error-message"></span></td></tr>
