@@ -1,4 +1,5 @@
 ﻿@model CIMOB_IPS.Models.ProfileViewModel
+@using Microsoft.EntityFrameworkCore;
 
 @{
     ViewData["Title"] = "Profile";
@@ -25,6 +26,30 @@
     <table class="information">
         @if (Model != null && Model.AccountType == EnumAccountType.STUDENT)
         {
+            Mobility activeMobility = null;
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                long lngEndedMobilityState = context.State.Where(s => s.Description == "Terminada").Select(s => s.IdState).SingleOrDefault();
+                long lngAcceptedApplicationState = context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
+
+                List<long> lstMobilitiesIds = context.Application.Where(a => a.IdStudent == Model.Student.IdStudent && a.IdState == lngAcceptedApplicationState).Select(a => a.IdApplication).ToList();
+
+                if (lstMobilitiesIds.Count > 0)
+                {
+                    activeMobility = context.Mobility.Where(m => lstMobilitiesIds.Contains(m.IdApplication) && m.IdState != lngEndedMobilityState)
+                    .Include(m => m.IdApplicationNavigation)
+                    .Include(m => m.IdOutgoingInstitutionNavigation)
+                    .SingleOrDefault();
+
+                    activeMobility.IdApplicationNavigation.IdProgramNavigation = context.Program.Where(p => p.IdProgram == activeMobility.IdApplicationNavigation.IdProgram)
+                        .Include(p => p.IdProgramTypeNavigation)
+                        .SingleOrDefault();
+
+                    activeMobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation = context.Nationality.Where(n => n.IdNationality == activeMobility.IdOutgoingInstitutionNavigation.IdNationality).SingleOrDefault();
+                }
+            }
+
             <tr>
                 <td class="profileLabel">@Html.DisplayNameFor(model => model.Student.Name)</td>
                 <td>@Html.DisplayFor(model => model.Student.Name)</td>
@@ -82,12 +107,16 @@
                 <td>@Html.DisplayFor(model => model.Student.StudentNum)</td>
             </tr>
             <tr>
-                <td class="profileLabel"><p> Mobilidade Atual: </p></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="profileLabel"><p>Bolsa: </p></td>
-                <td></td>
+                @if (activeMobility != null)
+                {
+                    <td class="profileLabel"><p> Mobilidade Atual: </p></td>
+                    <td>@activeMobility.IdApplicationNavigation.IdProgramNavigation.IdProgramTypeNavigation.Name 
+                - @activeMobility.IdOutgoingInstitutionNavigation.Name (@activeMobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)</td>
+                }
+                else
+                {
+                    <td class="profileLabel"><p>Sem Mobilidade Actual.</p></td>
+                }
             </tr>
         }
         else
@@ -104,7 +133,6 @@
                 <td class="profileLabel">@Html.DisplayNameFor(model => model.Technician.Telephone)</td>
                 <td>@Html.DisplayFor(model => model.Technician.Telephone)</td>
             </tr>
-
         }
     </table>
 </div>

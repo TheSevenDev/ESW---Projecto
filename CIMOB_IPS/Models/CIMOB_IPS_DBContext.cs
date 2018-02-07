@@ -10,6 +10,7 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<Account> Account { get; set; }
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Application> Application { get; set; }
+        public virtual DbSet<ApplicationCancelation> ApplicationCancelation { get; set; }
         public virtual DbSet<Coordenator> Coordenator { get; set; }
         public virtual DbSet<Course> Course { get; set; }
         public virtual DbSet<Help> Help { get; set; }
@@ -141,6 +142,21 @@ namespace CIMOB_IPS.Models
                     .HasForeignKey(d => d.IdStudent)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_C_Student");
+            });
+
+            modelBuilder.Entity<ApplicationCancelation>(entity =>
+            {
+                entity.HasKey(e => new { e.IdApplicationCancelation });
+
+                entity.ToTable("Application_Cancelation");
+
+                entity.Property(e => e.Reason).HasColumnName("reason");
+
+                entity.HasOne(d => d.IdApplicationNavigation)
+                    .WithMany(p => p.ApplicationCancelation)
+                    .HasForeignKey(d => d.IdApplication)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_AC_Application");
             });
 
             modelBuilder.Entity<ApplicationInstitutions>(entity =>

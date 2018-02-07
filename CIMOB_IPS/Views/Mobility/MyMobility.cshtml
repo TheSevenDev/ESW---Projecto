@@ -34,8 +34,8 @@ else
             <div style="margin-left:2.5%;">
                 <p>
                     <b>@Html.DisplayNameFor(modelItem => Model.IdOutgoingInstitutionNavigation): </b>
-                    @Html.DisplayFor(modelItem => Model.IdOutgoingInstitutionNavigation.Name)
-                </p>
+                    <a target="_blank" class="profileLink" href=@Model.IdOutgoingInstitutionNavigation.Hyperlink>@Html.DisplayFor(modelItem => Model.IdOutgoingInstitutionNavigation.Name)</a>
+</p>
 
                 <p>
                     <b>@Html.DisplayNameFor(modelItem => Model.IdApplicationNavigation.IdProgramNavigation.MobilityBeginDate): </b>

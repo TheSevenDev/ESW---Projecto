@@ -1,4 +1,5 @@
 ﻿@model CIMOB_IPS.Models.Student
+@using Microsoft.EntityFrameworkCore;
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
@@ -11,71 +12,108 @@
             <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw" draggable="false" />
         </div>-->
 
+        <div class="profileImage">
+            <img id="img" src="@Model.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false" />
+        </div>
+
         <table class="information">
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.Name)</td>
-                <td>@Html.DisplayFor(model => model.Name)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdNationality)</td>
-                <td>@Html.DisplayFor(model => model.IdNationalityNavigation.Description)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdCourseNavigation)</td>
-                <td>@Html.DisplayFor(model => model.IdCourseNavigation.Name)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.Gender)</td>
-                <td>@Html.DisplayFor(model => model.Gender)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.BirthDate)</td>
-                <td>@Html.DisplayFor(model => model.BirthDate)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAccountNavigation.Email)</td>
-                <td>@Html.DisplayFor(model => model.IdAccountNavigation.Email)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.Telephone)</td>
-                <td>@Html.DisplayFor(model => model.Telephone)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.PostalCode)</td>
-                <td>@Html.DisplayFor(model => model.IdAddressNavigation.PostalCode)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.AddressDesc)</td>
-                <td>@Html.DisplayFor(model => model.IdAddressNavigation.AddressDesc)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.DoorNumber)</td>
-                <td>@Html.DisplayFor(model => model.IdAddressNavigation.DoorNumber)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.Floor)</td>
-                <td>@Html.DisplayFor(model => model.IdAddressNavigation.Floor)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.Credits)</td>
-                <td>@Html.DisplayFor(model => model.Credits)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.Cc)</td>
-                <td>@Html.DisplayFor(model => model.Cc)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel">@Html.DisplayNameFor(model => model.StudentNum)</td>
-                <td>@Html.DisplayFor(model => model.StudentNum)</td>
-            </tr>
-            <tr>
-                <td class="profileLabel"><p> Mobilidade Atual: </p></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td class="profileLabel"><p>Bolsa: </p></td>
-                <td></td>
-            </tr>
+            @{
+                Mobility activeMobility = null;
+
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+                {
+                    long lngEndedMobilityState = context.State.Where(s => s.Description == "Terminada").Select(s => s.IdState).SingleOrDefault();
+                    long lngAcceptedApplicationState = context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
+
+                    List<long> lstMobilitiesIds = context.Application.Where(a => a.IdStudent == Model.IdStudent && a.IdState == lngAcceptedApplicationState).Select(a => a.IdApplication).ToList();
+
+                    if (lstMobilitiesIds.Count > 0)
+                    {
+                        activeMobility = context.Mobility.Where(m => lstMobilitiesIds.Contains(m.IdApplication) && m.IdState != lngEndedMobilityState)
+                        .Include(m => m.IdApplicationNavigation)
+                        .Include(m => m.IdOutgoingInstitutionNavigation)
+                        .SingleOrDefault();
+
+                        activeMobility.IdApplicationNavigation.IdProgramNavigation = context.Program.Where(p => p.IdProgram == activeMobility.IdApplicationNavigation.IdProgram)
+                            .Include(p => p.IdProgramTypeNavigation)
+                            .SingleOrDefault();
+
+                        activeMobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation = context.Nationality.Where(n => n.IdNationality == activeMobility.IdOutgoingInstitutionNavigation.IdNationality).SingleOrDefault();
+                    }
+                }
+
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Name)</td>
+                    <td>@Html.DisplayFor(model => model.Name)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdNationality)</td>
+                    <td>@Html.DisplayFor(model => model.IdNationalityNavigation.Description)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdCourseNavigation)</td>
+                    <td>@Html.DisplayFor(model => model.IdCourseNavigation.Name)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Gender)</td>
+                    <td>@Html.DisplayFor(model => model.Gender)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.BirthDate)</td>
+                    <td>@Html.DisplayFor(model => model.BirthDate)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAccountNavigation.Email)</td>
+                    <td>@Html.DisplayFor(model => model.IdAccountNavigation.Email)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Telephone)</td>
+                    <td>@Html.DisplayFor(model => model.Telephone)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.PostalCode)</td>
+                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.PostalCode)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.AddressDesc)</td>
+                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.AddressDesc)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.DoorNumber)</td>
+                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.DoorNumber)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.Floor)</td>
+                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.Floor)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Credits)</td>
+                    <td>@Html.DisplayFor(model => model.Credits)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.Cc)</td>
+                    <td>@Html.DisplayFor(model => model.Cc)</td>
+                </tr>
+                <tr>
+                    <td class="profileLabel">@Html.DisplayNameFor(model => model.StudentNum)</td>
+                    <td>@Html.DisplayFor(model => model.StudentNum)</td>
+                </tr>
+                <tr>
+                    @if (activeMobility != null)
+                {
+                        <td class="profileLabel"><p> Mobilidade Atual: </p></td>
+                        <td>
+                            @activeMobility.IdApplicationNavigation.IdProgramNavigation.IdProgramTypeNavigation.Name
+                        - <a target="_blank" class="profileLink" href=@activeMobility.IdOutgoingInstitutionNavigation.Hyperlink>@activeMobility.IdOutgoingInstitutionNavigation.Name</a>
+                            (@activeMobility.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description)
+                    </td>
+                    }
+                    else
+                    {
+                        <td class="profileLabel"><p>Sem Mobilidade Actual.</p></td>
+                    }
+                </tr>
+            }
         </table>
     </div>
 </div>
