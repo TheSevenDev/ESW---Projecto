@@ -47,7 +47,7 @@ else
 
                         <p>
                             <b>@Html.DisplayNameFor(modelItem => item.IdOutgoingInstitutionNavigation): </b>
-                            @Html.DisplayFor(modelItem => item.IdOutgoingInstitutionNavigation.Name)
+                            <a target="_blank" class="profileLink" href=@item.IdOutgoingInstitutionNavigation.Hyperlink>@Html.DisplayFor(modelItem => item.IdOutgoingInstitutionNavigation.Name)</a>
                         </p>
 
                         <p>

@@ -44,7 +44,7 @@
                         @Html.DisplayNameFor(model => model.First().Mobility.First().IdOutgoingInstitutionNavigation)
                     </th>
                     <th>
-                        @*@Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityDate)*@
+                        @Html.DisplayNameFor(model => model.First().IdProgramNavigation.MobilityBeginDate)
                     </th>
                 </tr>
             </thead>
@@ -57,7 +57,7 @@
                     string strLastName = arrNames[arrNames.Length - 1];
                     using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                     {
-                        var institutionName = context.Institution.Where(i => i.IdInstitution == item.Mobility.First().IdOutgoingInstitution).Select(i => i.Name).SingleOrDefault();
+                        Institution institution = context.Institution.Where(i => i.IdInstitution == item.Mobility.First().IdOutgoingInstitution).SingleOrDefault();
                     
                         if (arrNames.Length > 1)
                         {
@@ -82,10 +82,10 @@
                                     }
                                 </td>
                                 <td>
-                                    @institutionName
+                                    <a target="_blank" class="profileLink" href=@institution.Hyperlink>@institution.Name</a>
                                 </td>
                                 <td>
-                                    @*@Html.DisplayFor(model => item.IdProgramNavigation.MobilityDate)*@
+                                    @Html.DisplayFor(model => item.IdProgramNavigation.MobilityBeginDate)
                                 </td>
                         </tr>
                     }

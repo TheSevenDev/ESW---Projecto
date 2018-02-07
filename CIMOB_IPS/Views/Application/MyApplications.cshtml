@@ -47,7 +47,7 @@ else
                                 @foreach (var institution in item.ApplicationInstitutions)
                                 {
                                     <li>
-                                        @Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)
+                                        <a target="_blank" class="profileLink" href=@institution.IdInstitutionNavigation.Hyperlink>@Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)</a>
                                     </li>
                                 }
                             </ul>

@@ -439,6 +439,7 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     color: var(--main-color);
     font-size: 1.0vw;
     font-weight: bold;
+    text-decoration: none;
 }
 
 .profileLink:hover, .profileLink:visited:hover, .profileLink:link:hover, .profileLink:active:hover {

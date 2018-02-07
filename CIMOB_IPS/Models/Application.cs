@@ -66,7 +66,7 @@ namespace CIMOB_IPS.Models
         [Display(Name = "Instituições")]
         public ICollection<ApplicationInstitutions> ApplicationInstitutions { get; set; }
         public ICollection<Mobility> Mobility { get; set; }
-
+        public ICollection<ApplicationCancelation> ApplicationCancelation { get; set; }
 
         public bool IsAvailable()
         {
