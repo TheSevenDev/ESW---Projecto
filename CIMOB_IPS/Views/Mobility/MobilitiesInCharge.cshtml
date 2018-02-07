@@ -65,6 +65,13 @@ else
                             @Html.DisplayFor(modelItem => item.IdStateNavigation.Description)
                         </p>
 
+                        <p>
+                            <a class="profileLink" onclick="showApplicationDetails(@item.IdApplication);">Visualizar Candidatura</a>
+                        </p>
+
+                        <p>
+                            <a class="profileLink" onclick="showApplicationEvaluation(@item.IdApplication);">Visualizar Avaliação Final</a>
+                        </p>
                     </div>
                 </fieldset><br />
             </div>
