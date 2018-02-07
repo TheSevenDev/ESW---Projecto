@@ -29,93 +29,95 @@
 }
 else
 {
-    @foreach (var item in Model)
-    {
-        <br />
-        <form asp-action="DeleteApplication" method="post" class="form-delete-app">
-            <div class="main-application-container">
+    <div class="applcations-container">
+        @foreach (var item in Model)
+        {
+            <br />
+            <form asp-action="DeleteApplication" method="post" class="form-delete-app">
+                <div class="main-application-container">
 
-                <input type="hidden" value="@item.IdApplication" name="idApplication" />
-                <fieldset style="border:0px">
-                    <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
-                    <div style="margin-left:2.5%;">
-                        <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
-                        <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
-                        <ul class="myApp-institutions">
-                            @foreach (var institution in item.ApplicationInstitutions)
-                            {
-                                <li>
-                                    @Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)
-                                </li>
-                            }
-                        </ul>
-
-                        <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
-
-                        @if (item.HasScholarship)
-                        {
-                            <p><b>@Html.DisplayNameFor(modelItem => item.HasScholarship): </b>Sim</p>
-
-                        }
-                        else
-                        {
-
-                            <p><b>@Html.DisplayNameFor(modelItem => item.HasScholarship): </b>Não</p>
-                        }
-
-                        @if (item.IdStateNavigation.Description != "Em Avaliação")
-                        {
-                            <p>
-                                <b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
-                                @if (item.FinalEvaluation >= 50)
+                    <input type="hidden" value="@item.IdApplication" name="idApplication" />
+                    <fieldset style="border:0px">
+                        <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">Candidatura @Html.DisplayFor(modelItem => item.IdProgramNavigation.IdProgramTypeNavigation.Name)</legend>
+                        <div style="margin-left:2.5%;">
+                            <p><b>@Html.DisplayNameFor(modelItem => item.ApplicationDate): </b>@Html.DisplayFor(modelItem => item.ApplicationDate)</p>
+                            <p><b>@Html.DisplayNameFor(model => model.ApplicationInstitutions)</b></p>
+                            <ul class="myApp-institutions">
+                                @foreach (var institution in item.ApplicationInstitutions)
                                 {
-                                    <span>Aprovada!</span>
+                                    <li>
+                                        @Html.DisplayFor(modelItem => institution.IdInstitutionNavigation.Name)
+                                    </li>
                                 }
-                                else
-                                {
-                                    <span>Não aprovada</span>
-                                }
-                            </p>
-                        }
+                            </ul>
 
+                            <p><b>@Html.DisplayNameFor(modelItem => item.IdStateNavigation): </b>@Html.DisplayFor(modelItem => item.IdStateNavigation.Description)</p>
 
-                        <p>
-                            <b>@Html.DisplayNameFor(modelItem => item.IdInterviewNavigation):</b>
-                            @if (item.IdInterviewNavigation.IdState == lngNoInterviewState)
+                            @if (item.HasScholarship)
                             {
-                                <span>A decidir futuramente</span>
+                                <p><b>@Html.DisplayNameFor(modelItem => item.HasScholarship): </b>Sim</p>
+
                             }
                             else
                             {
-                                <span>
-                                    @item.IdInterviewNavigation.Date.Day/@item.IdInterviewNavigation.Date.Month/@item.IdInterviewNavigation.Date.Year
-                                    &nbsp;às @item.IdInterviewNavigation.Date.Hour.ToString("D2"):@item.IdInterviewNavigation.Date.Minute.ToString("D2")
-                                </span>
+
+                                <p><b>@Html.DisplayNameFor(modelItem => item.HasScholarship): </b>Não</p>
                             }
-                       </p>
-<p>
-                            <span id="motivationCard-title">
-                                <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
-                            </span>
-                        </p>
-                        <div id="motivationCard">
-                            @Html.DisplayFor(modelItem => item.MotivationCard)
-                        </div>
-                        @if (item.SignedAppFile != null)
-                        {
-                            <div style="padding-top:5%;">
-                                <a class="hyperlink" asp-action="OpenSignedAppFile" asp-route-fileId=@item.IdApplication>Ver Comprovativo de Candidatura</a>
+
+                            @if (item.IdStateNavigation.Description != "Em Avaliação")
+                            {
+                                <p>
+                                    <b>@Html.DisplayNameFor(model => model.FinalEvaluation):</b>
+                                    @if (item.FinalEvaluation >= 50)
+                                    {
+                                        <span>Aprovada!</span>
+                                    }
+                                    else
+                                    {
+                                        <span>Não aprovada</span>
+                                    }
+                                </p>
+                            }
+
+
+                            <p>
+                                <b>@Html.DisplayNameFor(modelItem => item.IdInterviewNavigation):</b>
+                                @if (item.IdInterviewNavigation.IdState == lngNoInterviewState)
+                                {
+                                    <span>A decidir futuramente</span>
+                                }
+                                else
+                                {
+                                    <span>
+                                        @item.IdInterviewNavigation.Date.Day/@item.IdInterviewNavigation.Date.Month/@item.IdInterviewNavigation.Date.Year
+                                        &nbsp;às @item.IdInterviewNavigation.Date.Hour.ToString("D2"):@item.IdInterviewNavigation.Date.Minute.ToString("D2")
+                                    </span>
+                                }
+                            </p>
+                            <p>
+                                <span id="motivationCard-title">
+                                    <b>@Html.DisplayNameFor(model => model.MotivationCard)</b>
+                                </span>
+                            </p>
+                            <div id="motivationCard">
+                                @Html.DisplayFor(modelItem => item.MotivationCard)
                             </div>
-                        }
-                    </div>
-                </fieldset><br />
-                @if (item.FinalEvaluation >= 50 && item.IdStateNavigation.Description == "Aceite")
-                {
-                    <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirm-application" value="Confirmar Candidatura"/>
-                }
-                <button type="submit" id="deleteApplication" >Cancelar Candidatura</button>
-            </div>                  
-        </form>
-        
-    }
+                            @if (item.SignedAppFile != null)
+                            {
+                                <div style="padding-top:5%;">
+                                    <a class="hyperlink" asp-action="OpenSignedAppFile" asp-route-fileId=@item.IdApplication>Ver Comprovativo de Candidatura</a>
+                                </div>
+                            }
+                        </div>
+                    </fieldset><br />
+                    @if (item.FinalEvaluation >= 50 && item.IdStateNavigation.Description == "Aceite")
+                    {
+                        <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirm-application" value="Confirmar Candidatura" />
+                    }
+                    <button type="submit" id="deleteApplication">Cancelar Candidatura</button>
+                </div>
+            </form>
+
+        }
+    </div>
 }

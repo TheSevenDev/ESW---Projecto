@@ -5,7 +5,7 @@
 }
 
 <p class="page-title">Perfil</p>
-<div class="profile">
+<div class="profile" style="height:100%;">
     <button type="button" onclick="location.href='@Url.Action("Edit", "Profile")'" style="display:@ViewData["edit-profile-display"]">Editar Perfil</button>
 
     @if (Model != null && Model.AccountType == EnumAccountType.STUDENT)

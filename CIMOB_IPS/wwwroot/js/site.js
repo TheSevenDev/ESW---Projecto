@@ -29,9 +29,6 @@ function openHelp() {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("help-content").style.display = "block";
     document.getElementById("help-close").style.display = "block";
-
-    //$("#help-content").slideToggle("slow");
-    //$("#help-close").toggle();
 }
 
 function closeHelp() {
@@ -668,7 +665,7 @@ function showProgramDetails(programId) {
                 setTimeout(function () {
                     $(".program-details").html(result);
                    $('.loading-program-div').hide();
-                }, 1000)
+                }, 1650)
             },
             error: function (error) {
             }

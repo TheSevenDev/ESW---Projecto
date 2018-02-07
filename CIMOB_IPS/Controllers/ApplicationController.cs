@@ -429,25 +429,25 @@ namespace CIMOB_IPS.Controllers
                     if (application != null)
                         application.IdState = 20;
 
-                        long lngAcceptedState = context.State.Where(s => s.Description == "Aceite").Select(s => s.IdState).SingleOrDefault();
+                    long lngAcceptedState = context.State.Where(s => s.Description == "Aceite").Select(s => s.IdState).SingleOrDefault();
 
-                        if(application.IdState == lngAcceptedState)
-                        {
-                            var program = context.Program.Where(p => p.IdProgram == application.IdProgram).FirstOrDefault();
-                            program.Vacancies += 1;
-                            context.Update(program);
-                            context.SaveChanges();
-                        }
+                    if (application.IdState == lngAcceptedState)
+                    {
+                        var program = context.Program.Where(p => p.IdProgram == application.IdProgram).FirstOrDefault();
+                        program.Vacancies += 1;
+                        context.Update(program);
+                        context.SaveChanges();
                     }
                 }
+
                 catch
                 {
 
                 }
-
-                return RedirectToAction("MyApplications", "Application");
             }
+                return RedirectToAction("MyApplications", "Application");
         }
+        
 
         [HttpGet]
         public IActionResult Details(string id)

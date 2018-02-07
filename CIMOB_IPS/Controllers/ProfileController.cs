@@ -150,67 +150,25 @@ namespace CIMOB_IPS.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task UploadAvatar(string accountid)
+        public async Task<IActionResult> UpdateProfileTechnician(ProfileViewModel model)
         {
-            if (Request.Form.Files.Count > 0)
-            {
-                var ImageFile = Request.Form.Files[0];
-                if (ImageFile != null)
-                {
-                    var extention = Path.GetExtension(ImageFile.FileName);
-
-                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + ".png");
-
-                    using (var fileStream = new FileStream(uploadName, FileMode.Create))
-                    {
-                        await ImageFile.CopyToAsync(fileStream);
-                        UpdateAvatarURL(accountid);
-
-                 }
-                }
-            }
-        }
-
-
-        private void UpdateAvatarURL(string account_id)
-        {
-            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
-            {
-                scnConnection.Open();
-                string strQuery = "UPDATE Account Set avatarURL = @AvatarURL WHERE id_account = @AccountID";
-
-                SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
-                scmCommand.Parameters.AddWithValue("@AvatarURL", "/images/avatars/" + account_id + ".png");
-                scmCommand.Parameters.AddWithValue("@AccountID", account_id);
-
-                scmCommand.ExecuteNonQuery();
-
-            }
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateProfileTechnician([Bind("IdAccount, Name, Telephone")] Technician technician)
-        {
-            if (GetCurrentUserID() != technician.IdAccount)
+            if (GetCurrentUserID() != model.Technician.IdAccount)
                 return BadRequest();
 
             try
             {
                 using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
-                    Technician newTechnician = await context.Technician.SingleOrDefaultAsync(t => t.IdAccount == technician.IdAccount);
+                    Technician newTechnician = await context.Technician.SingleOrDefaultAsync(t => t.IdAccount == model.Technician.IdAccount);
 
                     if (newTechnician == null)
                         return NotFound();
 
-                    newTechnician.Telephone = technician.Telephone;
+                    newTechnician.Telephone = model.Technician.Telephone;
 
                     context.Update(newTechnician);
 
-                    Console.WriteLine("============================================" + technician.IdAccount);
-
-                    await UploadAvatar(technician.IdAccount.ToString());
+                    await UploadAvatar(model.Technician.IdAccount.ToString());
                     await context.SaveChangesAsync();
                 }
             }
@@ -222,6 +180,47 @@ namespace CIMOB_IPS.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task UploadAvatar(string accountid)
+        {
+            if (Request.Form.Files.Count > 0)
+            {
+                var ImageFile = Request.Form.Files[0];
+                if (ImageFile != null)
+                {
+                    var extention = Path.GetExtension(ImageFile.FileName);
+
+                    var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + extention);
+
+                    using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                    {
+                        await ImageFile.CopyToAsync(fileStream);
+                        UpdateAvatarURL(accountid, extention);
+
+                 }
+                }
+            }
+        }
+
+
+        private void UpdateAvatarURL(string account_id, string extention)
+        {
+            using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
+            {
+                scnConnection.Open();
+                string strQuery = "UPDATE Account Set avatarURL = @AvatarURL WHERE id_account = @AccountID";
+
+                SqlCommand scmCommand = new SqlCommand(strQuery, scnConnection);
+                scmCommand.Parameters.AddWithValue("@AvatarURL", "/images/avatars/" + account_id + extention);
+                scmCommand.Parameters.AddWithValue("@AccountID", account_id);
+
+                scmCommand.ExecuteNonQuery();
+
+            }
+        }
+
 
         [HttpGet]
         public IActionResult ViewStudentProfile(string id)

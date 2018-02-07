@@ -7,6 +7,7 @@
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <h2 class="page-title" style="margin-top:1%;">Mobilidades Encarregue</h2>
 <h3 class="page-title" style="margin-top:3%; font-size:1.1vmax">Tem @Model.Count() mobilidades encarregue</h3>
@@ -23,17 +24,19 @@
 }
 else
 {
-    @foreach (var item in Model)
-    {
-        <br />
-            <div class="main-application-container">
+    <div class="applcations-container">
+        @foreach (var item in Model)
+        {
+            <br />
+            <div class="main-application-container" style="margin-top:1%;">
                 <fieldset style="border:0px">
                     <legend style="text-align:center;font-size:1.3vmax; margin-top: 2%;">
                         <a class="profileLink" onclick="viewProfile(@item.IdApplicationNavigation.IdStudentNavigation.IdStudent)">@Html.DisplayFor(modelItem => item.IdApplicationNavigation.IdStudentNavigation.Name)</a>
                     </legend>
-                    
+
                     <div style="margin-left:2.5%;">
-                        <p><b>@Html.DisplayNameFor(modelItem => item.IdApplicationNavigation.IdStudentNavigation.StudentNum): </b>
+                        <p>
+                            <b>@Html.DisplayNameFor(modelItem => item.IdApplicationNavigation.IdStudentNavigation.StudentNum): </b>
                             @Html.DisplayFor(modelItem => item.IdApplicationNavigation.IdStudentNavigation.StudentNum)
                         </p>
 
@@ -65,5 +68,6 @@ else
                     </div>
                 </fieldset><br />
             </div>
-    }
+        }
+    </div>
 }
