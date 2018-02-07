@@ -334,7 +334,7 @@ $(document).ready(function () {
     }
 
     $("form.form-delete-app").submit(function (event) {
-        var applicationID = this["idApplication"].value;
+        var id = this["idApplication"].value;
         event.preventDefault();
         var form = this;
         $.confirm({
@@ -343,19 +343,22 @@ $(document).ready(function () {
             modal: true,
             autoOpen: false,
             draggable: false,
-            content: 'Está a cancelar uma candidatura.\nTem a certeza que pretende continuar?'+
-                    '<br><br> Caso pretenda indique o motivo do cancelamento.<textarea  type="text" maxlength="512" rows="10" id="reason" style="margin-left:0;margin-top:1%;width:100%;resize:none">',
+            content: '<span style="font-size:1.25vmax"> Está a cancelar uma candidatura.\nTem a certeza que pretende continuar? </span>'+
+                    '<br><br> <span style="font-size:1.25vmax">Caso pretenda indique o motivo do cancelamento</span>.<textarea  type="text" maxlength="512" rows="10" id="reason" style="margin-left:0;margin-top:1%;width:100%;resize:none">',
             buttons: {
                 sim: {
                     text: 'Confirmar',
                     btnClass: 'btn-green',
                     action: function () {
-                        form.submit();
                         $.ajax({
                             type: 'POST',
-                            dataType: 'html',
-                            url: confirmUrl,
+                            dataType: 'json',
+                            contentType: 'application/json', 
+                            url: '/Application/CancelationReason?applicationID=' + id + '&reason=' + document.getElementById("reason").value,
                             error: function (error) {
+                            },
+                            success: function () {
+                               form.submit();
                             }
                         });
                     }
@@ -630,7 +633,7 @@ function scheduleInterview(applicationID) {
                 setTimeout(function () {
                     $("#application-details").html(result);
                     $('.loading-div').hide();
-                }, 1000)
+                }, 150)
             },
             error: function (error) {
             }
@@ -659,7 +662,7 @@ function reScheduleInterview(applicationID) {
                 setTimeout(function () {
                     $("#application-details").html(result);
                     $('.loading-div').hide();
-                }, 1000)
+                }, 150)
             },
             error: function (error) {
             }
