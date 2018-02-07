@@ -469,31 +469,15 @@ namespace CIMOB_IPS.Controllers
         }
         
         [HttpPost]
-        public IActionResult CancelationReason(string applicationID, string reason)
+        public ActionResult CancelationReason([FromQuery] string applicationID,[FromQuery] string reason)
         {
-            AccountController ac = new AccountController();
-
-            int lngCurrentUserId = GetCurrentUserID();
-            int applicationId = Int32.Parse(Request.Form["idApplication"]);
-
-            if (!ac.IsStudent(lngCurrentUserId))
-                return RedirectToAction("Index", "Home");
-
-            long studentId = ac.GetStudentId(lngCurrentUserId);
-
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                try
-                {
-                    
-                }
-
-                catch
-                {
-
-                }
+                context.ApplicationCancelation.Add(new ApplicationCancelation { IdApplication = Int32.Parse(applicationID), Reason = reason });
+                context.SaveChanges();
             }
-                return RedirectToAction("MyApplications", "Application");
+
+          return Json("");
         }
 
 

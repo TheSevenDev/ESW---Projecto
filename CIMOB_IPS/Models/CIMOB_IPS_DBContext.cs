@@ -147,10 +147,13 @@ namespace CIMOB_IPS.Models
             modelBuilder.Entity<ApplicationCancelation>(entity =>
             {
                 entity.HasKey(e => new { e.IdApplicationCancelation });
+                entity.Property(e => e.IdApplicationCancelation).HasColumnName("id_app_cancelation");
 
                 entity.ToTable("Application_Cancelation");
 
                 entity.Property(e => e.Reason).HasColumnName("reason");
+
+                entity.Property(e => e.IdApplication).HasColumnName("id_application");
 
                 entity.HasOne(d => d.IdApplicationNavigation)
                     .WithMany(p => p.ApplicationCancelation)
