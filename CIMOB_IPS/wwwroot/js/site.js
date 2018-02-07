@@ -416,7 +416,21 @@ function start() {
     if (document.getElementById("loading-program") !== null)
         showProgramDetails(1);
 
+    if (document.getElementById("interviews") !== null) {
+        loadInterviews();
+    }
+
 }
+
+function loadInterviews() {
+    $('#interviews').monthly({
+        mode: 'event',
+        xmlUrl: '/js/interviews.xml',
+        maxWidth: false,
+        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+    });
+}
+
 
 function autoPlayGallery() {
     function Move() {
