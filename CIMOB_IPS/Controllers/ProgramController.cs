@@ -170,8 +170,6 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        
-    
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProgramViewModel model)
@@ -228,6 +226,5 @@ namespace CIMOB_IPS.Controllers
             return View(new ProgramViewModel { ProgramTypes = PopulateProgramTypes(), Institutions = PopulateInstitutions() });
         }
         
-
     }
 }

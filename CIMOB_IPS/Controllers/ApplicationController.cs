@@ -206,7 +206,6 @@ namespace CIMOB_IPS.Controllers
             return _context.Application.Max(i => i.IdApplication) + 1;
         }
 
-
         private void AddApplicationNotification()
         {
             Notification not = new Notification
@@ -429,7 +428,7 @@ namespace CIMOB_IPS.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteApplication()
+        public IActionResult CancelApplication()
         {
             AccountController ac = new AccountController();
 
@@ -909,28 +908,6 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        //public async Task<IActionResult> Approved(int? pageApplication)
-        //{
-        //    using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-        //    {
-        //        int intPageSize = 10;
-        //        int intPageApplications = (pageApplication ?? 1);
-
-        //        var applications = (from a in context.Application
-        //                            select a)
-        //            .OrderBy(a => a.IdStudentNavigation.StudentNum)
-        //            .Include(a => a.IdStateNavigation)
-        //            .Include(a => a.IdStudentNavigation)
-        //            .Include(a => a.IdProgramNavigation)
-        //            .Where(a => a.IdProgramNavigation.IdState == 1 && a.FinalEvaluation >= 50);
-
-        //        var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
-
-        //        return View(paginatedApplications);
-        //    }
-        //}
-
-
         private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -990,7 +967,6 @@ namespace CIMOB_IPS.Controllers
                 return View(paginatedApplications);
             }
         }
-
 
         public IActionResult Confirm(int appId)
         {
@@ -1070,7 +1046,6 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Application", "MyApplications");
         }
 
-
         public IActionResult Interviews(int appId)
         {
             if (!User.Identity.IsAuthenticated)
@@ -1146,9 +1121,5 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-
     }
-
-
-
 }

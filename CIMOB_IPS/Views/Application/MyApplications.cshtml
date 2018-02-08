@@ -34,7 +34,7 @@ else
         @foreach (var item in Model)
         {
             <br />
-            <form asp-action="DeleteApplication" method="post" class="form-delete-app">
+            <form asp-action="CancelApplication" method="post" class="form-delete-app">
                 <div class="main-application-container">
 
                     <input type="hidden" value="@item.IdApplication" name="idApplication" />
