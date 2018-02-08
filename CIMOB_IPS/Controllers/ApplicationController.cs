@@ -729,7 +729,7 @@ namespace CIMOB_IPS.Controllers
                 ViewData["application-student-credits"] = app.IdStudentNavigation.Credits.ToString();
                 ViewData["application-student-motivation-card"] = app.MotivationCard.ToString();
 
-                return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), OutgoingInstitutions = PopulateOutgoingInstitutions(app.IdProgram), FinalEvalution = 0.00 });
+                return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), OutgoingInstitutions = PopulateOutgoingInstitutions(app.IdApplication), FinalEvalution = 0.00 });
             }
         }
 
@@ -907,14 +907,14 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
-        private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
+        private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intAppId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 List<SelectListItem> lisInstitutions = new List<SelectListItem>();
 
                 var listInstitutions = context.Institution.Where(i =>
-                    (context.InstitutionProgram.Where(ip => ip.IdProgram == intProgramId).Select(ip => ip.IdOutgoingInstitution)).Contains(i.IdInstitution)).ToList();
+                    (context.ApplicationInstitutions.Where(ip => ip.IdApplication == intAppId).Select(ip => ip.IdInstitution)).Contains(i.IdInstitution)).ToList();
 
                 foreach (Institution n in listInstitutions)
                 {
