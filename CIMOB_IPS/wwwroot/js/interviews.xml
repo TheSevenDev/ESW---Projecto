@@ -1,51 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <monthly>
   <event>
-    <id>1</id>
-    <name>TESTE</name>
-    <startdate>2018-02-04T00:00:00.0000000</startdate>
-    <enddate>2018-02-04T00:00:00.0000000</enddate>
-    <starttime>PT0S</starttime>
-    <color> </color>
-  </event>
-  <event>
-    <id>2</id>
-    <name>Bruno Pereira</name>
-    <startdate>2018-02-04T00:00:00.0000000</startdate>
-    <enddate>2018-02-04T00:00:00.0000000</enddate>
-    <starttime>PT0S</starttime>
-    <color> </color>
-  </event>
-  <event>
-    <id>3</id>
-    <name>Bruno Pereira</name>
-    <startdate>2018-02-08T00:00:00.0000000</startdate>
-    <enddate>2018-02-08T00:00:00.0000000</enddate>
-    <starttime>PT10H30M</starttime>
-    <color> </color>
-  </event>
-  <event>
-    <id>4</id>
-    <name>Bruno Pereira</name>
-    <startdate>2018-02-15T00:00:00.0000000</startdate>
-    <enddate>2018-02-15T00:00:00.0000000</enddate>
-    <starttime>PT14H14M</starttime>
-    <color> </color>
-  </event>
-  <event>
-    <id>7</id>
-    <name>Diogo Abreu</name>
-    <startdate>2018-02-22T00:00:00.0000000</startdate>
-    <enddate>2018-02-22T00:00:00.0000000</enddate>
-    <starttime>PT15H30M</starttime>
-    <color> </color>
-  </event>
-  <event>
-    <id>8</id>
-    <name>Diogo Abreu</name>
-    <startdate>2018-02-06T00:00:00.0000000</startdate>
-    <enddate>2018-02-06T00:00:00.0000000</enddate>
-    <starttime>PT0S</starttime>
+    <id>9</id>
+    <name>Ricardo Fernandes</name>
+    <startdate>2018-02-13T00:00:00.0000000</startdate>
+    <enddate>2018-02-13T00:00:00.0000000</enddate>
+    <starttime>15:30</starttime>
     <color> </color>
   </event>
 </monthly>

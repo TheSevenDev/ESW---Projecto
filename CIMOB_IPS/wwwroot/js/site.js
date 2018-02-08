@@ -427,7 +427,8 @@ function loadInterviews() {
         mode: 'event',
         xmlUrl: '/js/interviews.xml',
         maxWidth: false,
-        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+        
     });
 }
 

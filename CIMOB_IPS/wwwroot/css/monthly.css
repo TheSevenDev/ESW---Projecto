@@ -316,7 +316,7 @@
 /* Events in Events List */
 .monthly-event-list .listed-event {
 	display: block;
-	color: #fff;
+	color: black;
 	padding: 0.4em 1em;
 	border-radius: 0.2em;
 	margin-bottom: 0.5em;

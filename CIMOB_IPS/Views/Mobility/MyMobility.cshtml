@@ -63,7 +63,10 @@ else
     </div>
 }
 
-<div class="profile-preview" id="techProfilePreview" style="width:17.5vw;">
+
+@* MELHORAR ISTO. PASSAR PARA UMA ACAO NO CONTROLLER, COM AS DEVIDAS VERIFICAÇOES,  QUE RETORNA UMA PARTIALVIEW 
+    
+    <div class="profile-preview" id="techProfilePreview" style="width:17.5vw;">
     <img id="profile-preview-close" src="~/images/icons/error.png" onclick="javascript: closeProfilePreview();"/>
     <img src="@Url.Content(techProfilePic)" class="session-profile-image" draggable="false">
     <span id="nome">@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Name)</span>
@@ -85,5 +88,5 @@ else
             </td>
         </tr>
     </table>   
-</div>
+</div>*@
 
