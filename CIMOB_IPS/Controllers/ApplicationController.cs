@@ -1071,6 +1071,12 @@ namespace CIMOB_IPS.Controllers
 
         public IActionResult Interviews(int appId)
         {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
             FetchInterviews();
             return View();
         }
