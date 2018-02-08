@@ -59,16 +59,21 @@ function closefyp() {
     closefyp.style.display = "none";
 }
 
-function openProfilePreview() {
-    var profilePreview = document.getElementById("techProfilePreview");
+function openProfilePreview(techID) {
 
-    profilePreview.style.display = "block";
+    var actionUrl = '/Mobility/TechnicianPreview?IdTechnician=';
+    $.ajax({
+        type: "POST",
+        url: actionUrl += techID,
+        dataType: "html",
+    }).done(function (result) {
+        $("#profile-previewdiv").html(result);
+    });;
+
 }
 
 function closeProfilePreview() {
-    var profilePreview = document.getElementById("techProfilePreview");
-
-    profilePreview.style.display = "none";
+    document.getElementById("profile-previewdiv").innerHTML = "";
 }
 
 function openInviteTech() {

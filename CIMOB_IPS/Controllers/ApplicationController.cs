@@ -354,7 +354,7 @@ namespace CIMOB_IPS.Controllers
                 strbHtml.AppendLine(", declaro que, no presente dia " + DateTime.Now.Date.ToString("dd/MM/yyyy") + ", me candidato ao programa de mobilidade " + programType.Name + ", ");
                 strbHtml.AppendLine("tendo o perfeito conhecimento dos regulamentos associados com o mesmo, bem como os meus deveres e direitos.</p>");
                 strbHtml.AppendLine("<br><br><br><p><b>O estudante,</b></p><br><br>");
-\
+
 
                 MemoryStream ms = new MemoryStream();
                 TextReader txtReader = new StringReader(strbHtml.ToString());

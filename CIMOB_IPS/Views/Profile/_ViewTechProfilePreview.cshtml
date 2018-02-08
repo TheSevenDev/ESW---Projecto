@@ -1,0 +1,35 @@
+﻿@model CIMOB_IPS.Models.Technician
+
+@{
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
+
+<div class="profile-preview" id="techProfilePreview">
+    <img id="profile-preview-close" src="~/images/icons/error.png" onclick="javascript: closeProfilePreview();"/>
+    <img src="@Url.Content(Model.IdAccountNavigation.AvatarUrl)" class="session-profile-image" draggable="false">
+    <span id="nome">@Html.DisplayFor(modelItem => Model.Name)</span>
+    <table>
+        <tr>
+            <td>
+                <b>@Html.DisplayNameFor(modelItem => Model.IdAccountNavigation.Email)</b>
+            </td>
+            <td>
+                <span>@Html.DisplayFor(modelItem => Model.IdAccountNavigation.Email)</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>@Html.DisplayNameFor(modelItem => Model.Telephone)</b>
+            </td>
+            <td>
+                <span>@Html.DisplayFor(modelItem => Model.Telephone)</span>
+            </td>
+        </tr>
+    </table>
+</div>

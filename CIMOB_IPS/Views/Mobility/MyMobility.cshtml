@@ -54,39 +54,14 @@ else
 
                 <p>
                     <b>@Html.DisplayNameFor(modelItem => Model.IdResponsibleTechnicianNavigation): </b>
-                    <a class="technician-name" onclick="javascript: openProfilePreview();">@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Name)</a>  
+                    <a class="technician-name" onclick="javascript: openProfilePreview(@Model.IdResponsibleTechnician);">@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Name)</a>  
                         @*@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.IdAccountNavigation.Email) |
-                        @Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Telephone)*@
+                        @Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Telephone)*@ 
                 </p>
             </div>
         </fieldset><br />
     </div>
 }
 
-
-@* MELHORAR ISTO. PASSAR PARA UMA ACAO NO CONTROLLER, COM AS DEVIDAS VERIFICAÇOES,  QUE RETORNA UMA PARTIALVIEW 
-    
-    <div class="profile-preview" id="techProfilePreview" style="width:17.5vw;">
-    <img id="profile-preview-close" src="~/images/icons/error.png" onclick="javascript: closeProfilePreview();"/>
-    <img src="@Url.Content(techProfilePic)" class="session-profile-image" draggable="false">
-    <span id="nome">@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Name)</span>
-    <table style="border:0px; font-size:0.75vmax;">
-        <tr>
-            <td>
-                <b>@Html.DisplayNameFor(modelItem => Model.IdResponsibleTechnicianNavigation.IdAccountNavigation.Email)</b>
-            </td>
-            <td>
-                <span>@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.IdAccountNavigation.Email)</span>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b>@Html.DisplayNameFor(modelItem => Model.IdResponsibleTechnicianNavigation.Telephone)</b>
-            </td>
-            <td>
-                <span>@Html.DisplayFor(modelItem => Model.IdResponsibleTechnicianNavigation.Telephone)</span>
-            </td>
-        </tr>
-    </table>   
-</div>*@
+<div id="profile-previewdiv"></div>
 
