@@ -30,12 +30,12 @@ namespace CIMOB_IPS.Models
 
 
         [Required(ErrorMessage = "É necessário definir a data de início de mobilidade!")]
-        [Display(Name = "Data prevista de início Mobilidade")]
+        [Display(Name = "Data de início da Mobilidade")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityBeginDate { get; set; }
 
         [Required(ErrorMessage = "É necessário definir a data de fim de mobilidade!")]
-        [Display(Name = "Data prevista de fim de Mobilidade")]
+        [Display(Name = "Data de fim da Mobilidade")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime MobilityEndDate { get; set; }
 

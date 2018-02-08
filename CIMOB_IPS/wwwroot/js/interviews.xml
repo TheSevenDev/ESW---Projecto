@@ -33,14 +33,6 @@
     <color> </color>
   </event>
   <event>
-    <id>6</id>
-    <name>Ricardo Fernandes</name>
-    <startdate>2018-02-20T00:00:00.0000000</startdate>
-    <enddate>2018-02-20T00:00:00.0000000</enddate>
-    <starttime>PT9H</starttime>
-    <color> </color>
-  </event>
-  <event>
     <id>7</id>
     <name>Diogo Abreu</name>
     <startdate>2018-02-22T00:00:00.0000000</startdate>
