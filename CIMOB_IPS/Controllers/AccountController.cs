@@ -41,6 +41,14 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        public IActionResult TestPreRegister()
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            return View();
+        }
+
         [ActionName("Technicians")]
         public IActionResult Technicians(int? pagePending, int? pageTechnicians)
         {
@@ -237,7 +245,7 @@ namespace CIMOB_IPS.Controllers
                 bool success = InsertPendingAccount(strStudentEmail, EnumAccountType.STUDENT, 0);
                 if (success)
                 {
-                    ViewData["message"] = "Número registado.";
+                    ViewData["message"] = "Número registado. Verifique o seu e-mail de estudante.";
                     ViewData["error-message"] = "";
                 }
                 else
@@ -254,6 +262,39 @@ namespace CIMOB_IPS.Controllers
             }
 
             return View("Register");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult FakePreRegister(RegisterViewModel model)
+        {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "Home");
+
+            String strStudentEmail = model.Student.IdAccountNavigation.Email;
+
+            try
+            {
+                bool success = InsertPendingAccount(strStudentEmail, EnumAccountType.STUDENT, 0);
+                if (success)
+                {
+                    ViewData["message"] = "Registo efectuado com<br>sucesso. Verifique o seu<br>e-mail.";
+                    ViewData["error-message"] = "";
+                }
+                else
+                {
+                    ViewData["error-message"] = "E-mail já registado.";
+                    ViewData["message"] = "";
+                }
+
+                return View("TestPreRegister");
+            }
+            catch (SqlException e)
+            {
+                ViewData["error-message"] = "Conexão Falhada.";
+            }
+
+            return View("TestPreRegister");
         }
 
         public IActionResult RegisterStudent([FromQuery] string account_id, bool? birthDateError)
