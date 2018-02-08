@@ -436,11 +436,11 @@ function loadInterviews() {
 function autoPlayGallery() {
     function Move() {
         var i;
+        var obj;
         for (i = 1; i < 5; i++) {
-            var obj = document.getElementById('i' + i);
-            if (obj !== null && obj.checked) {
+            if (document.getElementById('i' + i) !== null && document.getElementById('i' + i).checked) {
                 i = (i % 4) + 1;
-                obj.checked = true;
+                document.getElementById('i' + i).checked = true;
                 break;
             }
         }
