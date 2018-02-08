@@ -416,7 +416,21 @@ function start() {
     if (document.getElementById("loading-program") !== null)
         showProgramDetails(1);
 
+    if (document.getElementById("interviews") !== null) {
+        loadInterviews();
+    }
+
 }
+
+function loadInterviews() {
+    $('#interviews').monthly({
+        mode: 'event',
+        xmlUrl: '/js/interviews.xml',
+        maxWidth: false,
+        dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+    });
+}
+
 
 function autoPlayGallery() {
     function Move() {
@@ -561,7 +575,7 @@ function showApplicationDetails(applicationID) {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("application-details").style.display = "block";
 
-    var detailsURL = "Application/Details/" + applicationID;
+    var detailsURL = "/Application/Details/" + applicationID;
 
     $.ajax(
         {
@@ -590,7 +604,7 @@ function showApplicationEvaluation(applicationID) {
     document.getElementById("fade-background").style.display = "block";
     document.getElementById("application-details").style.display = "block";
 
-    var detailsURL = "Application/EvaluationDetails/" + applicationID;
+    var detailsURL = "/Application/EvaluationDetails/" + applicationID;
 
     $.ajax(
         {

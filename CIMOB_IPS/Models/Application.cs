@@ -69,6 +69,7 @@ namespace CIMOB_IPS.Models
         public ICollection<ApplicationCancelation> ApplicationCancelation { get; set; }
         public ICollection<ApplicationEvaluation> ApplicationEvaluation { get; set; }
 
+
         public bool IsAvailable()
         {
             return IdStateNavigation.Description.Equals("Aberto");

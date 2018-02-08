@@ -16,6 +16,8 @@ using iTextSharp.text.html.simpleparser;
 using Microsoft.AspNetCore.Http;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Hosting;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -23,12 +25,12 @@ namespace CIMOB_IPS.Controllers
     {
         private readonly CIMOB_IPS_DBContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-
+        private CIMOB_IPS_DBContext _context1;
 
         public ApplicationController(CIMOB_IPS_DBContext context, IHostingEnvironment HostingEnvironment)
         {
             _context = context;
-             _hostingEnvironment = HostingEnvironment;
+            _hostingEnvironment = HostingEnvironment;
         }
 
         public int GetCurrentUserID()
@@ -415,7 +417,7 @@ namespace CIMOB_IPS.Controllers
                 else
                 {
                     applications = applications
-                        .Where(a=> a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
+                        .Where(a => a.IdStudentNavigation.Name.Contains(search_by) || a.IdStudentNavigation.StudentNum.ToString().Contains(search_by));
 
                     ViewData["search-by"] = search_by.ToString();
                 }
@@ -465,11 +467,11 @@ namespace CIMOB_IPS.Controllers
 
                 }
             }
-                return RedirectToAction("MyApplications", "Application");
+            return RedirectToAction("MyApplications", "Application");
         }
-        
+
         [HttpPost]
-        public ActionResult CancelationReason([FromQuery] string applicationID,[FromQuery] string reason)
+        public ActionResult CancelationReason([FromQuery] string applicationID, [FromQuery] string reason)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -477,7 +479,7 @@ namespace CIMOB_IPS.Controllers
                 context.SaveChanges();
             }
 
-          return Json("");
+            return Json("");
         }
 
 
@@ -498,7 +500,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.ApplicationInstitutions)
                     .FirstOrDefault();
 
-               
+
                 if (application == null)
                     return RedirectToAction("Index", "Application");
                 else
@@ -529,10 +531,15 @@ namespace CIMOB_IPS.Controllers
                 else
                 {
                     var applicationEvaluation = context.ApplicationEvaluation.Where(ae => ae.IdApplication == int.Parse(id))
-                        .Include(ae => ae.IdApplication)
+                        .Include(ae => ae.IdApplicationNavigation)
                         .SingleOrDefault();
 
-                    return PartialView("_ApplicationEvaluationDetails", applicationEvaluation);
+                    applicationEvaluation.IdApplicationNavigation.IdStudentNavigation = context.Student.Where(s => s.IdStudent == applicationEvaluation.IdApplicationNavigation.IdStudent).SingleOrDefault();
+
+                    ViewData["application-student-name"] = applicationEvaluation.IdApplicationNavigation.IdStudentNavigation.Name;
+                    ViewData["application-student-number"] = applicationEvaluation.IdApplicationNavigation.IdStudentNavigation.StudentNum;
+
+                    return PartialView("_EvaluationDetails", applicationEvaluation);
                 }
             }
         }
@@ -555,7 +562,7 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview, Date = DateTime.Today});
+                return PartialView("_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview, Date = DateTime.Today });
             }
         }
 
@@ -577,8 +584,8 @@ namespace CIMOB_IPS.Controllers
 
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("_RescheduleInterview", 
-                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date});
+                return PartialView("_RescheduleInterview",
+                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date });
             }
         }
 
@@ -591,7 +598,7 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
 
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
                 {
@@ -687,7 +694,7 @@ namespace CIMOB_IPS.Controllers
                 }
             }
 
-           return RedirectToAction("Index", "Application");
+            return RedirectToAction("Index", "Application");
         }
 
         [HttpGet]
@@ -701,7 +708,7 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["applicationID"] = appId;
 
-            if(bolTechError != null)
+            if (bolTechError != null)
             {
                 if ((bool)bolTechError)
                     ViewData["technicians-error"] = "É necessário escolher um técnico responsável pela mobilidade do(a) aluno(a).";
@@ -725,7 +732,7 @@ namespace CIMOB_IPS.Controllers
                 ViewData["application-student-motivation-card"] = app.MotivationCard.ToString();
 
                 return View(new ApplicationEvaluationViewModel { IdApplication = appId, Technicians = PopulateTechnicians(), OutgoingInstitutions = PopulateOutgoingInstitutions(app.IdProgram), FinalEvalution = 0.00 });
-            } 
+            }
         }
 
         [HttpPost]
@@ -739,10 +746,14 @@ namespace CIMOB_IPS.Controllers
 
             var appId = viewModel.IdApplication;
             var evaluationResult = Request.Form["final_classification"].ToString();
+            viewModel.InterviewPoints = int.Parse(Request.Form["interview"]);
+            viewModel.MotivationCardPoints = int.Parse(Request.Form["motivations"]);
+            viewModel.AverageGrade = int.Parse(Request.Form["average_grades"]);
+            viewModel.TotalCourseCredits = int.Parse(Request.Form["ects_all"]);
 
             double dblResult = Double.Parse(evaluationResult.Replace(".", ","));
 
-            if(dblResult >= 50 && viewModel.IdTechnician == 0)
+            if (dblResult >= 50 && viewModel.IdTechnician == 0)
                 return RedirectToAction("Evaluate", "Application", new { appId = viewModel.IdApplication, bolTechError = true });
 
             if (dblResult >= 50 && viewModel.IdInstitution == 0)
@@ -760,14 +771,14 @@ namespace CIMOB_IPS.Controllers
                     .Include(p => p.IdProgramTypeNavigation)
                     .SingleOrDefault();
 
-                if(application.IdState == acceptedApplicationState)
+                if (application.IdState == acceptedApplicationState)
                     return RedirectToAction("Index", "Application");
 
                 application.FinalEvaluation = (short)dblResult;
 
                 bool bolApproved = dblResult >= 50;
-                
-                if(dblResult >= 50)
+
+                if (dblResult >= 50)
                 {
                     application.IdState = context.State.Where(s => s.Description == "Aceite").Select(a => a.IdState).SingleOrDefault();
 
@@ -785,13 +796,13 @@ namespace CIMOB_IPS.Controllers
 
                     long intResponsibleTechnicianId = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault();
 
-                    if(intResponsibleTechnicianId != GetCurrentUserID())
+                    if (intResponsibleTechnicianId != GetCurrentUserID())
                     {
                         Notification notificationTechnician = new Notification
                         {
                             ReadNotification = false,
                             Description = "Foi posta uma nova mobilidade a seu cargo.",
-                            ControllerName = "Mobility", 
+                            ControllerName = "Mobility",
                             ActionName = "MobilitiesInCharge",
                             NotificationDate = DateTime.Now,
                             IdAccount = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault()
@@ -810,6 +821,21 @@ namespace CIMOB_IPS.Controllers
                 }
 
                 context.Update(application);
+
+                context.SaveChanges();
+
+                ApplicationEvaluation appEvaluation = new ApplicationEvaluation
+                {
+                    IdApplication = application.IdApplication,
+                    AverageGrade = viewModel.AverageGrade,
+                    CreditsRatio = (float)student.Credits/viewModel.TotalCourseCredits,
+                    InterviewPoints = viewModel.InterviewPoints,
+                    MotivationCardPoints = viewModel.MotivationCardPoints,
+                    IdApplicationNavigation = application
+                };
+
+                context.ApplicationEvaluation.Add(appEvaluation);
+                context.SaveChanges();
 
                 //email ao aluno
                 string strLink = "http://cimob-ips.azurewebsites.net/MyApplications";
@@ -904,7 +930,7 @@ namespace CIMOB_IPS.Controllers
         //    }
         //}
 
-        
+
         private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intProgramId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -931,7 +957,8 @@ namespace CIMOB_IPS.Controllers
                 int intPageSize = 10;
                 int intPageApplications = (pageApplication ?? 1);
 
-                var applications = (from a in context.Application orderby a.IdStudentNavigation.StudentNum
+                var applications = (from a in context.Application
+                                    orderby a.IdStudentNavigation.StudentNum
                                     select a)
                     .OrderBy(a => a.IdStudentNavigation.StudentNum)
                     .Include(a => a.IdStateNavigation)
@@ -951,7 +978,7 @@ namespace CIMOB_IPS.Controllers
                     ViewData["search-by"] = search_by.ToString();
                 }
 
-                foreach(Application app in applications)
+                foreach (Application app in applications)
                 {
                     app.Mobility.First().IdOutgoingInstitutionNavigation = await context.Institution.Where(i => i.IdInstitution == app.Mobility.First().IdOutgoingInstitution).SingleOrDefaultAsync();
                 }
@@ -1040,5 +1067,86 @@ namespace CIMOB_IPS.Controllers
 
             return RedirectToAction("Application", "MyApplications");
         }
+
+
+        public IActionResult Interviews(int appId)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            FetchInterviews();
+            return View();
+        }
+
+        public void FetchInterviews()
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                using (var ms = new MemoryStream())
+                {
+                    using (XmlWriter xw = XmlWriter.Create(ms))
+                    {
+                        XDocument doc = new XDocument();
+
+                        XElement monthly = new XElement("monthly");
+
+                        var list = context.Application
+                            .Include(a => a.IdInterviewNavigation)
+                            .Include(a => a.IdStudentNavigation);
+
+
+                        foreach (var app in list)
+                        {
+
+                            XElement ev = new XElement("event");
+                            ev.Add(new XElement("id", app.IdInterviewNavigation.IdInterview));
+
+                            var arrNames = app.IdStudentNavigation.Name.Split(' ');
+                            string strFirstName = arrNames[0];
+                            string strLastName = arrNames[arrNames.Length - 1];
+                            var name = " ";
+                            if (arrNames.Length > 1)
+                            {
+                                name = strFirstName + " " + strLastName;
+                            }
+                            else
+                            {
+                                name = strFirstName;
+                            }
+
+                            ev.Add(new XElement("name", name));
+                            ev.Add(new XElement("startdate", app.IdInterviewNavigation.Date.Date));
+                            ev.Add(new XElement("enddate", app.IdInterviewNavigation.Date.Date));
+                            ev.Add(new XElement("starttime", app.IdInterviewNavigation.Date.TimeOfDay));
+                            ev.Add(new XElement("color", " "));
+
+                            monthly.Add(ev);
+                        }
+                        doc.Add(monthly);
+
+
+                        doc.WriteTo(xw);
+                        doc.Save(ms);
+                        ms.Position = 0;
+
+
+                        var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "js", "interviews.xml");
+                        using (var fileStream = new FileStream(uploadName, FileMode.Create))
+                        {
+
+                            ms.CopyTo(fileStream);
+                        }
+                    }
+                }
+            }
+        }
+
+
     }
+
+
+
 }

@@ -13,7 +13,7 @@ namespace CIMOB_IPS.Models
 
         public long IdState { get; set; }
 
-        public State IdStateNavigagion { get; set; }
+        public State IdStateNavigation { get; set; }
 
         public ICollection<Application> Application { get; set; }
     }

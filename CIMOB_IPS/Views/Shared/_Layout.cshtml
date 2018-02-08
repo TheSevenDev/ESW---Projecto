@@ -81,6 +81,7 @@
                     @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                     {
                         <li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>
+                        <li> <a asp-area="" asp-controller="Application" asp-action="Interviews">Entrevistas</a></li>
                     }
 
                 }
@@ -177,9 +178,9 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
     <script src="~/lib/jquery-confirm/jquery-confirm.js"></script>
-    <script src="@Url.Content("~/js/site.js")"></script>
+    <script src="~/js/monthly.js"></script>
     <script src="~/js/SignaturePadInit.js"></script>
     <script src="~/js/profileImageHandler.js"></script>
-
+    <script src="@Url.Content("~/js/site.js")"></script>
 </body>
 </html>
