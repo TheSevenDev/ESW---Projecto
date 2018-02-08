@@ -976,6 +976,7 @@ namespace CIMOB_IPS.Controllers
             {
                 var application = context.Application.Where(a => a.IdApplication == appId)
                     .Include(a => a.IdStudentNavigation)
+                    .Include(a => a.IdProgramNavigation)
                     .SingleOrDefault();
 
                 var student = GetStudentById(GetCurrentUserID());
@@ -996,6 +997,7 @@ namespace CIMOB_IPS.Controllers
 
                 application.IdState = confirmedState.IdState;
                 application.IdStateNavigation = confirmedState;
+                application.IdProgramNavigation.IdProgramTypeNavigation = context.ProgramType.Where(a => a.IdProgramType == application.IdProgramNavigation.IdProgramType).SingleOrDefault();
 
                 context.Update(application);
                 context.SaveChanges();
@@ -1040,9 +1042,12 @@ namespace CIMOB_IPS.Controllers
                     NotificationDate = DateTime.Now,
                     IdAccount = mobility.IdResponsibleTechnicianNavigation.IdAccount
                 };
+
+                context.Add(notificationTechnician);
+                context.SaveChanges();
             }
 
-            return RedirectToAction("Application", "MyApplications");
+            return RedirectToAction("Mobility", "MyMobility");
         }
 
         public IActionResult Interviews(int appId)

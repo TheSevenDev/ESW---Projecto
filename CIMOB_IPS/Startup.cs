@@ -115,7 +115,7 @@ namespace CIMOB_IPS
                     defaults: new { controller = "Account", action = "PreRegister" });
 
                 routes.MapRoute(
-                    "MyApplicationsRoute", "MinhasCandidaturas",
+                    "MyApplicationsRoute", "MyApplications",
                     defaults: new { controller = "Application", action = "MyApplications" });
 
                 routes.MapRoute(

@@ -220,7 +220,7 @@ namespace CIMOB_IPS.Controllers
             string strName = model.Technician.Name;
             long lngTelephone = model.Technician.Telephone;
 
-            Technician technician = new Technician { IdAccount = lngIdAccount, Name = strName, Telephone = lngTelephone, IsAdmin = bolIsAdmin };
+            Technician technician = new Technician { IdAccount = lngIdAccount, Name = strName, Telephone = lngTelephone, IsAdmin = bolIsAdmin, Active = true };
 
             InsertTechnician(technician, strEmail);
 
