@@ -43,7 +43,7 @@ namespace CIMOB_IPS.Controllers
             return _context.Application.Where(s => s.IdStudent == GetStudentById(GetCurrentUserID()).IdStudent).Count(m => m.IdStateNavigation.Description == "Confirmada") > 0;
         }
 
-        public async Task<IActionResult> New()
+        public async Task<IActionResult> New(int programID)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
@@ -70,7 +70,7 @@ namespace CIMOB_IPS.Controllers
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplicationMob";
 
-            ApplicationViewModel viewModel = new ApplicationViewModel { Account = new Account(), Application = new Application { IdStudentNavigation = student } };
+            ApplicationViewModel viewModel = new ApplicationViewModel { IdProgram = programID, Account = new Account(), Application = new Application { IdStudentNavigation = student } };
             viewModel.Account.Email = GetEmail(userID);
 
             foreach (var ip in program.InstitutionProgram)
@@ -155,7 +155,7 @@ namespace CIMOB_IPS.Controllers
             _context.Interview.Add(interview);
 
             Application app = model.Application;
-            app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == 1).FirstOrDefault(); //ERASMUS MUDAR PROX FASE
+            app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == model.IdProgram).FirstOrDefault(); //testar
             app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
             app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
             app.ApplicationDate = DateTime.Now;
@@ -341,8 +341,8 @@ namespace CIMOB_IPS.Controllers
                     .Include(s => s.IdCourseNavigation)
                     .SingleOrDefaultAsync(s => s.IdAccount == GetCurrentUserID());
 
-                var programType = await context.ProgramType
-                    .SingleOrDefaultAsync(s => s.IdProgramType == 1); //erasmus, mudar prox fase
+                var idProgramType = await context.Program.Where(p => p.IdProgram == viewModel.IdProgram).Select(p => p.IdProgramType).SingleOrDefaultAsync(); //testar
+                var programType = await context.ProgramType.Where(p => p.IdProgramType == idProgramType).SingleOrDefaultAsync();
 
                 var strMes = DateTime.Now.ToString("MMMM");
                 strMes = strMes.First().ToString().ToUpper() + strMes.Substring(1);
@@ -615,7 +615,7 @@ namespace CIMOB_IPS.Controllers
                     Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
 
                     interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours.Hour, viewModel.Hours.Minute, 0);
-                    interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
+                    interview.IdState = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault(); //MUDAR NO FUTURO
 
                     context.Update(interview);
                     context.SaveChanges();
@@ -1058,7 +1058,7 @@ namespace CIMOB_IPS.Controllers
                 {
                     ReadNotification = false,
                     Description = "Uma mobilidade a seu cargo foi confirmada.",
-                    ControllerName = "Mobility", //MUDAR ISTO MUDAR ISTO MUDAR ISTO
+                    ControllerName = "Mobility", 
                     ActionName = "MobilitiesInCharge",
                     NotificationDate = DateTime.Now,
                     IdAccount = mobility.IdResponsibleTechnicianNavigation.IdAccount
