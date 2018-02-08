@@ -21,10 +21,10 @@
             <input type="text" max="600" min="0" value=@ViewData["application-student-credits"] id="ects_done" name="ects_done" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
             <label>Número de ECTS do curso</label>
-            <input type="text" max="600" min="0" value="0" id="ects_all" name="ects_all" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
+            <input type="text" max="600" min="0" value="0" asp-for="TotalCourseCredits" id="ects_all" name="ects_all" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
             <label>Classificação de motivações(0-100)</label>
-            <input type="text" max="100" min="0" value="0" id="motivations" name="motivations" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br />
+            <input type="text" max="100" min="0" value="0" asp-for="MotivationCardPoints" id="motivations" name="motivations" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br />
 
             <button type="button" id="viewMotivationCard" onclick="javascript:toggleMotivationCard(this);">Pré-visualizar</button>
 
@@ -32,10 +32,10 @@
             <br /><br />
 
             <label>Classificação da entrevista(0-100)</label>
-            <input type="text" max="100" min="0" value="0" id="interview" name="interview" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br /><br />
+            <input type="text" max="100" min="0" value="0" asp-for="InterviewPoints" id="interview" name="interview" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br /><br />
 
             <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
-            <input type="text" max="20" min="0" value="0" id="average_grades" name="average_grades" onfocusout="this.value = minmax(this.value, 0, 20); evaluateApplication();"/>
+            <input type="text" max="20" min="0" value="0" asp-for="InterviewPoints" id="average_grades" name="average_grades" onfocusout="this.value = minmax(this.value, 0, 20); evaluateApplication();"/>
             <label>&nbsp;valores</label><br />
 
             <div style="margin-left:60%;margin-top:5%;">

@@ -109,7 +109,7 @@ namespace XUnitCIMOB_IPS
             });
 
             _context.SaveChanges();
-            _controller = new ApplicationController(_context);
+            _controller = new ApplicationController(_context, null);
         }
 
         #region Aux Functions
