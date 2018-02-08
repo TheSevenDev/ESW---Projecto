@@ -12,22 +12,22 @@
     <br />
     <div style="margin-left:2.5%;padding:1%;">
 
-        <label>Rádio de ECTS realizados</label>
-        <input type="text" value=@Model.CreditsRatio id="ects_done" disabled name="ects_done"/><br /><br />
+        <label>Rácio de ECTS realizados</label>
+        <input type="text" value=@Model.CreditsRatio id="ects_done" disabled name="ects_done" style="width:2.5vw;"/><br /><br />
 
         <label>Classificação de motivações(0-100)</label>
-        <input type="text" value=@Model.MotivationCardPoints id="motivations" disabled name="motivations"><br /><br />
+        <input type="text" value=@Model.MotivationCardPoints id="motivations" disabled name="motivations" style="width:2.5vw;"><br /><br />
 
         <label>Classificação da entrevista(0-100)</label>
-        <input type="text" value=@Model.MotivationCardPoints id="interview" disabled name="interview" /><br /><br />
+        <input type="text" value=@Model.MotivationCardPoints id="interview" disabled name="interview" style="width:2.5vw;"/><br /><br />
 
         <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
-        <input type="text" value=@Model.AverageGrade id="average_grades" disabled name="average_grades"/>
+        <input type="text" value=@Model.AverageGrade id="average_grades" disabled name="average_grades" style="width:2.5vw;"/>
         <label>&nbsp;valores</label><br />
 
-        <div style="margin-left:60%;margin-top:5%;">
+        <div style="margin-left:50%;margin-top:5%;">
             <label>Classificação Final</label>
-            <input type="text" value=@Model.IdApplicationNavigation.FinalEvaluation disabled id="final_classification" name="final_classification" />
+            <input type="text" value=@Model.IdApplicationNavigation.FinalEvaluation disabled id="final_classification" name="final_classification" style="width:2.5vw;" />
             <label>&nbsp;valores</label><br /><br />
             <label id="evaluate_result" style="float:right; margin-right: 8%;"></label><br /><br />
         </div>

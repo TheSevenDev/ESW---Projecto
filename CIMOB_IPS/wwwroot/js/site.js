@@ -435,16 +435,17 @@ function loadInterviews() {
 function autoPlayGallery() {
     function Move() {
         var i;
-        for (i = 1; i < 4; i++) {
-            if (document.getElementById('i' + i) !== null && document.getElementById('i' + i).checked) {
-                i = (i % 3) + 1;
-                document.getElementById('i' + i).checked = true;
+        for (i = 1; i < 5; i++) {
+            var obj = document.getElementById('i' + i);
+            if (obj !== null && obj.checked) {
+                i = (i % 4) + 1;
+                obj.checked = true;
                 break;
             }
         }
 
     }
-    setInterval(Move, 3000);
+    setInterval(Move, 6400);
 }
 
 function setColor() {
@@ -461,16 +462,6 @@ function setColor() {
             document.documentElement.style.setProperty('--main-color', '#F5B738'); //amarelo torrado
             document.documentElement.style.setProperty('--hover-button', '#F5B73899'); //hoverDotsSlider
             break;
-        //case 3:
-        //    document.documentElement.style.setProperty('--main-color', '#EA3527'); //vermelho
-        //    document.documentElement.style.setProperty('--secundary-color', '#EDEDED'); //secundária (letras menu)
-        //    document.documentElement.style.setProperty('--hover-color', '#383838'); //hover
-        //    document.documentElement.style.setProperty('--hover-button', '#EA352799'); //hoverDotsSlider
-        //    break;
-        //case 4:
-        //    document.documentElement.style.setProperty('--main-color', '#F3E01A'); //amarelo
-        //    document.documentElement.style.setProperty('--hover-button', '#F3E01A99'); //hoverDotsSlider
-        //    break;
         case 3:
             document.documentElement.style.setProperty('--main-color', '#C1D53C'); //verde
             document.documentElement.style.setProperty('--hover-button', '#C1D53C99'); //hoverDotsSlider

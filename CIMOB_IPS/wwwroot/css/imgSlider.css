@@ -1,16 +1,9 @@
-﻿html,body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-}
-
-.imgContainer {
+﻿.imgContainer {
     margin: 0 auto;
-    margin-top: 5%;
+    margin-top: 0%;
     position: relative;
-    width: 70%;
-    height: 0;
-    padding-bottom: 30%;
+    width: 82%;
+    padding-bottom: 84Vh;
     border: 0px solid;
 }
 
@@ -20,12 +13,12 @@
     height: 100%;
 }
 
-.slider-img img{
+.slider-img img {
     width: 100%;
     height: 100%;
 }
 
-#i1,#i2,#i3{
+#i1,#i2,#i3, #i4{
     display: none;
 }
 
@@ -38,12 +31,12 @@
     z-index: 99;
 }
 
-    .pre:hover,
-    .nxt:hover {
-        transition: .3s;
-        background: rgba(241,241,241,.4);
-        cursor: pointer;
-    }
+.pre:hover,
+.nxt:hover {
+    transition: .3s;
+    background: rgba(241,241,241,.4);
+    cursor: pointer;
+}
 
 .arrPre , .arrNxt  {
     position: absolute;
@@ -82,8 +75,8 @@
 
 .dots {
     top: 150%;
-    width: 1.5%;
-    height: 50%;
+    width: 1.5vw;
+    height: 1.5vw;
     margin: 0 4px;
     position: relative;
     border-radius: 50%;
@@ -103,14 +96,16 @@
 
 #i1:checked ~ #first,
 #i2:checked ~ #second,
-#i3:checked ~ #third {
+#i3:checked ~ #third,
+#i4:checked ~ #fourth {
     z-index: 9;
     animation: scroll 1s ease-in-out;
 }
 
 #i1:checked ~ .navi #dot1,
 #i2:checked ~ .navi #dot2,
-#i3:checked ~ .navi #dot3 {
+#i3:checked ~ .navi #dot3,
+#i4:checked ~ .navi #dot4 {
     background: var(--main-color);
 }
 
