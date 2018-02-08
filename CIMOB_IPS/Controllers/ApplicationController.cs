@@ -967,6 +967,8 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.Mobility)
                     .Where(a => a.IdStateNavigation.Description == "Aceite" && a.FinalEvaluation >= 50);
 
+                applications = applications.Where(a => a.IdProgramNavigation.IdState != 13);
+
                 if (String.IsNullOrEmpty(search_by))
                 {
                     ViewData["search-by"] = "";
