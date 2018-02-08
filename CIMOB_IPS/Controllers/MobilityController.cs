@@ -106,5 +106,29 @@ namespace CIMOB_IPS.Controllers
                 return View(mobility);
             }
         }
+
+        public IActionResult TechnicianPreview(int? IdTechnician)
+        {
+            if (!User.Identity.IsAuthenticated)
+                return RedirectToAction("Login", "Account");
+
+            if ((User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                return RedirectToAction("Index", "Home");
+
+            
+            Technician tech;
+
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                tech = context.Technician.Where(t => t.IdTechnician == IdTechnician).Include(t => t.IdAccountNavigation).SingleOrDefault();
+            }
+
+            if(tech == null)
+            {
+                return RedirectToAction("MyMobility", "Mobility");
+            }
+
+                return PartialView("~/Views/Profile/_ViewTechProfilePreview.cshtml",tech);
+        }
     }
 }
