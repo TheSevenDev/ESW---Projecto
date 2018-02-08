@@ -5,18 +5,13 @@
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
 
-<div class="main-application-container" style="width:100%;">
+<div class="main-application-container" style="width:100%;border-radius:1.5%;margin-top:0%;">
     <div style="margin-left:2.5%;padding:1%;">
-        <!--
-        <div class="profileImage">
-            <img id="img" src="~/images/user1.png" style="width:9.5vw; height:9.5vw" draggable="false" />
-        </div>-->
-
-        <div class="profileImage">
-            <img id="img" src="@Model.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:9.5vw; height:9.5vw;" draggable="false" />
+        <div class="profileImage" style="margin-top:1%;margin-left:37%;">
+            <img id="img" src="@Model.IdAccountNavigation.AvatarUrl" class="profile-image" style="width:7vw; height:7vw; margin-top:0%;" draggable="false" />
         </div>
 
-        <table class="information">
+        <table class="information" style="position:relative;margin-left:20%;margin-top:20%;width:60%;">
             @{
                 Mobility activeMobility = null;
 
@@ -77,14 +72,6 @@
                 <tr>
                     <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.AddressDesc)</td>
                     <td>@Html.DisplayFor(model => model.IdAddressNavigation.AddressDesc)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.DoorNumber)</td>
-                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.DoorNumber)</td>
-                </tr>
-                <tr>
-                    <td class="profileLabel">@Html.DisplayNameFor(model => model.IdAddressNavigation.Floor)</td>
-                    <td>@Html.DisplayFor(model => model.IdAddressNavigation.Floor)</td>
                 </tr>
                 <tr>
                     <td class="profileLabel">@Html.DisplayNameFor(model => model.Credits)</td>

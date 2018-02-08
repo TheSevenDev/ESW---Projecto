@@ -231,12 +231,6 @@ namespace CIMOB_IPS.Controllers
         [HttpGet]
         public IActionResult ViewStudentProfile(string id)
         {
-            if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
-
-            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
-
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 Student student = context.Student.Where(s => s.IdStudent == int.Parse(id))
@@ -245,9 +239,6 @@ namespace CIMOB_IPS.Controllers
                     .Include(s => s.IdCourseNavigation)
                     .Include(s => s.IdNationalityNavigation)
                     .SingleOrDefault();
-
-                if (student == null)
-                    return RedirectToAction("Index", "Home");
 
                 return PartialView("_ViewStudentProfile", student);
             }

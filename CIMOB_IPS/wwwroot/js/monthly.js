@@ -222,8 +222,8 @@ Monthly 2.2.2 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 
 			if(startTime) {
 				var endTime = _getEventDetail(event, "endtime");
-				timeHtml = '<div><div class="monthly-list-time-start">' + formatTime(startTime) + "</div>"
-					+ (endTime ? '<div class="monthly-list-time-end">' + formatTime(endTime) + "</div>" : "")
+				timeHtml = '<div><div class="monthly-list-time-start">' + startTime + "</div>"
+					+ (endTime ? '<div class="monthly-list-time-end">' + endTime + "</div>" : "")
 					+ "</div>";
 			}
 
@@ -328,7 +328,7 @@ Monthly 2.2.2 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 		// Use the user's locale if possible to obtain a list of short month names, falling back on English
 		function defaultMonthNames() {
 			if(typeof Intl === "undefined") {
-				return ["Jan", "Feb", "Mar", "Apr", "May", "June", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+				return ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 			}
 			var formatter = new Intl.DateTimeFormat(locale, {month: monthNameFormat});
 			var names = [];
@@ -386,7 +386,7 @@ Monthly 2.2.2 by Kevin Thornbloom is licensed under a Creative Commons Attributi
 			if(hour > 12) {
 				hour -= 12;
 				period = "PM";
-			} else if (hour == 12) {
+			} else if (hour === 12) {
 				period = "PM";
 			} else if(hour === 0) {
 				hour = 12;
