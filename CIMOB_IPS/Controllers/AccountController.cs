@@ -319,7 +319,8 @@ namespace CIMOB_IPS.Controllers
                 else
                 {
                     string strEmail = email.ToString();
-                    string strStudentNumber = email.ToString().Substring(0, 9);
+                    string strStudentNumber = "180000000"; //MUDAR ISTO NO FIM
+                    //string strStudentNumber = email.ToString().Substring(0, 9); 
                     ViewData["student-email"] = strEmail;
                     ViewData["student-number"] = strStudentNumber;
                 }
