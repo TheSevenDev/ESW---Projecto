@@ -1,0 +1,31 @@
+﻿#notFound {
+    background: var(--main-grey);
+    width: 74vh;
+    height: 65vh;
+    margin-top: 6%;
+    margin-left: 31%;
+    border-radius: 50%;
+}
+
+    #notFound img {
+        width: 29vw;
+        position: relative;
+        margin-left: 11%;
+    }
+
+    #notFound p {
+        font-size: 2vw;
+        position: relative;
+        display: block;
+        font-weight: bold;
+        color: #EDEDED;
+        margin-top: -6%;
+    }
+
+#maintenance{
+
+}
+
+#errorCatched{
+
+}
