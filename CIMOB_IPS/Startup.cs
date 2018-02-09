@@ -60,7 +60,7 @@ namespace CIMOB_IPS
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Home/ErrorView");
             }
 
             app.UseStaticFiles(new StaticFileOptions
@@ -68,14 +68,6 @@ namespace CIMOB_IPS
                 ServeUnknownFileTypes = true, //allow unkown file types also to be served
                 DefaultContentType = "application/vnd.microsoft.portable-executable" //content type to returned if fileType is not known.
             });
-
-            /*
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), @"BackOffice")),
-                RequestPath = new PathString("/BackOffice")
-            });*/
 
             app.UseMvc(routes =>
             {

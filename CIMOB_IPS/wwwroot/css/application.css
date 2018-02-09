@@ -189,7 +189,7 @@ legend {
 
 .available-inst:hover {
     background-color: var(--blue-var5);
-    cursor: default;
+    cursor: pointer;
 }
 
 .connected  {

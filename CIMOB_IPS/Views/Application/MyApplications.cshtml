@@ -115,7 +115,10 @@ else
                     {
                         <input type="button" onclick="javascript:confirmApplication(@item.IdApplication);" id="confirm-application" value="Confirmar Candidatura" />
                     }
-                    <button type="submit" id="deleteApplication">Cancelar Candidatura</button>
+                    @if (item.IdStateNavigation.Description == "Aceite" || item.IdStateNavigation.Description == "Em Avaliação")
+                    {
+                        <button type="submit" id="deleteApplication">Cancelar Candidatura</button>
+                    }
                 </div>
             </form>
 
