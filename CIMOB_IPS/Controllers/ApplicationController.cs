@@ -46,13 +46,13 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> New(int programID)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             if (HasConfirmedApp())
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             ProfileController pc = new ProfileController(_hostingEnvironment);
             int intEcts = await pc.GetCurrentStudentECTS(User);
@@ -65,7 +65,7 @@ namespace CIMOB_IPS.Controllers
             var app = _context.Application.Where(ap => ap.IdStudent == student.IdStudent);
 
             if (app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             ViewData["app_form"] = "NewApplication";
             ViewData["submit_form"] = "NewApplicationMob";
@@ -140,10 +140,10 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
 
             Interview interview = new Interview
@@ -241,17 +241,17 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> MyApplications()
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             AccountController ac = new AccountController();
 
             int lngCurrentUserId = GetCurrentUserID();
 
             if (!ac.IsStudent(lngCurrentUserId))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             long studentId = ac.GetStudentId(lngCurrentUserId);
 
@@ -387,10 +387,10 @@ namespace CIMOB_IPS.Controllers
         public async Task<IActionResult> Index(int? pageApplication, string search_by)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(new AccountController().IsTechnician(GetCurrentUserID())))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -435,7 +435,7 @@ namespace CIMOB_IPS.Controllers
             int applicationId = Int32.Parse(Request.Form["idApplication"]);
 
             if (!ac.IsStudent(lngCurrentUserId))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             long studentId = ac.GetStudentId(lngCurrentUserId);
 
@@ -485,10 +485,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult Details(string id)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -517,10 +517,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult EvaluationDetails(string id)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -546,10 +546,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult ScheduleInterview(string id)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -568,10 +568,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult RescheduleInterview(string id)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -591,10 +591,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult ScheduleInterview(InterviewViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             if (ModelState.IsValid)
             {
@@ -646,10 +646,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult RescheduleInterview(InterviewViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             if (ModelState.IsValid)
             {
@@ -699,10 +699,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult Evaluate(int appId, bool? bolTechError, bool? bolInstitutionError)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             ViewData["applicationID"] = appId;
 
@@ -739,7 +739,7 @@ namespace CIMOB_IPS.Controllers
             if (!User.Identity.IsAuthenticated)
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             var appId = viewModel.IdApplication;
             var evaluationResult = Request.Form["final_classification"].ToString();
@@ -953,7 +953,7 @@ namespace CIMOB_IPS.Controllers
         public IActionResult Confirm(int appId)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -966,7 +966,7 @@ namespace CIMOB_IPS.Controllers
 
                 if (student.IdStudent != application.IdStudent || application.FinalEvaluation < 50)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return View("ErrorView");
                 }
 
                 var mobility = context.Mobility.Where(m => m.IdApplication == appId)
@@ -1036,10 +1036,10 @@ namespace CIMOB_IPS.Controllers
         public IActionResult Interviews(int appId)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
+                return View("ErrorView");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return RedirectToAction("Index", "Home");
+                return View("ErrorView");
 
             FetchInterviews();
             return View();
