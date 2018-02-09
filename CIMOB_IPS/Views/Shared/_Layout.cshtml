@@ -28,13 +28,7 @@
         @Html.Partial("SessionBar")
         <div class="navbar-menu">
             <ul>
-                @if (User.IsInRole("estudante"))
-                {
-                    <li>
-                        <a asp-area="" asp-controller="Program" asp-action="Index">Programas</a>
-                    </li>
-                }
-                else
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 {
                     <li>
                         <a>Programas</a>
@@ -45,6 +39,13 @@
                         </ul>
                     </li>
                 }
+                else
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Program" asp-action="Index">Programas</a>
+                    </li>
+                }
+                
 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -86,7 +87,7 @@
 
                     @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
                     {
-                        <!--<li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>-->
+                        <li> <a asp-area="" asp-controller="Account" asp-action="Technicians">Técnicos</a></li>
                         <li> <a asp-area="" asp-controller="Application" asp-action="Interviews">Entrevistas</a></li>
                     }
 

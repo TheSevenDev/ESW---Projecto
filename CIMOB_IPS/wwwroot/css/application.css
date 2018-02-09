@@ -102,6 +102,10 @@ textarea {
     border: 0.7px solid var(--main-color);
 }
 
+    .application-form-pager input[type=submit]:disabled {
+        border: none;
+    }
+
 input[type=submit]:disabled {
     background-color: #AAAAAA;
 }

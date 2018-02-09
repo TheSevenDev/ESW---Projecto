@@ -191,7 +191,10 @@ function chooseInstitution(institution) {
         document.getElementById("not-chosen-institutions").appendChild(institution);
 }
 
-
+function enableApplicationButton()
+{
+    document.getElementById("submit-application-btn").disabled = false;
+}
 
 function applicationInstitutions() {
     if ($("#form-application").valid()) 
@@ -199,24 +202,35 @@ function applicationInstitutions() {
 
         var list = document.getElementById("chosen-institutions").getElementsByTagName("li");
 
-        for (var i = 0; i < list.length; i++) {
-            var institution = list[i].innerText;
-            if (i === 0)
-                actionUrl += "?inst" + (i + 1) + "=" + institution;
-            else
-                actionUrl += "&inst" + (i + 1) + "=" + institution;
+        if (list.length == 0)
+        {
+            document.getElementById("no-institutions-chosen-error").style.display = "block";
+            $("#form-application").preventDefault();
+            return;
         }
+        else
+        {
+            document.getElementById("no-institutions-chosen-error").style.display = "none";
 
-        $.ajax({
-            type: "POST",
-            url: actionUrl,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-        }).done(function (res) {
+            for (var i = 0; i < list.length; i++) {
+                var institution = list[i].innerText;
+                if (i === 0)
+                    actionUrl += "?inst" + (i + 1) + "=" + institution;
+                else
+                    actionUrl += "&inst" + (i + 1) + "=" + institution;
+            }
 
-        });;
+            $.ajax({
+                type: "POST",
+                url: actionUrl,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+            }).done(function (res) {
+
+            });
+        }
     }
-}
+
 
 function toggleCourses(elem) {
     var jqString = "#" + elem.id;
@@ -413,15 +427,6 @@ $(document).ready(function () {
 
             }
         })
-    });
-
-    $("form.schedule-interview-form").submit(function (event) {
-        var id = this["idApplication"].value;
-        event.preventDefault();
-        var form = this;
-
-        alert(document.getElementById("Date").value);
-        alert(document.getElementById("Hour").value);
     });
 });
 

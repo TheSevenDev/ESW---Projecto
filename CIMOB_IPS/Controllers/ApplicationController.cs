@@ -642,6 +642,19 @@ namespace CIMOB_IPS.Controllers
 
                     Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
 
+                    Notification notification = new Notification
+                    {
+                        ReadNotification = false,
+                        Description = "Foi marcada uma entrevista para uma candidatura sua.",
+                        ControllerName = "Application",
+                        ActionName = "MyApplications",
+                        NotificationDate = DateTime.Now,
+                        IdAccount = student.IdAccount
+                    };
+
+                    context.Notification.Add(notification);
+                    context.SaveChanges();
+
                     return RedirectToAction("Index", "Application");
                 }
             }
@@ -694,6 +707,19 @@ namespace CIMOB_IPS.Controllers
                     strbBody.AppendLine("Cumprimentos, <br> A Equipa do CIMOB-IPS.");
 
                     Email.SendEmail(student.IdAccountNavigation.Email, "Entrevista de candidatura para mobilidade", strbBody.ToString());
+
+                    Notification notification = new Notification
+                    {
+                        ReadNotification = false,
+                        Description = "Foi re-marcada uma entrevista para uma candidatura sua.",
+                        ControllerName = "Application",
+                        ActionName = "MyApplications",
+                        NotificationDate = DateTime.Now,
+                        IdAccount = student.IdAccount
+                    };
+
+                    context.Notification.Add(notification);
+                    context.SaveChanges();
 
                     return RedirectToAction("Index", "Application");
                 }
@@ -811,6 +837,7 @@ namespace CIMOB_IPS.Controllers
                     };
 
                     context.Notification.Add(notificationTechnician);
+                    context.SaveChanges();
 
                     program.Vacancies -= 1;
                     context.Program.Update(program);

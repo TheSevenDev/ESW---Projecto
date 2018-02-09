@@ -66,7 +66,7 @@
         <fieldset style="margin-top:7%;">
             <legend>Contacto em caso de emergência</legend>
             <table style="margin-left:11%">
-                <tr> <td><label asp-for="Application.EmergencyContactName"></label></td></tr>
+                <tr> <td><label id="emergency-contact-name" asp-for="Application.EmergencyContactName"></label></td></tr>
                 <tr>
                     <td>
                         <div class="on-focus clearfix">
@@ -152,6 +152,7 @@
                                     &nbsp;
                                 </ul>
                             </div>
+                            <p><span class="error-message" id="no-institutions-chosen-error" style="display: none;">Tem de escolher pelo menos uma instituição.</span></p>
                         </section>
                     </td>
                 </tr>
@@ -172,13 +173,13 @@
             <p style="width:100%;text-align:center;">Como prova do seu consentimento de candidatura, é <span style="color: red;">necessário</span> a sua assinatura digital.</p>
             <p style="width:100%;text-align:center;">Esta assinatura produzirá um documento que poderá visualizar na página das suas candidaturas.</p>
             <table style="margin-left:20%;">
-                <tr> <td>@Html.EditorFor(model => model.Signature)</td></tr>
+                <tr> <td onclick = "javascript:enableApplicationButton();">@Html.EditorFor(model => model.Signature, new { @id = "canvasSignature", @class = "canvasSignature" })</td></tr>
                 <tr> <td><span asp-validation-for="Signature" class="error-message"></span></td></tr>
             </table>
         </fieldset>
 
         <div class="application-form-pager">
-            <input type="submit" value="Submeter Candidatura">
+            <input type="submit" id="submit-application-btn" disabled value="Submeter Candidatura">
         </div>
     </form>
 </div>
