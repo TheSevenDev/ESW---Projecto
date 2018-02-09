@@ -11,6 +11,8 @@ namespace CIMOB_IPS.Models.ViewModels
     {
         public long IdInterview { get; set; }
 
+        public long IdApplication { get; set; }
+
         [Display(Name ="Dia")]
         [CheckIfDateIsAfter]       
         [Required(ErrorMessage = "É necessário seleccionar o dia.")]

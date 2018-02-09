@@ -13,10 +13,16 @@ namespace CIMOB_IPS.Models.CustomValidations
         {
             if (value != null)
             {
+                var model = (ViewModels.InterviewViewModel)validationContext.ObjectInstance;
+                DateTime hours = Convert.ToDateTime(model.Hours);
+
                 DateTime date = Convert.ToDateTime(value);
-                if (date < DateTime.Now)
+
+                DateTime actualDate = new DateTime(date.Year, date.Month, date.Day, hours.Hour, hours.Minute, 0);
+
+                if (actualDate < DateTime.Now)
                 {
-                    return new ValidationResult("A data tem de ser após o dia actual");
+                    return new ValidationResult("A data não pode ser anterior a hoje");
                 }
             }
 
