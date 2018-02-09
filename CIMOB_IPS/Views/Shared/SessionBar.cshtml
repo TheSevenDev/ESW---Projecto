@@ -43,10 +43,8 @@
     }
     else
     {
-        <div class="session-name">
-            @*Bem-vindo,*@ 
-            
-            <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" class="session-profile-image" draggable="false"/> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
+        <div class="session-name">  
+            <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" onerror="this.src='images/avatars/user1.png'" class="session-profile-image" draggable="false"/> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
     }
 
