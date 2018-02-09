@@ -737,7 +737,6 @@ namespace CIMOB_IPS.Controllers
         public IActionResult EvaluateApplication(ApplicationEvaluationViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
-                return RedirectToAction("Login", "Account");
 
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return RedirectToAction("Index", "Home");
@@ -794,20 +793,17 @@ namespace CIMOB_IPS.Controllers
 
                     long intResponsibleTechnicianId = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault();
 
-                    if (intResponsibleTechnicianId != GetCurrentUserID())
+                    Notification notificationTechnician = new Notification
                     {
-                        Notification notificationTechnician = new Notification
-                        {
-                            ReadNotification = false,
-                            Description = "Foi posta uma nova mobilidade a seu cargo.",
-                            ControllerName = "Mobility",
-                            ActionName = "MobilitiesInCharge",
-                            NotificationDate = DateTime.Now,
-                            IdAccount = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault()
-                        };
+                        ReadNotification = false,
+                        Description = "Foi posta uma nova mobilidade a seu cargo.",
+                        ControllerName = "Mobility",
+                        ActionName = "MobilitiesInCharge",
+                        NotificationDate = DateTime.Now,
+                        IdAccount = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault()
+                    };
 
-                        context.Notification.Add(notificationTechnician);
-                    }
+                    context.Notification.Add(notificationTechnician);
 
                     program.Vacancies -= 1;
                     context.Program.Update(program);
@@ -871,23 +867,10 @@ namespace CIMOB_IPS.Controllers
                 };
 
                 context.Notification.Add(notificationStudent);
-
                 context.SaveChanges();
             }
 
             return RedirectToAction("Index", "Application");
-        }
-
-        public void InsertEvaluation(ApplicationEvaluationViewModel viewModel)
-        {
-            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-            {
-                ApplicationEvaluation appCancel = new ApplicationEvaluation
-                {
-                    /*IdApplication = viewModel.IdApplication,
-                    CreditsRatio = viewModel.*/
-                };
-            }
         }
 
         private IEnumerable<SelectListItem> PopulateTechnicians()

@@ -16,7 +16,7 @@ namespace CIMOB_IPS.Models.CustomValidations
                 DateTime date = Convert.ToDateTime(value);
                 if (date < DateTime.Now)
                 {
-                    return new ValidationResult("A data não pode ser anterior a hoje");
+                    return new ValidationResult("A data tem de ser após o dia actual");
                 }
             }
 

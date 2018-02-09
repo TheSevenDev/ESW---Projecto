@@ -27,21 +27,23 @@
         @Html.Partial("SessionBar")
         <div class="navbar-menu">
             <ul>
-                <li>
-                    <a>Programas</a>
-                    <ul class="sub-menu">
-                        @if (User.Identity.IsAuthenticated)
-                        {
-
-                            @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
-                            {
-                                <li><a asp-area="" asp-controller="Program" asp-action="Create">Criar Programa</a></li>
-                            }
-                        }
-                        <li><a asp-area="" asp-controller="Program" asp-action="Index">Ver Programas</a></li>
-                        <li></li>
-                    </ul>
-                </li>
+                @if (User.IsInRole("estudante"))
+                {
+                    <li>
+                        <a asp-area="" asp-controller="Program" asp-action="Index">Programas</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a>Programas</a>
+                        <ul class="sub-menu">
+                            <li><a asp-area="" asp-controller="Program" asp-action="Create">Criar Programa</a></li>
+                            <li><a asp-area="" asp-controller="Program" asp-action="Index">Ver Programas</a></li>
+                            <li></li>
+                        </ul>
+                    </li>
+                }
 
                 @if (User.Identity.IsAuthenticated)
                 {
@@ -49,7 +51,7 @@
                     @if (User.IsInRole("estudante"))
                     {
                         <li>
-                            <a>Mobilidade</a>
+                            <a>Candidaturas</a>
                             <ul class="sub-menu">
                                 <li><a asp-area="" asp-controller="Application" asp-action="MyApplications">Minhas Candidaturas</a></li>
                                 <li><a asp-area="" asp-controller="Mobility" asp-action="MyMobility">Minha Mobilidade</a></li>
@@ -149,7 +151,7 @@
     </div>
 
     <footer>
-        <img src="~/images/ips.png" style="width:2.15vw; height:2.15vw; opacity:0.8; position:fixed;margin-left:12vw;margin-top:0.05%;" />
+        <img src="~/images/ips.png" style="width:2vw; height:2vw; opacity:0.8; position:fixed;margin-left:12vw;margin-top:0.05%;" />
         <p>CIMOB - <a target="_blank" href="https://www.ips.pt/ips_si/web_page.inicial">Instituto Politécnico de Setúbal</a></p>
         <a target="_blank" href="https://www.facebook.com/ipsetubal/"><img src="~/images/iconFace.png" style="width:1.5vw; height:1.5vw; opacity:0.8; position:fixed;margin-left:35vw;margin-top:-0.7%;"></a>
         <a target="_blank" href="http://www.linkedin.com/edu/school?id=162089"><img src="~/images/iconLikedin.png" style="width:1.5vw; height:1.5vw; opacity:0.8; position:fixed;margin-left:33vw;margin-top:-0.7%;"></a>
