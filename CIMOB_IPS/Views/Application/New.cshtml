@@ -134,11 +134,11 @@
                         <section id="connected" style="margin-top:2.5%;">
                             <span style="margin-left:32%; font-size:1.15vmax">Instituições Disponíveis</span>
                             <div class="box-available-inst">
-                                <ul class="connected">
+                                <ul class="connected" id="not-chosen-institutions">
                                     &nbsp;
                                     @foreach (var inst in Model.Institutions)
                                     {
-                                        <li class="available-inst" ondrag="javascript: closeHelpInst();" title="@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description">
+                                        <li class="available-inst" onclick="javascript:chooseInstitution(this);" ondrag="javascript: closeHelpInst();" title="@inst.IdOutgoingInstitutionNavigation.IdNationalityNavigation.Description">
                                             @inst.IdOutgoingInstitutionNavigation.Name
                                             <input type="hidden" name="chosen-institutions" value="@inst.IdOutgoingInstitutionNavigation.IdInstitution" />
                                         </li>

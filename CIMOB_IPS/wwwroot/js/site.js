@@ -1,7 +1,7 @@
 ﻿
 function toogleSettings() {
     document.getElementById("submenu-notifications").style.display = "none";
-    $("#submenu-settings").slideToggle(250);
+    $("#submenu-settings").toggle();
 }
 
 function toogleNotifications() {
@@ -184,10 +184,17 @@ function adressCode() {
     })
 }
 
+function chooseInstitution(institution) {
+    if (institution.parentNode.getAttribute('id') === 'not-chosen-institutions')
+        document.getElementById("institutions-chosen").appendChild(institution);
+    else
+        document.getElementById("not-chosen-institutions").appendChild(institution);
+}
+
+
+
 function applicationInstitutions() {
-
-    if ($("#form-application").valid()) {
-
+    if ($("#form-application").valid()) 
         var actionUrl = '/Application/RegisterApplicationInstitutions';
 
         var list = document.getElementById("chosen-institutions").getElementsByTagName("li");
@@ -208,11 +215,9 @@ function applicationInstitutions() {
         }).done(function (res) {
 
         });;
-
     }
-
-
 }
+
 function toggleCourses(elem) {
     var jqString = "#" + elem.id;
     var jqElem = $(jqString);

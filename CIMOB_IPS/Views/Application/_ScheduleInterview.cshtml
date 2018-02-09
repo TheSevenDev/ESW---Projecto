@@ -3,8 +3,26 @@
 <link rel="stylesheet" href='@Url.Content("~/css/program.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/site.css")' />
 <link rel="stylesheet" href='@Url.Content("~/css/application.css")' />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script>
+    function TDate() {
+        var UserDate = document.getElementById("interview-date").value;
+        var ToDate = new Date();
 
+        if (new Date(UserDate).getTime() <= ToDate.getTime()) {
+            document.getElementById("date-error-message").style.display = "inline-block";
+            document.getElementById("submit-interview").disabled = true;
+            return false;
+        }
+        document.getElementById("date-error-message").style.display = "none";
+        document.getElementById("submit-interview").disabled = false;
+        return true;
+    }
+
+    function validateDate() {
+        if (document.getElementById("date-error-message").style.display == "inline-block" || document.getElementById("date-error-message").style.display == "block")
+            event.preventDefault();
+    }
+</script>
 <div class="main-application-container" style="width:40%;margin-top:20%;border-radius:1.5%;">
     <form asp-action="ScheduleInterview" method="post"  id="form-application" class="schedule-interview-form">
         <div style="margin-left:2.5%;padding:1%;">
@@ -12,14 +30,13 @@
                 @Html.HiddenFor(model => model.IdInterview)
                 @Html.HiddenFor(model => model.IdApplication)
                 <tr> <td><label asp-for="Date"> Data</label></td></tr>
-                <tr> <td><input asp-for="Date" type="date" style="width:100%;"/></td></tr>
-                <tr> <td><span asp-validation-for="Date" class="error-message"></span></td></tr>
+                <tr> <td><input asp-for="Date"  id="interview-date" type="date" onchange="TDate()" style="width:100%;"/></td></tr>
+                <tr> <td><span asp-validation-for="Date" class="error-message" id="date-error-message" style="display:inline-block" >Data tem de ser posterior à atual.</span></td></tr>
 
                 <tr> <td><label asp-for="Hours"></label></td></tr>
                 <tr> <td><input asp-for="Hours" type="time" style="width:100%;"/></td></tr>
-                <tr> <td><span asp-validation-for="Hours" class="error-message"></span></td></tr>
 
-                <tr> <td><input type="submit" value="Submeter" style="width:100%;"/></td></tr>
+                <tr> <td><input type="submit" value="Submeter" id="submit-interview" disabled onsubmit="validateDate();" style="width:100%;"/></td></tr>
             </table>
         </div>
     </form>

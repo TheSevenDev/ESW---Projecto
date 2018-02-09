@@ -40,7 +40,10 @@ namespace CIMOB_IPS.Controllers
 
         public bool HasConfirmedApp()
         {
-            return _context.Application.Where(s => s.IdStudent == GetStudentById(GetCurrentUserID()).IdStudent).Count(m => m.IdStateNavigation.Description == "Confirmada") > 0;
+            return _context.Application
+                .Where(s => s.IdStudent == GetStudentById(GetCurrentUserID()).IdStudent)
+                .Include(a => a.IdStateNavigation)
+                .Count(m => m.IdStateNavigation.Description == "Confirmada") > 0;
         }
 
         public async Task<IActionResult> New(int programID)
@@ -62,7 +65,10 @@ namespace CIMOB_IPS.Controllers
             int userID = GetCurrentUserID();
 
             Student student = GetStudentById(userID);
-            var app = _context.Application.Where(ap => ap.IdStudent == student.IdStudent);
+            var app = _context.Application
+                .Where(ap => ap.IdStudent == student.IdStudent) 
+                .Include(a => a.IdStateNavigation)
+                .Where(a => a.IdStateNavigation.Description != "Descartada");
 
             if (app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
                 return View("ErrorView");

@@ -19,7 +19,7 @@ html, body {
     margin: 0;
     padding: 0;
     /*font-family: Arial,Helvetica, sans-serif;*/
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 1em;
     width: 100%;
     min-height: 100vh;
@@ -1105,39 +1105,42 @@ footer {
     min-height: 33.5vh;
     display: block;
     position: absolute;
+    padding-bottom:1.5%;
 }
 
-    .profile-preview img {
-        border-radius: 50%;
-        border: 0.18vw solid var(--main-color);
-        width: 7vw;
-        height: 7vw;
-        margin-left: 36%;
-        margin-right: 30%;
-        margin-top: 3.5%;
-        margin-bottom: 4%;
-    }
-    .profile-preview table {
-        padding-left: 2%;
-        width: 100%;
-        font-size: 1.10vmax;
-    }
-        .profile-preview table td {
-            padding-top: 6%;
-            padding-right: 2%;
-            padding-left: 7%;
-            width: 35%;
-        }
+.profile-preview img {
+    border-radius: 50%;
+    border: 0.18vw solid var(--main-color);
+    width: 7vw;
+    height: 7vw;
+    margin-left: 36%;
+    margin-right: 30%;
+    margin-top: 3.5%;
+    margin-bottom: 4%;
+}
 
-    .profile-preview table td span a{
-        color:var(--blue-var2);
-    }
+.profile-preview table {
+    padding-left: 2%;
+    width: 100%;
+    font-size: 1.10vmax;
+}
+
+.profile-preview table td {
+    padding-top: 6%;
+    padding-right: 2%;
+    padding-left: 7%;
+    width: 35%;
+}
+
+.profile-preview table td span a{
+    color:var(--blue-var2);
+}
 
 #profile-preview-close {
     position: absolute;
-    width: 2.5vw;
-    height: 2.5vw;
-    top: -11%;
+    width: 2vw;
+    height: 2vw;
+    top: -8.5%;
     left: 59%;
     z-index: 999;
     cursor: pointer;

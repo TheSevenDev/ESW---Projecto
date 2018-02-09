@@ -12,8 +12,8 @@
 
 <div class="profile-preview" id="techProfilePreview">
     <img id="profile-preview-close" src="~/images/icons/error.png" onclick="javascript: closeProfilePreview();"/>
-    <img src="@Url.Content(Model.IdAccountNavigation.AvatarUrl)" class="session-profile-image" draggable="false">
-    <span id="nome">@Html.DisplayFor(modelItem => Model.Name)</span>
+    <img src="@Url.Content(Model.IdAccountNavigation.AvatarUrl)" class="session-profile-image" style="margin-left:38%;" draggable="false">
+    <span id="nome" style="width:100%;text-align:center;">@Html.DisplayFor(modelItem => Model.Name)</span>
     <table>
         <tr>
             <td>
