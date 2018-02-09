@@ -557,17 +557,17 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return View("ErrorView");
 
-            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-            {
-                Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
+                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+                {
+                    Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
 
-                if (app == null)
-                    return RedirectToAction("Index", "Application");
+                    if (app == null)
+                        return RedirectToAction("Index", "Application");
 
-                Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
+                    Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                return PartialView("_ScheduleInterview", new InterviewViewModel { IdInterview = interview.IdInterview, Date = DateTime.Today });
-            }
+                    return PartialView("_ScheduleInterview", new InterviewViewModel { IdApplication = int.Parse(id), IdInterview = interview.IdInterview, Date = DateTime.Today });
+                }
         }
 
         [HttpGet]
@@ -589,7 +589,7 @@ namespace CIMOB_IPS.Controllers
                 Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
                 return PartialView("_RescheduleInterview",
-                    new InterviewViewModel { IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date });
+                    new InterviewViewModel { IdApplication = int.Parse(id), IdInterview = interview.IdInterview, Date = interview.Date, Hours = interview.Date });
             }
         }
 
@@ -645,6 +645,7 @@ namespace CIMOB_IPS.Controllers
                     return RedirectToAction("Index", "Application");
                 }
             }
+
             return RedirectToAction("Index", "Application");
         }
 

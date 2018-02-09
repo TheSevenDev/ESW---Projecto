@@ -414,6 +414,15 @@ $(document).ready(function () {
             }
         })
     });
+
+    $("form.schedule-interview-form").submit(function (event) {
+        var id = this["idApplication"].value;
+        event.preventDefault();
+        var form = this;
+
+        alert(document.getElementById("Date").value);
+        alert(document.getElementById("Hour").value);
+    });
 });
 
 onload = start;
