@@ -369,9 +369,9 @@
 .monthly-event-list::-webkit-scrollbar-thumb:hover {background: #555;}
 
 /* Language-specific. Default is English. */
-.monthly-reset:after		{ content: 'Today'; }
-.monthly-cal:after			{ content: 'Month'; }
-.monthly-list-item:after	{ content: 'No Events'; }
+.monthly-reset:after		{ content: 'Hoje'; }
+.monthly-cal:after			{ content: 'Mês'; }
+.monthly-list-item:after	{ content: 'Sem Eventos'; }
 
 .monthly-locale-fr .monthly-reset:after		{ content: "aujourd'hui"; }
 .monthly-locale-fr .monthly-cal:after		{ content: "mois"; }
