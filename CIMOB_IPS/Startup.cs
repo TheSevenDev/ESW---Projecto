@@ -54,13 +54,13 @@ namespace CIMOB_IPS
             app.UseAuthentication();
 
             if (env.IsDevelopment())
-            {    
+            {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
             else
             {
-                app.UseExceptionHandler("ErrorView");
+                app.UseExceptionHandler("/ErrorView");
             }
 
             app.UseStaticFiles(new StaticFileOptions
