@@ -1,5 +1,6 @@
 ﻿using CIMOB_IPS.Controllers;
 using CIMOB_IPS.Models;
+using CIMOB_IPS.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -132,6 +133,7 @@ namespace XUnitCIMOB_IPS
 
                 return lisProgramTypes;
         }
+        
 
         #endregion
 
@@ -141,7 +143,7 @@ namespace XUnitCIMOB_IPS
             // Act
             var actionResultTask = IndexTest();
             actionResultTask.Wait();
-            var viewResult = actionResultTask.Result as System.Web.Mvc.ViewResult;
+            var viewResult = actionResultTask.Result as Microsoft.AspNetCore.Mvc.ViewResult;
 
             List<Program> lstPrograms = (List<Program>)viewResult.Model;
 
@@ -161,7 +163,7 @@ namespace XUnitCIMOB_IPS
             // Act
             var actionResultTask = Details("1");
             actionResultTask.Wait();
-            var viewResult = actionResultTask.Result as System.Web.Mvc.ViewResult;
+            var viewResult = actionResultTask.Result as Microsoft.AspNetCore.Mvc.ViewResult;
 
             Program model = (Program)viewResult.Model;
 

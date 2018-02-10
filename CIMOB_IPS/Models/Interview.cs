@@ -16,5 +16,10 @@ namespace CIMOB_IPS.Models
         public State IdStateNavigation { get; set; }
 
         public ICollection<Application> Application { get; set; }
+
+        public bool IsInterviewDone()
+        {
+            return Date < DateTime.Now;
+        }
     }
 }
