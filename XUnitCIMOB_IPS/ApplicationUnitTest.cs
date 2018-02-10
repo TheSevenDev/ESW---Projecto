@@ -450,7 +450,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void ApplicationGetIdByInstitution()
+        public void ApplicationGetIdByInstitutionTest()
         {
             long idInstitution = _controller.GetIdByInstitution("Instituição");
 
@@ -458,7 +458,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void ApplicationGetIdByInstitutionInvalid()
+        public void ApplicationGetIdByInstitutionInvalidTest()
         {
             long idInstitution = _controller.GetIdByInstitution("Escola");
 
@@ -466,7 +466,7 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
-        public void ApplicationGetNewApplicationID()
+        public void ApplicationGetNewApplicationIDTest()
         {
             long lngNewAppId = _controller.GetNewApplicationID();
 

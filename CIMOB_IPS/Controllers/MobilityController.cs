@@ -19,8 +19,6 @@ namespace CIMOB_IPS.Controllers
     /// Contém métodos para a confirmação de uma mobilidade ou cancelamento da mesma.
     /// Mostra em vistas as mobilidades ao cargo de um técnico ou a mobilidade do estudante autenticado.
     /// </summary>
-    public class MobilityController : Controller
-    {
         /// <summary>
         /// Retorna a chave primária associada à conta do utilizador autenticado no momento.
         /// </summary>

@@ -272,7 +272,7 @@ namespace CIMOB_IPS.Controllers
         /// </summary>
         /// <param name="institutionName">Nome da instituição</param>
         /// <returns>Chave Primária da instituição</returns>
-        private long GetIdByInstitution(string institutionName)
+        public long GetIdByInstitution(string institutionName)
         {
             return _context.Institution.Where(i => i.Name == institutionName).FirstOrDefault().IdInstitution;
         }
@@ -281,7 +281,7 @@ namespace CIMOB_IPS.Controllers
         /// Retorna a última candidatura submetida
         /// </summary>
         /// <returns>Última candidatura submetida</returns>
-        private long GetNewApplicationID()
+        public long GetNewApplicationID()
         {
             return _context.Application.Max(i => i.IdApplication) + 1;
         }
@@ -1103,7 +1103,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.Mobility)
-                    .Where(a => a.IdStateNavigation.Description == "Aceite" && a.FinalEvaluation >= 50);//Apresenta as candidaturas aceites e com avaliação >=50
+                    .Where(a => (a.IdStateNavigation.Description == "Aceite" || a.IdStateNavigation.Description == "Confirmada") && a.FinalEvaluation >= 50);//Apresenta as candidaturas aceites e com avaliação >=50
 
                 applications = applications.Where(a => a.IdProgramNavigation.IdState != 13); //Candidaturas não descartadas.
 

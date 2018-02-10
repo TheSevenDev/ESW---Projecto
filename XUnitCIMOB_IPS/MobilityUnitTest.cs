@@ -87,6 +87,31 @@ namespace XUnitCIMOB_IPS
                 }
             });
 
+            _context.Student.Add(new Student()
+            {
+                IdStudent = 2,
+                IdAccount = 4,
+                StudentNum = 150221067,
+                IdCourse = 1,
+                Name = "Estudante2",
+                Cc = 15131611,
+                Telephone = 921111111,
+                IdNationality = 1,
+                Credits = 120,
+                IdAccountNavigation = new Account
+                {
+                    IdAccount = 4,
+                    Email = "email4@exemplo.com"
+                },
+                IdAddressNavigation = new Address
+                {
+                    AddressDesc = "Desc2",
+                    DoorNumber = 2,
+                    Floor = "2",
+                    PostalCode = "2010-123"
+                }
+            });
+
             _context.Technician.Add(new Technician()
             {
                 IdTechnician = 1,
@@ -97,6 +122,21 @@ namespace XUnitCIMOB_IPS
                 {
                     IdAccount = 2,
                     Email = "email2@exemplo.com"
+                },
+                IsAdmin = true,
+                Active = true
+            });
+
+            _context.Technician.Add(new Technician()
+            {
+                IdTechnician = 2,
+                IdAccount = 3,
+                Name = "Técnico2",
+                Telephone = 911112111,
+                IdAccountNavigation = new Account
+                {
+                    IdAccount = 3,
+                    Email = "email3@exemplo.com"
                 },
                 IsAdmin = true,
                 Active = true
@@ -122,7 +162,7 @@ namespace XUnitCIMOB_IPS
                 IdStudent = 1,
                 IdState = 10,
                 HasScholarship = false,
-                FinalEvaluation = 15,
+                FinalEvaluation = 50,
                 MotivationCard = "",
                 EmergencyContactName = "Mae Estudante",
                 EmergencyContactRelation = "Mae",
@@ -246,9 +286,9 @@ namespace XUnitCIMOB_IPS
             _context.SaveChanges();
         }
 
-        public async Task<IActionResult> MobilitiesInCharge(string search_by)
+        public async Task<IActionResult> MobilitiesInCharge(int intIdTechAccount, string search_by)
         {
-            long lngTechId = _context.Technician.Where(t => t.IdAccount == 2).Select(t => t.IdTechnician).SingleOrDefault();
+            long lngTechId = _context.Technician.Where(t => t.IdAccount == intIdTechAccount).Select(t => t.IdTechnician).SingleOrDefault();
 
             var mobilities = await _context.Mobility.Where(m => m.IdResponsibleTechnician == lngTechId)
                 .Include(m => m.IdApplicationNavigation)
@@ -279,9 +319,9 @@ namespace XUnitCIMOB_IPS
             return View(mobilities);
         }
 
-        public async Task<IActionResult> MyMobility()
+        public async Task<IActionResult> MyMobility(int idStudentAccount)
         {
-            long lngStudentId = _context.Student.Where(s => s.IdAccount == 1).Select(s => s.IdStudent).SingleOrDefault();
+            long lngStudentId = _context.Student.Where(s => s.IdAccount == idStudentAccount).Select(s => s.IdStudent).SingleOrDefault();
 
             long lngConfirmedState = _context.State.Where(s => s.Description == "Confirmada").Select(s => s.IdState).SingleOrDefault();
 
@@ -323,7 +363,7 @@ namespace XUnitCIMOB_IPS
         public void MobilityMobilitiesInChargeTest()
         {
             // Act
-            var actionResultTask = MobilitiesInCharge("");
+            var actionResultTask = MobilitiesInCharge(2, "");
             actionResultTask.Wait();
             var viewResult = actionResultTask.Result as ViewResult;
 
@@ -334,10 +374,24 @@ namespace XUnitCIMOB_IPS
         }
 
         [Fact]
+        public void MobilityNoMobilitiesInChargetTest()
+        {
+            // Act
+            var actionResultTask = MobilitiesInCharge(3, "");
+            actionResultTask.Wait();
+            var viewResult = actionResultTask.Result as ViewResult;
+
+            List<Mobility> lstMobilities = (List<Mobility>)viewResult.Model;
+
+            // Assert
+            Assert.Empty(lstMobilities);
+        }
+
+        [Fact]
         public void MobilityMyMobilityTest()
         {
             // Act
-            var actionResultTask = MyMobility();
+            var actionResultTask = MyMobility(1);
             actionResultTask.Wait();
             var viewResult = actionResultTask.Result as ViewResult;
 
@@ -345,6 +399,20 @@ namespace XUnitCIMOB_IPS
 
             // Assert
             Assert.NotNull(mobility);
+        }
+
+        [Fact]
+        public void MobilityMyMobilityInexistentTest()
+        {
+            // Act
+            var actionResultTask = MyMobility(4);
+            actionResultTask.Wait();
+            var viewResult = actionResultTask.Result as ViewResult;
+
+            Mobility mobility = (Mobility)viewResult.Model;
+
+            // Assert
+            Assert.Null(mobility);
         }
     }
 }
