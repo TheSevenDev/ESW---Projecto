@@ -37,6 +37,7 @@
     <img draggable="false" src="~/images/@Model.IdProgramTypeNavigation.ImageFile" />
 
     <p style="width:80%;margin-left:10%;">@Html.DisplayFor(model => model.IdProgramTypeNavigation.Description)</p>
+    <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
 
     @if (User.Identity.IsAuthenticated)
     {
@@ -44,7 +45,7 @@
         {
             @if (!bolClosedProgram && !bolMaxApplications && !bolNoVacancies && !bolNoCredits && !bolIsLoggedOff)
             {
-                <p>@Html.DisplayNameFor(model => model.Vacancies): <b>@Html.DisplayFor(model => model.Vacancies)</b></p>
+                
                 @if (intConfirmedApplications == 0)
                 {
                     <input type="button" value="Efectuar Candidatura" onclick="location.href='@Url.Action("New", "Application", new { programID = Model.IdProgram })'" />
@@ -53,7 +54,6 @@
             }
             else if (bolIsLoggedOff && !bolClosedProgram)
             {
-                <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
                 <p>Caso deseje candidatar-se ao presente programa, <a href="@Url.Action("Login", "Account")">autentique-se</a>.</p>
             }
             else if (bolClosedProgram || DateTime.Now >= Model.ClosingDate)
