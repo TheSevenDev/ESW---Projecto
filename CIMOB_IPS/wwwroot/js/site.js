@@ -1,4 +1,20 @@
-﻿
+﻿onload = start;
+
+function start() {
+
+    autoPlayGallery();
+    setColor();
+
+    if (document.getElementById("loading-program") !== null)
+        showProgramDetails(1);
+
+    if (document.getElementById("interviews") !== null) {
+        loadInterviews();
+    }
+
+}
+
+
 function toogleSettings() {
     document.getElementById("submenu-notifications").style.display = "none";
     $("#submenu-settings").toggle();
@@ -430,21 +446,6 @@ $(document).ready(function () {
     });
 });
 
-onload = start;
-
-function start() {
-
-    autoPlayGallery();
-    setColor();
-
-    if (document.getElementById("loading-program") !== null)
-        showProgramDetails(1);
-
-    if (document.getElementById("interviews") !== null) {
-        loadInterviews();
-    }
-
-}
 
 function loadInterviews() {
     $('#interviews').monthly({

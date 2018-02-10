@@ -10,6 +10,7 @@
 	<script src="SyntaxHighlighter/scripts/shCore_helixoft.js" type="text/javascript"></script>
 	<script src="SyntaxHighlighter/scripts/shBrushVb.js" type="text/javascript"></script>
 	<script src="SyntaxHighlighter/scripts/shBrushCSharp.js" type="text/javascript"></script>
+	<script src="SyntaxHighlighter/scripts/shBrushFSharp.js" type="text/javascript"></script>
 	<script src="SyntaxHighlighter/scripts/shBrushCpp.js" type="text/javascript"></script>
 	<script src="SyntaxHighlighter/scripts/shBrushJScript.js" type="text/javascript"></script>
 	<link href="SyntaxHighlighter/styles/shCore.css" rel="stylesheet" type="text/css" />
@@ -73,6 +74,8 @@ function replaceTitleAndUrl(win, title, url) {
       <div id="mainBody">
         <p />
        
+        Controlador para as ações relacionadas com a Conta de utilizador.
+Contem métodos para efetuar um registo, autenticação e recuperação da palavra-passe.
 
 
         <p /><strong>Namespace:</strong>
@@ -82,6 +85,7 @@ function replaceTitleAndUrl(win, title, url) {
 
 
         <br /><strong>Assembly:</strong> CIMOB_IPS (in )
+
 
 
 
@@ -112,6 +116,9 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				<div class="codeSnippetTab csNaTab codeCsharp">
 					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
 				</div>
 				<div class="codeSnippetTab csNaTab codeCpp">
 					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
@@ -149,6 +156,9 @@ function replaceTitleAndUrl(win, title, url) {
 				<div class="codeSnippetTab csActiveTab codeCsharp">
 					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
 				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
+				</div>
 				<div class="codeSnippetTab csNaTab codeCpp">
 					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
 				</div>
@@ -175,6 +185,7 @@ function replaceTitleAndUrl(win, title, url) {
 			</div>
 		</div>
 
+
 		<div class="codeSnippetContainer">
 			<div class="codeSnippetTabs">
 				<div class="codeSnippetTabLeftCorner">
@@ -184,6 +195,9 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				<div class="codeSnippetTab csNaTab codeCsharp">
 					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
 				</div>
 				<div class="codeSnippetTab csActiveTab codeCpp">
 					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
@@ -220,6 +234,9 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				<div class="codeSnippetTab csNaTab codeCsharp">
 					<a href="javascript: CodeSnippet_SetLanguage('Csharp');">C#</a>
+				</div>
+				<div class="codeSnippetTab csNaTab codeFsharp">
+					<a href="javascript: CodeSnippet_SetLanguage('Fsharp');">F#</a>
 				</div>
 				<div class="codeSnippetTab csNaTab codeCpp">
 					<a href="javascript: CodeSnippet_SetLanguage('Cpp');">C++</a>
@@ -263,11 +280,63 @@ function replaceTitleAndUrl(win, title, url) {
 
 
 
+
 	</div>
 </div>
 
 
 
+<div class="section_container">
+	<div class="section_heading">
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Constructors</a></span>
+		<div><hr /></div>
+	</div>
+
+	<div id="ConstructorsSection" class="section">	
+  <table class="memberListTable">
+    <tr>
+      <th></th>
+      <th>
+        Name
+      </th>
+      <th>
+        Description
+      </th>
+    </tr>
+
+
+	
+			<tr class="
+	
+	
+	">
+	  <td>
+    <img alt="Public constructor" title="Public constructor" src="msdn2017/pubmethod.png"></img>
+
+	
+	    
+	  </td>
+	  <td>
+	    <a href="topic_0000000000000002.html">AccountController()</a>
+
+	  </td>
+	  <td>
+	
+	
+	
+		</td>
+	</tr>
+	
+
+
+  </table>
+
+  <a href="#mainBody">
+    Top
+  </a>
+
+	</div>					
+</div>
 
 
 
@@ -307,7 +376,175 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000009.html">DeletePendingAccount(string)</a>
+	<a href="topic_000000000000001D.html">AccountID(string)</a>
+
+	</td>
+	<td>
+
+Retorna a chave primária da conta que tem como registo o endereço email pasasdo como argumento.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000001F.html">AccountName(string)</a>
+
+	</td>
+	<td>
+
+Retorna o nome de utilizador da conta que tem a chave primária passada como argumento
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000001E.html">AccountType(string)</a>
+
+	</td>
+	<td>
+
+Retorna um enumerado com o tipo de conta (Técnico ou Estudante) do registo que tem a chave primária passada como argumento
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000006.html">Address(string)</a>
+
+	</td>
+	<td>
+
+Método que retorna o documento XML correspondente ao pedido de morada à API dos CTT.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000000F.html">DeletePendingAccount(string)</a>
+
+	</td>
+	<td>
+
+Elimina uma conta pendende.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000024.html">EncryptToMD5(string)</a>
+
+	</td>
+	<td>
+
+Encripta uma string para MD5
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000000A.html">FakePreRegister(RegisterViewModel)</a>
 
 	</td>
 	<td>
@@ -335,40 +572,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_000000000000000F.html">ExecFYP(IFormCollection)</a>
+	<a href="topic_0000000000000018.html">ForgotYourPassword(IFormCollection)</a>
 
 	</td>
 	<td>
 
-
-
-	</td>
-</tr>
-
-
-
-
-
-
-
-
-	<tr class="
-
-
-">
-	<td>
-<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
-	  
-
-    
-	</td>
-	<td>
-	<a href="topic_0000000000000010.html">GetCurrentUserID()</a>
-
-	</td>
-	<td>
-
-
+Retorna a view com o formulário para resgatar a palavra-passe, em caso de esquecimento.
 
 	</td>
 </tr>
@@ -391,40 +600,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_000000000000000A.html">InsertAccount(string, byte[])</a>
+	<a href="topic_0000000000000016.html">GetAvatarUrl(string)</a>
 
 	</td>
 	<td>
 
-
-
-	</td>
-</tr>
-
-
-
-
-
-
-
-
-	<tr class="
-
-
-">
-	<td>
-<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
-	  
-
-    
-	</td>
-	<td>
-	<a href="topic_000000000000000B.html">InsertPreRegister(string)</a>
-
-	</td>
-	<td>
-
-
+Retorna o caminho para a imagem de perfil de um utilizador.
 
 	</td>
 </tr>
@@ -447,12 +628,152 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000008.html">InviteTec(IFormCollection)</a>
+	<a href="topic_0000000000000019.html">GetCurrentUserID()</a>
 
 	</td>
 	<td>
 
+Retorna a chave primária associada à conta do utilizador autenticado no momento.
 
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000023.html">GetStudentId(int)</a>
+
+	</td>
+	<td>
+
+Retorna o model do estudante que tem a chave primária passada como argumento
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000012.html">InsertAccount(Account)</a>
+
+	</td>
+	<td>
+
+Cria uma nova conta.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000010.html">InsertAccountGetId(string, string)</a>
+
+	</td>
+	<td>
+
+Insere uma nova conta na aplicação e retorna a chave primária associada à mesma.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000011.html">InsertAddress(Address)</a>
+
+	</td>
+	<td>
+
+Adiciona um novo registo de uma morada.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000013.html">InsertPendingAccount(string, EnumAccountType, int)</a>
+
+	</td>
+	<td>
+
+Insere uma conta pendende na base de dados.
 
 	</td>
 </tr>
@@ -474,12 +795,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_000000000000000D.html">Login(LoginViewModel)</a>
+	<a href="topic_000000000000000E.html">InviteTec(TechnicianManagementViewModel)</a>
 
 	</td>
 	<td>
 
-
+Executa um convite a um técnico para efetuar um registo na aplicação.
 
 	</td>
 </tr>
@@ -494,12 +815,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_000000000000000C.html">Login()</a>
+	<a href="topic_000000000000000D.html">InviteTec()</a>
 
 	</td>
 	<td>
 
-
+Retorna a vista para os convites de Técnicos do CIMOB
 
 	</td>
 </tr>
@@ -523,40 +844,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_000000000000000E.html">Logout()</a>
+	<a href="topic_0000000000000020.html">IsAdmin(string)</a>
 
 	</td>
 	<td>
 
-
-
-	</td>
-</tr>
-
-
-
-
-
-
-
-
-	<tr class="
-
-
-">
-	<td>
-<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
-	  
-
-    
-	</td>
-	<td>
-	<a href="topic_0000000000000006.html">PreRegister(RegisterViewModel)</a>
-
-	</td>
-	<td>
-
-
+Verifica se uma chave primária de uma conta, passada como argumento, pertence a um técnico do CIMOB correspondente a um administrador.
 
 	</td>
 </tr>
@@ -579,12 +872,69 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000002.html">Register()</a>
+	<a href="topic_000000000000001C.html">IsRegistered(string, string)</a>
 
 	</td>
 	<td>
 
+Verifica se uma autenticação (email, password) é válida.
+Caso seja retorna o estado LoginState.CONECTED_STUDENT, para o caso de um estudante, e LoginState.CONNECTED_TECH, para o case de um técnico.
 
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000022.html">IsStudent(int)</a>
+
+	</td>
+	<td>
+
+Verifica se uma chave primária de uma conta, passada como argumento, pertence a um estudante.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000021.html">IsTechnician(int)</a>
+
+	</td>
+	<td>
+
+Verifica se uma chave primária de uma conta, passada como argumento, pertence a um técnico do CIMOB.
 
 	</td>
 </tr>
@@ -606,12 +956,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000004.html">RegisterStudent(RegisterViewModel)</a>
+	<a href="topic_0000000000000015.html">Login(LoginViewModel)</a>
 
 	</td>
 	<td>
 
-
+Método que executa uma auntenticação na aplicação. Redirecciona o utilizador para a página principal, caso o login seja efetuado com sucesso.
 
 	</td>
 </tr>
@@ -626,12 +976,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000007.html">RegisterStudent(string)</a>
+	<a href="topic_0000000000000014.html">Login()</a>
 
 	</td>
 	<td>
 
-
+Retorna a view para a autenticação na aplicação.
 
 	</td>
 </tr>
@@ -655,7 +1005,245 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000005.html">RegisterTechnician(IFormCollection)</a>
+	<a href="topic_0000000000000017.html">Logout()</a>
+
+	</td>
+	<td>
+
+Executa um logout, redireciconando o utilizador para a página principal da aplicação.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000009.html">PreRegister(RegisterViewModel)</a>
+
+	</td>
+	<td>
+
+Adiciona um novo pré-registo na aplicação.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000003.html">Register()</a>
+
+	</td>
+	<td>
+
+Retorna a view para o registo na aplicação. O tipo de registo por defeito é o pré-registo de um estudante na aplicação (student-preregister)
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+			<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000007.html">RegisterStudent(RegisterViewModel)</a>
+
+	</td>
+	<td>
+
+Regista um novo estudante na aplicação.
+Caso exista um erro na validação da data de nascimento, é novamente carregada mesma página com uma mensagem de erro na operação.
+Caso contrário, redirecciona o utilizador para a página com o formulário de autenticação.
+
+	</td>
+</tr>
+			<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000000B.html">RegisterStudent(string, Nullable&lt;Boolean&gt;)</a>
+
+	</td>
+	<td>
+
+Retorna a vista com o formulário para a criação de um registo de um estudante.
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+			<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000008.html">RegisterTechnician(RegisterViewModel)</a>
+
+	</td>
+	<td>
+
+Regista um novo técnico na aplicação.
+
+	</td>
+</tr>
+			<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_000000000000000C.html">RegisterTechnician(string)</a>
+
+	</td>
+	<td>
+
+Retorna a vista com um formulário para o registo de um novo técnico.
+
+	</td>
+</tr>
+	
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000026.html">StrToArrByte(string)</a>
+
+	</td>
+	<td>
+
+Converte uma string num vetor de bytes
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000005.html">Technicians(Nullable&lt;Int32&gt;, Nullable&lt;Int32&gt;)</a>
+
+	</td>
+	<td>
+
+Retorna a vista com as informações paginadas dos técnicos registados na aplicação.
+
+	</td>
+</tr>
+
+
+
+
+
+
+
+
+	<tr class="
+
+
+">
+	<td>
+<img alt="Public method" title="Public method" src="msdn2017/pubmethod.png"></img>
+	  
+
+    
+	</td>
+	<td>
+	<a href="topic_0000000000000004.html">TestPreRegister()</a>
 
 	</td>
 	<td>
@@ -683,12 +1271,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000003.html">Tecnicos()</a>
+	<a href="topic_0000000000000025.html">ToHex(byte[], bool)</a>
 
 	</td>
 	<td>
 
-
+Converte um vetor de bytes numa string em formato Hexadecimal
 
 	</td>
 </tr>
@@ -710,12 +1298,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000011.html">UpdatePassword()</a>
+	<a href="topic_000000000000001A.html">UpdatePassword()</a>
 
 	</td>
 	<td>
 
-
+Ação para mostrar a vista da página para atualizar a password.
 
 	</td>
 </tr>
@@ -730,12 +1318,12 @@ function replaceTitleAndUrl(win, title, url) {
     
 	</td>
 	<td>
-	<a href="topic_0000000000000012.html">UpdatePassword(UpdatePasswordViewModel)</a>
+	<a href="topic_000000000000001B.html">UpdatePassword(UpdatePasswordViewModel)</a>
 
 	</td>
 	<td>
 
-
+Atualiza a conta do utilizador com a nova password.
 
 	</td>
 </tr>
@@ -754,6 +1342,23 @@ function replaceTitleAndUrl(win, title, url) {
 
 	</div>					
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -817,28 +1422,17 @@ function replaceTitleAndUrl(win, title, url) {
 
 
 
-<div class="section_container">
-	<div class="section_heading">
-		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Platforms</a></span>
-		<div><hr /></div>
-	</div>
-
-	<div id="platformsSection" class="section">	
-		<p>
-			Windows Phone 8.1, Windows Phone 8, Windows 8.1, Windows Server 2012 R2, Windows 8, Windows Server 2012, Windows 7, Windows Vista SP2, Windows Server 2008 (Server Core Role not supported), Windows Server 2008 R2 (Server Core Role supported with SP1 or later; Itanium not supported)
-		</p>
-		<p>
-			The .NET Framework does not support all versions of every platform. For a list of the supported versions, see 
-			<a target="_top" href="http://msdn2.microsoft.com/en-us/library/298275e2-da1d-4618-9f74-6a3567832350.aspx">System Requirements</a>.
-		</p>
-	</div>					
-</div>
 
 
 
   
 
 
+
+
+
+
+
 	
 	
 	
@@ -848,12 +1442,17 @@ function replaceTitleAndUrl(win, title, url) {
 
 <div class="section_container">
 	<div class="section_heading">
-		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Version Information</a></span>
+		<span><a href="javascript:void(0)" title="Collapse" onclick="toggleSection(this);">Applies to</a></span>
 		<div><hr /></div>
 	</div>
 
 	<div id="frameworksSection" class="section">	
   <h4 class="subHeading">.NET Framework</h4>Supported in: 4.6, 4.5, 4, 3.5, 3.0, 2.0, 1.1, 1.0<br />
+
+
+
+
+
 
   <h4 class="subHeading">.NET Framework Client Profile</h4>Supported in: 4, 3.5 SP1<br />
 

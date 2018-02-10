@@ -1,21 +1,24 @@
 ﻿.imgContainer {
     margin: 0 auto;
-    margin-top: 0%;
+    margin-top: 2%;
     position: relative;
-    width: 82%;
-    padding-bottom: 84Vh;
+    width: 70%;
+    padding-bottom: 75Vh;
     border: 0px solid;
+    border-radius: 1.5%;
 }
 
-.slider-img{
+.slider-img {
     position: absolute;
     width: 100%;
     height: 100%;
+    border-radius: 1.5%;
 }
 
 .slider-img img {
     width: 100%;
     height: 100%;
+    border-radius: 1.5%;
 }
 
 #i1,#i2,#i3, #i4{
@@ -75,8 +78,8 @@
 
 .dots {
     top: 150%;
-    width: 1.5vw;
-    height: 1.5vw;
+    width: 1vw;
+    height: 1vw;
     margin: 0 4px;
     position: relative;
     border-radius: 50%;

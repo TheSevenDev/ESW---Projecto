@@ -22,7 +22,8 @@ using System.IO;
 namespace CIMOB_IPS.Controllers
 {
     /// <summary>
-    /// Controlador para as ações relacionadas com a Conta de utilizador
+    /// Controlador para as ações relacionadas com a Conta de utilizador.
+    /// Contem métodos para efetuar um registo, autenticação e recuperação da palavra-passe.
     /// </summary>
     /// <remarks></remarks>
     public class AccountController : Controller

@@ -21,11 +21,15 @@ using System.Xml.Linq;
 
 namespace CIMOB_IPS.Controllers
 {
+    /// <summary>
+    /// Controlador usado para a gestão das candidaturas a um programa de mobilidade.
+    /// Contém métodos para efetuar uma candidatura, avaliação gestão das mesmas e marcação de entrevistas.
+    /// </summary>
+    /// <remarks></remarks>
     public class ApplicationController : Controller
     {
         private readonly CIMOB_IPS_DBContext _context;
         private readonly IHostingEnvironment _hostingEnvironment;
-        private CIMOB_IPS_DBContext _context1;
 
         public ApplicationController(CIMOB_IPS_DBContext context, IHostingEnvironment HostingEnvironment)
         {
@@ -33,11 +37,22 @@ namespace CIMOB_IPS.Controllers
             _hostingEnvironment = HostingEnvironment;
         }
 
+        /// <summary>
+        /// Retorna a chave primária associada à conta do utilizador autenticado no momento.
+        /// </summary>
+        /// <returns>Chave primária associada à conta do utilizador autenticado no momento</returns>
+        /// <remarks></remarks>
         public int GetCurrentUserID()
         {
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
+
+        /// <summary>
+        /// Verifica se um estudante já tem uma candidatura aceite.
+        /// </summary>
+        /// <returns>Valor lógico resultante</returns>
+        /// <remarks></remarks>
         public bool HasConfirmedApp()
         {
             return _context.Application
@@ -46,15 +61,22 @@ namespace CIMOB_IPS.Controllers
                 .Count(m => m.IdStateNavigation.Description == "Confirmada") > 0;
         }
 
+        /// <summary>
+        /// Retorna a vista com o formulário para a submissão de uma nova candidatura.
+        /// Caso o utilizador não esteja autenticado, ou não seja estudante, ou já tenha uma candidatura aprovada é retornada uma vista com um erro.
+        /// </summary>
+        /// <param name="programID">Chave primária do programa de mobilidade.</param>
+        /// <returns>View Application/New</returns>
+        /// <remarks></remarks>
         public async Task<IActionResult> New(int programID)
         {
-            if (!User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)//caso não autenticado
                 return View("ErrorView");
 
-            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+            if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))//não estudante
                 return View("ErrorView");
 
-            if (HasConfirmedApp())
+            if (HasConfirmedApp())//o estudante já tem uma candidatura confirmada para mobilidade
                 return View("ErrorView");
 
             ProfileController pc = new ProfileController(_hostingEnvironment);
@@ -66,10 +88,14 @@ namespace CIMOB_IPS.Controllers
 
             Student student = GetStudentById(userID);
             var app = _context.Application
-                .Where(ap => ap.IdStudent == student.IdStudent) 
+                .Where(ap => ap.IdStudent == student.IdStudent)
                 .Include(a => a.IdStateNavigation)
                 .Where(a => a.IdStateNavigation.Description != "Descartada");
 
+            //Se já tiver 3 candidaturas,
+            //o programa não tiver vagas,
+            //o programa não estiver aberto,
+            //ou o número de créditos do estudante for inferior a 45
             if (app.Count() >= 3 || program.Vacancies <= 0 || !(program.IdStateNavigation.Description == "Aberto") || intEcts < 45)
                 return View("ErrorView");
 
@@ -98,6 +124,13 @@ namespace CIMOB_IPS.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// Retorna o estudante com base na chave primária da conta.
+        /// </summary>
+        /// <param name="intId">Chave primária da conta</param>
+        /// <returns>
+        /// Estudante com base na chave primária da conta.
+        /// </returns>
         public Student GetStudentById(int intId)
         {
             return _context.Student.Where(s => s.IdAccount == intId)
@@ -106,6 +139,12 @@ namespace CIMOB_IPS.Controllers
                 .FirstOrDefault();
         }
 
+        /// <summary>
+        /// Retorna o email de uma conta com base na chave primária da mesma.
+        /// </summary>
+        /// <param name="intId">Chave primária da conta.</param>
+        /// <returns>Email de uma conta</returns>
+        /// <remarks></remarks>
         public string GetEmail(int intId)
         {
             var account = _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault();
@@ -113,13 +152,17 @@ namespace CIMOB_IPS.Controllers
             var email = "";
 
             if (account != null)
-            {
                 email = _context.Account.Where(s => s.IdAccount == intId).FirstOrDefault().Email;
-            }
 
             return email;
         }
 
+        /// <summary>
+        /// Retorna o número de candidaturas com avaliação pendente do utilizador autenticado.
+        /// </summary>
+        /// <param name="user">Utilizador autenticado</param>
+        /// <returns>A contagem das candidaturas em avaliação</returns>
+        /// <remarks></remarks>
         public async Task<int> GetNumberPendentApplications(ClaimsPrincipal user)
         {
             var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
@@ -132,6 +175,13 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna o número de candidaturas confirmadas do utilizador autenticado.
+        /// </summary>
+        /// <param name="user">Utilizador autenticado</param>
+        /// <returns>
+        /// A contagem das candidaturas confirmadas
+        /// </returns>
         public async Task<int> GetConfirmedApplications(ClaimsPrincipal user)
         {
             var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
@@ -142,6 +192,11 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Submete um novo registo para uma candidatura a um programa de mobilidade. Redirecciona o utilizador para a página das aplicações submetidas pelo mesmo.
+        /// </summary>
+        /// <param name="model">Model da candidaturas</param>
+        /// <returns>View Application/MyApplications</returns>
         [HttpPost]
         public async Task<IActionResult> RegisterApplication(ApplicationViewModel model)
         {
@@ -161,7 +216,7 @@ namespace CIMOB_IPS.Controllers
             _context.Interview.Add(interview);
 
             Application app = model.Application;
-            app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == model.IdProgram).FirstOrDefault(); //testar
+            app.IdProgramNavigation = _context.Program.Where(p => p.IdProgram == model.IdProgram).FirstOrDefault();
             app.IdStateNavigation = _context.State.Where(s => s.Description == "Em Avaliação").FirstOrDefault();
             app.IdStudentNavigation = GetStudentById(GetCurrentUserID());
             app.ApplicationDate = DateTime.Now;
@@ -177,6 +232,16 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("MyApplications", "Application");
         }
 
+        /// <summary>
+        /// Regista as instituições escolhidas pelo estudante para a candidatura. 
+        /// Pode escolher 1, 2 ou 3 instituições em que a ordem da escolha indica uma ordem de preferência.
+        /// Este método é usado pelo request AJAX aquando submissão do formulário.
+        /// </summary>
+        /// <param name="inst1">Instituição1</param>
+        /// <param name="inst2">Instituição1</param>
+        /// <param name="inst3">Instituição1</param>
+        /// <returns></returns>
+        /// <remarks></remarks>
         [HttpPost]
         public IActionResult RegisterApplicationInstitutions([FromQuery] string inst1, [FromQuery] string inst2, [FromQuery] string inst3)
         {
@@ -199,19 +264,31 @@ namespace CIMOB_IPS.Controllers
 
             _context.SaveChanges();
 
-            return Json("Sucess");
+            return Json("Success");
         }
 
+        /// <summary>
+        /// Retorna a chave primária de uma instituição pelo nome.
+        /// </summary>
+        /// <param name="institutionName">Nome da instituição</param>
+        /// <returns>Chave Primária da instituição</returns>
         private long GetIdByInstitution(string institutionName)
         {
             return _context.Institution.Where(i => i.Name == institutionName).FirstOrDefault().IdInstitution;
         }
 
+        /// <summary>
+        /// Retorna a última candidatura submetida
+        /// </summary>
+        /// <returns>Última candidatura submetida</returns>
         private long GetNewApplicationID()
         {
             return _context.Application.Max(i => i.IdApplication) + 1;
         }
 
+        /// <summary>
+        /// Adiciona a notificação do sucesso da submissão de uma nova candidatura.
+        /// </summary>
         private void AddApplicationNotification()
         {
             Notification not = new Notification
@@ -227,6 +304,11 @@ namespace CIMOB_IPS.Controllers
             _context.SaveChanges();
         }
 
+        /// <summary>
+        ///  Popula uma selectlist com as nacionalidades da base de dados.
+        /// </summary>
+        /// <returns>Lista com as nacionalidades</returns>
+        /// <remarks></remarks>
         private IEnumerable<SelectListItem> PopulateNationalities()
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -244,6 +326,12 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Retorna a view com as candidaturas efetuadas pelo estudante autenticado.
+        /// Caso não esteja autenticado ou não seja estudante, o utilizador é redireccionado para uma view de erro.
+        /// </summary>
+        /// <returns>View com as candidaturas efetuadas pelo estudante autenticado.</returns>
         public async Task<IActionResult> MyApplications()
         {
             if (!User.Identity.IsAuthenticated)
@@ -268,10 +356,10 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.ApplicationInstitutions)
                     .Include(a => a.IdInterviewNavigation)
-                    .Where(a => a.IdState != 20)
+                    .Where(a => a.IdState != 20)//Estado diferente de candidatura descartada
                     .ToListAsync();
 
-                foreach (Application app in lisApplications)
+                foreach (Application app in lisApplications)//por cada candidatura
                 {
                     app.ApplicationInstitutions = await context.ApplicationInstitutions
                         .Include(ai => ai.IdInstitutionNavigation).OrderBy(ai => ai.InstitutionOrder).Where(i => i.IdApplication == app.IdApplication).ToListAsync();
@@ -281,32 +369,6 @@ namespace CIMOB_IPS.Controllers
 
                 return View(lisApplications);
             }
-        }
-
-        public IActionResult FileTest()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FileTest([Bind("File")] FileViewModel viewModel)
-        {
-            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-            {
-                var testFile = new TestFile { };
-
-                using (var memoryStream = new MemoryStream())
-                {
-                    await viewModel.File.CopyToAsync(memoryStream);
-                    testFile.FileTest = memoryStream.ToArray();
-                }
-
-                context.Add(testFile);
-                await context.SaveChangesAsync();
-            }
-
-            return RedirectToAction("ShowFiles", "Application");
         }
 
         public async Task<IActionResult> ShowFiles()
@@ -329,6 +391,10 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Cria o documento comprotavito da submissão de uma candidatura. Este documento contem a assinatura do estudante, que é feita no formulário de criação de uma candidatura.
+        /// </summary>
+        /// <param name="viewModel">Candidatura</param>
         [HttpPost]
         public async Task<byte[]> CreateSignedApplication(ApplicationViewModel viewModel)
         {
@@ -385,11 +451,17 @@ namespace CIMOB_IPS.Controllers
                 htmlWorker.Close();
                 doc.Close();
 
-                //return File(ms.ToArray(), "application/pdf", "teste.pdf");
                 return ms.ToArray();
             }
         }
 
+        /// <summary>
+        /// Retorna a página index das candidaturas que contém uma lista paginada das candidaturas submetidas pelos estudantes filtrada pelo critério passado como argumento.
+        /// </summary>
+        /// <param name="pageApplication">Página da lista das candidaturas</param>
+        /// <param name="search_by">Critério de filtragem das candidaturas</param>
+        /// <returns>View das candidaturas com tabela paginada e filtrada pelo critério passado como argumento.</returns>
+        /// <remarks></remarks>
         public async Task<IActionResult> Index(int? pageApplication, string search_by)
         {
             if (!User.Identity.IsAuthenticated)
@@ -412,7 +484,7 @@ namespace CIMOB_IPS.Controllers
                         .Include(a => a.IdStudentNavigation.IdCourseNavigation.IdInstitutionNavigation)
                         .Include(a => a.IdProgramNavigation)
                         .Include(a => a.IdInterviewNavigation)
-                        .Where(a => a.IdStateNavigation.IdState == lngIdState);
+                        .Where(a => a.IdStateNavigation.IdState == lngIdState);// Apenas Candidaturas em avaliação
 
                 if (String.IsNullOrEmpty(search_by))
                 {
@@ -432,6 +504,11 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação que cancela uma candidatura submetida. Neste caso, atualiza o estado da candidatura para 'Descartada'.
+        /// Este método utiliza como chave primária da candidatura a cancelar os valores que vêm no request AJAX feito pelo browser, aquando clique no botão de cancelamento da candidatura.
+        /// </summary>
+        /// <returns>View Application/MyApplications</returns>
         [HttpPost]
         public IActionResult CancelApplication()
         {
@@ -474,6 +551,13 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("MyApplications", "Application");
         }
 
+        /// <summary>
+        /// Regista o motivo para o cancelamento da candidatura. Recebe como argumentos a chave primária da candidatura a cancelar e o texto com o motivo.
+        /// </summary>
+        /// <param name="applicationID">Chave Primária da candidatura</param>
+        /// <param name="reason">Texto com o motivo</param>
+        /// <returns>Sucesso da operação.</returns>
+        /// <remarks></remarks>
         [HttpPost]
         public ActionResult CancelationReason([FromQuery] string applicationID, [FromQuery] string reason)
         {
@@ -483,10 +567,15 @@ namespace CIMOB_IPS.Controllers
                 context.SaveChanges();
             }
 
-            return Json("");
+            return Json("Success");
         }
 
 
+        /// <summary>
+        /// Retorna uma partial view com os detalhes de uma candidaturas.
+        /// </summary>
+        /// <param name="id">Chave primária da candidatura.</param>
+        /// <returns>Partial view com os detalhes de uma candidatura.</returns>
         [HttpGet]
         public IActionResult Details(string id)
         {
@@ -504,7 +593,6 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.ApplicationInstitutions)
                     .FirstOrDefault();
 
-
                 if (application == null)
                     return RedirectToAction("Index", "Application");
                 else
@@ -519,6 +607,11 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna uma partial view com os detalhes da avaliação de uma candidaturas.
+        /// </summary>
+        /// <param name="id">Chave primária da candidatura.</param>
+        /// <returns>Partial view com os detalhes da avaliação de uma candidatura.</returns>
         [HttpGet]
         public IActionResult EvaluationDetails(string id)
         {
@@ -548,6 +641,12 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna a vista para adicionar uma data para a entrevista de uma candidatura.
+        /// </summary>
+        /// <param name="id">Chave primária da candidatura</param>
+        /// <returns>Partial View com um formulário para agendar a entrevista.</returns>
+        /// <remarks></remarks>
         [HttpGet]
         public IActionResult ScheduleInterview(string id)
         {
@@ -557,19 +656,25 @@ namespace CIMOB_IPS.Controllers
             if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
                 return View("ErrorView");
 
-                using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-                {
-                    Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                Application app = context.Application.Where(a => a.IdApplication == int.Parse(id)).SingleOrDefault();
 
-                    if (app == null)
-                        return RedirectToAction("Index", "Application");
+                if (app == null)
+                    return RedirectToAction("Index", "Application");
 
-                    Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
+                Interview interview = context.Interview.Where(i => i.IdInterview == app.IdInterview).SingleOrDefault();
 
-                    return PartialView("_ScheduleInterview", new InterviewViewModel { IdApplication = int.Parse(id), IdInterview = interview.IdInterview, Date = DateTime.Today });
-                }
+                return PartialView("_ScheduleInterview", new InterviewViewModel { IdApplication = int.Parse(id), IdInterview = interview.IdInterview, Date = DateTime.Today });
+            }
         }
 
+        /// <summary>
+        /// Retorna a vista para reagendar uma data para a entrevista de uma candidatura.
+        /// </summary>
+        /// <param name="id">Chave primária da candidatura</param>
+        /// <returns>Partial View com um formulário para reagendar a entrevista.</returns>
+        /// <remarks></remarks>
         [HttpGet]
         public IActionResult RescheduleInterview(string id)
         {
@@ -593,6 +698,12 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Agenda uma entrevista para a candidatura.
+        /// </summary>
+        /// <param name="viewModel">Model da entrevista</param>
+        /// <returns>Retorna para a vista das candidaturas submetidas</returns>
+        /// <remarks></remarks>
         [HttpPost]
         public IActionResult ScheduleInterview(InterviewViewModel viewModel)
         {
@@ -662,6 +773,12 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Application");
         }
 
+        /// <summary>
+        /// Reagenda uma entrevista para a candidatura.
+        /// </summary>
+        /// <param name="viewModel">Model da entrevista</param>
+        /// <returns>Retorna para a vista das candidaturas submetidas</returns>
+        /// <remarks></remarks>
         [HttpPost]
         public IActionResult RescheduleInterview(InterviewViewModel viewModel)
         {
@@ -693,7 +810,6 @@ namespace CIMOB_IPS.Controllers
                     context.Update(interview);
                     context.SaveChanges();
 
-                    //email ao aluno
                     string strLink = "http://cimob-ips.azurewebsites.net/Contact";
 
                     var strbBody = new StringBuilder();
@@ -728,6 +844,14 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Application");
         }
 
+        /// <summary>
+        /// Retorna a vista com o formulário para a avaliação de uma candidatura. 
+        /// Caso não tenha sido escolhido nenhum técnico responsável ou uma instituição de destino retorna a view e mostra os respetivos erros.
+        /// </summary>
+        /// <param name="appId">Chave primária da candidatura</param>
+        /// <param name="bolTechError">Caso exista erro de técnico não seleccionado</param>
+        /// <param name="bolInstitutionError">Caso exista erro de instituição não seleccionada</param>
+        /// <returns>Vista com o formulário para a avaliação de uma candidatura.</returns>
         [HttpGet]
         public IActionResult Evaluate(int appId, bool? bolTechError, bool? bolInstitutionError)
         {
@@ -766,13 +890,20 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Submete a avaliação de uma candidatura. Muda o estado da candidatura para aceite ou rejeitada, consoante a avaliação.
+        /// Por fim notifica o aluno e o técnico responsável pela mobilidade.
+        /// </summary>
+        /// <param name="viewModel">Model da avaliação da entrevista</param>
+        /// <returns></returns>
+        /// <remarks></remarks>
         [HttpPost]
         public IActionResult EvaluateApplication(ApplicationEvaluationViewModel viewModel)
         {
             if (!User.Identity.IsAuthenticated)
 
-            if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
-                return View("ErrorView");
+                if (!(User.IsInRole("tecnico") || User.IsInRole("tecnico_admin")))
+                    return View("ErrorView");
 
             var appId = viewModel.IdApplication;
             var evaluationResult = Request.Form["final_classification"].ToString();
@@ -808,7 +939,7 @@ namespace CIMOB_IPS.Controllers
 
                 bool bolApproved = dblResult >= 50;
 
-                if (dblResult >= 50)
+                if (dblResult >= 50) //Caso o resultado da avaliação seja positivo
                 {
                     application.IdState = context.State.Where(s => s.Description == "Aceite").Select(a => a.IdState).SingleOrDefault();
 
@@ -822,7 +953,6 @@ namespace CIMOB_IPS.Controllers
 
                     context.Add(mobility);
 
-                    //caso tecnico n seja actual, enviar notificação tambem
 
                     long intResponsibleTechnicianId = context.Technician.Where(t => t.IdTechnician == viewModel.IdTechnician).Select(t => t.IdAccount).SingleOrDefault();
 
@@ -856,7 +986,7 @@ namespace CIMOB_IPS.Controllers
                 {
                     IdApplication = application.IdApplication,
                     AverageGrade = viewModel.AverageGrade,
-                    CreditsRatio = (float)student.Credits/viewModel.TotalCourseCredits,
+                    CreditsRatio = (float)student.Credits / viewModel.TotalCourseCredits,
                     InterviewPoints = viewModel.InterviewPoints,
                     MotivationCardPoints = viewModel.MotivationCardPoints,
                     IdApplicationNavigation = application
@@ -907,6 +1037,10 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index", "Application");
         }
 
+        /// <summary>
+        /// Popula uma lista de seleção com os técnicos do CIMOB registados na aplicação.
+        /// </summary>
+        /// <returns>Lista populada com os técnicos</returns>
         private IEnumerable<SelectListItem> PopulateTechnicians()
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -924,6 +1058,10 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Popula uma lista de seleção com as instituições passíveis de destino de mobilidade.
+        /// </summary>
+        /// <returns>Lista populada com as instituições.</returns>
         private IEnumerable<SelectListItem> PopulateOutgoingInstitutions(long intAppId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -942,6 +1080,13 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Apresenta a vista com as candidaturas aprovadas, dispostas numa tabela paginada e filtradas por um critério passado por argumento.         
+        /// </summary>
+        /// <param name="pageApplication">Página da tabela</param>
+        /// <param name="search_by">Critério de filtração das candidaturas.</param>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public async Task<IActionResult> Approved(int? pageApplication, string search_by)
         {
 
@@ -958,9 +1103,9 @@ namespace CIMOB_IPS.Controllers
                     .Include(a => a.IdStudentNavigation)
                     .Include(a => a.IdProgramNavigation)
                     .Include(a => a.Mobility)
-                    .Where(a => a.IdStateNavigation.Description == "Aceite" && a.FinalEvaluation >= 50);
+                    .Where(a => a.IdStateNavigation.Description == "Aceite" && a.FinalEvaluation >= 50);//Apresenta as candidaturas aceites e com avaliação >=50
 
-                applications = applications.Where(a => a.IdProgramNavigation.IdState != 13);
+                applications = applications.Where(a => a.IdProgramNavigation.IdState != 13); //Candidaturas não descartadas.
 
                 if (String.IsNullOrEmpty(search_by))
                 {
@@ -984,6 +1129,12 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Ação que confirma uma candidatura e a coloca como mobilidade. Redirecciona o utilizador para vista da sua mobilidade corrente.
+        /// </summary>
+        /// <param name="appId">Chave primária da candidatura</param>
+        /// <returns>View Mobility/MyMobility</returns>
+        /// <remarks></remarks>
         public IActionResult Confirm(int appId)
         {
             if (!User.Identity.IsAuthenticated)
@@ -998,7 +1149,7 @@ namespace CIMOB_IPS.Controllers
 
                 var student = GetStudentById(GetCurrentUserID());
 
-                if (student.IdStudent != application.IdStudent || application.FinalEvaluation < 50)
+                if (student.IdStudent != application.IdStudent || application.FinalEvaluation < 50) //Caso a avaliação da candidatura não seja positiva
                 {
                     return View("ErrorView");
                 }
@@ -1034,7 +1185,7 @@ namespace CIMOB_IPS.Controllers
 
                 context.SaveChanges();
 
-                //email ao aluno
+                //Email ao Estudante
                 var strbBody = new StringBuilder();
                 strbBody.AppendLine("Caro estudante,<br><br>");
                 strbBody.AppendFormat(@"Informamos que confirmou com sucesso a sua mobilidade para a instituição " + mobility.IdOutgoingInstitutionNavigation.Name);
@@ -1049,12 +1200,12 @@ namespace CIMOB_IPS.Controllers
                 Email.SendEmail(student.IdAccountNavigation.Email, "Confirmação de candidatura", strbBody.ToString());
 
 
-                //notificaçao ao tecnico responsavel
+                //Notificação ao técnico responsável
                 Notification notificationTechnician = new Notification
                 {
                     ReadNotification = false,
                     Description = "Uma mobilidade a seu cargo foi confirmada.",
-                    ControllerName = "Mobility", 
+                    ControllerName = "Mobility",
                     ActionName = "MobilitiesInCharge",
                     NotificationDate = DateTime.Now,
                     IdAccount = mobility.IdResponsibleTechnicianNavigation.IdAccount
@@ -1067,6 +1218,12 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Mobility", "MyMobility");
         }
 
+        /// <summary>
+        /// Carrega a página com a calendarização das entrevistas.
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        /// <remarks></remarks>
         public IActionResult Interviews(int appId)
         {
             if (!User.Identity.IsAuthenticated)
@@ -1079,6 +1236,11 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Método que procura todas as marcações de entrevistas registadas na base de dados e converte-as para um ficheiro XML.
+        /// Este ficheiro é guardado no servidor para mais tarde ser usado na mostragem das marcações de entrevistas.
+        /// </summary>
+        /// <remarks></remarks>
         public void FetchInterviews()
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -1088,18 +1250,19 @@ namespace CIMOB_IPS.Controllers
                     using (XmlWriter xw = XmlWriter.Create(ms))
                     {
                         XDocument doc = new XDocument();
-
+                        //elemento principal - monthly
                         XElement monthly = new XElement("monthly");
 
+                        //Consulta das candidaturas
                         var list = context.Application
                             .Include(a => a.IdInterviewNavigation)
                             .Include(a => a.IdStudentNavigation)
-                            .Where(a=> a.IdState == 1);
+                            .Where(a => a.IdState == 1);
 
 
                         foreach (var app in list)
                         {
-
+                            //por cada candidatura é criada um elemento <event>
                             XElement ev = new XElement("event");
                             ev.Add(new XElement("id", app.IdInterviewNavigation.IdInterview));
 
@@ -1116,6 +1279,7 @@ namespace CIMOB_IPS.Controllers
                                 name = strFirstName;
                             }
 
+                            //informações do evento(nome, data de início, data de fecho, hora de início)
                             ev.Add(new XElement("name", name));
                             ev.Add(new XElement("startdate", app.IdInterviewNavigation.Date.Date));
                             ev.Add(new XElement("enddate", app.IdInterviewNavigation.Date.Date));
@@ -1132,6 +1296,7 @@ namespace CIMOB_IPS.Controllers
                         ms.Position = 0;
 
 
+                        //Grava o ficheiro no servidor
                         var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "js", "interviews.xml");
                         using (var fileStream = new FileStream(uploadName, FileMode.Create))
                         {

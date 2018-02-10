@@ -12,6 +12,10 @@ using System.IO;
 
 namespace CIMOB_IPS.Controllers
 {
+    /// <summary>
+    /// Controlador para as acções do perfil de um utilizador.
+    /// Contém métodos para visualização e edição de um perfil de utilizador.
+    /// </summary>
     public class ProfileController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
@@ -21,11 +25,21 @@ namespace CIMOB_IPS.Controllers
             _hostingEnvironment = HostingEnvironment;
         }
 
+        /// <summary>
+        /// Retorna a chave primária associada à conta do utilizador autenticado no momento.
+        /// </summary>
+        /// <returns>Chave primária associada à conta do utilizador autenticado no momento</returns>
+        /// <remarks></remarks>
         public int GetCurrentUserID()
         {
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
         }
 
+        /// <summary>
+        /// Retorna o modelo de um conta pela chave primária da mesma passada como argumento.
+        /// </summary>
+        /// <param name="intId">Chave primária da conta</param>
+        /// <returns>Modelo de um conta pela chave primária da mesma passada como argumento.</returns>
         public ProfileViewModel GetAccountModelByID(int intId)
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
@@ -60,6 +74,10 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna a vista com as informações do perfil do utilizador autenticado.
+        /// </summary>
+        /// <returns>Vista com as informações do perfil do utilizador autenticado.</returns>
         public IActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
@@ -73,6 +91,11 @@ namespace CIMOB_IPS.Controllers
             return View(accountViewModel);
         }
 
+        /// <summary>
+        /// Retorna a vista com as informações do perfil de um utilizador que tem como chave primária o inteiro passado como argumento.
+        /// </summary>
+        /// <param name="id">Chave primária do utilizador</param>
+        /// <returns>Vista com as informações do perfil de um utilizador que tem como chave primária o inteiro passado como argumento./returns>
         public IActionResult Get(int id)
         {
             if (!User.Identity.IsAuthenticated)
@@ -87,6 +110,10 @@ namespace CIMOB_IPS.Controllers
             return View("Index", accountViewModel);
         }
 
+        /// <summary>
+        /// Retorna a vista com o formulário para edição do perfil do utilizador autenticado.
+        /// </summary>
+        /// <returns>Vista com o formulário para edição do perfil do utilizador autenticado.</returns>
         public IActionResult Edit()
         {
             if (!User.Identity.IsAuthenticated)
@@ -105,6 +132,12 @@ namespace CIMOB_IPS.Controllers
             return View(accountViewModel);
         }
 
+        /// <summary>
+        /// Atualiza o perfil de um estudante com novas informações.
+        /// </summary>
+        /// <param name="model">Modelo do perfil</param>
+        /// <returns>View Profile/Index com a visualização do perfil atualizado</returns>
+        /// <remarks></remarks>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProfileStudent(ProfileViewModel model)
@@ -148,6 +181,12 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Atualiza o perfil de um técnico do CIMOB com novas informações.
+        /// </summary>
+        /// <param name="model">Modelo do perfil</param>
+        /// <returns>View Profile/Index com a visualização do perfil atualizado</returns>
+        /// <remarks></remarks>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> UpdateProfileTechnician(ProfileViewModel model)
@@ -181,6 +220,12 @@ namespace CIMOB_IPS.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Insere no servidor um ficheiro que representa a imagem avatar de um utilizador.
+        /// O ficheiro ficará com o caminho images/avatars/(chave primária da conta do utilizador).(extensão).
+        /// Por defeito a imagem é images/avatars/user1.png .
+        /// </summary>
+        /// <param name="accountid">Chave primária da conta do utilizador para ser guardada como nome do ficheiro</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task UploadAvatar(string accountid)
@@ -192,8 +237,6 @@ namespace CIMOB_IPS.Controllers
                 {
                     if (ImageFile.FileName != "")
                     {
-
-
                         var extention = Path.GetExtension(ImageFile.FileName);
 
                         var uploadName = Path.Combine(_hostingEnvironment.WebRootPath, "images/avatars", accountid + extention);
@@ -210,7 +253,12 @@ namespace CIMOB_IPS.Controllers
         }
 
 
-
+        /// <summary>
+        /// Atualiza o caminho para a imagem do perfil do utilizador.
+        /// </summary>
+        /// <param name="account_id">Chave Primária da conta do utilizador</param>
+        /// <param name="extention">Extensão do ficheiro</param>
+        /// <remarks></remarks>
         private void UpdateAvatarURL(string account_id, string extention)
         {
             using (SqlConnection scnConnection = new SqlConnection(CIMOB_IPS_DBContext.ConnectionString))
@@ -228,6 +276,11 @@ namespace CIMOB_IPS.Controllers
         }
 
 
+        /// <summary>
+        /// Visualização do perfil de um estudante.
+        /// </summary>
+        /// <param name="id">Chave primária do estudante</param>
+        /// <returns>Partial view com as informações do perfil de um estudante</returns>
         [HttpGet]
         public IActionResult ViewStudentProfile(string id)
         {
@@ -244,6 +297,11 @@ namespace CIMOB_IPS.Controllers
             }
         }
 
+        /// <summary>
+        /// Retorna o número de créditos do estudante autenticado.
+        /// </summary>
+        /// <param name="user">Estudante autenticado</param>
+        /// <returns>Número de créditos do estudante autenticado.</returns>
         public async Task<int> GetCurrentStudentECTS(ClaimsPrincipal user)
         {
             var intCurrentId = int.Parse(user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);

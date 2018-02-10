@@ -60,7 +60,7 @@ namespace CIMOB_IPS
             }
             else
             {
-                app.UseExceptionHandler("/Home/ErrorView");
+                app.UseExceptionHandler("/ErrorView");
             }
 
             app.UseStaticFiles(new StaticFileOptions

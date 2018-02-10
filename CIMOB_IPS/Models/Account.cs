@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
-//COMMIT
 
 namespace CIMOB_IPS.Models
 {
