@@ -155,8 +155,6 @@ namespace CIMOB_IPS.Controllers
         [HttpPost]
         [ValidateAntiForgeryTokenAttribute]
         public async Task<IActionResult> Edit(Models.Program model)
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Models.Program model)
         {
             if (!User.Identity.IsAuthenticated)
                 return RedirectToAction("Login", "Account");
