@@ -202,17 +202,26 @@ namespace CIMOB_IPS.Controllers
             return Json("Sucess");
         }
 
-        private long GetIdByInstitution(string institutionName)
+        public long GetIdByInstitution(string institutionName)
         {
-            return _context.Institution.Where(i => i.Name == institutionName).FirstOrDefault().IdInstitution;
+            Institution institution = _context.Institution.Where(i => i.Name == institutionName).FirstOrDefault();
+
+            if(institution != null)
+            {
+                return institution.IdInstitution;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
-        private long GetNewApplicationID()
+        public long GetNewApplicationID()
         {
             return _context.Application.Max(i => i.IdApplication) + 1;
         }
 
-        private void AddApplicationNotification()
+        public void AddApplicationNotification()
         {
             Notification not = new Notification
             {

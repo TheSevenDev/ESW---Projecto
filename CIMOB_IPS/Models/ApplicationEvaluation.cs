@@ -16,5 +16,10 @@ namespace CIMOB_IPS.Models
         public int AverageGrade { get; set; }
 
         public Application IdApplicationNavigation { get; set; }
+
+        public double CalculateEvaluation()
+        {
+            return (CreditsRatio * 100) * 0.35 + ((MotivationCardPoints * 0.5 + InterviewPoints * 0.5)) * 0.35 + (AverageGrade * 5) * 0.30;
+        }
     }
 }

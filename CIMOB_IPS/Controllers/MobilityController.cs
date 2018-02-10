@@ -1,16 +1,26 @@
-﻿using System;
+﻿using CIMOB_IPS.Controllers;
+using CIMOB_IPS.Models;
+using CIMOB_IPS.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using CIMOB_IPS.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Xunit;
+
 
 namespace CIMOB_IPS.Controllers
 {
-    public class MobilityController : Controller
+    public class MobilityController : Microsoft.AspNetCore.Mvc.Controller
     {
+        public MobilityController()
+        {
+
+        }
+
         public int GetCurrentUserID()
         {
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
