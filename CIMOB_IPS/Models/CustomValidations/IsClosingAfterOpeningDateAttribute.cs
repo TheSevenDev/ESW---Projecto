@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models
 {
-
+    /// <summary>
+    /// Classe usada para validar se a data de enceramento das candidatuars é superior à de abertura.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class IsClosingAfterOpeningDateAttribute : ValidationAttribute
     {

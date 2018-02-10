@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 namespace CIMOB_IPS.Models
 {
 
+    /// <summary>
+    /// Classe usada para validar se a data de fecho da mobilidade é superior à data de ínicio.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class IsEndMobilityAfterBeginDate : ValidationAttribute
     {

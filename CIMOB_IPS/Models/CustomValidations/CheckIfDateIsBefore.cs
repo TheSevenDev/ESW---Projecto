@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models.CustomValidations
 {
+    /// <summary>
+    /// Classe usada para validar se uma data é inferior à data atual
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class CheckIfDateIsBefore : ValidationAttribute
     {

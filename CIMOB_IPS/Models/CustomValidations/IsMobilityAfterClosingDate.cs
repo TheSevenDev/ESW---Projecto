@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models.CustomValidations
 {
+    /// <summary>
+    /// Classe usada para validar se uma data de ínicoo de mobilidade é superior à data de fecho das candidaturas à mesma.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public sealed class IsMobilityAfterClosingDate : ValidationAttribute
     {
