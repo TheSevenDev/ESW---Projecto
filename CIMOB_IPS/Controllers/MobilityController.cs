@@ -21,8 +21,6 @@ namespace CIMOB_IPS.Controllers
     /// </summary>
     public class MobilityController : Microsoft.AspNetCore.Mvc.Controller
     {
-
-
         /// <summary>
         /// Retorna a chave primária associada à conta do utilizador autenticado no momento.
         /// </summary>
