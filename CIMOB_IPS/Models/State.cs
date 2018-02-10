@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>
+    /// Classe que representa o estado de uma candidatura ou programa de mobilidade.
+    /// </summary>
     public partial class State
     {
         public State()
@@ -12,8 +15,17 @@ namespace CIMOB_IPS.Models
             Program = new HashSet<Program>();
         }
 
+        /// <summary>
+        /// Chave primária do estado.
+        /// </summary>
+        /// <value>Chave primária do estado.</value>
+        /// <remarks></remarks>
         public long IdState { get; set; }
 
+        /// <summary>
+        /// Descrição do estado.
+        /// </summary>
+        /// <value>Descrição do estado.</value>
         [Display(Name = "Estado")]
         public string Description { get; set; }
 

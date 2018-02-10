@@ -189,7 +189,7 @@ namespace XUnitCIMOB_IPS
         {
             var program = GetProgram().Result;
 
-            Assert.True(program.isOpenProgram());
+            Assert.True(program.IsOpenProgram());
         }
 
         [Fact]
@@ -199,7 +199,7 @@ namespace XUnitCIMOB_IPS
 
             program.IdStateNavigation.Description = "Em Seriação";
 
-            Assert.False(program.isOpenProgram());
+            Assert.False(program.IsOpenProgram());
         }
 
         [Fact]
@@ -207,7 +207,7 @@ namespace XUnitCIMOB_IPS
         {
             var program = GetProgram().Result;
 
-            Assert.True(program.withVacanciesAvailable());
+            Assert.True(program.WithVacanciesAvailable());
         }
 
         [Fact]
@@ -217,7 +217,7 @@ namespace XUnitCIMOB_IPS
 
             program.Vacancies = 0;
 
-            Assert.False(program.withVacanciesAvailable());
+            Assert.False(program.WithVacanciesAvailable());
         }
 
         [Fact]
@@ -225,7 +225,7 @@ namespace XUnitCIMOB_IPS
         {
             var program = GetProgram().Result;
 
-            Assert.True(program.withDateAvailable());
+            Assert.True(program.WithDateAvailable());
         }
 
         [Fact]
@@ -235,7 +235,7 @@ namespace XUnitCIMOB_IPS
 
             program.ClosingDate = new DateTime(2017, 01, 03);
 
-            Assert.False(program.withDateAvailable());
+            Assert.False(program.WithDateAvailable());
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace XUnitCIMOB_IPS
         {
             var program = GetProgram().Result;
 
-            Assert.True(program.withPossibleApplication());
+            Assert.True(program.WithPossibleApplication());
         }
 
         [Fact]
@@ -253,7 +253,7 @@ namespace XUnitCIMOB_IPS
 
             program.Vacancies = 0;
 
-            Assert.False(program.withPossibleApplication());
+            Assert.False(program.WithPossibleApplication());
         }
 
         [Fact]

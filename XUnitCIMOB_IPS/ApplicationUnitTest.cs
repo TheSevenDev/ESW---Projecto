@@ -343,7 +343,7 @@ namespace XUnitCIMOB_IPS
         {
             var student = GetStudent().Result;
 
-            Assert.True(student.hasEnoughCredits());
+            Assert.True(student.HasEnoughCredits());
         }
 
         [Fact]
@@ -352,7 +352,7 @@ namespace XUnitCIMOB_IPS
             var student = GetStudent().Result;
             student.Credits = 30;
 
-            Assert.False(student.hasEnoughCredits());
+            Assert.False(student.HasEnoughCredits());
         }
 
         [Fact]
@@ -360,7 +360,7 @@ namespace XUnitCIMOB_IPS
         {
             var student = GetStudent().Result;
 
-            Assert.True(student.hasNotMaxApplicationNumber());
+            Assert.True(student.HasNotMaximumApplications());
         }
 
         [Fact]
@@ -370,7 +370,7 @@ namespace XUnitCIMOB_IPS
 
             student.Application.Add(new Application());
             
-            Assert.False(student.hasNotMaxApplicationNumber());
+            Assert.False(student.HasNotMaximumApplications());
         }
 
         [Fact]

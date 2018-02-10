@@ -5,6 +5,10 @@ using CIMOB_IPS.Models;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>
+    /// Database Context
+    /// </summary>
+    /// <remarks></remarks>
     public partial class CIMOB_IPS_DBContext : DbContext
     {
         public virtual DbSet<Account> Account { get; set; }
@@ -597,7 +601,7 @@ namespace CIMOB_IPS.Models
                     .HasConstraintName("fk_E_Nationality");
             });
 
-            
+
 
             modelBuilder.Entity<Technician>(entity =>
             {
@@ -626,7 +630,7 @@ namespace CIMOB_IPS.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_T_Account");
 
-                
+
             });
 
             modelBuilder.Entity<TestFile>(entity =>

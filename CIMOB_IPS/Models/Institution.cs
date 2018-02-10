@@ -5,6 +5,9 @@ using System.ComponentModel;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>
+    /// Classe que representa uma instituição nacional ou internacional.
+    /// </summary>
     public partial class Institution
     {
         public Institution()
@@ -15,12 +18,30 @@ namespace CIMOB_IPS.Models
             Mobility = new HashSet<Mobility>();
         }
 
+        /// <summary>
+        /// Chave primária da instituição.
+        /// </summary>
+        /// <value>Chave primária da instituição.</value>
         public long IdInstitution { get; set; }
-        
-        [Display(Name="Instituição")]
+
+        /// <summary>
+        /// Nome da instituição.
+        /// </summary>
+        /// <value>Nome da instituição.</value>
+        [Display(Name = "Instituição")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Chave estrangeira da <see cref="CIMOB_IPS.Models.Nationality" /> que representa o país onde a instiuição está sediada.
+        /// </summary>
+        /// <value>Chave estrangeira do país da insitutição.</value>
         public long IdNationality { get; set; }
+
+
+        /// <summary>
+        /// Hiperligação para o site da instituição.
+        /// </summary>
+        /// <value>Hiperligação para o site da instituição.</value>
         public string Hyperlink { get; set; }
 
         public Nationality IdNationalityNavigation { get; set; }

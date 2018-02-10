@@ -104,24 +104,24 @@ footer a, footer a:visited:hover, footer a:link:hover, footer a:active:hover {
     font-size: 1.1vw;
 }
 
-    .session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
-        text-decoration: none;
-        color: #F1F1F1;
-        font-size: 1.1vw;
-    }
+.session-name a, .session-name a:visited, .session-name a:link, .session-name a:active {
+    text-decoration: none;
+    color: #F1F1F1;
+    font-size: 1.1vw;
+}
 
-        .session-name a:hover, .session-name a:visited:hover, .session-name a:link:hover, .session-name a:active:hover {
-            text-decoration: none;
-        }
+.session-name a:hover, .session-name a:visited:hover, .session-name a:link:hover, .session-name a:active:hover {
+    text-decoration: none;
+}
 
 #logout {
     color: var(--main-color);
-    font-size: 1.0vw;
+    font-size: 1vw;
 }
 
-    #logout:hover, #logout:visited:hover, #logout:link:hover, #logout:active:hover {
-        text-decoration: underline;
-    }
+#logout:hover, #logout:visited:hover, #logout:link:hover, #logout:active:hover {
+    text-decoration: underline;
+}
 
 .option-button {
     height: 1.3vmax;

@@ -19,20 +19,15 @@ namespace CIMOB_IPS.Controllers
     /// Contém métodos para a confirmação de uma mobilidade ou cancelamento da mesma.
     /// Mostra em vistas as mobilidades ao cargo de um técnico ou a mobilidade do estudante autenticado.
     /// </summary>
-    public class MobilityController : Controller
+    public class MobilityController : Microsoft.AspNetCore.Mvc.Controller
     {
+
+
         /// <summary>
         /// Retorna a chave primária associada à conta do utilizador autenticado no momento.
         /// </summary>
         /// <returns>Chave primária associada à conta do utilizador autenticado no momento</returns>
         /// <remarks></remarks>
-    public class MobilityController : Microsoft.AspNetCore.Mvc.Controller
-    {
-        public MobilityController()
-        {
-
-        }
-
         public int GetCurrentUserID()
         {
             return int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);

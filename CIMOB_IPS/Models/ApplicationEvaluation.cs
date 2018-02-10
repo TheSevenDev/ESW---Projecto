@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 
 namespace CIMOB_IPS.Models
 {
+    /// <summary>
+    /// Classe que representa a avaliação da candidatura.\
+    /// </summary>
+    /// <remarks></remarks>
     public class ApplicationEvaluation
     {
         public long IdApplicationEvaluation { get; set; }

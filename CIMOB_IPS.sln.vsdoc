@@ -64,6 +64,8 @@
   <string>comInterface</string>
   <string>comEventDecl</string>
   <string>comDeclare</string>
+  <string>supportedOthers</string>
+  <string>comWriteDescription</string>
 </ArrayOfString>]]></add>
       <add key="VBdocman_comNonCommented"><![CDATA[-1]]></add>
       <add key="VBdocman_comDeclare"><![CDATA[-1]]></add>

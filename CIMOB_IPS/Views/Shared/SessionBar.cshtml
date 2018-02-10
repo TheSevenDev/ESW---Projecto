@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     string strName = "";
     if (User.Identity.Name != null)
     {
@@ -29,7 +29,7 @@
 <div class="nav-session">
     <div>
         <a asp-controller="Home" asp-action="Index" style="position:fixed; margin-left:0.2%;z-index:600" draggable="false">
-           <img id="session-logo" src="~/images/cimobips.png" draggable="false"/>
+            <img id="session-logo" src="~/images/cimobips.png" draggable="false" />
         </a>
     </div>
 
@@ -43,8 +43,8 @@
     }
     else
     {
-        <div class="session-name">  
-            <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" onerror="this.src='images/avatars/user1.png'" class="session-profile-image" draggable="false"/> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
+        <div class="session-name">
+            <a asp-area="" asp-controller="Profile" asp-action="Index"><img src="@ac.GetAvatarUrl(account_id)" onerror="this.src='images/avatars/user1.png'" class="session-profile-image" draggable="false" /> @strName</a> <a id="logout" asp-area="" asp-controller="Account" asp-action="Logout">(Sair)</a>
         </div>
     }
 
