@@ -82,7 +82,7 @@ namespace CIMOB_IPS.Controllers
             ProfileController pc = new ProfileController(_hostingEnvironment);
             int intEcts = await pc.GetCurrentStudentECTS(User);
 
-            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == 1);
+            var program = await _context.Program.Include(p => p.IdProgramTypeNavigation).Include(p => p.IdStateNavigation).Include(p => p.InstitutionProgram).FirstOrDefaultAsync(p => p.IdProgram == programID);
 
             int userID = GetCurrentUserID();
 
@@ -368,16 +368,6 @@ namespace CIMOB_IPS.Controllers
                 }
 
                 return View(lisApplications);
-            }
-        }
-
-        public async Task<IActionResult> ShowFiles()
-        {
-            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
-            {
-                var files = await context.TestFile.ToListAsync();
-
-                return View(files);
             }
         }
 
@@ -970,6 +960,10 @@ namespace CIMOB_IPS.Controllers
                     context.SaveChanges();
 
                     program.Vacancies -= 1;
+
+                    if (program.Vacancies < 0)
+                        program.Vacancies = 0;
+
                     context.Program.Update(program);
                     context.SaveChanges();
                 }
