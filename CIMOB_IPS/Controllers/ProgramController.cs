@@ -29,7 +29,6 @@ namespace CIMOB_IPS.Controllers
 
         public async Task<IActionResult> Details([FromQuery] string programID)
         {
-            Console.WriteLine("===================================================" + programID);
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
                 var program = await context.Program

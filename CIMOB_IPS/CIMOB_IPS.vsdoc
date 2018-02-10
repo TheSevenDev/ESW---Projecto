@@ -87,5 +87,12 @@
     <add key="VBdocman_supportedOthers"><![CDATA[]]></add>
     <add key="VBdocman_generateCsharpSyntax"><![CDATA[-1]]></add>
     <add key="VBdocman_comInterface"><![CDATA[-1]]></add>
+    <add key="VBdocman_SupportedXamarinIos"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedNetCore"><![CDATA[]]></add>
+    <add key="VBdocman_ConstantValueDisplay"><![CDATA[1]]></add>
+    <add key="VBdocman_SupportedNetStandard"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedXamarinMac"><![CDATA[]]></add>
+    <add key="VBdocman_SupportedXamarinAndroid"><![CDATA[]]></add>
+    <add key="VBdocman_generateFsharpSyntax"><![CDATA[0]]></add>
   </appSettings>
 </configuration>
