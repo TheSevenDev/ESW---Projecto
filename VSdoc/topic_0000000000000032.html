@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="GENERATOR" content="VSdocman - documentation generator; http://www.helixoft.com" />
-	<title>ApplicationController.MyApplications Method</title>
+	<title>ApplicationController.GetIdByInstitution Method</title>
 
 	<link rel="stylesheet" type="text/css" href="msdn2017/msdn2017.css"></link>
 	<script src="msdn2017/msdn2017.js" type="text/javascript"></script>
@@ -60,7 +60,7 @@ function replaceTitleAndUrl(win, title, url) {
 <!--HEADER START-->
   <div id="header">
   	<div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
-  	<h1 class="title">ApplicationController.MyApplications Method</h1>
+  	<h1 class="title">ApplicationController.GetIdByInstitution Method</h1>
   	<div id="headerLinks">
 
 	<a href="#seeAlsoSection">See Also</a>
@@ -74,8 +74,7 @@ function replaceTitleAndUrl(win, title, url) {
       <div id="mainBody">
         <p />
        
-        Retorna a view com as candidaturas efetuadas pelo estudante autenticado.
-Caso não esteja autenticado ou não seja estudante, o utilizador é redireccionado para uma view de erro.
+        Retorna a chave primária de uma instituição pelo nome.
 
 
         <p /><strong>Namespace:</strong>
@@ -138,7 +137,7 @@ Caso não esteja autenticado ou não seja estudante, o utilizador é redireccion
 				</div>
 				
 				<div class="codeSnippetCode codeVB">
-					<pre xml:space="preserve" class="brush: vb">Public Function MyApplications() As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>(Of <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>)</pre>			
+					<pre xml:space="preserve" class="brush: vb">Public Function GetIdByInstitution( _&nbsp;<br />   ByVal <i>institutionName</i> As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.string.aspx">String</a> _&nbsp;<br />) As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int64.aspx">Long</a></pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -177,7 +176,7 @@ Caso não esteja autenticado ou não seja estudante, o utilizador é redireccion
 				</div>
 				
 				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>&gt; MyApplications()</pre>			
+					<pre xml:space="preserve" class="brush: csharp">public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int64.aspx">long</a> GetIdByInstitution(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.string.aspx">string</a> <i>institutionName</i>&nbsp;<br />)</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -217,7 +216,7 @@ Caso não esteja autenticado ou não seja estudante, o utilizador é redireccion
 				</div>
 				
 				<div class="codeSnippetCode codeCpp">
-					<pre xml:space="preserve" class="brush: cpp">public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>^&gt;^ MyApplications() </pre>			
+					<pre xml:space="preserve" class="brush: cpp">public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int64.aspx">long</a> GetIdByInstitution(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.string.aspx">String</a>^ <i>institutionName</i>&nbsp;<br />) </pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -256,7 +255,7 @@ Caso não esteja autenticado ou não seja estudante, o utilizador é redireccion
 				</div>
 				
 				<div class="codeSnippetCode codeJScript">
-					<pre xml:space="preserve" class="brush: js">JScript does not support generic types and methods.</pre>			
+					<pre xml:space="preserve" class="brush: js">public function GetIdByInstitution(&nbsp;<br />    <i>institutionName</i> : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.string.aspx">String</a>&nbsp;<br />) : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int64.aspx">long</a>;</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -267,12 +266,28 @@ Caso não esteja autenticado ou não seja estudante, o utilizador é redireccion
 	</div>
 
 
+<h4 class="subHeading">
+	Parameters</h4><dl paramName="institutionName">
+	<dt>
+		<span class="parameter">
+			institutionName
+		</span>
+	</dt>
+	<dd>
+		Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.string.aspx">string</a> 
+		<p>
+			Nome da instituição 
+		</p>
+	</dd>
+</dl>
+
+<p />
 
 	<h4 class="subHeading">
 		Return Value</h4>
-	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>&gt; 
+	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int64.aspx">long</a> 
 		<p>
-		View com as candidaturas efetuadas pelo estudante autenticado. 
+		Chave Primária da instituição 
 	</p>
 	
 

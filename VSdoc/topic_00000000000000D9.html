@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="GENERATOR" content="VSdocman - documentation generator; http://www.helixoft.com" />
-	<title>Address.Student Property</title>
+	<title>Address.DoorNumber Property</title>
 
 	<link rel="stylesheet" type="text/css" href="msdn2017/msdn2017.css"></link>
 	<script src="msdn2017/msdn2017.js" type="text/javascript"></script>
@@ -60,7 +60,7 @@ function replaceTitleAndUrl(win, title, url) {
 <!--HEADER START-->
   <div id="header">
   	<div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
-  	<h1 class="title">Address.Student Property</h1>
+  	<h1 class="title">Address.DoorNumber Property</h1>
   	<div id="headerLinks">
 
 	<a href="#seeAlsoSection">See Also</a>
@@ -74,10 +74,11 @@ function replaceTitleAndUrl(win, title, url) {
       <div id="mainBody">
         <p />
        
+        Representa o número da porta da morada.
 
 
         <p /><strong>Namespace:</strong>
-<a href="topic_000000000000006E.html">CIMOB_IPS.Models</a>
+<a href="topic_0000000000000070.html">CIMOB_IPS.Models</a>
 
 
 
@@ -136,7 +137,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeVB">
-					<pre xml:space="preserve" class="brush: vb">Public Property Student() As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>(Of <a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>)</pre>			
+					<pre xml:space="preserve" class="brush: vb">&lt;Display(Name = &quot;N.º da Porta:&quot;)&gt; _&nbsp;<br />&lt;RegularExpression(&quot;^[0-9]*$&quot;, ErrorMessage = &quot;O nº da porta tem de ser expresso em algarismos.&quot;)&gt; _&nbsp;<br />Public Property DoorNumber() As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">Short</a></pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -175,7 +176,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>&lt;<a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>&gt; Student {get; set;}</pre>			
+					<pre xml:space="preserve" class="brush: csharp">[Display(Name = &quot;N.º da Porta:&quot;)]&nbsp;<br />[RegularExpression(&quot;^[0-9]*$&quot;, ErrorMessage = &quot;O nº da porta tem de ser expresso em algarismos.&quot;)]&nbsp;<br />public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a> DoorNumber {get; set;}</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -215,7 +216,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeCpp">
-					<pre xml:space="preserve" class="brush: cpp">public: &nbsp;<br />property <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>&lt;<a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>^&gt;^ Student {&nbsp;<br /> <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>&lt;<a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>^&gt;^ get( );&nbsp;<br /> void set(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>&lt;<a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>^&gt;^ value&nbsp;<br /> );&nbsp;<br />}</pre>			
+					<pre xml:space="preserve" class="brush: cpp">[Display(Name = &quot;N.º da Porta:&quot;)]&nbsp;<br />[RegularExpression(&quot;^[0-9]*$&quot;, ErrorMessage = &quot;O nº da porta tem de ser expresso em algarismos.&quot;)]&nbsp;<br />public: &nbsp;<br />property <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a> DoorNumber {&nbsp;<br /> <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a> get( );&nbsp;<br /> void set(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a> value&nbsp;<br /> );&nbsp;<br />}</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -254,7 +255,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeJScript">
-					<pre xml:space="preserve" class="brush: js">JScript does not support generic types and methods.</pre>			
+					<pre xml:space="preserve" class="brush: js">public &nbsp;<br />   Display(Name = &quot;N.º da Porta:&quot;)&nbsp;<br />   RegularExpression(&quot;^[0-9]*$&quot;, ErrorMessage = &quot;O nº da porta tem de ser expresso em algarismos.&quot;)&nbsp;<br />function get DoorNumber() : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a>;&nbsp;<br />public &nbsp;<br />   Display(Name = &quot;N.º da Porta:&quot;)&nbsp;<br />   RegularExpression(&quot;^[0-9]*$&quot;, ErrorMessage = &quot;O nº da porta tem de ser expresso em algarismos.&quot;)&nbsp;<br />function set DoorNumber(value : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a>);</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -268,7 +269,10 @@ function replaceTitleAndUrl(win, title, url) {
 
 	<h4 class="subHeading">
 		Property Value</h4>
-	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/92t2ye13.aspx">ICollection</a>&lt;<a target="_top" href="topic_00000000000001AC.html" onclick="this.target='';return true;">Student</a>&gt; 
+	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int16.aspx">short</a> 
+		<p>
+		Número da porta da morada. 
+	</p>
 	
 
 
@@ -359,11 +363,11 @@ function replaceTitleAndUrl(win, title, url) {
 
 	<div id="seeAlsoSection" class="section">	
 		<div>
-			<a href="topic_00000000000000D3.html">Address Class</a><br />
+			<a href="topic_00000000000000D5.html">Address Class</a><br />
 
 
 
-<a href="topic_000000000000006E.html">CIMOB_IPS.Models Namespace</a><br />
+<a href="topic_0000000000000070.html">CIMOB_IPS.Models Namespace</a><br />
 
 
 			

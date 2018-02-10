@@ -32,7 +32,6 @@ namespace CIMOB_IPS.Models
         public virtual DbSet<State> State { get; set; }
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<Technician> Technician { get; set; }
-        public virtual DbSet<TestFile> TestFile { get; set; }
 
         public CIMOB_IPS_DBContext(DbContextOptions<CIMOB_IPS_DBContext> options)
         : base(options)
@@ -631,17 +630,6 @@ namespace CIMOB_IPS.Models
                     .HasConstraintName("fk_T_Account");
 
 
-            });
-
-            modelBuilder.Entity<TestFile>(entity =>
-            {
-                entity.HasKey(e => e.IdFile);
-
-                entity.ToTable("test_file");
-
-                entity.Property(e => e.IdFile).HasColumnName("id_file");
-
-                entity.Property(e => e.FileTest).HasColumnName("file_test");
             });
         }
     }

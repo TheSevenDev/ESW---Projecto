@@ -1,36 +1,36 @@
-﻿@{ 
+﻿@{
     ViewData["Title"] = "HomePage";
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/imgSlider.css")' />
-<div class="imgContainer">
 
-    <input type="radio" name="images" id="i1" checked/>
+<div class="imgContainer">
+    <input type="radio" name="images" id="i1" checked />
     <input type="radio" name="images" id="i2" />
     <input type="radio" name="images" id="i3" />
     <input type="radio" name="images" id="i4" />
 
-    <div class="slider-img" id="first">
+    <div class="slider-img" id="img1">
         <img src="~/images/erasmus_students.jpg" />
-        
+
         <label for="i3" class="pre"></label>
         <label for="i2" class="nxt"></label>
     </div>
 
-    <div class="slider-img" id="second">
-        <img src="~/images/smile_students.jpg" />
+    <div class="slider-img" id="img2">
+        <img src="~/images/smile_students.jpg"  />
 
         <label for="i1" class="pre"></label>
         <label for="i3" class="nxt"></label>
     </div>
 
-    <div class="slider-img" id="third">
+    <div class="slider-img" id="img3">
         <img src="~/images/students_Macau.jpg" />
 
         <label for="i2" class="pre"></label>
         <label for="i4" class="nxt"></label>
     </div>
-        <div class="slider-img" id="fourth">
+    <div class="slider-img" id="img4">
         <img src="~/images/sudents.jpg" />
 
         <label for="i3" class="pre"></label>
@@ -43,9 +43,14 @@
         <label class="dots" id="dot3" for="i3"></label>
         <label class="dots" id="dot4" for="i4"></label>
     </div>
-
-    <!--<div class="applicationDate">
-        <label>Prazo limite para as candidaturas</label>
-    </div>-->
-
 </div>
+
+
+@*<div id="slider">
+    <figure>
+    <img src="~/images/erasmus_students.jpg">
+    <img src="~/images/smile_students.jpg">
+    <img src="~/images/students_Macau.jpg">
+    <img src="~/images/sudents.jpg">
+    </figure>
+</div>*@
