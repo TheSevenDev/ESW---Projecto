@@ -7,6 +7,7 @@
 }
     .circle:hover {
         background-color: #F1873599;
+        cursor:pointer;
     }
 
 #border-toastedyellow {
@@ -83,4 +84,10 @@
     border-radius: 1.5%;
     border: 2px solid #F18735;
     padding-left: 2%;
+}
+
+#closeimg {
+    cursor: pointer;
+    margin-top: -13%;
+    margin-left: 92%;
 }

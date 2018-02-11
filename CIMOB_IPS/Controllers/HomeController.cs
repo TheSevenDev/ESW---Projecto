@@ -47,7 +47,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(t => t.IdAccountNavigation)
                     .ToListAsync();
 
-                return View("~/Views/Profile/TechniciansContact.cshtml" , new ContactsViewModel { Coordenators = coordenators, Technicians = technicians });
+                return View("~/Views/Account/TechniciansContact.cshtml" , new ContactsViewModel { Coordenators = coordenators, Technicians = technicians });
             }
         }
     }
