@@ -23,9 +23,10 @@
                 <tr> <td><label asp-for="IsAdmin"></label></td></tr>
                 <tr> <td><input asp-for="IsAdmin" type="checkbox" /></td></tr>
             }
-            
-                </table>
-          <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span></td><td><input type="submit" value="Enviar convite" /></td></tr>
+
+
+            <tr><td><span id="pre-register-message">@Html.Raw(ViewData["message"])</span><span id="pre-register-message-error">@ViewData["error-message"]</span></td><td><input type="submit" value="Enviar convite" /></td></tr>
+        </table>
      </form>
 </div>
 

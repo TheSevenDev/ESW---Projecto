@@ -1355,3 +1355,44 @@ footer {
     height: 8vw;
     margin-top: 3%;
 }
+
+#interviewPop {
+    background-color: white;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    width: 45%;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    height: 100%;
+    margin-left: 25%;
+    margin-top: 29%;
+    outline-color: var(--main-color);
+    border-radius:1.5%;
+}
+
+#closeButton {
+    margin-left: 67%;
+    margin-bottom: -33%;
+}
+
+#closeButton:hover{
+    cursor:pointer;
+}
+
+.arrow-right {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-45deg);
+}
+
+
+.arrow-left {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+}

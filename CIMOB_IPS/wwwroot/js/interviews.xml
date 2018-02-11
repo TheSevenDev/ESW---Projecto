@@ -24,4 +24,20 @@
     <starttime>00:00</starttime>
     <color> </color>
   </event>
+  <event>
+    <id>45</id>
+    <name>1</name>
+    <startdate>2018-02-12T00:00:00.0000000</startdate>
+    <enddate>2018-02-12T00:00:00.0000000</enddate>
+    <starttime>00:00</starttime>
+    <color> </color>
+  </event>
+  <event>
+    <id>47</id>
+    <name>Filipe</name>
+    <startdate>2000-01-01T00:00:00.0000000</startdate>
+    <enddate>2000-01-01T00:00:00.0000000</enddate>
+    <starttime>00:00</starttime>
+    <color> </color>
+  </event>
 </monthly>

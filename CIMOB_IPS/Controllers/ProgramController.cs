@@ -86,9 +86,39 @@ namespace CIMOB_IPS.Controllers
                         .SingleOrDefaultAsync(i => i.IdInstitution == ip.IdOutgoingInstitution);
                 }
 
+                CheckProgramStateChange(program);
 
 
                 return PartialView("_ProgramDetails", program);
+            }
+        }
+
+        /// <summary>
+        /// Verifica se, consoante a data de um programa, ele se encontra aberto ou fechado e muda o seu estado
+        /// </summary>
+        /// <param name="program">Programa a modificar</param>
+        /// <remarks></remarks>
+        public void CheckProgramStateChange(Models.Program program)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                long lngOpenProgramState = context.State.Where(s => s.Description == "Aberto").Select(s => s.IdState).SingleOrDefault();
+                long lngInSeriationState = context.State.Where(s => s.Description == "Em Seriação").Select(s => s.IdState).SingleOrDefault();
+
+                if(DateTime.Compare((DateTime)program.ClosingDate, DateTime.Now) <= 0 && program.IdState == lngOpenProgramState)
+                {
+                    program.IdState = lngInSeriationState;
+                    context.Update(program);
+                    context.SaveChanges();
+                }
+                else if(DateTime.Compare((DateTime)program.ClosingDate, DateTime.Now) <= 0 
+                    && DateTime.Compare((DateTime)program.ClosingDate, DateTime.Now) > 0
+                    && program.IdState != lngOpenProgramState)
+                {
+                    program.IdState = lngOpenProgramState;
+                    context.Update(program);
+                    context.SaveChanges();
+                }
             }
         }
 

@@ -2,39 +2,93 @@
 
 @{
     ViewData["Title"] = "Contactos";
-
-    var orderedCoordenators = Model.Coordenators.OrderBy(c => c.IdCourseNavigation.Name);
-    var orderedTechnicians = Model.Technicians.OrderBy(t => t.Name);
 }
 
 <link rel="stylesheet" href='@Url.Content("~/css/registo.css")' />
+<link rel="stylesheet" href='@Url.Content("~/css/contact.css")' />
+<h2 class="page-title">Contactos</h2>
 
-<h2 class="page-title">Coordenadores de curso</h2>
+<table id="contacts-table">
+    <tbody>
+        <tr>
+            <td>
+                <div class="circle" onclick="javascript: showInfo();">
+                    <img src="~/images/icons/phone-receiver.png" />
+                </div>
+            </td>
+            <td>
+                <a asp-action="TechniciansContact" asp-controller="Home">
+                    <div class="circle" id="border-toastedyellow" >
+                        <img src="~/images/icons/multiple-users-silhouette.png" />
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a target="_blank" href="https://twitter.com/IPSsetubal">
+                    <div class="circle" id="border-lightblue">
+                        <img src="~/images/icons/twitter.png" />
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a target="_blank" href="http://www.linkedin.com/edu/school?id=162089">
+                    <div class="circle" id="border-blue">
+                        <img src="~/images/icons/linkedin.png" />
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a target="_blank" href="https://www.youtube.com/user/IPSETUBAL">
+                    <div class="circle" id="border-red">
+                        <img src="~/images/icons/youtube.png" />
+                    </div>
+                </a>
+            </td>
+            <td>
+                <a target="_blank" href="https://www.facebook.com/ipsetubal/">
+                    <div class="circle" id="border-darkblue">
+                        <img src="~/images/icons/facebook.png" />
+                    </div>
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
-<div class="main-container-contacts">
 
-    @foreach (var item in orderedCoordenators)
-    {
-        <div class="tableContact">
-            <b>@Html.DisplayFor(model => item.IdCourseNavigation.Name) | @Html.DisplayFor(model => item.Name)</b><br />
-            <em>@Html.DisplayFor(model => item.Email) | </em>
-            @if (item.Telephone != null)
-            {
-                <em>@Html.DisplayFor(model => item.Telephone) </em><br />
-    }
+<div id="info" style="display:none">
+    <img src="~/images/icons/error.png" style="margin-top: -13%; margin-left: 92%;" onclick="javascript: closeInfo();"/>
+    <h3 style="margin-top: -2%;">Horário de Atendimento</h3>
+    <table>
+        <tr>
+            <td>
+                <b>2.ª e 4.ª</b> <span> | 14h00 - 16h30</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>3.ª e 5.ª</b> <span> | 09h30 - 12h30</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>6.ª</b> <span> | Não há atendimento</span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Telefone:</b> <span> + 351 265 790 159 </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Email</b> <span> <a style="color: var(--blue-var2)" href="mailto:cimob@ips.pt">cimob@ips.pt</a></span>
+            </td>
+        </tr>
+    </table>
 </div>
-    }
-
-</div>
-
-<h2 class="page-title">Técnicos do CIMOB</h2>
-
-<div class="main-container-contacts" style="margin-bottom:5.5%;">
-    @foreach (var item in orderedTechnicians)
-    {
-        <div class="tableContact">
-            <b>@Html.DisplayFor(model => item.Name)</b><br />
-            <em>@Html.DisplayFor(model => item.IdAccountNavigation.Email) | @Html.DisplayFor(model => item.Telephone)</em><br />
-        </div>
-    }
-</div>
+  

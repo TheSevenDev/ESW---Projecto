@@ -11,19 +11,19 @@
 
     <form class="evaluate-application-form" asp-action="EvaluateApplication">
         <div style="padding-left:3%;padding-top:2%;font-size:1.45vmax;text-align:center;">
-            Candidato <br /><span>@ViewData["application-student-name"]  @ViewData["application-student-number"]</span>
+            Candidato <br /><span style="color:var(--main-color); font-weight:bold;">@ViewData["application-student-name"]  @ViewData["application-student-number"]</span>
         </div>
 
         <div style="padding:3%;padding-top:5%">
             @Html.HiddenFor(model => model.IdApplication)
 
-            <label>Número de ECTS realizados</label>
+            <b>Número de ECTS realizados</b>
             <input type="text" max="600" min="0" value=@ViewData["application-student-credits"] id="ects_done" name="ects_done" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
-            <label>Número de ECTS do curso</label>
+            <b>Número de ECTS do curso</b>
             <input type="text" max="600" min="0" value="0" asp-for="TotalCourseCredits" id="ects_all" name="ects_all" onfocusout="this.value = minmax(this.value, 0, 600); evaluateApplication();"/><br /><br />
 
-            <label>Classificação de motivações(0-100)</label>
+            <b>Classificação de motivações(0-100)</b>
             <input type="text" max="100" min="0" value="0" asp-for="MotivationCardPoints" id="motivations" name="motivations" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br />
 
             <button type="button" id="viewMotivationCard" onclick="javascript:toggleMotivationCard(this);">Pré-visualizar</button>
@@ -31,29 +31,29 @@
             <textarea id="motivationCard" name="motivationCard" disabled style="display: none; width:95%;">@ViewData["application-student-motivation-card"]</textarea>
             <br /><br />
 
-            <label>Classificação da entrevista(0-100)</label>
+            <b>Classificação da entrevista(0-100)</b>
             <input type="text" max="100" min="0" value="0" asp-for="InterviewPoints" id="interview" name="interview" onfocusout="this.value = minmax(this.value, 0, 100); evaluateApplication();"/><br /><br />
 
-            <label>Média aritmética das classificações obtidas nas unidades curriculares</label>
+            <b>Média aritmética das classificações obtidas nas unidades curriculares</b>
             <input type="text" max="20" min="0" value="0" asp-for="InterviewPoints" id="average_grades" name="average_grades" onfocusout="this.value = minmax(this.value, 0, 20); evaluateApplication();"/>
-            <label>&nbsp;valores</label><br />
+            <b>&nbsp;valores</b><br />
 
             <div style="margin-left:60%;margin-top:5%;">
-                <label>Classificação Final</label>
+                <b>Classificação Final</b>
                 <input type="text" value=@Model.FinalEvalution asp-for="FinalEvalution" readonly id="final_classification" name="final_classification"/>
-                <label>&nbsp;valores</label><br /><br />
-                <label id="evaluate_result" style="float:right; margin-right: 8%;"></label><br /><br />
+                <b>&nbsp;valores</b><br /><br />
+                <b id="evaluate_result" style="float:right; margin-right: 8%;"></b><br /><br />
             </div>
 
             <div id="technicians-Div">
-                <label>Técnico responsável: </label>
+                <b>Técnico responsável: &nbsp;</b>
                 @Html.DropDownListFor(model => model.IdTechnician, Model.Technicians, "-- Seleccione o Técnico --", new { @id = "technicianDd", @disabled = "disabled" })
                 <span class="error-message">@ViewData["technicians-error"]</span>
             </div>
             <br />
 
             <div id="institutions-Div">
-                <label>Instituição da mobilidade: </label>
+                <b>Instituição da mobilidade: </b>
                 @Html.DropDownListFor(model => model.IdInstitution, Model.OutgoingInstitutions, "-- Seleccione a Instituição --", new { @id = "institutionDd", @disabled = "disabled" })
                 <span class="error-message">@ViewData["institution-error"]</span>
             </div>

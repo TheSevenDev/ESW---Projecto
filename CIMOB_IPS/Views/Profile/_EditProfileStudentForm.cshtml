@@ -73,6 +73,10 @@
         <tr> <td><label asp-for="Student.IdAddressNavigation.Floor"></label></td></tr>
         <tr><td><input asp-for="Student.IdAddressNavigation.Floor" type="text" /></td></tr>
 
+        <tr> <td><label>Curso: </label></td></tr>
+        <tr> <td> @Html.DropDownListFor(model => model.Student.IdCourse, Model.Courses, Model.Student.IdCourseNavigation.Name)</td></tr>
+        <tr> <td><span asp-validation-for="Student.IdCourse" class="error-message"></span></td></tr>
+
         <tr>
             <td>
                 <label asp-for="Student.Credits"></label>
@@ -86,6 +90,7 @@
         <tr><td><input asp-for="Student.Credits" placeholder="ECTS" /></td></tr>
         <tr><td><span asp-validation-for="Student.Credits" class="error-message"></span></td></tr>
 
-        <tr> <td><input type="submit" value="Guardar" /></td> </tr>
+        <tr> <td><input style="margin-left: 1%; width: 45%;" type="submit" value="Guardar" />
+            <input onclick="location.href='@Url.Action("Index", "Profile")'" style="background-color: red; width: 45%;" type="button" value="Cancelar" /></td> </tr>
     </table>
 </form>

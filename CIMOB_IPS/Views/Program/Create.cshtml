@@ -5,7 +5,7 @@
 <p class="page-title">Novo Programa</p>
 
 <div class="main-create-program-container" style="padding-bottom:1.5%;">
-    <form asp-action="Create" method="post" class="program-form" id="form-application">
+    <form asp-action="Create" method="post" class="program-form" id="form-application" style="margin-bottom:5.5%">
         <table>
             <tr><td><label asp-for="IdProgramType"></label></td></tr>
             <tr><td> @Html.DropDownListFor(model => model.IdProgramType, Model.ProgramTypes, "-- Seleccione o tipo de programa --")</td></tr>
