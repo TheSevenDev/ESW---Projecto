@@ -32,6 +32,7 @@
     <span style="margin-left:2.7%;">UMA REFERÊNCIA NO ENSINO SUPERIOR</span>
 </div>
 
+
 <div id="homepage-buttons">
 
     <div id="ips-button" onclick="window.open('https://www.ips.pt/ips_si/web_page.inicial');">
@@ -44,15 +45,44 @@
         </div>
     </div>
 
-    <div id="authentication-button">
-        <br />
-        <span>Autenticar</span>
-    </div>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Login');">
+            <br />
+            <span>Autenticar</span>
+        </div>
 
-    <div id="register-button">
-                <br />
-        <span>Criar Conta</span>
-    </div>
+        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Register');">
+            <br />
+            <span>Criar Conta</span>
+        </div>
+    }
+    @if (User.IsInRole("estudante"))
+    {
+        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Application/MyApplications');">
+            <br />
+            <span>Minhas Candidaturas</span>
+        </div>
+
+        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Mobility/MyMobility');">
+            <br />
+            <span>Minha Mobilidade</span>
+        </div>
+
+    }
+
+    @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
+    {
+        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Application');">
+            <br />
+            <span>Candidaturas Submetidas</span>
+        </div>
+
+        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Mobility/MobilitiesInCharge');">
+            <br />
+            <span>Mobilidades a cargo</span>
+        </div>
+    }
 
     <div id="erasmusapp-button" onclick="window.open('https://play.google.com/store/apps/details?id=com.euf.project.erasmus');">
         <img src="~/images/erasmus_app.png" />
