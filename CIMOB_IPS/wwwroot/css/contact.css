@@ -77,13 +77,14 @@
 }
 
 #info {
-    margin-top: -35%;
+    margin-top: -70vh;
     margin-left: 17%;
     background-color: #ededed;
-    width: 15%;
+    width: 20vw;
     border-radius: 1.5%;
     border: 2px solid #F18735;
     padding-left: 2%;
+    font-size: 1.1vmax;
 }
 
 #closeimg {

@@ -21,6 +21,8 @@ namespace CIMOB_IPS.Models
         /// Endereço email da conta pendente.
         /// </summary>
         /// <value>Endereço email da conta pendente.</value>
+        [EmailAddress(ErrorMessage = "O email deverá conter a seguinte estrutura: exemplo@dominio.com")]
+        [Display(Name ="E-mail")]
         public string Email { get; set; }
 
 
