@@ -1236,9 +1236,10 @@ footer {
 
 #welcome-image {
     width: 85%;
-    height: 97%;
+    height: 100%;
     z-index: 500;
     position: absolute;
+    overflow: hidden;
 }
 
 #future-text {
