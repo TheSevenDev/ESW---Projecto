@@ -36,7 +36,7 @@ function toogleNotifications() {
     }
 
     document.getElementById("submenu-settings").style.display = "none";
-    $("#submenu-notifications").slideToggle(250);
+    $("#submenu-notifications").toggle();
 }
 
 function openHelp() {
