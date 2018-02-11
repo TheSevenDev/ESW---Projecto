@@ -104,6 +104,7 @@ input[type=date] {
     min-height: 78vh;
     padding-bottom: 2%;
     padding-top: 0.5%;
+    margin-bottom: 5.5%;
 }
 
 .user-form {
