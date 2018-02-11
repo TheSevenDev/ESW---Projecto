@@ -35,17 +35,17 @@
     <br />
     
     @{
-        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "" ;
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
     }
 
     @if (Model.HasPreviousPage)
     {
-        <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+         <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex - 1)" id='@prevDisabled' class="arrow-left"></a>
     }
-    Página @Model.PageIndex de @Model.TotalPages
+    <b>Página @Model.PageIndex de @Model.TotalPages</b>
     @if (Model.HasNextPage)
     {
-        <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+         <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex + 1)" id='@nextDisabled' class="arrow-right"></a>   
     }
 </div>

@@ -182,9 +182,9 @@ input[type=date] {
     color: white;
 }
 
-.main-container-pendingtech table td a, .main-container-pendingtech table td a:hover, .main-container-pendingtech table td a:visited:hover, .main-container-pendingtech table td a:link:hover, .main-container-pendingtech table td a:active:hover {
-    color: var(--hover-button);
-}
+    .main-container-pendingtech table td a, main-container-pendingtech table td, .main-container-pendingtech table td a:hover, .main-container-pendingtech table td a:visited:hover, .main-container-pendingtech table td a:link:hover, .main-container-pendingtech table td a:active:hover {
+        color: var(--blue-var2);
+    }
 
     .main-container-techs table td a, .main-container-techs table td a:hover, .main-container-techs table td a:visited:hover, .main-container-techs table td a:link:hover, .main-container-techs table td a:active:hover {
         color: var(--blue-var2);

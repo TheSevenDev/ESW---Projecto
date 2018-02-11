@@ -704,6 +704,11 @@ function reScheduleInterview(applicationID) {
         });
 }
 
+function closePopUps() {
+    document.getElementById("fade-background").style.display = "none";
+    document.getElementById("application-details").style.display = "none";
+}
+
 function viewProfile(studentId) {
     $("#application-details").html("");
 

@@ -523,7 +523,7 @@ namespace CIMOB_IPS.Controllers
                     ViewData["message"] = "";
                 }
 
-                return View("Technicians", PopulateTechnicians(1, 1, 3));
+                return View("Technicians", PopulateTechnicians(1, 1, 10));
             }
             catch (SqlException e)
             {
@@ -531,7 +531,7 @@ namespace CIMOB_IPS.Controllers
                 ViewData["error-message"] = "Conexão Falhada.";
             }
 
-            return View("Technicians", PopulateTechnicians(1, 1, 3));
+            return View("Technicians", PopulateTechnicians(1, 1, 10));
         }
 
         /// <summary>
