@@ -34,13 +34,13 @@ namespace CIMOB_IPS.Models
         public ICollection<Application> Application { get; set; }
 
         /// <summary>
-        /// Verifica se a entrevista já foi realizada, isto é, a data de hoje é posterior à data da entrevista.
+        /// Verifica se a entrevista já foi realizada, isto é, a data de hoje é posterior ou igual à data da entrevista.
         /// </summary>
         /// <returns>Valor lógico resultante</returns>
         /// <remarks></remarks>
         public bool IsInterviewDone()
         {
-            return Date < DateTime.Now;
+            return Date <= DateTime.Now;
         }
     }
 }

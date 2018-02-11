@@ -488,9 +488,38 @@ namespace CIMOB_IPS.Controllers
                     ViewData["search-by"] = search_by.ToString();
                 }
 
+                long lngInterviewScheduledState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault();
+                long lndInterviewDoneState = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault();
+
+                foreach (Application app in applications)
+                {
+                    if (app.IdInterviewNavigation.IdState == lngInterviewScheduledState)
+                    {
+                        CheckInterviewDone(app.IdInterviewNavigation, lndInterviewDoneState);
+                    }
+                }
+
                 var paginatedApplications = await PaginatedList<Application>.CreateAsync(applications.AsNoTracking(), intPageApplications, intPageSize);
 
                 return View(paginatedApplications);
+            }
+        }
+
+        /// <summary>
+        /// Verifica se uma entrevista marcada já foi realizada
+        /// </summary>
+        /// <param name="interview">Entrevista a analisar</param>
+        /// <param name="lngDoneState">ID do estado realizado</param>
+        private void CheckInterviewDone(Interview interview, long lngDoneState)
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                if(interview.IsInterviewDone())
+                {
+                    interview.IdState = lngDoneState;
+                    context.Update(interview);
+                    context.SaveChanges();
+                }
             }
         }
 
@@ -720,7 +749,7 @@ namespace CIMOB_IPS.Controllers
                     Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
 
                     interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours.Hour, viewModel.Hours.Minute, 0);
-                    interview.IdState = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault(); //MUDAR NO FUTURO
+                    interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault(); 
 
                     context.Update(interview);
                     context.SaveChanges();

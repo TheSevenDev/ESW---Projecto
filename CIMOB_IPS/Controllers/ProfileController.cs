@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CIMOB_IPS.Controllers
 {
@@ -87,8 +88,29 @@ namespace CIMOB_IPS.Controllers
 
             ViewData["edit-profile-display"] = "block";
 
-
             return View(accountViewModel);
+        }
+
+        private IEnumerable<SelectListItem> PopulateCourses()
+        {
+            using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
+            {
+                List<SelectListItem> lisCourses = new List<SelectListItem>();
+
+                var listCourses = context.Course
+                    .Where(x => (from i in context.Institution
+                                 where i.IdNationality ==
+                                    (from n in context.Nationality where n.Description == "PORTUGAL" select n.IdNationality).FirstOrDefault()
+                                 select i.IdInstitution).Contains(x.IdInstitution))
+                    .OrderBy(x => x.Name).ToList();
+
+                foreach (Course n in listCourses)
+                {
+                    lisCourses.Add(new SelectListItem { Value = n.IdCourse.ToString(), Text = n.Name });
+                }
+
+                return lisCourses;
+            }
         }
 
         /// <summary>
@@ -128,6 +150,7 @@ namespace CIMOB_IPS.Controllers
                 accountViewModel.PostalCode1 = postalCode.Substring(0, 4);
                 accountViewModel.PostalCode2 = postalCode.Substring(5, 3);
             }
+            accountViewModel.Courses = PopulateCourses();
 
             return View(accountViewModel);
         }
@@ -159,6 +182,7 @@ namespace CIMOB_IPS.Controllers
                     newStudent.Telephone = model.Student.Telephone;
                     newStudent.IdAddressNavigation.PostalCode = model.Student.IdAddressNavigation.PostalCode;
                     newStudent.Credits = model.Student.Credits;
+                    newStudent.IdCourse = model.Student.IdCourse;
 
                     Address studentAddress = await context.Address.SingleOrDefaultAsync(s => s.IdAddress == newStudent.IdAddress);
                     studentAddress.PostalCode = model.PostalCode1 + "-" + model.PostalCode2;

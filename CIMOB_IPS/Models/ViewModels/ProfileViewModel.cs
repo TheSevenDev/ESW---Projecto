@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CIMOB_IPS.Models
 {
@@ -34,6 +36,10 @@ namespace CIMOB_IPS.Models
         /// </summary>
         /// <value>vs</value>
         public Technician Technician { get; set; }
+
+        /// <summary>Property used to represent the list of the courses selected from the database. </summary>
+        /// <value>All the courses provided by the database. </value>
+        public IEnumerable<SelectListItem> Courses { get; set; }
     }
 
 

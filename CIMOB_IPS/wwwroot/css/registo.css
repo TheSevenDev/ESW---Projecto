@@ -121,18 +121,18 @@ input[type=date] {
     font-size: 1.1vmax;
 }
 
-    .user-form input[type=text], .user-form input[type=password], .user-form input[type=number], .user-form select {
-        width: 22.2vw;
-        padding: 2% 3%;
-        display: inline-block;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 0.95vmax;
-        outline-color: var(--main-color);
-    }
+.user-form input[type=text], .user-form input[type=password], .user-form input[type=number], .user-form select {
+    width: 22.2vw;
+    padding: 2% 3%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 0.95vmax;
+    outline-color: var(--main-color);
+}
 
-.user-form input[type=submit] {
+.user-form input[type=submit], .user-form input[type=button] {
     width: 100%;
     background-color: var(--main-color);
     color: white;
@@ -143,9 +143,13 @@ input[type=date] {
     font-size: 1.1vmax;
 }
 
-.user-form input[type=submit]:hover {
-    background-color: var(--hover-button);
-}
+    .user-form input[type=submit]:hover {
+        background-color: var(--hover-button);
+    }
+
+    .user-form input[type=button]:hover{
+        background-color: blue;
+    }
 
 .main-container-pendingtech {
     text-align: center;

@@ -47,15 +47,6 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
-        public IActionResult TestPreRegister()
-        {
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            return View();
-        }
-
-
         /// <summary>
         /// Retorna a vista com as informações paginadas dos técnicos registados na aplicação. 
         /// </summary>
@@ -328,40 +319,7 @@ namespace CIMOB_IPS.Controllers
             }
 
             return View("Register");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult FakePreRegister(RegisterViewModel model)
-        {
-            if (User.Identity.IsAuthenticated)
-                return RedirectToAction("Index", "Home");
-
-            String strStudentEmail = model.Student.IdAccountNavigation.Email;
-
-            try
-            {
-                bool success = InsertPendingAccount(strStudentEmail, EnumAccountType.STUDENT, 0);
-                if (success)
-                {
-                    ViewData["message"] = "Registo efectuado com<br>sucesso. Verifique o seu<br>e-mail.";
-                    ViewData["error-message"] = "";
-                }
-                else
-                {
-                    ViewData["error-message"] = "E-mail já registado.";
-                    ViewData["message"] = "";
-                }
-
-                return View("TestPreRegister");
-            }
-            catch (SqlException e)
-            {
-                ViewData["error-message"] = "Conexão Falhada.";
-            }
-
-            return View("TestPreRegister");
-        }
+        }      
 
         /// <summary>
         /// Retorna a vista com o formulário para a criação de um registo de um estudante.
@@ -392,8 +350,7 @@ namespace CIMOB_IPS.Controllers
                 else
                 {
                     string strEmail = email.ToString();
-                    string strStudentNumber = "180000000"; //MUDAR ISTO NO FIM
-                    //string strStudentNumber = email.ToString().Substring(0, 9); 
+                    string strStudentNumber = email.ToString().Substring(0, 9); 
                     ViewData["student-email"] = strEmail;
                     ViewData["student-number"] = strStudentNumber;
                 }
