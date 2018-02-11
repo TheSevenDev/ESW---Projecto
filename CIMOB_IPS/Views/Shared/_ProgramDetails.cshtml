@@ -62,18 +62,14 @@
             }
             else if (bolNoVacancies && !bolIsLoggedOff)
             {
-                <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
                 <p>Programa sem vagas disponíveis! Tente mais tarde ou consulte <a href="@Url.Action("Index", "Program")">outros programas</a>.</p>
             }
             else if (bolNoCredits && !bolIsLoggedOff)
             {
-
-                <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
                 <p>Não possui ECTS suficientes para se candidatar a um programa de mobilidade! Para obter ECTS, terá de concluir Unidades Curriculares.</p>
             }
             else if (bolMaxApplications && !bolIsLoggedOff)
             {
-                <p>@Html.DisplayNameFor(model => model.Vacancies): @Html.DisplayFor(model => model.Vacancies)</p>
                 <p>Já possui o máximo de 3 candidaturas pendentes!</p>
             }
         }

@@ -59,7 +59,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>DEBAEE0AF176B1B9BA9620EE8825AE04DEA30882</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>41E3B4557031D001EDC42E7F93962AC02BA9E7FE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>CIMOB_IPS_BackOffice_2_TemporaryKey.pfx</ManifestKeyFile>
