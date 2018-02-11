@@ -1,8 +1,8 @@
 ﻿#notFound {
     background: var(--main-grey);
-    width: 74vh;
-    height: 65vh;
-    margin-top: 6%;
+    width: 34vw;
+    height: 32vw;
+    margin-top: 5%;
     margin-left: 31%;
     border-radius: 50%;
 }
@@ -10,7 +10,7 @@
     #notFound img {
         width: 29vw;
         position: relative;
-        margin-left: 11%;
+        margin-left: 8%;
     }
 
     #notFound p {
@@ -21,11 +21,3 @@
         color: #EDEDED;
         margin-top: -6%;
     }
-
-#maintenance{
-
-}
-
-#errorCatched{
-
-}
