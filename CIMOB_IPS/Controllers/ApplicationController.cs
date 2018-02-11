@@ -462,7 +462,7 @@ namespace CIMOB_IPS.Controllers
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                int intPageSize = 10;
+                int intPageSize = 30;
                 int intPageApplications = (pageApplication ?? 1);
 
                 long lngIdState = context.State.Where(s => s.Description == "Em Avaliação").Select(s => s.IdState).SingleOrDefault();
@@ -1086,7 +1086,7 @@ namespace CIMOB_IPS.Controllers
 
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
-                int intPageSize = 10;
+                int intPageSize = 50;
                 int intPageApplications = (pageApplication ?? 1);
 
                 var applications = (from a in context.Application

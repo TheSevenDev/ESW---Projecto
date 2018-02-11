@@ -33,8 +33,7 @@
         </tbody>
     </table>
     <br />
-    Página @Model.PageIndex de @Model.TotalPages
-    <br />
+    
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -44,7 +43,7 @@
     {
         <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
     }
-    &nbsp;&nbsp;&nbsp;
+    Página @Model.PageIndex de @Model.TotalPages
     @if (Model.HasNextPage)
     {
         <a asp-action="Technicians" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>

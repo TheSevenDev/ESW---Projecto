@@ -36,7 +36,7 @@
     <button type="submit"><i class="fa fa-search"></i></button>
 </form>
 <br />
-<div class="main-container-submitted-applications" style="padding:1%;padding-left:2%;">
+<div class="main-container-submitted-applications" style="padding:1%;padding-left:2%; margin-bottom: 10%;">
     @if (Model.Count > 0)
     {
         <table style="margin: 1% auto; width:100%;">
@@ -115,8 +115,9 @@
                 }
             </tbody>
         </table>
+        <br />
 
-        @*Página @Model.PageIndex de @Model.TotalPages
+        <div>
             @{
                 var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
                 var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -124,14 +125,16 @@
 
             @if (Model.HasPreviousPage)
             {
-                <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+                <a asp-action="Index" asp-controller="Application" asp-route-pageApplication="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
             }
-            &nbsp;&nbsp;&nbsp;
+
+            Página @Model.PageIndex de @Model.TotalPages
+            
             @if (Model.HasNextPage)
             {
-                <a asp-action="Index" asp-route-pagePending="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
-            }*@
-
+                <a asp-action="Index" asp-controller="Application" asp-route-pageApplication="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+            }
+        </div> 
     }
     else
     {
