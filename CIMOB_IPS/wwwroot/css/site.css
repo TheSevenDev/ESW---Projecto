@@ -1191,3 +1191,166 @@ footer {
 .technician-name:hover {
     text-decoration:underline;
 }
+
+/**
+    HOME
+*/
+
+#welcome-rectangle {
+    width: 85%;
+    background-color: var(--main-color);
+    height: 20vh;
+    margin-top: 3%;
+    color: var(--secundary-color);
+    opacity: 0.95;
+    z-index: 700;
+    position: absolute;
+
+}
+
+#motivational-rectangle {
+    position: absolute;
+    background-color: var(--main-color);
+    opacity: 0.95;
+    z-index: 700;
+    color: var(--secundary-color);
+    width: 39.3%;
+    height: 5.5vh;
+    margin-left: 0%;
+    /*margin-top:78.5vh; AT BOTTOM*/
+    margin-top: 60vh;
+    font-size: 2vw;
+}
+
+#welcome-pt-text {
+    color: var(--secundary-color);
+    font-size:3.5vw;
+    margin-left:4%;
+}
+
+#welcome-rectangle i {
+    color: var(--secundary-color);
+    font-size: 2vw;
+    margin-left: 4%;
+}
+
+#welcome-image {
+    width: 85%;
+    height: 97%;
+    z-index: 500;
+    position: absolute;
+}
+
+#future-text {
+    margin-left: 71.5%;
+    top: 45%;
+    position: absolute;
+    text-align: right;
+    font-size: 1.3vw;
+}
+
+#future-text i {
+    color: var(--secundary-color);
+    font-size: 1.1vw;
+    margin-left: 4%;
+}
+
+#homepage-buttons {
+    background-color: var(--main-color);
+    width: 15%;
+    height: 97%;
+    position: absolute;
+    z-index: 700;
+    margin-left: 85%;
+    opacity: 0.90;
+}
+
+
+#ips-button {
+    background-color: white;
+    text-align: center;
+    height: 27vh;
+    margin-top: 0;
+    cursor: pointer;
+    font-size: 1.4vmax;
+    background-color: #f0f0f0;
+    width: 97%;
+    margin-left: 1.5%;
+
+}
+
+#ips-button:hover {
+    opacity:0.85;
+}
+
+#ips-button img {
+    width:6.5vw;
+    height:6.5vw;
+}
+
+#authentication-button {
+    background-color: white;
+    text-align: center;
+    height: 13.5vh;
+    margin-top: 1.5%;
+    cursor: pointer;
+    font-size: 1.4vmax;
+    background-color: #f0f0f0;
+    width: 97%;
+    margin-left: 1.5%;
+}
+
+#authentication-button:hover {
+    opacity: 0.85;
+}
+
+#authentication-button a:hover {
+    background-color: red;
+}
+
+#register-button {
+    background-color: white;
+    text-align: center;
+    height: 13.5vh;
+    margin-top: 1.5%;
+    cursor: pointer;
+    font-size: 1.4vmax;
+    background-color: #f0f0f0;
+    width: 97%;
+    margin-left: 1.5%;
+}
+
+#register-button:hover {
+    opacity: 0.85;
+}
+
+#register-button a:hover {
+    background-color: red;
+}
+
+
+#erasmusapp-button {
+    background-color: white;
+    text-align: center;
+    height: 28vh;
+    margin-top: 1.5%;
+    cursor: pointer;
+    font-size: 1.4vmax;
+    background-color: #f0f0f0;
+    width: 97%;
+    margin-left: 1.5%;
+}
+
+#erasmusapp-button:hover {
+    opacity: 0.85;
+}
+
+#erasmusapp-button a:hover {
+    background-color: red;
+}
+
+#erasmusapp-button img {
+    width: 8vw;
+    height: 8vw;
+    margin-top: 3%;
+}
