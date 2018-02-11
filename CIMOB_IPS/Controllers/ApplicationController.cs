@@ -720,7 +720,7 @@ namespace CIMOB_IPS.Controllers
                     Interview interview = context.Interview.Where(i => i.IdInterview == viewModel.IdInterview).SingleOrDefault();
 
                     interview.Date = new DateTime(viewModel.Date.Year, viewModel.Date.Month, viewModel.Date.Day, viewModel.Hours.Hour, viewModel.Hours.Minute, 0);
-                    interview.IdState = context.State.Where(s => s.Description == "Realizada").Select(s => s.IdState).SingleOrDefault(); //MUDAR NO FUTURO
+                    interview.IdState = context.State.Where(s => s.Description == "Marcada").Select(s => s.IdState).SingleOrDefault(); 
 
                     context.Update(interview);
                     context.SaveChanges();
