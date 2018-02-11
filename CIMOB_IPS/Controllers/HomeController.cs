@@ -23,12 +23,17 @@ namespace CIMOB_IPS.Controllers
             return View();
         }
 
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Retorna a página dos contactos.
         /// </summary>
         /// <returns>Página dos contactos.</returns>
         /// <remarks></remarks>
-        public async Task<IActionResult> Contact()
+        public async Task<IActionResult> TechniciansContact()
         {
             using (var context = new CIMOB_IPS_DBContext(new DbContextOptions<CIMOB_IPS_DBContext>()))
             {
@@ -42,7 +47,7 @@ namespace CIMOB_IPS.Controllers
                     .Include(t => t.IdAccountNavigation)
                     .ToListAsync();
 
-                return View(new ContactsViewModel { Coordenators = coordenators, Technicians = technicians });
+                return View("~/Views/Profile/TechniciansContact.cshtml" , new ContactsViewModel { Coordenators = coordenators, Technicians = technicians });
             }
         }
     }

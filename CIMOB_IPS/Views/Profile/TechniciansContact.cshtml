@@ -1,0 +1,40 @@
+﻿
+@model CIMOB_IPS.Models.ViewModels.ContactsViewModel
+
+@{
+    ViewData["Title"] = "Contactos";
+
+    var orderedCoordenators = Model.Coordenators.OrderBy(c => c.IdCourseNavigation.Name);
+    var orderedTechnicians = Model.Technicians.OrderBy(t => t.Name);
+}
+
+<h2 class="page-title">Coordenadores de curso</h2>
+
+<div class="main-container-contacts">
+
+    @foreach (var item in orderedCoordenators)
+    {
+        <div class="tableContact">
+            <b>@Html.DisplayFor(model => item.IdCourseNavigation.Name) | @Html.DisplayFor(model => item.Name)</b><br />
+            <em>@Html.DisplayFor(model => item.Email) | </em>
+            @if (item.Telephone != null)
+            {
+                <em>@Html.DisplayFor(model => item.Telephone) </em><br />
+            }
+        </div>
+    }
+
+</div>
+
+<h2 class="page-title">Técnicos do CIMOB</h2>
+
+<div class="main-container-contacts" style="margin-bottom:5.5%;">
+    @foreach (var item in orderedTechnicians)
+    {
+        <div class="tableContact">
+            <b>@Html.DisplayFor(model => item.Name)</b><br />
+            <em>@Html.DisplayFor(model => item.IdAccountNavigation.Email) | @Html.DisplayFor(model => item.Telephone)</em><br />
+        </div>
+    }
+</div>
+

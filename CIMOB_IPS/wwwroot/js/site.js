@@ -873,3 +873,11 @@ function preview_image(event) {
     }
     reader.readAsDataURL(event.target.files[0]);
 }
+
+function showInfo() {
+    document.getElementById("info").style.display = "block";
+}
+
+function closeInfo() {
+    document.getElementById("info").style.display = "none";
+}

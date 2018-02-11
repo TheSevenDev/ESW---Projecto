@@ -1,0 +1,86 @@
+﻿.circle {
+    background-color: transparent;
+    border-radius: 50%;
+    width: 7vw;
+    height: 7vw;
+    border: 2px solid #F18735
+}
+    .circle:hover {
+        background-color: #F1873599;
+    }
+
+#border-toastedyellow {
+    border-color: #F5B738;
+}
+
+    #border-toastedyellow:hover {
+        background-color: #F5B73899;
+    }
+
+#border-lightblue {
+    border-color: #76AAEB;
+}
+
+    #border-lightblue:hover {
+        background-color: #76AAEB99;
+    }
+
+#border-blue {
+    border-color: #0077B9;
+}
+
+    #border-blue:hover {
+        background-color: #0077B999;
+    }
+
+#border-red {
+    border-color: #F61C0D;
+}
+
+    #border-red:hover {
+        background-color: #F61C0D99;
+    }
+
+#border-darkblue {
+    border-color: #455894;
+}
+
+    #border-darkblue:hover {
+        background-color: #45589499;
+    }
+
+
+#contacts-table {
+    border-radius: 1%;
+    padding: 14%;
+    margin-left: -6%;
+    margin-top: 1%;
+}
+
+#contacts-table td{
+    padding:3vw;
+}
+
+#span-background{
+    background-color:var(--dark-grey);
+    width:2%;
+    height:3%;
+}
+
+.circle img {
+    position: relative;
+    margin-top: 20%;
+    margin-left: 20%;
+    width: 4vw;
+    z-index:-1;
+}
+
+#info {
+    margin-top: -35%;
+    margin-left: 17%;
+    background-color: #ededed;
+    width: 15%;
+    border-radius: 1.5%;
+    border: 2px solid #F18735;
+    padding-left: 2%;
+}
