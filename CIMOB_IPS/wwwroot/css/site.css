@@ -1395,3 +1395,12 @@ footer {
     padding: 3px;
     transform: rotate(135deg);
 }
+
+#cancelButton {
+    background-color: #EA3527;
+    width: 45%;
+}
+
+#cancelButton:hover{
+    opacity:0.6;
+}
