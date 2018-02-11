@@ -59,10 +59,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>A7C94347921586092D0CD7AD721A3F8255D8E0C8</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>41E3B4557031D001EDC42E7F93962AC02BA9E7FE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>CIMOB_IPS_BackOffice_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>CIMOB_IPS_BackOffice_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>false</SignAssembly>
@@ -189,6 +189,7 @@
     <EmbeddedResource Include="Resources\Resources.resx" />
     <None Include="app.manifest" />
     <None Include="CIMOB_IPS_BackOffice_1_TemporaryKey.pfx" />
+    <None Include="CIMOB_IPS_BackOffice_2_TemporaryKey.pfx" />
     <None Include="CIMOB_IPS_BackOffice_7_TemporaryKey.pfx" />
     <None Include="CIMOB_IPS_BackOffice_TemporaryKey.pfx" />
     <None Include="packages.config" />

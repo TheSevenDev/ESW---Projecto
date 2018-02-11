@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="GENERATOR" content="VSdocman - documentation generator; http://www.helixoft.com" />
-	<title>ApplicationController.EvaluateApplication Method</title>
+	<title>ApplicationController.RescheduleInterview (InterviewViewModel) Method</title>
 
 	<link rel="stylesheet" type="text/css" href="msdn2017/msdn2017.css"></link>
 	<script src="msdn2017/msdn2017.js" type="text/javascript"></script>
@@ -60,7 +60,7 @@ function replaceTitleAndUrl(win, title, url) {
 <!--HEADER START-->
   <div id="header">
   	<div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
-  	<h1 class="title">ApplicationController.EvaluateApplication Method</h1>
+  	<h1 class="title">ApplicationController.RescheduleInterview (InterviewViewModel) Method</h1>
   	<div id="headerLinks">
 
 	<a href="#seeAlsoSection">See Also</a>
@@ -74,8 +74,7 @@ function replaceTitleAndUrl(win, title, url) {
       <div id="mainBody">
         <p />
        
-        Submete a avaliação de uma candidatura. Muda o estado da candidatura para aceite ou rejeitada, consoante a avaliação.
-Por fim notifica o aluno e o técnico responsável pela mobilidade.
+        Reagenda uma entrevista para a candidatura.
 
 
         <p /><strong>Namespace:</strong>
@@ -138,7 +137,7 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 				</div>
 				
 				<div class="codeSnippetCode codeVB">
-					<pre xml:space="preserve" class="brush: vb">&lt;HttpPost()&gt; _&nbsp;<br />Public Function EvaluateApplication( _&nbsp;<br />   ByVal <i>viewModel</i> As <a target="_top" href="topic_0000000000000076.html" onclick="this.target='';return true;">ApplicationEvaluationViewModel</a> _&nbsp;<br />) As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a></pre>			
+					<pre xml:space="preserve" class="brush: vb">&lt;HttpPost()&gt; _&nbsp;<br />Public Function RescheduleInterview( _&nbsp;<br />   ByVal <i>viewModel</i> As <a target="_top" href="topic_000000000000009A.html" onclick="this.target='';return true;">InterviewViewModel</a> _&nbsp;<br />) As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a></pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -177,7 +176,7 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 				</div>
 				
 				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">[HttpPost()]&nbsp;<br />public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a> EvaluateApplication(&nbsp;<br />   <a target="_top" href="topic_0000000000000076.html" onclick="this.target='';return true;">ApplicationEvaluationViewModel</a> <i>viewModel</i>&nbsp;<br />)</pre>			
+					<pre xml:space="preserve" class="brush: csharp">[HttpPost()]&nbsp;<br />public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a> RescheduleInterview(&nbsp;<br />   <a target="_top" href="topic_000000000000009A.html" onclick="this.target='';return true;">InterviewViewModel</a> <i>viewModel</i>&nbsp;<br />)</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -217,7 +216,7 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 				</div>
 				
 				<div class="codeSnippetCode codeCpp">
-					<pre xml:space="preserve" class="brush: cpp">[HttpPost()]&nbsp;<br />public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>^ EvaluateApplication(&nbsp;<br />   <a target="_top" href="topic_0000000000000076.html" onclick="this.target='';return true;">ApplicationEvaluationViewModel</a>^ <i>viewModel</i>&nbsp;<br />) </pre>			
+					<pre xml:space="preserve" class="brush: cpp">[HttpPost()]&nbsp;<br />public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>^ RescheduleInterview(&nbsp;<br />   <a target="_top" href="topic_000000000000009A.html" onclick="this.target='';return true;">InterviewViewModel</a>^ <i>viewModel</i>&nbsp;<br />) </pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -256,7 +255,7 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 				</div>
 				
 				<div class="codeSnippetCode codeJScript">
-					<pre xml:space="preserve" class="brush: js">public &nbsp;<br />   HttpPost()&nbsp;<br />function EvaluateApplication(&nbsp;<br />    <i>viewModel</i> : <a target="_top" href="topic_0000000000000076.html" onclick="this.target='';return true;">ApplicationEvaluationViewModel</a>&nbsp;<br />) : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>;</pre>			
+					<pre xml:space="preserve" class="brush: js">public &nbsp;<br />   HttpPost()&nbsp;<br />function RescheduleInterview(&nbsp;<br />    <i>viewModel</i> : <a target="_top" href="topic_000000000000009A.html" onclick="this.target='';return true;">InterviewViewModel</a>&nbsp;<br />) : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>;</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -275,9 +274,9 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 		</span>
 	</dt>
 	<dd>
-		Type: <a target="_top" href="topic_0000000000000076.html" onclick="this.target='';return true;">ApplicationEvaluationViewModel</a> 
+		Type: <a target="_top" href="topic_000000000000009A.html" onclick="this.target='';return true;">InterviewViewModel</a> 
 		<p>
-			Model da avaliação da entrevista 
+			Model da entrevista 
 		</p>
 	</dd>
 </dl>
@@ -287,6 +286,9 @@ Por fim notifica o aluno e o técnico responsável pela mobilidade.
 	<h4 class="subHeading">
 		Return Value</h4>
 	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a> 
+		<p>
+		Retorna para a vista das candidaturas submetidas 
+	</p>
 	
 
 

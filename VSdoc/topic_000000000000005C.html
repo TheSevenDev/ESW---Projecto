@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="GENERATOR" content="VSdocman - documentation generator; http://www.helixoft.com" />
-	<title>ProfileController.UpdateProfileStudent Method</title>
+	<title>ProfileController.Get Method</title>
 
 	<link rel="stylesheet" type="text/css" href="msdn2017/msdn2017.css"></link>
 	<script src="msdn2017/msdn2017.js" type="text/javascript"></script>
@@ -60,7 +60,7 @@ function replaceTitleAndUrl(win, title, url) {
 <!--HEADER START-->
   <div id="header">
   	<div id="runningHeaderText">SOLUTION-WIDE PROPERTIES Reference</div>
-  	<h1 class="title">ProfileController.UpdateProfileStudent Method</h1>
+  	<h1 class="title">ProfileController.Get Method</h1>
   	<div id="headerLinks">
 
 	<a href="#seeAlsoSection">See Also</a>
@@ -74,7 +74,7 @@ function replaceTitleAndUrl(win, title, url) {
       <div id="mainBody">
         <p />
        
-        Atualiza o perfil de um estudante com novas informações.
+        Retorna a vista com as informações do perfil de um utilizador que tem como chave primária o inteiro passado como argumento.
 
 
         <p /><strong>Namespace:</strong>
@@ -137,7 +137,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeVB">
-					<pre xml:space="preserve" class="brush: vb">&lt;HttpPost()&gt; _&nbsp;<br />&lt;ValidateAntiForgeryToken()&gt; _&nbsp;<br />Public Function UpdateProfileStudent( _&nbsp;<br />   ByVal <i>model</i> As <a target="_top" href="topic_00000000000000A1.html" onclick="this.target='';return true;">ProfileViewModel</a> _&nbsp;<br />) As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>(Of <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>)</pre>			
+					<pre xml:space="preserve" class="brush: vb">Public Function Get( _&nbsp;<br />   ByVal <i>id</i> As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int32.aspx">Integer</a> _&nbsp;<br />) As <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a></pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -176,7 +176,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeCsharp">
-					<pre xml:space="preserve" class="brush: csharp">[HttpPost()]&nbsp;<br />[ValidateAntiForgeryToken()]&nbsp;<br />public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>&gt; UpdateProfileStudent(&nbsp;<br />   <a target="_top" href="topic_00000000000000A1.html" onclick="this.target='';return true;">ProfileViewModel</a> <i>model</i>&nbsp;<br />)</pre>			
+					<pre xml:space="preserve" class="brush: csharp">public <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a> Get(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int32.aspx">int</a> <i>id</i>&nbsp;<br />)</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -216,7 +216,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeCpp">
-					<pre xml:space="preserve" class="brush: cpp">[HttpPost()]&nbsp;<br />[ValidateAntiForgeryToken()]&nbsp;<br />public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>^&gt;^ UpdateProfileStudent(&nbsp;<br />   <a target="_top" href="topic_00000000000000A1.html" onclick="this.target='';return true;">ProfileViewModel</a>^ <i>model</i>&nbsp;<br />) </pre>			
+					<pre xml:space="preserve" class="brush: cpp">public: &nbsp;<br /><a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>^ Get(&nbsp;<br />   <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int32.aspx">int</a> <i>id</i>&nbsp;<br />) </pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -255,7 +255,7 @@ function replaceTitleAndUrl(win, title, url) {
 				</div>
 				
 				<div class="codeSnippetCode codeJScript">
-					<pre xml:space="preserve" class="brush: js">JScript does not support generic types and methods.</pre>			
+					<pre xml:space="preserve" class="brush: js">public function Get(&nbsp;<br />    <i>id</i> : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int32.aspx">int</a>&nbsp;<br />) : <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>;</pre>			
 				</div>
 				<div class="codeSnippetCode codeNA">
 					<pre xml:space="preserve">This language is not supported or no code example is available.</pre>			
@@ -267,16 +267,16 @@ function replaceTitleAndUrl(win, title, url) {
 
 
 <h4 class="subHeading">
-	Parameters</h4><dl paramName="model">
+	Parameters</h4><dl paramName="id">
 	<dt>
 		<span class="parameter">
-			model
+			id
 		</span>
 	</dt>
 	<dd>
-		Type: <a target="_top" href="topic_00000000000000A1.html" onclick="this.target='';return true;">ProfileViewModel</a> 
+		Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/system.int32.aspx">int</a> 
 		<p>
-			Modelo do perfil 
+			Chave primária do utilizador 
 		</p>
 	</dd>
 </dl>
@@ -285,10 +285,7 @@ function replaceTitleAndUrl(win, title, url) {
 
 	<h4 class="subHeading">
 		Return Value</h4>
-	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/dd321424.aspx">Task</a>&lt;<a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a>&gt; 
-		<p>
-		View Profile/Index com a visualização do perfil atualizado 
-	</p>
+	Type: <a target="_top" href="http://msdn2.microsoft.com/en-us/library/microsoft.aspnetcore.mvc.iactionresult.aspx">IActionResult</a> 
 	
 
 
@@ -379,7 +376,7 @@ function replaceTitleAndUrl(win, title, url) {
 
 	<div id="seeAlsoSection" class="section">	
 		<div>
-			<a href="topic_0000000000000055.html">ProfileController Class</a><br />
+			<a href="topic_0000000000000057.html">ProfileController Class</a><br />
 
 
 

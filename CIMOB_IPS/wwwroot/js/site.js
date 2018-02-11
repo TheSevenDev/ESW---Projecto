@@ -218,7 +218,7 @@ function applicationInstitutions() {
 
         var list = document.getElementById("chosen-institutions").getElementsByTagName("li");
 
-        if (list.length == 0)
+        if (list.length === 0)
         {
             document.getElementById("no-institutions-chosen-error").style.display = "block";
             $("#form-application").preventDefault();
@@ -466,6 +466,10 @@ function autoPlayGallery() {
             if (document.getElementById('i' + i) !== null && document.getElementById('i' + i).checked) {
                 i = (i % 4) + 1;
                 document.getElementById('i' + i).checked = true;
+
+                document.getElementById('img' + i - 1).style.display = "none";
+                document.getElementById('img' + i).style.display = "block";
+
                 break;
             }
         }
