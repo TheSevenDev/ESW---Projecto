@@ -77,7 +77,7 @@
 }
 
 #info {
-    margin-top: -70vh;
+    margin-top: -35.7vw;
     margin-left: 17%;
     background-color: #ededed;
     width: 20vw;
@@ -91,4 +91,15 @@
     cursor: pointer;
     margin-top: -13%;
     margin-left: 92%;
+}
+
+#popUpTable {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    height: 8vw;
+}
+
+#popUpTable td{
+     height: 20vw;
 }
