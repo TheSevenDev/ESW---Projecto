@@ -2,7 +2,7 @@
     background: var(--main-grey);
     width: 34vw;
     height: 32vw;
-    margin-top: 6%;
+    margin-top: 5%;
     margin-left: 31%;
     border-radius: 50%;
 }
@@ -21,11 +21,3 @@
         color: #EDEDED;
         margin-top: -6%;
     }
-
-#maintenance{
-
-}
-
-#errorCatched{
-
-}
