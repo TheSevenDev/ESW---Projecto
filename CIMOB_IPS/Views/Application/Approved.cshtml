@@ -92,6 +92,25 @@
                 }
             </tbody>
         </table>
+
+        <div>
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+
+            @if (Model.HasPreviousPage)
+            {
+                <a asp-action="Approved" asp-controller="Application" asp-route-pageApplication="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
+            }
+
+            Página @Model.PageIndex de @Model.TotalPages
+            
+            @if (Model.HasNextPage)
+            {
+                <a asp-action="Approved" asp-controller="Application" asp-route-pageApplication="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
+            }
+        </div> 
     }
     else
     {

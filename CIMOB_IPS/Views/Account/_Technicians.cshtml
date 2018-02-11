@@ -1,6 +1,6 @@
 ﻿@model PaginatedList<CIMOB_IPS.Models.Technician>
 
-<div class="main-container-techs">
+<div class="main-container-techs" style="margin-bottom: 10%;">
     <table style="margin: 0 auto; margin-top: 3%;">
         <thead>
             <tr>
@@ -39,8 +39,6 @@
         </tbody>
     </table>
     <br />
-    Página @Model.PageIndex de @Model.TotalPages
-    <br />
     @{
         var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
         var nextDisabled = !Model.HasNextPage ? "disabled" : "";
@@ -50,7 +48,7 @@
     {
         <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex - 1)" class='@prevDisabled'>Anterior</a>
     }
-    &nbsp;&nbsp;&nbsp;
+    Página @Model.PageIndex de @Model.TotalPages
     @if (Model.HasNextPage)
     {
         <a asp-action="Technicians" asp-route-pageTechnicians="@(Model.PageIndex + 1)" class='@nextDisabled'>Seguinte</a>
