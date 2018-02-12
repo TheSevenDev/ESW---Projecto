@@ -47,24 +47,24 @@
 
     @if (!User.Identity.IsAuthenticated)
     {
-        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Login');">
+        <div id="authentication-button" onclick="location.href='http://cimob-ips.azurewebsites.net/Login'">
             <br />
             <span>Autenticar</span>
         </div>
 
-        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Register');">
+        <div id="register-button" onclick="location.href='http://cimob-ips.azurewebsites.net/Register'">
             <br />
             <span>Criar Conta</span>
         </div>
     }
     @if (User.IsInRole("estudante"))
     {
-        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Application/MyApplications');">
+        <div id="authentication-button" onclick="location.href='http://cimob-ips.azurewebsites.net/Application/MyApplications'">
             <br />
             <span>Minhas Candidaturas</span>
         </div>
 
-        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Mobility/MyMobility');">
+        <div id="register-button" onclick="location.href=''http://cimob-ips.azurewebsites.net/Mobility/MyMobility'">
             <br />
             <span>Minha Mobilidade</span>
         </div>
@@ -73,12 +73,12 @@
 
     @if (User.IsInRole("tecnico") || User.IsInRole("tecnico_admin"))
     {
-        <div id="authentication-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Application');">
+        <div id="authentication-button" onclick="location.href='http://cimob-ips.azurewebsites.net/Application'">
             <br />
             <span>Candidaturas Submetidas</span>
         </div>
 
-        <div id="register-button" onclick="window.open('http://cimob-ips.azurewebsites.net/Mobility/MobilitiesInCharge');">
+        <div id="register-button" onclick="location.href='http://cimob-ips.azurewebsites.net/Mobility/MobilitiesInCharge'">
             <br />
             <span>Mobilidades a cargo</span>
         </div>
