@@ -302,7 +302,7 @@ namespace CIMOB_IPS.Controllers
                 bool success = InsertPendingAccount(strStudentEmail, EnumAccountType.STUDENT, 0);
                 if (success)
                 {
-                    ViewData["message"] = "Número registado. Verifique o seu e-mail de estudante.";
+                    ViewData["message"] = "Número registado.Verifique o seu e-mail de estudante.";
                     ViewData["error-message"] = "";
                 }
                 else
