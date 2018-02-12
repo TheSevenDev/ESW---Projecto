@@ -77,17 +77,29 @@
 }
 
 #info {
-    margin-top: -35%;
+    margin-top: -35.7vw;
     margin-left: 17%;
     background-color: #ededed;
-    width: 15%;
+    width: 20vw;
     border-radius: 1.5%;
     border: 2px solid #F18735;
     padding-left: 2%;
+    font-size: 1.1vmax;
 }
 
 #closeimg {
     cursor: pointer;
-    margin-top: -13%;
-    margin-left: 92%;
+    margin-top: -1vw;
+    margin-left: 19vw;
+}
+
+#popUpTable {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    height: 8vw;
+}
+
+#popUpTable td{
+     height: 20vw;
 }
